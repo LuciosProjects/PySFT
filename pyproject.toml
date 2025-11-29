@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pysft"
+version = "0.0.1"
+description = "Fetch security data and analyze with an LLM agent"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Lucio" }]
+license = { text = "Proprietary" }
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pysft*"]
+
+[project.urls]
+Homepage = "https://github.com/LuciosProjects/PySFT"
