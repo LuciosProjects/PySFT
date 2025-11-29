@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/lib",
+        "${workspaceFolder}/app",
+        "${workspaceFolder}/modules"
+    ]
+}
