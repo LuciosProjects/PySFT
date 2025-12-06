@@ -1,0 +1,7967 @@
+{
+    "1209790": {
+        "name": "ABOU FAMILY B1",
+        "symbol": "ABUF-B1.TA",
+        "ISIN": "IL0012097908"
+    },
+    "1101666": {
+        "name": "ABRA",
+        "symbol": "ABRA.TA",
+        "ISIN": "IL0011016669"
+    },
+    "770016": {
+        "name": "ACCEL",
+        "symbol": "ACCL.TA",
+        "ISIN": "IL0007700169"
+    },
+    "1176205": {
+        "name": "ACKERSTEIN GRP.",
+        "symbol": "ACKR.TA",
+        "ISIN": "IL0011762056"
+    },
+    "1188572": {
+        "name": "ACRO     B1",
+        "symbol": "ACRO-B1.TA",
+        "ISIN": "IL0011885725"
+    },
+    "1226059": {
+        "name": "ACRO B2",
+        "symbol": "ACRO-B2.TA",
+        "ISIN": "IL0012260597"
+    },
+    "1184902": {
+        "name": "ACRO KVUT",
+        "symbol": "ACRO.TA",
+        "ISIN": "IL0011849028"
+    },
+    "1110915": {
+        "name": "ADAMA .B2",
+        "symbol": "ADAMA-B2.TA",
+        "ISIN": "IL0011109159"
+    },
+    "1820208": {
+        "name": "ADGAR       B10",
+        "symbol": "ADGR-B10.TA",
+        "ISIN": "IL0018202080"
+    },
+    "1820281": {
+        "name": "ADGAR       B11",
+        "symbol": "ADGR-B11.TA",
+        "ISIN": "IL0018202817"
+    },
+    "1820331": {
+        "name": "ADGAR     B12",
+        "symbol": "ADGR-B12.TA",
+        "ISIN": "IL0018203310"
+    },
+    "1207158": {
+        "name": "ADGAR B13",
+        "symbol": "ADGR-B13.TA",
+        "ISIN": "IL0012071580"
+    },
+    "1820083": {
+        "name": "ADGAR INV.",
+        "symbol": "ADGR.TA",
+        "ISIN": "IL0018200837"
+    },
+    "1228931": {
+        "name": "ADGAR W9",
+        "symbol": "ADGR-W9.TA",
+        "ISIN": "IL0012289315"
+    },
+    "363010": {
+        "name": "AERODROME GROUP",
+        "symbol": "ARDM.TA",
+        "ISIN": "IL0003630105"
+    },
+    "1133131": {
+        "name": "AEROSPACE IN B4",
+        "symbol": "ARSP-B4.TA",
+        "ISIN": "IL0011331316"
+    },
+    "578013": {
+        "name": "AFCON HOLD",
+        "symbol": "AFHL.TA",
+        "ISIN": "IL0005780130"
+    },
+    "5780168": {
+        "name": "AFCON HOLD   B4",
+        "symbol": "AFHL-B4.TA",
+        "ISIN": "IL0057801685"
+    },
+    "1225838": {
+        "name": "AFCON HOLD B5",
+        "symbol": "AFHL-B5.TA",
+        "ISIN": "IL0012258385"
+    },
+    "1225846": {
+        "name": "AFCON HOLD W1",
+        "symbol": "AFHL-W1.TA",
+        "ISIN": "IL0012258468"
+    },
+    "1213719": {
+        "name": "AFI PRO W3",
+        "symbol": "AFIPR-W3.TA",
+        "ISIN": "IL0012137191"
+    },
+    "1160878": {
+        "name": "AFI PROP B10",
+        "symbol": "AFPR-B10.TA",
+        "ISIN": "IL0011608788"
+    },
+    "1173764": {
+        "name": "AFI PROP B12",
+        "symbol": "AFPR-B12.TA",
+        "ISIN": "IL0011737645"
+    },
+    "1178292": {
+        "name": "AFI PROP B13",
+        "symbol": "AFPR-B13.TA",
+        "ISIN": "IL0011782922"
+    },
+    "1184530": {
+        "name": "AFI PROP B14",
+        "symbol": "AFPR-B14.TA",
+        "ISIN": "IL0011845307"
+    },
+    "1199603": {
+        "name": "AFI PROP B15",
+        "symbol": "AFPR-B15.TA",
+        "ISIN": "IL0011996035"
+    },
+    "1210947": {
+        "name": "AFI PROP B16",
+        "symbol": "AFPR-B16.TA",
+        "ISIN": "IL0012109471"
+    },
+    "1220383": {
+        "name": "AFI PROP B17",
+        "symbol": "AFPR-B17.TA",
+        "ISIN": "IL0012203837"
+    },
+    "1142231": {
+        "name": "AFI PROP B8",
+        "symbol": "AFPR-B8.TA",
+        "ISIN": "IL0011422313"
+    },
+    "1223668": {
+        "name": "AFI PROP P5",
+        "symbol": "AFPR-P5.TA",
+        "ISIN": "IL0012236688"
+    },
+    "1091354": {
+        "name": "AFI PROPERTIES",
+        "symbol": "AFPR.TA",
+        "ISIN": "IL0010913544"
+    },
+    "1162825": {
+        "name": "AFRICA RESID B5",
+        "symbol": "AFRE-B5.TA",
+        "ISIN": "IL0011628257"
+    },
+    "1097948": {
+        "name": "AFRICA RESIDENC",
+        "symbol": "AFRE.TA",
+        "ISIN": "IL0010979487"
+    },
+    "1223239": {
+        "name": "AGELLAN B1",
+        "symbol": "AGLN-B1.TA",
+        "ISIN": "IL0012232398"
+    },
+    "1133487": {
+        "name": "AIRPORT      B5",
+        "symbol": "ARPT-B5.TA",
+        "ISIN": "IL0011334872"
+    },
+    "1160944": {
+        "name": "AIRPORT    B9",
+        "symbol": "ARPT-B9.TA",
+        "ISIN": "IL0011609448"
+    },
+    "1195999": {
+        "name": "AIRPORT B11",
+        "symbol": "ARPT-B11.TA",
+        "ISIN": "IL0011959991"
+    },
+    "1211564": {
+        "name": "AIRPORT B12",
+        "symbol": "ARPT-B12.TA",
+        "ISIN": "IL0012115643"
+    },
+    "1095835": {
+        "name": "AIRPORT CITY",
+        "symbol": "ARPT.TA",
+        "ISIN": "IL0010958358"
+    },
+    "1195981": {
+        "name": "AIRPRORT B10",
+        "symbol": "ARPT-B10.TA",
+        "ISIN": "IL0011959819"
+    },
+    "1173376": {
+        "name": "AIRTOUCH",
+        "symbol": "ARTS.TA",
+        "ISIN": "IL0011733768"
+    },
+    "1083856": {
+        "name": "ALARUM",
+        "symbol": "ALAR.TA",
+        "ISIN": "IL0010838568"
+    },
+    "625012": {
+        "name": "ALBAAD",
+        "symbol": "ALBA.TA",
+        "ISIN": "IL0006250125"
+    },
+    "1158732": {
+        "name": "ALBR        B17",
+        "symbol": "ALBR-B17.TA",
+        "ISIN": "IL0011587321"
+    },
+    "1158740": {
+        "name": "ALBR        B18",
+        "symbol": "ALBR-B18.TA",
+        "ISIN": "IL0011587404"
+    },
+    "1191824": {
+        "name": "ALBR B19",
+        "symbol": "ALBR-B19.TA",
+        "ISIN": "IL0011918245"
+    },
+    "1191832": {
+        "name": "ALBR B20",
+        "symbol": "ALBR-B20.TA",
+        "ISIN": "IL0011918328"
+    },
+    "1216027": {
+        "name": "ALBR B21",
+        "symbol": "ALBR-B21.TA",
+        "ISIN": "IL0012160276"
+    },
+    "1216035": {
+        "name": "ALBR B22",
+        "symbol": "ALBR-B22.TA",
+        "ISIN": "IL0012160359"
+    },
+    "1101450": {
+        "name": "ALLMED SOLUTION",
+        "symbol": "ALMD.TA",
+        "ISIN": "IL0011014508"
+    },
+    "1099654": {
+        "name": "ALLOT",
+        "symbol": "ALLT.TA",
+        "ISIN": "IL0010996549"
+    },
+    "1173145": {
+        "name": "ALMA YESODOT",
+        "symbol": "ALMY.TA",
+        "ISIN": "IL0011731457"
+    },
+    "1168962": {
+        "name": "ALMEDA      PU",
+        "symbol": "AMDA.TA",
+        "ISIN": "IL0011689622"
+    },
+    "1213297": {
+        "name": "ALMEDA W5",
+        "symbol": "AMDA-W5.TA",
+        "ISIN": "IL0012132978"
+    },
+    "1223320": {
+        "name": "ALMOG B1",
+        "symbol": "ALMC-B1.TA",
+        "ISIN": "IL0012233206"
+    },
+    "1136829": {
+        "name": "ALMOGIM",
+        "symbol": "ALMA.TA",
+        "ISIN": "IL0011368292"
+    },
+    "1201615": {
+        "name": "ALMOGIM B10",
+        "symbol": "ALMA-B10.TA",
+        "ISIN": "IL0012016155"
+    },
+    "1211358": {
+        "name": "ALMOGIM B11",
+        "symbol": "ALMA-B11.TA",
+        "ISIN": "IL0012113580"
+    },
+    "1217892": {
+        "name": "ALMOGIM B12",
+        "symbol": "ALMA-B12.TA",
+        "ISIN": "IL0012178922"
+    },
+    "1185230": {
+        "name": "ALMOGIM B8",
+        "symbol": "ALMA-B8.TA",
+        "ISIN": "IL0011852303"
+    },
+    "1189224": {
+        "name": "ALMOGIM B9",
+        "symbol": "ALMA-B9.TA",
+        "ISIN": "IL0011892242"
+    },
+    "1169127": {
+        "name": "ALON SQUARE B6",
+        "symbol": "BSI-B6.TA",
+        "ISIN": "IL0011691271"
+    },
+    "1183979": {
+        "name": "ALON SQUARE B7",
+        "symbol": "BSI-B7.TA",
+        "ISIN": "IL0011839797"
+    },
+    "1197276": {
+        "name": "ALON SQUARE B8",
+        "symbol": "BSI-B8.TA",
+        "ISIN": "IL0011972762"
+    },
+    "1197284": {
+        "name": "ALON SQUARE B9",
+        "symbol": "BSI-B9.TA",
+        "ISIN": "IL0011972846"
+    },
+    "3900354": {
+        "name": "ALONY HETS   B9",
+        "symbol": "ALHE-B9.TA",
+        "ISIN": "IL0039003541"
+    },
+    "3900362": {
+        "name": "ALONY HETS  B10",
+        "symbol": "ALHE-B10.TA",
+        "ISIN": "IL0039003624"
+    },
+    "3900487": {
+        "name": "ALONY HETS B11",
+        "symbol": "ALHE-B11.TA",
+        "ISIN": "IL0039004879"
+    },
+    "3900495": {
+        "name": "ALONY HETS B12",
+        "symbol": "ALHE-B12.TA",
+        "ISIN": "IL0039004952"
+    },
+    "1189406": {
+        "name": "ALONY HETS B13",
+        "symbol": "ALHE-B13.TA",
+        "ISIN": "IL0011894065"
+    },
+    "1189414": {
+        "name": "ALONY HETS B15",
+        "symbol": "ALHE-B15.TA",
+        "ISIN": "IL0011894149"
+    },
+    "1229384": {
+        "name": "ALONY HETS B16",
+        "symbol": "ALHE-B16.TA",
+        "ISIN": "IL0012293846"
+    },
+    "1229392": {
+        "name": "ALONY HETS B17",
+        "symbol": "ALHE-B17.TA",
+        "ISIN": "IL0012293929"
+    },
+    "390013": {
+        "name": "ALONY HETZ",
+        "symbol": "ALHE.TA",
+        "ISIN": "IL0003900136"
+    },
+    "1208404": {
+        "name": "ALONY HETZ W16",
+        "symbol": "ALHE-W16.TA",
+        "ISIN": "IL0012084047"
+    },
+    "3870169": {
+        "name": "ALROV PRO    B5",
+        "symbol": "ALRP-B5.TA",
+        "ISIN": "IL0038701699"
+    },
+    "3870185": {
+        "name": "ALROV PRO B6",
+        "symbol": "ALRP-B6.TA",
+        "ISIN": "IL0038701855"
+    },
+    "1207471": {
+        "name": "ALROV PRO B7",
+        "symbol": "ALRP-B7.TA",
+        "ISIN": "IL0012074717"
+    },
+    "387019": {
+        "name": "ALROV PROPERT",
+        "symbol": "ALRPR.TA",
+        "ISIN": "IL0003870198"
+    },
+    "1207604": {
+        "name": "ALTITUDE B2",
+        "symbol": "ALTD-B2.TA",
+        "ISIN": "IL0012076043"
+    },
+    "1184936": {
+        "name": "ALTSHULER FIN",
+        "symbol": "ALTF.TA",
+        "ISIN": "IL0011849366"
+    },
+    "1219443": {
+        "name": "ALUMA B2",
+        "symbol": "ALUM-B2.TA",
+        "ISIN": "IL0012194432"
+    },
+    "1181643": {
+        "name": "ALUMA INFRASTR'",
+        "symbol": "ALUMA.TA",
+        "ISIN": "IL0011816431"
+    },
+    "1190925": {
+        "name": "ALUMA W1",
+        "symbol": "ALUM-W1.TA",
+        "ISIN": "IL0011909251"
+    },
+    "654012": {
+        "name": "AMANET",
+        "symbol": "AMAN.TA",
+        "ISIN": "IL0006540129"
+    },
+    "1225887": {
+        "name": "AMERICAN EQU B1",
+        "symbol": "AEPL-B1.TA",
+        "ISIN": "IL0012258872"
+    },
+    "1094390": {
+        "name": "AMIAD",
+        "symbol": "AMD.TA",
+        "ISIN": "IL0010943905"
+    },
+    "1143585": {
+        "name": "AMIDAR       B1",
+        "symbol": "AMDR-B1.TA",
+        "ISIN": "IL0011435851"
+    },
+    "1092204": {
+        "name": "AMIR MARK.",
+        "symbol": "AMRK.TA",
+        "ISIN": "IL0010922040"
+    },
+    "1220425": {
+        "name": "AMLA YESODOT B1",
+        "symbol": "ALMY-B1.TA",
+        "ISIN": "IL0012204256"
+    },
+    "1097278": {
+        "name": "AMOT",
+        "symbol": "AMOT.TA",
+        "ISIN": "IL0010972789"
+    },
+    "1133149": {
+        "name": "AMOT         B4",
+        "symbol": "AMOT-B4.TA",
+        "ISIN": "IL0011331498"
+    },
+    "1138114": {
+        "name": "AMOT         B5",
+        "symbol": "AMOT-B5.TA",
+        "ISIN": "IL0011381147"
+    },
+    "1158609": {
+        "name": "AMOT         B6",
+        "symbol": "AMOT-B6.TA",
+        "ISIN": "IL0011586091"
+    },
+    "1162866": {
+        "name": "AMOT         B7",
+        "symbol": "AMOT-B7.TA",
+        "ISIN": "IL0011628661"
+    },
+    "1172782": {
+        "name": "AMOT         B8",
+        "symbol": "AMOT-B8.TA",
+        "ISIN": "IL0011727828"
+    },
+    "1205004": {
+        "name": "AMOT B10",
+        "symbol": "AMOT-B10.TA",
+        "ISIN": "IL0012050048"
+    },
+    "1204999": {
+        "name": "AMOT B9",
+        "symbol": "AMOT-B9.TA",
+        "ISIN": "IL0012049990"
+    },
+    "1225036": {
+        "name": "AMOT W12",
+        "symbol": "AMOT-W12.TA",
+        "ISIN": "IL0012250366"
+    },
+    "1225200": {
+        "name": "AMPA",
+        "symbol": "AMPA.TA",
+        "ISIN": "IL0012252008"
+    },
+    "1229285": {
+        "name": "AMPA B1",
+        "symbol": "AMPA-B1.TA",
+        "ISIN": "IL0012292855"
+    },
+    "1226950": {
+        "name": "AMPA P1",
+        "symbol": "AMPA-P1.TA",
+        "ISIN": "IL0012269507"
+    },
+    "1193515": {
+        "name": "AMPA YUVAL B1",
+        "symbol": "AMYU-B1.TA",
+        "ISIN": "IL0011935157"
+    },
+    "1188044": {
+        "name": "AMRAM AVRAHM B1",
+        "symbol": "AMRM-B1.TA",
+        "ISIN": "IL0011880445"
+    },
+    "1202555": {
+        "name": "AMRAM AVRAHM B2",
+        "symbol": "AMRM-B2.TA",
+        "ISIN": "IL0012025552"
+    },
+    "1215862": {
+        "name": "AMRAM AVRAHM B3",
+        "symbol": "AMRM-B3.TA",
+        "ISIN": "IL0012158627"
+    },
+    "1188200": {
+        "name": "AMRM",
+        "symbol": "AMRM.TA",
+        "ISIN": "IL0011882003"
+    },
+    "1229129": {
+        "name": "AMTRUST B1",
+        "symbol": "AMTR-B1.TA",
+        "ISIN": "IL0012291295"
+    },
+    "1080613": {
+        "name": "ANALYST",
+        "symbol": "ANLT.TA",
+        "ISIN": "IL0010806136"
+    },
+    "180018": {
+        "name": "ANGEL SALOMON",
+        "symbol": "ANGL.TA",
+        "ISIN": "IL0001800189"
+    },
+    "1082114": {
+        "name": "APOLLO POWER",
+        "symbol": "APLP.TA",
+        "ISIN": "IL0010821143"
+    },
+    "1214741": {
+        "name": "APOLLO POWER W8",
+        "symbol": "APLP-W8.TA",
+        "ISIN": "IL0012147414"
+    },
+    "1170240": {
+        "name": "AQUARIUS EN",
+        "symbol": "AQUA.TA",
+        "ISIN": "IL0011702409"
+    },
+    "1091651": {
+        "name": "ARAD",
+        "symbol": "ARD.TA",
+        "ISIN": "IL0010916513"
+    },
+    "1085265": {
+        "name": "ARAN",
+        "symbol": "ARAN.TA",
+        "ISIN": "IL0010852650"
+    },
+    "1380047": {
+        "name": "ARAZIM       B2",
+        "symbol": "ARZM-B2.TA",
+        "ISIN": "IL0013800474"
+    },
+    "1380104": {
+        "name": "ARAZIM       B4",
+        "symbol": "ARZM-B4.TA",
+        "ISIN": "IL0013801043"
+    },
+    "1207489": {
+        "name": "ARBE ROBOT C1",
+        "symbol": "ARBE-C1.TA",
+        "ISIN": "IL0012074899"
+    },
+    "1179662": {
+        "name": "ARBE ROBOTICS",
+        "symbol": "ARBE.TA",
+        "ISIN": "IL0011796625"
+    },
+    "1175371": {
+        "name": "ARGO PROP.",
+        "symbol": "ARGO.TA",
+        "ISIN": "NL0015000D84"
+    },
+    "366013": {
+        "name": "ARI RAEL ESTATE",
+        "symbol": "ARIN.TA",
+        "ISIN": "IL0003660136"
+    },
+    "3660156": {
+        "name": "ARI REAL ES B1",
+        "symbol": "ARIN-B1.TA",
+        "ISIN": "IL0036601560"
+    },
+    "1212331": {
+        "name": "ARI REAL ES B2",
+        "symbol": "ARIN-B2.TA",
+        "ISIN": "IL0012123316"
+    },
+    "1212349": {
+        "name": "ARI REAL ES W1",
+        "symbol": "ARIN-W1.TA",
+        "ISIN": "IL0012123498"
+    },
+    "587014": {
+        "name": "ARYT",
+        "symbol": "ARYT.TA",
+        "ISIN": "IL0005870147"
+    },
+    "1199488": {
+        "name": "ASHDOD REFIN B2",
+        "symbol": "ARF-B2.TA",
+        "ISIN": "IL0011994881"
+    },
+    "1215136": {
+        "name": "ASHDOD REFIN B3",
+        "symbol": "ARF-B3.TA",
+        "ISIN": "IL0012151366"
+    },
+    "1198910": {
+        "name": "ASHDOD REFINERY",
+        "symbol": "ARF.TA",
+        "ISIN": "IL0011989105"
+    },
+    "312017": {
+        "name": "ASHOT",
+        "symbol": "ASHO.TA",
+        "ISIN": "IL0003120172"
+    },
+    "1132315": {
+        "name": "ASHTROM GROUP",
+        "symbol": "ASHG.TA",
+        "ISIN": "IL0011323156"
+    },
+    "1132323": {
+        "name": "ASHTROM GRUP B1",
+        "symbol": "ASHG-B1.TA",
+        "ISIN": "IL0011323230"
+    },
+    "1140102": {
+        "name": "ASHTROM GRUP B3",
+        "symbol": "ASHG-B3.TA",
+        "ISIN": "IL0011401028"
+    },
+    "1182989": {
+        "name": "ASHTROM GRUP B4",
+        "symbol": "ASHG-B4.TA",
+        "ISIN": "IL0011829897"
+    },
+    "1199579": {
+        "name": "ASHTROM GRUP B5",
+        "symbol": "ASHG-B5.TA",
+        "ISIN": "IL0011995797"
+    },
+    "2510170": {
+        "name": "ASHTROM PR   B9",
+        "symbol": "ASPR-B9.TA",
+        "ISIN": "IL0025101705"
+    },
+    "2510204": {
+        "name": "ASHTROM PR  B10",
+        "symbol": "ASPR-B10.TA",
+        "ISIN": "IL0025102042"
+    },
+    "2510238": {
+        "name": "ASHTROM PR B11",
+        "symbol": "ASPR-B11.TA",
+        "ISIN": "IL0025102380"
+    },
+    "2510279": {
+        "name": "ASHTROM PRO B12",
+        "symbol": "ASPR-B12.TA",
+        "ISIN": "IL0025102794"
+    },
+    "2510303": {
+        "name": "ASHTROM PRO B13",
+        "symbol": "ASPR-B13.TA",
+        "ISIN": "IL0025103032"
+    },
+    "1201896": {
+        "name": "ASHTROM PRO B14",
+        "symbol": "ASPR-B14.TA",
+        "ISIN": "IL0012018961"
+    },
+    "313015": {
+        "name": "ASPEN GROUP",
+        "symbol": "ASGR.TA",
+        "ISIN": "IL0003130155"
+    },
+    "1229160": {
+        "name": "ASPEN GROUP B10",
+        "symbol": "ASGR-B10.TA",
+        "ISIN": "IL0012291600"
+    },
+    "3130390": {
+        "name": "ASPEN GROUP B8",
+        "symbol": "ASGR-B8.TA",
+        "ISIN": "IL0031303907"
+    },
+    "3130424": {
+        "name": "ASPEN GROUP B9",
+        "symbol": "ASGR-B9.TA",
+        "ISIN": "IL0031304244"
+    },
+    "1096106": {
+        "name": "ATREYU CAP",
+        "symbol": "ATRY.TA",
+        "ISIN": "IL0010961063"
+    },
+    "1082965": {
+        "name": "AUDIOCODES",
+        "symbol": "AUDC.TA",
+        "ISIN": "IL0010829658"
+    },
+    "1105907": {
+        "name": "AUGWIND",
+        "symbol": "AUGN.TA",
+        "ISIN": "IL0011059073"
+    },
+    "373019": {
+        "name": "AURA",
+        "symbol": "AURA.TA",
+        "ISIN": "IL0003730194"
+    },
+    "3730579": {
+        "name": "AURA B16",
+        "symbol": "AURA-B16.TA",
+        "ISIN": "IL0037305799"
+    },
+    "1193580": {
+        "name": "AURA B17",
+        "symbol": "AURA-B17.TA",
+        "ISIN": "IL0011935801"
+    },
+    "1203405": {
+        "name": "AURA B18",
+        "symbol": "AURA-B18.TA",
+        "ISIN": "IL0012034059"
+    },
+    "1223296": {
+        "name": "AURA B19",
+        "symbol": "AURA-B19.TA",
+        "ISIN": "IL0012232968"
+    },
+    "1176619": {
+        "name": "AURA SMART-M",
+        "symbol": "AUSA-M.TA",
+        "ISIN": "IL0011766198"
+    },
+    "1080522": {
+        "name": "AUSTRALIA ISR",
+        "symbol": "AUIS.TA",
+        "ISIN": "IL0010805229"
+    },
+    "1158161": {
+        "name": "AUTO BANK SERV",
+        "symbol": "SHVA.TA",
+        "ISIN": "IL0011581613"
+    },
+    "1131697": {
+        "name": "AUTOMAX",
+        "symbol": "AMX.TA",
+        "ISIN": "IL0011316978"
+    },
+    "1184928": {
+        "name": "AUTOMAX B2",
+        "symbol": "AMX-B2.TA",
+        "ISIN": "IL0011849283"
+    },
+    "1221761": {
+        "name": "AUTOMAX B3",
+        "symbol": "AMX-B3.TA",
+        "ISIN": "IL0012217613"
+    },
+    "1083419": {
+        "name": "AUTONOMOUS",
+        "symbol": "AGRD.TA",
+        "ISIN": "IL0010834195"
+    },
+    "1223031": {
+        "name": "AUTONOMOUS C1",
+        "symbol": "AGRD-C1.TA",
+        "ISIN": "IL0012230319"
+    },
+    "675017": {
+        "name": "AVERBUCH",
+        "symbol": "AVER.TA",
+        "ISIN": "IL0006750173"
+    },
+    "1171818": {
+        "name": "AVGAD",
+        "symbol": "AVGD.TA",
+        "ISIN": "IL0011718181"
+    },
+    "1196542": {
+        "name": "AVGAD B2",
+        "symbol": "AVGD-B2.TA",
+        "ISIN": "IL0011965428"
+    },
+    "1211770": {
+        "name": "AVGAD B3",
+        "symbol": "AVGD-B3.TA",
+        "ISIN": "IL0012117706"
+    },
+    "1225929": {
+        "name": "AVGAD B4",
+        "symbol": "AVGD-B4.TA",
+        "ISIN": "IL0012259292"
+    },
+    "1225937": {
+        "name": "AVGAD W2",
+        "symbol": "AVGD-W2.TA",
+        "ISIN": "IL0012259375"
+    },
+    "1100957": {
+        "name": "AVGOL",
+        "symbol": "AVGL.TA",
+        "ISIN": "IL0011009573"
+    },
+    "1140417": {
+        "name": "AVGOL        B4",
+        "symbol": "AVGL-B4.TA",
+        "ISIN": "IL0011404170"
+    },
+    "1209279": {
+        "name": "AVIAD DEPO B1",
+        "symbol": "AVDP-B1.TA",
+        "ISIN": "IL0012092792"
+    },
+    "1214592": {
+        "name": "AVIAD DEPO B2",
+        "symbol": "AVDP-B2.TA",
+        "ISIN": "IL0012145921"
+    },
+    "1221399": {
+        "name": "AVIAD DEPO B3",
+        "symbol": "AVDP-B3.TA",
+        "ISIN": "IL0012213992"
+    },
+    "1228329": {
+        "name": "AVIAD DEPO B4",
+        "symbol": "AVDP-B4.TA",
+        "ISIN": "IL0012283292"
+    },
+    "413013": {
+        "name": "AVIATION LINKS",
+        "symbol": "AVIA.TA",
+        "ISIN": "IL0004130139"
+    },
+    "444018": {
+        "name": "AVIV",
+        "symbol": "AVIV.TA",
+        "ISIN": "IL0004440181"
+    },
+    "1190453": {
+        "name": "AVIV B7",
+        "symbol": "AVIV-B7.TA",
+        "ISIN": "IL0011904534"
+    },
+    "297010": {
+        "name": "AVROT",
+        "symbol": "AVRT.TA",
+        "ISIN": "IL0002970106"
+    },
+    "383018": {
+        "name": "AXILION",
+        "symbol": "AILN.TA",
+        "ISIN": "IL0003830184"
+    },
+    "1204064": {
+        "name": "AXILION W5",
+        "symbol": "AILN-W5.TA",
+        "ISIN": "IL0012040643"
+    },
+    "1204072": {
+        "name": "AXILION W6",
+        "symbol": "AILN-W6.TA",
+        "ISIN": "IL0012040726"
+    },
+    "1217280": {
+        "name": "AXILION W7",
+        "symbol": "AILN-W7.TA",
+        "ISIN": "IL0012172800"
+    },
+    "1227552": {
+        "name": "AXONS VISION",
+        "symbol": "AXN.TA",
+        "ISIN": "IL0012275520"
+    },
+    "1227560": {
+        "name": "AXSON VIS W1",
+        "symbol": "AXN-W1.TA",
+        "ISIN": "IL0012275603"
+    },
+    "209015": {
+        "name": "AYALON  HOLD.",
+        "symbol": "AYAL.TA",
+        "ISIN": "IL0002090152"
+    },
+    "1195569": {
+        "name": "AYALON HOLD B5",
+        "symbol": "AYAL-B5.TA",
+        "ISIN": "IL0011955692"
+    },
+    "715011": {
+        "name": "AZORIM",
+        "symbol": "AZRM.TA",
+        "ISIN": "IL0007150118"
+    },
+    "7150410": {
+        "name": "AZORIM     B13",
+        "symbol": "AZRM-B13.TA",
+        "ISIN": "IL0071504109"
+    },
+    "7150444": {
+        "name": "AZORIM    B14",
+        "symbol": "AZRM-B14.TA",
+        "ISIN": "IL0071504448"
+    },
+    "7150451": {
+        "name": "AZORIM B15",
+        "symbol": "AZRM-B15.TA",
+        "ISIN": "IL0071504513"
+    },
+    "1223486": {
+        "name": "AZORIM B16",
+        "symbol": "AZRM-B16.TA",
+        "ISIN": "IL0012234865"
+    },
+    "1138650": {
+        "name": "AZRIELI      B4",
+        "symbol": "AZRL-B4.TA",
+        "ISIN": "IL0011386500"
+    },
+    "1156611": {
+        "name": "AZRIELI      B6",
+        "symbol": "AZRL-B6.TA",
+        "ISIN": "IL0011566119"
+    },
+    "1156603": {
+        "name": "AZRIELI     B5",
+        "symbol": "AZRL-B5.TA",
+        "ISIN": "IL0011566036"
+    },
+    "1178680": {
+        "name": "AZRIELI    B8",
+        "symbol": "AZRL-B8.TA",
+        "ISIN": "IL0011786808"
+    },
+    "1178672": {
+        "name": "AZRIELI   B7",
+        "symbol": "AZRL-B7.TA",
+        "ISIN": "IL0011786725"
+    },
+    "1225689": {
+        "name": "AZRIELI B10",
+        "symbol": "AZRL-B10.TA",
+        "ISIN": "IL0012256892"
+    },
+    "1209253": {
+        "name": "AZRIELI B9",
+        "symbol": "AZRL-B9.TA",
+        "ISIN": "IL0012092537"
+    },
+    "1119478": {
+        "name": "AZRIELI GROUP",
+        "symbol": "AZRG.TA",
+        "ISIN": "IL0011194789"
+    },
+    "1107663": {
+        "name": "B COMMUNICATION",
+        "symbol": "BCOM.TA",
+        "ISIN": "IL0011076630"
+    },
+    "1229418": {
+        "name": "B.S.R ENGIN B1",
+        "symbol": "BSRE-B1.TA",
+        "ISIN": "IL0012294182"
+    },
+    "1183656": {
+        "name": "BAIT BAKFAR",
+        "symbol": "BKFR.TA",
+        "ISIN": "IL0011836561"
+    },
+    "1221274": {
+        "name": "BAIT BAKFAR B1",
+        "symbol": "BKFR-B1.TA",
+        "ISIN": "IL0012212747"
+    },
+    "1221282": {
+        "name": "BAIT BAKFAR W1",
+        "symbol": "BKFR-W1.TA",
+        "ISIN": "IL0012212820"
+    },
+    "1224989": {
+        "name": "BAIT VEGAG B1",
+        "symbol": "BVGG-B1.TA",
+        "ISIN": "IL0012249897"
+    },
+    "1185362": {
+        "name": "BAIT VEGAG GL",
+        "symbol": "BVGG.TA",
+        "ISIN": "IL0011853624"
+    },
+    "1212539": {
+        "name": "BALADI",
+        "symbol": "BLDI.TA",
+        "ISIN": "IL0012125394"
+    },
+    "1212455": {
+        "name": "BALADI B1",
+        "symbol": "BLDI-B1.TA",
+        "ISIN": "IL0012124553"
+    },
+    "1216662": {
+        "name": "BALADI W1",
+        "symbol": "BLDI-W1.TA",
+        "ISIN": "IL0012166620"
+    },
+    "1104363": {
+        "name": "BARAK INVEST",
+        "symbol": "BARI.TA",
+        "ISIN": "IL0011043630"
+    },
+    "286013": {
+        "name": "BARAN",
+        "symbol": "BRAN.TA",
+        "ISIN": "IL0002860133"
+    },
+    "1178276": {
+        "name": "BAREKET",
+        "symbol": "BRKT.TA",
+        "ISIN": "IL0011782765"
+    },
+    "1216746": {
+        "name": "BAREKET CAP B1",
+        "symbol": "BRKT-B1.TA",
+        "ISIN": "IL0012167461"
+    },
+    "1158823": {
+        "name": "BATM",
+        "symbol": "BVC.TA",
+        "ISIN": "IL0010849045"
+    },
+    "2590248": {
+        "name": "BAZAN",
+        "symbol": "ORL.TA",
+        "ISIN": "IL0025902482"
+    },
+    "2590511": {
+        "name": "BAZAN       B10",
+        "symbol": "BAZN-B10.TA",
+        "ISIN": "IL0025905113"
+    },
+    "2590578": {
+        "name": "BAZAN       B12",
+        "symbol": "BZN-B12.TA",
+        "ISIN": "IL0025905782"
+    },
+    "1195346": {
+        "name": "BAZAN      B13",
+        "symbol": "BZN-B13.TA",
+        "ISIN": "IL0011953465"
+    },
+    "1211986": {
+        "name": "BAZAN B15",
+        "symbol": "BZN-B15.TA",
+        "ISIN": "IL0012119868"
+    },
+    "1082346": {
+        "name": "BEEIO HONEY",
+        "symbol": "BHNY.TA",
+        "ISIN": "IL0010823461"
+    },
+    "1221431": {
+        "name": "BEEIO HONEY W1",
+        "symbol": "BHNY-W1.TA",
+        "ISIN": "IL0012214313"
+    },
+    "1081561": {
+        "name": "BET SHEMESH",
+        "symbol": "BSEN.TA",
+        "ISIN": "IL0010815616"
+    },
+    "1175561": {
+        "name": "BEYON 3D",
+        "symbol": "BYON.TA",
+        "ISIN": "IL0011755613"
+    },
+    "230011": {
+        "name": "BEZEQ",
+        "symbol": "BEZQ.TA",
+        "ISIN": "IL0002300114"
+    },
+    "2300176": {
+        "name": "BEZEQ        B9",
+        "symbol": "BEZQ-B9.TA",
+        "ISIN": "IL0023001766"
+    },
+    "2300184": {
+        "name": "BEZEQ       B10",
+        "symbol": "BEZQ-B10.TA",
+        "ISIN": "IL0023001840"
+    },
+    "2300234": {
+        "name": "BEZEQ       B11",
+        "symbol": "BEZQ-B11.TA",
+        "ISIN": "IL0023002343"
+    },
+    "2300242": {
+        "name": "BEZEQ       B12",
+        "symbol": "BEZQ-B12.TA",
+        "ISIN": "IL0023002426"
+    },
+    "2300309": {
+        "name": "BEZEQ B13",
+        "symbol": "BEZQ-B13.TA",
+        "ISIN": "IL0023003093"
+    },
+    "2300317": {
+        "name": "BEZEQ B14",
+        "symbol": "BEZQ-B14.TA",
+        "ISIN": "IL0023003176"
+    },
+    "1097260": {
+        "name": "BIG",
+        "symbol": "BIG.TA",
+        "ISIN": "IL0010972607"
+    },
+    "1151117": {
+        "name": "BIG         B11",
+        "symbol": "BIG-B11.TA",
+        "ISIN": "IL0011511172"
+    },
+    "1156231": {
+        "name": "BIG         B12",
+        "symbol": "BIG-B12.TA",
+        "ISIN": "IL0011562316"
+    },
+    "1161512": {
+        "name": "BIG         B14",
+        "symbol": "BIG-B14.TA",
+        "ISIN": "IL0011615122"
+    },
+    "1162221": {
+        "name": "BIG         B15",
+        "symbol": "BIG-B15.TA",
+        "ISIN": "IL0011622219"
+    },
+    "1168442": {
+        "name": "BIG         B16",
+        "symbol": "BIG-B16.TA",
+        "ISIN": "IL0011684425"
+    },
+    "1168459": {
+        "name": "BIG         B17",
+        "symbol": "BIG-B17.TA",
+        "ISIN": "IL0011684599"
+    },
+    "1141050": {
+        "name": "BIG       B9",
+        "symbol": "BIG-B9.TA",
+        "ISIN": "IL0011410508"
+    },
+    "1159516": {
+        "name": "BIG      B13",
+        "symbol": "BIG-B13.TA",
+        "ISIN": "IL0011595167"
+    },
+    "1181007": {
+        "name": "BIG B 19",
+        "symbol": "BIG-B19.TA",
+        "ISIN": "IL0011810079"
+    },
+    "1174226": {
+        "name": "BIG B18",
+        "symbol": "BIG-B18.TA",
+        "ISIN": "IL0011742264"
+    },
+    "1186188": {
+        "name": "BIG B20",
+        "symbol": "BIG-B20.TA",
+        "ISIN": "IL0011861882"
+    },
+    "1202217": {
+        "name": "BIG B21",
+        "symbol": "BIG-B21.TA",
+        "ISIN": "IL0012022179"
+    },
+    "1224948": {
+        "name": "BIG B22",
+        "symbol": "BIG-B22.TA",
+        "ISIN": "IL0012249483"
+    },
+    "1224955": {
+        "name": "BIG B23",
+        "symbol": "BIG-B23.TA",
+        "ISIN": "IL0012249558"
+    },
+    "1227032": {
+        "name": "BIG B24",
+        "symbol": "BIG-B24.TA",
+        "ISIN": "IL0012270323"
+    },
+    "1138924": {
+        "name": "BIG B8",
+        "symbol": "BIG-B8.TA",
+        "ISIN": "IL0011389249"
+    },
+    "1223114": {
+        "name": "BIG P5",
+        "symbol": "BIG-P5.TA",
+        "ISIN": "IL0012231143"
+    },
+    "1214345": {
+        "name": "BIG W7",
+        "symbol": "BIG-W7.TA",
+        "ISIN": "IL0012143454"
+    },
+    "1172295": {
+        "name": "BIG-TECH 50 PU",
+        "symbol": "BIGT.TA",
+        "ISIN": "IL0011722951"
+    },
+    "1172618": {
+        "name": "BIKUREY HASHDE",
+        "symbol": "BKRY.TA",
+        "ISIN": "IL0011726184"
+    },
+    "1096049": {
+        "name": "BIO VIEW",
+        "symbol": "BIOV.TA",
+        "ISIN": "IL0010960495"
+    },
+    "1095223": {
+        "name": "BIOLIGHT",
+        "symbol": "BOLT.TA",
+        "ISIN": "IL0010952237"
+    },
+    "1229327": {
+        "name": "BIOLIGHT W10",
+        "symbol": "BOLT-W10.TA",
+        "ISIN": "IL0012293275"
+    },
+    "1229319": {
+        "name": "BIOLIGHT W9",
+        "symbol": "BOLT-W9.TA",
+        "ISIN": "IL0012293192"
+    },
+    "1101518": {
+        "name": "BIOLINE RX",
+        "symbol": "BLRX.TA",
+        "ISIN": "IL0011015182"
+    },
+    "1173905": {
+        "name": "BIOMEAT FOOD PU",
+        "symbol": "BIMT.TA",
+        "ISIN": "IL0011739054"
+    },
+    "1187590": {
+        "name": "BIOMEAT FOOD.W1",
+        "symbol": "BIMT-W1.TA",
+        "ISIN": "IL0011875908"
+    },
+    "1201375": {
+        "name": "BIOMEAT.W2",
+        "symbol": "BIMT-W2.TA",
+        "ISIN": "IL0012013756"
+    },
+    "530014": {
+        "name": "BIRMAN",
+        "symbol": "BIRM.TA",
+        "ISIN": "IL0005300145"
+    },
+    "1208594": {
+        "name": "BLADE RAN W1",
+        "symbol": "BLRN-W1.TA",
+        "ISIN": "IL0012085945"
+    },
+    "1170513": {
+        "name": "BLADE RANGER",
+        "symbol": "BLRN.TA",
+        "ISIN": "IL0011705139"
+    },
+    "1172097": {
+        "name": "BLENDER",
+        "symbol": "BLND.TA",
+        "ISIN": "IL0011720971"
+    },
+    "424010": {
+        "name": "BLITZ-M",
+        "symbol": "BLITZ-M.TA",
+        "ISIN": "IL0004240102"
+    },
+    "1098565": {
+        "name": "BLUE SQ REAL ES",
+        "symbol": "BLSR.TA",
+        "ISIN": "IL0010985658"
+    },
+    "1140615": {
+        "name": "BLUE SQ REES B7",
+        "symbol": "BLSR-B7.TA",
+        "ISIN": "IL0011406159"
+    },
+    "1157569": {
+        "name": "BLUE SQ REES B8",
+        "symbol": "BLSR-B8.TA",
+        "ISIN": "IL0011575698"
+    },
+    "1174556": {
+        "name": "BLUE SQ REES B9",
+        "symbol": "BLSR-B9.TA",
+        "ISIN": "IL0011745564"
+    },
+    "1220672": {
+        "name": "BLUE SQ REES P2",
+        "symbol": "BLSR-P2.TA",
+        "ISIN": "IL0012206723"
+    },
+    "1213396": {
+        "name": "BLUE SQ RES B10",
+        "symbol": "BSLR-B10.TA",
+        "ISIN": "IL0012133968"
+    },
+    "1140607": {
+        "name": "BLUE SQREES B6",
+        "symbol": "BLSR-B6.TA",
+        "ISIN": "IL0011406076"
+    },
+    "1096890": {
+        "name": "BLUE WAVE-M",
+        "symbol": "BLWV-M.TA",
+        "ISIN": "IL0010968902"
+    },
+    "5310305": {
+        "name": "BONEI TICHO B20",
+        "symbol": "BONI-B20.TA",
+        "ISIN": "IL0053103052"
+    },
+    "1198829": {
+        "name": "BONEI TICHO B21",
+        "symbol": "BONI-B21.TA",
+        "ISIN": "IL0011988297"
+    },
+    "531012": {
+        "name": "BONEI TICHON",
+        "symbol": "BOTI.TA",
+        "ISIN": "IL0005310128"
+    },
+    "1218007": {
+        "name": "BONI TICHON B22",
+        "symbol": "BONI-B22.TA",
+        "ISIN": "IL0012180076"
+    },
+    "485011": {
+        "name": "BONUS BIOGROUP",
+        "symbol": "BONS.TA",
+        "ISIN": "IL0004850116"
+    },
+    "1100718": {
+        "name": "BRAINSWAY",
+        "symbol": "BWAY.TA",
+        "ISIN": "IL0011007189"
+    },
+    "1094515": {
+        "name": "BRAM INDUS",
+        "symbol": "BRAM.TA",
+        "ISIN": "IL0010945157"
+    },
+    "2860237": {
+        "name": "BRAN  C3-L",
+        "symbol": "BRN-C3-L.TA",
+        "ISIN": "IL0028602378"
+    },
+    "536011": {
+        "name": "BRAND",
+        "symbol": "BRND.TA",
+        "ISIN": "IL0005360115"
+    },
+    "1211937": {
+        "name": "BRAND B2",
+        "symbol": "BRND-B2.TA",
+        "ISIN": "IL0012119371"
+    },
+    "399014": {
+        "name": "BRILL",
+        "symbol": "BRIL.TA",
+        "ISIN": "IL0003990145"
+    },
+    "1094283": {
+        "name": "BRIMAG",
+        "symbol": "BRMG.TA",
+        "ISIN": "IL0010942832"
+    },
+    "1105139": {
+        "name": "BUBBLES",
+        "symbol": "BBLS.TA",
+        "ISIN": "IL0011051393"
+    },
+    "1179043": {
+        "name": "BUFF TECH'",
+        "symbol": "BUFT.TA",
+        "ISIN": "IL0011790438"
+    },
+    "1180595": {
+        "name": "BULIGO",
+        "symbol": "BLGO.TA",
+        "ISIN": "IL0011805954"
+    },
+    "1187061": {
+        "name": "BULL TRAD B2",
+        "symbol": "BULL-B2.TA",
+        "ISIN": "IL0011870610"
+    },
+    "1176635": {
+        "name": "BULL TRADING-M",
+        "symbol": "BULL-M.TA",
+        "ISIN": "IL0011766354"
+    },
+    "442012": {
+        "name": "C I SYSTEMS",
+        "symbol": "CISY.TA",
+        "ISIN": "IL0004420126"
+    },
+    "1095264": {
+        "name": "CAMTEK",
+        "symbol": "CAMT.TA",
+        "ISIN": "IL0010952641"
+    },
+    "1094473": {
+        "name": "CAN FITE BIO",
+        "symbol": "CANF.TA",
+        "ISIN": "IL0010944739"
+    },
+    "1218171": {
+        "name": "CANADA GLOB B1",
+        "symbol": "CNGL-B1.TA",
+        "ISIN": "IL0012181710"
+    },
+    "1218189": {
+        "name": "CANADA GLOB W1",
+        "symbol": "CNGL-W1.TA",
+        "ISIN": "IL0012181892"
+    },
+    "106013": {
+        "name": "CANADA GLOBAL",
+        "symbol": "CNGL.TA",
+        "ISIN": "IL0001060131"
+    },
+    "1176908": {
+        "name": "CANNABOTECH",
+        "symbol": "CNTC.TA",
+        "ISIN": "IL0011769085"
+    },
+    "1096007": {
+        "name": "CANZON-M",
+        "symbol": "CNZN-M.TA",
+        "ISIN": "IL0010960073"
+    },
+    "1097146": {
+        "name": "CAPITAL POINT",
+        "symbol": "CPTP.TA",
+        "ISIN": "IL0010971468"
+    },
+    "1136464": {
+        "name": "CARASSO MOT B1",
+        "symbol": "CRSM-B1.TA",
+        "ISIN": "IL0011364648"
+    },
+    "1141829": {
+        "name": "CARASSO MOT B3",
+        "symbol": "CRSM-B3.TA",
+        "ISIN": "IL0011418295"
+    },
+    "1173566": {
+        "name": "CARASSO MOT B4",
+        "symbol": "CRSM-B4.TA",
+        "ISIN": "IL0011735664"
+    },
+    "1202779": {
+        "name": "CARASSO MOT B5",
+        "symbol": "CRSM-B5.TA",
+        "ISIN": "IL0012027798"
+    },
+    "1226224": {
+        "name": "CARASSO MOT B6",
+        "symbol": "CRSM-B6.TA",
+        "ISIN": "IL0012262247"
+    },
+    "1123850": {
+        "name": "CARASSO MOTORS",
+        "symbol": "CRSM.TA",
+        "ISIN": "IL0011238503"
+    },
+    "1190008": {
+        "name": "CARASSO RE B1",
+        "symbol": "CRSR-B1.TA",
+        "ISIN": "IL0011900086"
+    },
+    "1216233": {
+        "name": "CARASSO RE B2",
+        "symbol": "CRSR-B2.TA",
+        "ISIN": "IL0012162330"
+    },
+    "1187962": {
+        "name": "CARASSO REAL ES",
+        "symbol": "CRSR.TA",
+        "ISIN": "IL0011879629"
+    },
+    "1147685": {
+        "name": "CARMEL CORP",
+        "symbol": "CRML.TA",
+        "ISIN": "IL0011476855"
+    },
+    "440016": {
+        "name": "CARMIT",
+        "symbol": "CRMT.TA",
+        "ISIN": "IL0004400169"
+    },
+    "1224864": {
+        "name": "CASTELLAN B1",
+        "symbol": "CASL-B1.TA",
+        "ISIN": "IL0012248642"
+    },
+    "1224880": {
+        "name": "CASTELLAN B2",
+        "symbol": "CASL-B2.TA",
+        "ISIN": "IL0012248808"
+    },
+    "280016": {
+        "name": "CASTRO",
+        "symbol": "CAST.TA",
+        "ISIN": "IL0002800162"
+    },
+    "1139245": {
+        "name": "CELCOM      B10",
+        "symbol": "CEL-B10.TA",
+        "ISIN": "IL0011392458"
+    },
+    "1139252": {
+        "name": "CELCOM      B11",
+        "symbol": "CEL-B11.TA",
+        "ISIN": "IL0011392524"
+    },
+    "1143080": {
+        "name": "CELCOM      B12",
+        "symbol": "CEL-B12.TA",
+        "ISIN": "IL0011430803"
+    },
+    "1189190": {
+        "name": "CELCOM   B13",
+        "symbol": "CEL-B13.TA",
+        "ISIN": "IL0011891905"
+    },
+    "1101534": {
+        "name": "CELLCOM",
+        "symbol": "CEL.TA",
+        "ISIN": "IL0011015349"
+    },
+    "1155951": {
+        "name": "CHAMOSS      B1",
+        "symbol": "CHMS-B1.TA",
+        "ISIN": "IL0011559510"
+    },
+    "1102532": {
+        "name": "CIELO-BLU",
+        "symbol": "CILO.TA",
+        "ISIN": "IL0011025322"
+    },
+    "1194000": {
+        "name": "CION",
+        "symbol": "CION.TA",
+        "ISIN": "US17259U2042"
+    },
+    "1194018": {
+        "name": "CION B1",
+        "symbol": "CION-B1.TA",
+        "ISIN": "IL0011940181"
+    },
+    "1181932": {
+        "name": "CIPIA VISION",
+        "symbol": "CPIA.TA",
+        "ISIN": "IL0011819328"
+    },
+    "716035": {
+        "name": "CITRUS PLANT 5",
+        "symbol": "CTPL5.TA",
+        "ISIN": "IL0007160356"
+    },
+    "716019": {
+        "name": "CITRUS PLANT1",
+        "symbol": "CTPL1.TA",
+        "ISIN": "IL0007160190"
+    },
+    "1198266": {
+        "name": "CITY PEOPLE",
+        "symbol": "CPPL.TA",
+        "ISIN": "IL0011982662"
+    },
+    "1198175": {
+        "name": "CITY PEPPLE B1",
+        "symbol": "CPPL-B1.TA",
+        "ISIN": "IL0011981755"
+    },
+    "1140300": {
+        "name": "C-LAB",
+        "symbol": "CLAB.TA",
+        "ISIN": "IL0011403008"
+    },
+    "1104280": {
+        "name": "CLAL BIOTECH",
+        "symbol": "CBI.TA",
+        "ISIN": "IL0011042806"
+    },
+    "1160647": {
+        "name": "CLAL CAP B11",
+        "symbol": "CLLC-B11.TA",
+        "ISIN": "IL0011606477"
+    },
+    "1179928": {
+        "name": "CLAL CAP B12",
+        "symbol": "CLLC-B12.TA",
+        "ISIN": "IL0011799280"
+    },
+    "1197920": {
+        "name": "CLAL CAP B13",
+        "symbol": "CLLC-B13.TA",
+        "ISIN": "IL0011979205"
+    },
+    "1220524": {
+        "name": "CLAL CAP B14",
+        "symbol": "CLLC-B14.TA",
+        "ISIN": "IL0012205246"
+    },
+    "1193481": {
+        "name": "CLAL INSU B1",
+        "symbol": "CLIS-B1.TA",
+        "ISIN": "IL0011934812"
+    },
+    "1201391": {
+        "name": "CLAL INSU B3",
+        "symbol": "CLIS-B3.TA",
+        "ISIN": "IL0012013913"
+    },
+    "1193499": {
+        "name": "CLAL INSU C2",
+        "symbol": "CLIS-C2.TA",
+        "ISIN": "IL0011934994"
+    },
+    "224014": {
+        "name": "CLAL INSURANCE",
+        "symbol": "CLIS.TA",
+        "ISIN": "IL0002240146"
+    },
+    "810010": {
+        "name": "COHEN DEV",
+        "symbol": "CDEV.TA",
+        "ISIN": "IL0008100104"
+    },
+    "1085208": {
+        "name": "COMPUGEN",
+        "symbol": "CGEN.TA",
+        "ISIN": "IL0010852080"
+    },
+    "507012": {
+        "name": "COMPUTER DIRECT",
+        "symbol": "CMDR.TA",
+        "ISIN": "IL0005070128"
+    },
+    "1182260": {
+        "name": "CONTINUAL-M",
+        "symbol": "CNTL-M.TA",
+        "ISIN": "IL0011822603"
+    },
+    "1204718": {
+        "name": "COPPERLINE B4",
+        "symbol": "CPLN-B4.TA",
+        "ISIN": "IL0012047184"
+    },
+    "1224070": {
+        "name": "COPPERLINE B5",
+        "symbol": "CPLN-B5.TA",
+        "ISIN": "IL0012240706"
+    },
+    "1210327": {
+        "name": "CREDITO IPOS B1",
+        "symbol": "CRDT-B1.TA",
+        "ISIN": "IL0012103276"
+    },
+    "1184951": {
+        "name": "DALIA B1",
+        "symbol": "DLIA-B1.TA",
+        "ISIN": "IL0011849515"
+    },
+    "1193598": {
+        "name": "DALIA B2",
+        "symbol": "DLIA-B2.TA",
+        "ISIN": "IL0011935983"
+    },
+    "822015": {
+        "name": "DAN   HOTELS",
+        "symbol": "DANH.TA",
+        "ISIN": "IL0008220159"
+    },
+    "314013": {
+        "name": "DANEL",
+        "symbol": "DANE.TA",
+        "ISIN": "IL0003140139"
+    },
+    "1224633": {
+        "name": "DANIEL DEPO B1",
+        "symbol": "DNDP-B1.TA",
+        "ISIN": "IL0012246331"
+    },
+    "1227206": {
+        "name": "DANIEL DEPO B2",
+        "symbol": "DNDP-B2.TA",
+        "ISIN": "IL0012272063"
+    },
+    "1173137": {
+        "name": "DANYA CEBUS",
+        "symbol": "DNYA.TA",
+        "ISIN": "IL0011731374"
+    },
+    "829010": {
+        "name": "DELEK AUTOMOTIV",
+        "symbol": "DLEA.TA",
+        "ISIN": "IL0008290103"
+    },
+    "1084128": {
+        "name": "DELEK GROUP",
+        "symbol": "DLEKG.TA",
+        "ISIN": "IL0010841281"
+    },
+    "1199504": {
+        "name": "DELEK GRP B38",
+        "symbol": "DLKG-B38.TA",
+        "ISIN": "IL0011995045"
+    },
+    "1205772": {
+        "name": "DELEK GRP B39",
+        "symbol": "DLKG-B39.TA",
+        "ISIN": "IL0012057720"
+    },
+    "1217389": {
+        "name": "DELEK GRP B40",
+        "symbol": "DLKG-B40.TA",
+        "ISIN": "IL0012173899"
+    },
+    "1228618": {
+        "name": "DELEK GRP B41",
+        "symbol": "DLKG-B41.TA",
+        "ISIN": "IL0012286188"
+    },
+    "1196211": {
+        "name": "DELEK PROP",
+        "symbol": "DLPR.TA",
+        "ISIN": "IL0011962110"
+    },
+    "1196179": {
+        "name": "DELEK PROP B1",
+        "symbol": "DLPR-B1.TA",
+        "ISIN": "IL0011961799"
+    },
+    "1173699": {
+        "name": "DELTA BRANDS",
+        "symbol": "DLTI.TA",
+        "ISIN": "IL0011736993"
+    },
+    "627034": {
+        "name": "DELTA GALIL",
+        "symbol": "DELG.TA",
+        "ISIN": "IL0006270347"
+    },
+    "6270144": {
+        "name": "DELTA GALIL B1",
+        "symbol": "DELG-B1.TA",
+        "ISIN": "IL0062701441"
+    },
+    "6270193": {
+        "name": "DELTA GALIL B6",
+        "symbol": "DELG-B6.TA",
+        "ISIN": "IL0062701938"
+    },
+    "1222157": {
+        "name": "DESTINY B1",
+        "symbol": "DSTN-B1.TA",
+        "ISIN": "IL0012221573"
+    },
+    "1090315": {
+        "name": "DIMRI",
+        "symbol": "DIMRI.TA",
+        "ISIN": "IL0010903156"
+    },
+    "1168368": {
+        "name": "DIMRI        B9",
+        "symbol": "DIR-B9.TA",
+        "ISIN": "IL0011683682"
+    },
+    "1186162": {
+        "name": "DIMRI B10",
+        "symbol": "DIR-B10.TA",
+        "ISIN": "IL0011861627"
+    },
+    "1211606": {
+        "name": "DIMRI B11",
+        "symbol": "DIR-B11.TA",
+        "ISIN": "IL0012116062"
+    },
+    "1173491": {
+        "name": "DIPLOMAT HOLDI.",
+        "symbol": "DIPL.TA",
+        "ISIN": "IL0011734915"
+    },
+    "1171214": {
+        "name": "DIRECT FINAN B3",
+        "symbol": "DIFI-B3.TA",
+        "ISIN": "IL0011712143"
+    },
+    "1175660": {
+        "name": "DIRECT FINAN B4",
+        "symbol": "DIFI-B4.TA",
+        "ISIN": "IL0011756603"
+    },
+    "1182831": {
+        "name": "DIRECT FINAN B5",
+        "symbol": "DIFI-B5.TA",
+        "ISIN": "IL0011828311"
+    },
+    "1191659": {
+        "name": "DIRECT FINAN B6",
+        "symbol": "DIFI-B6.TA",
+        "ISIN": "IL0011916595"
+    },
+    "1220128": {
+        "name": "DIRECT FINAN B7",
+        "symbol": "DIFI-B7.TA",
+        "ISIN": "IL0012201286"
+    },
+    "1168186": {
+        "name": "DIRECT FINANCE",
+        "symbol": "DIFI.TA",
+        "ISIN": "IL0011681868"
+    },
+    "7480163": {
+        "name": "DISCONT MAN B14",
+        "symbol": "DSMN-B14.TA",
+        "ISIN": "IL0074801635"
+    },
+    "7480304": {
+        "name": "DISCONT MAN B15",
+        "symbol": "DSMN-B15.TA",
+        "ISIN": "IL0074803045"
+    },
+    "1203157": {
+        "name": "DISCONT MAN B16",
+        "symbol": "DSMN-B16.TA",
+        "ISIN": "IL0012031576"
+    },
+    "1215953": {
+        "name": "DISCONT MAN B17",
+        "symbol": "DSMN-B17.TA",
+        "ISIN": "IL0012159534"
+    },
+    "1191246": {
+        "name": "DISCOONT MAN B9",
+        "symbol": "DSN-B9.TA",
+        "ISIN": "IL0011912461"
+    },
+    "691212": {
+        "name": "DISCOUNT",
+        "symbol": "DSCT.TA",
+        "ISIN": "IL0006912120"
+    },
+    "6390348": {
+        "name": "DISCOUNT IN B10",
+        "symbol": "DISI-B10.TA",
+        "ISIN": "IL0063903483"
+    },
+    "6390405": {
+        "name": "DISCOUNT IN B11",
+        "symbol": "DISI-B11.TA",
+        "ISIN": "IL0063904051"
+    },
+    "639013": {
+        "name": "DISCOUNT INV",
+        "symbol": "DISI.TA",
+        "ISIN": "IL0006390137"
+    },
+    "6390207": {
+        "name": "DISCOUNT INV B6",
+        "symbol": "DISI-B6.TA",
+        "ISIN": "IL0063902071"
+    },
+    "7480197": {
+        "name": "DISCOUNT MAN B6",
+        "symbol": "DSMN-B6.TA",
+        "ISIN": "IL0074801973"
+    },
+    "7480247": {
+        "name": "DISCOUNT MAN B7",
+        "symbol": "DSMN-B7.TA",
+        "ISIN": "IL0074802476"
+    },
+    "7480312": {
+        "name": "DISCOUNT MAN B8",
+        "symbol": "DSMN-B8.TA",
+        "ISIN": "IL0074803128"
+    },
+    "1215946": {
+        "name": "DISCOUNT MAN P5",
+        "symbol": "DSMN-P5.TA",
+        "ISIN": "IL0012159468"
+    },
+    "1222025": {
+        "name": "DISCOUNT MAN P6",
+        "symbol": "DSMN-P6.TA",
+        "ISIN": "IL0012220252"
+    },
+    "1211069": {
+        "name": "DISCOUNT MN B10",
+        "symbol": "DSMN-B10.TA",
+        "ISIN": "IL0012110693"
+    },
+    "1227750": {
+        "name": "DISCOUNT MN B11",
+        "symbol": "DSMN-B11.TA",
+        "ISIN": "IL0012277500"
+    },
+    "1103852": {
+        "name": "DNA GROUP",
+        "symbol": "DNA.TA",
+        "ISIN": "IL0011038523"
+    },
+    "1093202": {
+        "name": "DOR ALON",
+        "symbol": "DRAL.TA",
+        "ISIN": "IL0010932023"
+    },
+    "1157700": {
+        "name": "DOR ALON     B7",
+        "symbol": "DRAL-B7.TA",
+        "ISIN": "IL0011577009"
+    },
+    "1175199": {
+        "name": "DOR ALON     B8",
+        "symbol": "DRAL-B8.TA",
+        "ISIN": "IL0011751992"
+    },
+    "1166768": {
+        "name": "DORAL ENERGY",
+        "symbol": "DORL.TA",
+        "ISIN": "IL0011667685"
+    },
+    "1179134": {
+        "name": "DOREL ENERGY B1",
+        "symbol": "DORL-B1.TA",
+        "ISIN": "IL0011791345"
+    },
+    "1205475": {
+        "name": "DOREL ENERGY B2",
+        "symbol": "DORL-B2.TA",
+        "ISIN": "IL0012054750"
+    },
+    "1220193": {
+        "name": "DOREL ENERGY B3",
+        "symbol": "DORL-B3.TA",
+        "ISIN": "IL0012201930"
+    },
+    "1178128": {
+        "name": "DORSEL       B4",
+        "symbol": "DRSL-B4.TA",
+        "ISIN": "IL0011781288"
+    },
+    "1190628": {
+        "name": "DORSEL HOLD",
+        "symbol": "DRSH.TA",
+        "ISIN": "IL0011906281"
+    },
+    "400010": {
+        "name": "DUNIEC",
+        "symbol": "DUNI.TA",
+        "ISIN": "IL0004000100"
+    },
+    "1198704": {
+        "name": "DUNIEC  B2",
+        "symbol": "DUNI-B2.TA",
+        "ISIN": "IL0011987042"
+    },
+    "1215896": {
+        "name": "DUNIEC B3",
+        "symbol": "DUNI-B3.TA",
+        "ISIN": "IL0012158965"
+    },
+    "382010": {
+        "name": "E&M",
+        "symbol": "EMCO.TA",
+        "ISIN": "IL0003820102"
+    },
+    "1169895": {
+        "name": "E.E.A.M.I-M",
+        "symbol": "EEAM-M.TA",
+        "ISIN": "IL0011698953"
+    },
+    "1178334": {
+        "name": "ECONERGY",
+        "symbol": "ECNR.TA",
+        "ISIN": "IL0011783342"
+    },
+    "1214428": {
+        "name": "ECONERGY B2",
+        "symbol": "ECNR-B2.TA",
+        "ISIN": "IL0012144288"
+    },
+    "1182518": {
+        "name": "ECONERGY C1",
+        "symbol": "ECNR-C1.TA",
+        "ISIN": "IL0011825184"
+    },
+    "1181437": {
+        "name": "EFFI CAP",
+        "symbol": "EFCP.TA",
+        "ISIN": "IL0011814378"
+    },
+    "1199744": {
+        "name": "EFFI CAP B3",
+        "symbol": "EFCP-B3.TA",
+        "ISIN": "IL0011997447"
+    },
+    "1212489": {
+        "name": "EFFI CAP B4",
+        "symbol": "EFCP-B4.TA",
+        "ISIN": "IL0012124892"
+    },
+    "1217421": {
+        "name": "EFFI CAP B5",
+        "symbol": "EFFI-B5.TA",
+        "ISIN": "IL0012174210"
+    },
+    "1204213": {
+        "name": "EFFI CAP W1",
+        "symbol": "EFCP-W1.TA",
+        "ISIN": "IL0012042136"
+    },
+    "1087824": {
+        "name": "EL AL",
+        "symbol": "ELAL.TA",
+        "ISIN": "IL0010878242"
+    },
+    "1205467": {
+        "name": "EL AL W3",
+        "symbol": "ELAL-W3.TA",
+        "ISIN": "IL0012054677"
+    },
+    "1217702": {
+        "name": "ELAD SOFTWARE",
+        "symbol": "ELAD.TA",
+        "ISIN": "IL0012177023"
+    },
+    "1081116": {
+        "name": "ELBIT IMAGING",
+        "symbol": "EMITF.TA",
+        "ISIN": "IL0010811169"
+    },
+    "1226968": {
+        "name": "ELBIT IMG B10",
+        "symbol": "EMIT-B10.TA",
+        "ISIN": "IL0012269689"
+    },
+    "474015": {
+        "name": "ELBIT MEDITEC-M",
+        "symbol": "EMTC-M.TA",
+        "ISIN": "IL0004740150"
+    },
+    "1178235": {
+        "name": "ELBIT SYS. B2",
+        "symbol": "ESLT-B2.TA",
+        "ISIN": "IL0011782351"
+    },
+    "1178250": {
+        "name": "ELBIT SYS. B3",
+        "symbol": "ESLT-B3.TA",
+        "ISIN": "IL0011782500"
+    },
+    "1178268": {
+        "name": "ELBIT SYS. B4",
+        "symbol": "ESLT-B4.TA",
+        "ISIN": "IL0011782682"
+    },
+    "1081124": {
+        "name": "ELBIT SYSTEMS",
+        "symbol": "ESLT.TA",
+        "ISIN": "IL0010811243"
+    },
+    "694034": {
+        "name": "ELCO",
+        "symbol": "ELCO.TA",
+        "ISIN": "IL0006940345"
+    },
+    "6940233": {
+        "name": "ELCO B13",
+        "symbol": "ELCO-B13.TA",
+        "ISIN": "IL0069402332"
+    },
+    "1207752": {
+        "name": "ELCO B14",
+        "symbol": "ELCO-B14.TA",
+        "ISIN": "IL0012077520"
+    },
+    "1134881": {
+        "name": "ELDAN TRANS",
+        "symbol": "ELDT.TA",
+        "ISIN": "IL0011348815"
+    },
+    "1225283": {
+        "name": "ELDAN TRANS B10",
+        "symbol": "ELDT-B10.TA",
+        "ISIN": "IL0012252834"
+    },
+    "1225291": {
+        "name": "ELDAN TRANS B11",
+        "symbol": "ELDT-B11.TA",
+        "ISIN": "IL0012252917"
+    },
+    "1161678": {
+        "name": "ELDAN TRANS B6",
+        "symbol": "ELDT-B6.TA",
+        "ISIN": "IL0011616781"
+    },
+    "1184779": {
+        "name": "ELDAN TRANS B7",
+        "symbol": "ELDT-B7.TA",
+        "ISIN": "IL0011847790"
+    },
+    "1192442": {
+        "name": "ELDAN TRANS B8",
+        "symbol": "ELDT-B8.TA",
+        "ISIN": "IL0011924425"
+    },
+    "1192459": {
+        "name": "ELDAN TRANS B9",
+        "symbol": "ELDT-B9.TA",
+        "ISIN": "IL0011924599"
+    },
+    "739037": {
+        "name": "ELECTRA",
+        "symbol": "ELTR.TA",
+        "ISIN": "IL0007390375"
+    },
+    "7390149": {
+        "name": "ELECTRA      B4",
+        "symbol": "ELTR-B4.TA",
+        "ISIN": "IL0073901493"
+    },
+    "7390222": {
+        "name": "ELECTRA B5",
+        "symbol": "ELTR-B5.TA",
+        "ISIN": "IL0073902228"
+    },
+    "7390263": {
+        "name": "ELECTRA B6",
+        "symbol": "ELTR-B6.TA",
+        "ISIN": "IL0073902632"
+    },
+    "5010129": {
+        "name": "ELECTRA CO  PR",
+        "symbol": "ECP.TA",
+        "ISIN": "IL0050101299"
+    },
+    "5010335": {
+        "name": "ELECTRA CO B1",
+        "symbol": "EFP-B1.TA",
+        "ISIN": "IL0050103352"
+    },
+    "1167360": {
+        "name": "ELECTRA POW B1",
+        "symbol": "ELCP-B1.TA",
+        "ISIN": "IL0011673600"
+    },
+    "1181924": {
+        "name": "ELECTRA POW B2",
+        "symbol": "ELCP-B2.TA",
+        "ISIN": "IL0011819245"
+    },
+    "1166917": {
+        "name": "ELECTRA POWER",
+        "symbol": "ELCP.TA",
+        "ISIN": "IL0011669178"
+    },
+    "1174564": {
+        "name": "ELECTRA REAL B6",
+        "symbol": "ELCRA-B6.TA",
+        "ISIN": "IL0011745648"
+    },
+    "1203553": {
+        "name": "ELECTRA REAL B7",
+        "symbol": "ELCRA-B7.TA",
+        "ISIN": "IL0012035536"
+    },
+    "1094044": {
+        "name": "ELECTRA REAL E.",
+        "symbol": "ELCRE.TA",
+        "ISIN": "IL0010940448"
+    },
+    "368019": {
+        "name": "ELECTREON",
+        "symbol": "ELWS.TA",
+        "ISIN": "IL0003680191"
+    },
+    "1196781": {
+        "name": "ELECTRIC B34",
+        "symbol": "ELEC-B34.TA",
+        "ISIN": "IL0011967812"
+    },
+    "1196799": {
+        "name": "ELECTRIC B35",
+        "symbol": "ELEC-B35.TA",
+        "ISIN": "IL0011967994"
+    },
+    "1221589": {
+        "name": "ELECTRIC B36",
+        "symbol": "ELEC-B36.TA",
+        "ISIN": "IL0012215898"
+    },
+    "1221597": {
+        "name": "ELECTRIC B37",
+        "symbol": "ELEC-B37.TA",
+        "ISIN": "IL0012215971"
+    },
+    "6000210": {
+        "name": "ELECTRIC CO B27",
+        "symbol": "ELEC-B27.TA",
+        "ISIN": "IL0060002107"
+    },
+    "6000236": {
+        "name": "ELECTRIC CO B29",
+        "symbol": "ELEC-B29.TA",
+        "ISIN": "IL0060002362"
+    },
+    "6000285": {
+        "name": "ELECTRIC CO B31",
+        "symbol": "ELEC-B31.TA",
+        "ISIN": "IL0060002859"
+    },
+    "6000384": {
+        "name": "ELECTRIC CO B32",
+        "symbol": "ELEC-B32.TA",
+        "ISIN": "IL0060003840"
+    },
+    "6000392": {
+        "name": "ELECTRIC CO B33",
+        "symbol": "ELEC-B33.TA",
+        "ISIN": "IL0060003923"
+    },
+    "1189950": {
+        "name": "ELLA CON B1",
+        "symbol": "ELAC-B1.TA",
+        "ISIN": "IL0011899502"
+    },
+    "1210384": {
+        "name": "ELLA DEPO B10",
+        "symbol": "ELDP-B10.TA",
+        "ISIN": "IL0012103847"
+    },
+    "1213453": {
+        "name": "ELLA DEPO B11",
+        "symbol": "ELDP-B11.TA",
+        "ISIN": "IL0012134537"
+    },
+    "1217173": {
+        "name": "ELLA DEPO B12",
+        "symbol": "ELDP-B12.TA",
+        "ISIN": "IL0012171737"
+    },
+    "1162304": {
+        "name": "ELLA DEPOSIT B4",
+        "symbol": "ELDP-B4.TA",
+        "ISIN": "IL0011623043"
+    },
+    "1162577": {
+        "name": "ELLA DEPOSIT B5",
+        "symbol": "ELDP-B5.TA",
+        "ISIN": "IL0011625774"
+    },
+    "1189398": {
+        "name": "ELLA DEPOSIT B6",
+        "symbol": "ELDP-B6.TA",
+        "ISIN": "IL0011893984"
+    },
+    "1197045": {
+        "name": "ELLA DEPOSIT B9",
+        "symbol": "ELDP-B9.TA",
+        "ISIN": "IL0011970451"
+    },
+    "1082635": {
+        "name": "ELLOMAY",
+        "symbol": "ELLO.TA",
+        "ISIN": "IL0010826357"
+    },
+    "1193275": {
+        "name": "ELLOMAY B5",
+        "symbol": "ELLO-B5.TA",
+        "ISIN": "IL0011932758"
+    },
+    "1203074": {
+        "name": "ELLOMAY B6",
+        "symbol": "ELLO-B6.TA",
+        "ISIN": "IL0012030743"
+    },
+    "1217538": {
+        "name": "ELLOMAY B7",
+        "symbol": "ELLO-B7.TA",
+        "ISIN": "IL0012175381"
+    },
+    "1172956": {
+        "name": "ELLOMAY C4",
+        "symbol": "ELLO-C4.TA",
+        "ISIN": "IL0011729568"
+    },
+    "1203082": {
+        "name": "ELLOMAY W2",
+        "symbol": "ELLO-W2.TA",
+        "ISIN": "IL0012030826"
+    },
+    "1142454": {
+        "name": "ELMOR",
+        "symbol": "ELMR.TA",
+        "ISIN": "IL0011424541"
+    },
+    "749077": {
+        "name": "ELRON",
+        "symbol": "ELRN.TA",
+        "ISIN": "IL0007490779"
+    },
+    "1090364": {
+        "name": "ELSPEC",
+        "symbol": "ELSPC.TA",
+        "ISIN": "IL0010903644"
+    },
+    "589010": {
+        "name": "EMILIA DEVEL",
+        "symbol": "EMDV.TA",
+        "ISIN": "IL0005890103"
+    },
+    "1206622": {
+        "name": "ENCORE OPP B2",
+        "symbol": "ENOP-B2.TA",
+        "ISIN": "IL0012066226"
+    },
+    "1220482": {
+        "name": "ENCORE OPP B3",
+        "symbol": "ENOP-B3.TA",
+        "ISIN": "IL0012204827"
+    },
+    "1188739": {
+        "name": "ENCORE PROP B3",
+        "symbol": "ENCR-B3.TA",
+        "ISIN": "IL0011887390"
+    },
+    "1204403": {
+        "name": "ENCORE PROP B4",
+        "symbol": "ENCR-B4.TA",
+        "ISIN": "IL0012044033"
+    },
+    "1226844": {
+        "name": "ENCORE PROP B5",
+        "symbol": "ENCR-B5.TA",
+        "ISIN": "IL0012268442"
+    },
+    "1155290": {
+        "name": "ENERGEAN",
+        "symbol": "ENOG.TA",
+        "ISIN": "GB00BG12Y042"
+    },
+    "1123355": {
+        "name": "ENERGIX",
+        "symbol": "ENRG.TA",
+        "ISIN": "IL0011233553"
+    },
+    "1161751": {
+        "name": "ENERGIX      B1",
+        "symbol": "ENRG-B1.TA",
+        "ISIN": "IL0011617516"
+    },
+    "1168483": {
+        "name": "ENERGIX      C2",
+        "symbol": "ENRG-C2.TA",
+        "ISIN": "IL0011684839"
+    },
+    "7200256": {
+        "name": "ENLIGHT B4",
+        "symbol": "ENLT-B4.TA",
+        "ISIN": "IL0072002566"
+    },
+    "7200173": {
+        "name": "ENLIGHT B6",
+        "symbol": "ENLT-B6.TA",
+        "ISIN": "IL0072001733"
+    },
+    "1218122": {
+        "name": "ENLIGHT B7",
+        "symbol": "ENLT-B7.TA",
+        "ISIN": "IL0012181223"
+    },
+    "7200249": {
+        "name": "ENLIGHT C3",
+        "symbol": "ENLT-C3.TA",
+        "ISIN": "IL0072002491"
+    },
+    "1218130": {
+        "name": "ENLIGHT C8",
+        "symbol": "ENLT-C8.TA",
+        "ISIN": "IL0012181306"
+    },
+    "720011": {
+        "name": "ENLIGHT ENERGY",
+        "symbol": "ENLT.TA",
+        "ISIN": "IL0007200111"
+    },
+    "1158997": {
+        "name": "ENLIVEX",
+        "symbol": "ENLV.TA",
+        "ISIN": "IL0011319527"
+    },
+    "1182591": {
+        "name": "EPITOMEE MED",
+        "symbol": "EPIT.TA",
+        "ISIN": "IL0011825911"
+    },
+    "755017": {
+        "name": "EQUITAL",
+        "symbol": "EQTL.TA",
+        "ISIN": "IL0007550176"
+    },
+    "7550148": {
+        "name": "EQUITAL      B3",
+        "symbol": "EQTL-B3.TA",
+        "ISIN": "IL0075501481"
+    },
+    "1197607": {
+        "name": "EQUITAL B4",
+        "symbol": "EQTL-B4.TA",
+        "ISIN": "IL0011976078"
+    },
+    "1120161": {
+        "name": "ERECH FINANCEM",
+        "symbol": "EFNC-M.TA",
+        "ISIN": "IL0011201618"
+    },
+    "1178912": {
+        "name": "ERIKA B-CURE",
+        "symbol": "BCUR.TA",
+        "ISIN": "IL0011789125"
+    },
+    "1176114": {
+        "name": "ETGA GROUP",
+        "symbol": "ETGA.TA",
+        "ISIN": "IL0011761140"
+    },
+    "1105055": {
+        "name": "EVOGENE",
+        "symbol": "EVGN.TA",
+        "ISIN": "IL0011050551"
+    },
+    "704015": {
+        "name": "EXPORT INV",
+        "symbol": "EXPO.TA",
+        "ISIN": "IL0007040152"
+    },
+    "7040082": {
+        "name": "EXPORT INV  B1",
+        "symbol": "EXPO-B1.TA",
+        "ISIN": "IL0070400820"
+    },
+    "1224690": {
+        "name": "EXPORT INV B2",
+        "symbol": "EXPO-B2.TA",
+        "ISIN": "IL0012246901"
+    },
+    "1175041": {
+        "name": "EXTELL      B3",
+        "symbol": "EXTD-B3.TA",
+        "ISIN": "IL0011750416"
+    },
+    "1183169": {
+        "name": "EXTELL B4",
+        "symbol": "EXTD-B4.TA",
+        "ISIN": "IL0011831695"
+    },
+    "1218635": {
+        "name": "EXTELL B5",
+        "symbol": "EXTD-B5.TA",
+        "ISIN": "IL0012186354"
+    },
+    "1161785": {
+        "name": "FATTA HOLD B3",
+        "symbol": "FTAL-B3.TA",
+        "ISIN": "IL0011617854"
+    },
+    "1141852": {
+        "name": "FATTAL EURO  B3",
+        "symbol": "FTEU-B3.TA",
+        "ISIN": "IL0011418527"
+    },
+    "1168038": {
+        "name": "FATTAL EURO B4",
+        "symbol": "FTEU-B4.TA",
+        "ISIN": "IL0011680381"
+    },
+    "1198886": {
+        "name": "FATTAL EURO B5",
+        "symbol": "FTEU-B5.TA",
+        "ISIN": "IL0011988867"
+    },
+    "1219286": {
+        "name": "FATTAL EURO B6",
+        "symbol": "FTEU-B6.TA",
+        "ISIN": "IL0012192865"
+    },
+    "1143429": {
+        "name": "FATTAL HOLD",
+        "symbol": "FTAL.TA",
+        "ISIN": "IL0011434292"
+    },
+    "1188192": {
+        "name": "FATTAL HOLD B4",
+        "symbol": "FTAL-B4.TA",
+        "ISIN": "IL0011881922"
+    },
+    "1203942": {
+        "name": "FATTAL HOLD B5",
+        "symbol": "FTAL-B5.TA",
+        "ISIN": "IL0012039421"
+    },
+    "1223635": {
+        "name": "FATTAL HOLD P2",
+        "symbol": "FTAL-P2.TA",
+        "ISIN": "IL0012236357"
+    },
+    "1169721": {
+        "name": "FATTALHOLD C1-L",
+        "symbol": "FTAL-C1L.TA",
+        "ISIN": "IL0011697211"
+    },
+    "1173178": {
+        "name": "FEAT INV PU",
+        "symbol": "FEAT.TA",
+        "ISIN": "IL0011731788"
+    },
+    "593038": {
+        "name": "FIBI BANK",
+        "symbol": "FIBI.TA",
+        "ISIN": "IL0005930388"
+    },
+    "763011": {
+        "name": "FIBI HOLDINGS",
+        "symbol": "FIBIH.TA",
+        "ISIN": "IL0007630119"
+    },
+    "1165307": {
+        "name": "FIRE AND GAS",
+        "symbol": "FGAS.TA",
+        "ISIN": "IL0011653073"
+    },
+    "1202118": {
+        "name": "FIRE AND GAS W3",
+        "symbol": "FGAS-W3.TA",
+        "ISIN": "IL0012021189"
+    },
+    "1173582": {
+        "name": "FLYING SPARK",
+        "symbol": "FLYS.TA",
+        "ISIN": "IL0011735821"
+    },
+    "315010": {
+        "name": "FMS",
+        "symbol": "FBRT.TA",
+        "ISIN": "IL0003150104"
+    },
+    "199018": {
+        "name": "FORESIGHT",
+        "symbol": "FRSX.TA",
+        "ISIN": "IL0001990188"
+    },
+    "256016": {
+        "name": "FORMULA",
+        "symbol": "FORTY.TA",
+        "ISIN": "IL0002560162"
+    },
+    "2560209": {
+        "name": "FORMULA     B3",
+        "symbol": "FORTY-B3.TA",
+        "ISIN": "IL0025602090"
+    },
+    "1211556": {
+        "name": "FORMULA B4",
+        "symbol": "FORTY-B4.TA",
+        "ISIN": "IL0012115569"
+    },
+    "1087022": {
+        "name": "FOX",
+        "symbol": "FOX.TA",
+        "ISIN": "IL0010870223"
+    },
+    "1102219": {
+        "name": "FRIDENSON",
+        "symbol": "FRDN.TA",
+        "ISIN": "IL0011022196"
+    },
+    "1156280": {
+        "name": "G 1 SECU",
+        "symbol": "GOSS.TA",
+        "ISIN": "IL0011562803"
+    },
+    "126011": {
+        "name": "G CITY",
+        "symbol": "GCT.TA",
+        "ISIN": "IL0001260111"
+    },
+    "1260603": {
+        "name": "G CITY  B12",
+        "symbol": "GCT-B12.TA",
+        "ISIN": "IL0012606039"
+    },
+    "1260652": {
+        "name": "G CITY  B13",
+        "symbol": "GCT-B13.TA",
+        "ISIN": "IL0012606526"
+    },
+    "1260736": {
+        "name": "G CITY B14",
+        "symbol": "GCT-B14.TA",
+        "ISIN": "IL0012607367"
+    },
+    "1260769": {
+        "name": "G CITY B15",
+        "symbol": "GCT-B15.TA",
+        "ISIN": "IL0012607698"
+    },
+    "1260785": {
+        "name": "G CITY B16",
+        "symbol": "GCT-B16.TA",
+        "ISIN": "IL0012607854"
+    },
+    "1203850": {
+        "name": "G CITY B18",
+        "symbol": "GCT-B18.TA",
+        "ISIN": "IL0012038506"
+    },
+    "1205715": {
+        "name": "G CITY B19",
+        "symbol": "GCT-B19.TA",
+        "ISIN": "IL0012057159"
+    },
+    "1208867": {
+        "name": "G CITY B20",
+        "symbol": "GCT-B20.TA",
+        "ISIN": "IL0012088675"
+    },
+    "1212752": {
+        "name": "G CITY B21",
+        "symbol": "GCT-B21.TA",
+        "ISIN": "IL0012127523"
+    },
+    "1198142": {
+        "name": "G CITY C17",
+        "symbol": "GCT-C17.TA",
+        "ISIN": "IL0011981425"
+    },
+    "1214816": {
+        "name": "G CITY W11",
+        "symbol": "GCT-W11.TA",
+        "ISIN": "IL0012148164"
+    },
+    "1122688": {
+        "name": "G.F.C-M",
+        "symbol": "GFC-M.TA",
+        "ISIN": "IL0011226888"
+    },
+    "1144781": {
+        "name": "G.P GLOBAL-M",
+        "symbol": "GPGB-M.TA",
+        "ISIN": "IL0011447815"
+    },
+    "1224013": {
+        "name": "GABAY G B1",
+        "symbol": "GABY-B1.TA",
+        "ISIN": "IL0012240136"
+    },
+    "7710239": {
+        "name": "GABAY PROP B10",
+        "symbol": "GBPR-B10.TA",
+        "ISIN": "IL0077102395"
+    },
+    "7710262": {
+        "name": "GABAY PROP B12",
+        "symbol": "GBPR-B12.TA",
+        "ISIN": "IL0077102627"
+    },
+    "7710296": {
+        "name": "GABAY PROP B13",
+        "symbol": "GBPR-B13.TA",
+        "ISIN": "IL0077102965"
+    },
+    "1193176": {
+        "name": "GABAY PROP B14",
+        "symbol": "GBPR-B14.TA",
+        "ISIN": "IL0011931768"
+    },
+    "1211796": {
+        "name": "GABAY PROP B15",
+        "symbol": "GBPR-B15.TA",
+        "ISIN": "IL0012117961"
+    },
+    "1228808": {
+        "name": "GAD DAIRIES",
+        "symbol": "GAD.TA",
+        "ISIN": "IL0012288085"
+    },
+    "1185933": {
+        "name": "GAMA B2",
+        "symbol": "GMA-B2.TA",
+        "ISIN": "IL0011859332"
+    },
+    "1185941": {
+        "name": "GAMA B3",
+        "symbol": "GMA-B3.TA",
+        "ISIN": "IL0011859415"
+    },
+    "1223841": {
+        "name": "GAMA B4",
+        "symbol": "GMA-B4.TA",
+        "ISIN": "IL0012238411"
+    },
+    "1220441": {
+        "name": "GAMA P4",
+        "symbol": "GAMA-P4.TA",
+        "ISIN": "IL0012204413"
+    },
+    "532010": {
+        "name": "GAN SHMUEL",
+        "symbol": "GSFI.TA",
+        "ISIN": "IL0005320101"
+    },
+    "1206564": {
+        "name": "GAON B5",
+        "symbol": "GAON-B5.TA",
+        "ISIN": "IL0012065640"
+    },
+    "1198324": {
+        "name": "GAON C4-M",
+        "symbol": "GAON-C4M.TA",
+        "ISIN": "IL0011983249"
+    },
+    "454017": {
+        "name": "GAON GROUP",
+        "symbol": "GAGR.TA",
+        "ISIN": "IL0004540170"
+    },
+    "1104744": {
+        "name": "GAON-M",
+        "symbol": "GAON-M.TA",
+        "ISIN": "IL0011047441"
+    },
+    "759019": {
+        "name": "GAV YAM",
+        "symbol": "GVYM.TA",
+        "ISIN": "IL0007590198"
+    },
+    "7590219": {
+        "name": "GAV YAM     B9",
+        "symbol": "GVYM-B9.TA",
+        "ISIN": "IL0075902192"
+    },
+    "7590128": {
+        "name": "GAV YAM  B6",
+        "symbol": "GVYM-B6.TA",
+        "ISIN": "IL0075901285"
+    },
+    "7590151": {
+        "name": "GAV YAM  B8",
+        "symbol": "GVYM-B8.TA",
+        "ISIN": "IL0075901517"
+    },
+    "7590284": {
+        "name": "GAV YAM B10",
+        "symbol": "GVYM-B10.TA",
+        "ISIN": "IL0075902846"
+    },
+    "1208339": {
+        "name": "GAV YAM B11",
+        "symbol": "GVYM-B11.TA",
+        "ISIN": "IL0012083395"
+    },
+    "1222587": {
+        "name": "GAV YAM B12",
+        "symbol": "GVYM-B12.TA",
+        "ISIN": "IL0012225871"
+    },
+    "1222090": {
+        "name": "GAV YAM P3",
+        "symbol": "GVIM-P3.TA",
+        "ISIN": "IL0012220906"
+    },
+    "1118116": {
+        "name": "GEFFEN R&R",
+        "symbol": "GEFR.TA",
+        "ISIN": "IL0011181166"
+    },
+    "1199686": {
+        "name": "GEFFEN R&R C1",
+        "symbol": "GEFR-C1.TA",
+        "ISIN": "IL0011996860"
+    },
+    "1227305": {
+        "name": "GEHSEM B2",
+        "symbol": "GSHM-B2.TA",
+        "ISIN": "IL0012273053"
+    },
+    "1208933": {
+        "name": "GEHSEM BI",
+        "symbol": "GSHM-B1.TA",
+        "ISIN": "IL0012089335"
+    },
+    "1169689": {
+        "name": "GENCELL",
+        "symbol": "GNCL.TA",
+        "ISIN": "IL0011696890"
+    },
+    "1177526": {
+        "name": "GENERATION C B2",
+        "symbol": "GNRS-B2.TA",
+        "ISIN": "IL0011775264"
+    },
+    "1184555": {
+        "name": "GENERATION C B3",
+        "symbol": "GNRS-B3.TA",
+        "ISIN": "IL0011845554"
+    },
+    "1214964": {
+        "name": "GENERATION C C4",
+        "symbol": "GNRS-C4.TA",
+        "ISIN": "IL0012149642"
+    },
+    "1156926": {
+        "name": "GENERATION CAP",
+        "symbol": "GNRS.TA",
+        "ISIN": "IL0011569261"
+    },
+    "1202647": {
+        "name": "GFI B5",
+        "symbol": "GFI-B5.TA",
+        "ISIN": "IL0012026477"
+    },
+    "1218767": {
+        "name": "GFI B6",
+        "symbol": "GFI-B6.TA",
+        "ISIN": "IL0012187675"
+    },
+    "4480190": {
+        "name": "GIBUI HOLDIN B2",
+        "symbol": "GIBU-B2.TA",
+        "ISIN": "IL0044801905"
+    },
+    "448019": {
+        "name": "GIBUI HOLDING",
+        "symbol": "GIBUI.TA",
+        "ISIN": "IL0004480195"
+    },
+    "1200880": {
+        "name": "GILAD DEPO B1",
+        "symbol": "GLDP-B1.TA",
+        "ISIN": "IL0012008806"
+    },
+    "1210541": {
+        "name": "GILAD DEPO B2",
+        "symbol": "GLDP-B2.TA",
+        "ISIN": "IL0012105412"
+    },
+    "1214501": {
+        "name": "GILAD DEPO B3",
+        "symbol": "GLDP-B3.TA",
+        "ISIN": "IL0012145012"
+    },
+    "1215037": {
+        "name": "GILAD DEPO B4",
+        "symbol": "GLDP-B4.TA",
+        "ISIN": "IL0012150376"
+    },
+    "1219112": {
+        "name": "GILAD DEPO B5",
+        "symbol": "GLDP-B5.TA",
+        "ISIN": "IL0012191123"
+    },
+    "1216589": {
+        "name": "GILAD DEPO B6",
+        "symbol": "GLDP-B6.TA",
+        "ISIN": "IL0012165895"
+    },
+    "1189877": {
+        "name": "GILAD MAY B2",
+        "symbol": "GMAI-B2.TA",
+        "ISIN": "IL0011898777"
+    },
+    "1226018": {
+        "name": "GILAD MAY B3",
+        "symbol": "GMAI-B3.TA",
+        "ISIN": "IL0012260183"
+    },
+    "1082510": {
+        "name": "GILAT",
+        "symbol": "GILT.TA",
+        "ISIN": "IL0010825102"
+    },
+    "1177823": {
+        "name": "GILAT TELE C3",
+        "symbol": "GLTL-C3.TA",
+        "ISIN": "IL0011778235"
+    },
+    "1218205": {
+        "name": "GILAT TELE C4",
+        "symbol": "GLTL-C4.TA",
+        "ISIN": "IL0012182056"
+    },
+    "1080597": {
+        "name": "GILAT TELECOM",
+        "symbol": "GLTL.TA",
+        "ISIN": "IL0010805971"
+    },
+    "1095892": {
+        "name": "GINEGAR",
+        "symbol": "GNGR.TA",
+        "ISIN": "IL0010958929"
+    },
+    "1139849": {
+        "name": "GIRON        B6",
+        "symbol": "GRON-B6.TA",
+        "ISIN": "IL0011398497"
+    },
+    "1142629": {
+        "name": "GIRON        B7",
+        "symbol": "GRON-B7.TA",
+        "ISIN": "IL0011426298"
+    },
+    "1183151": {
+        "name": "GIRON B8",
+        "symbol": "GRON-B8.TA",
+        "ISIN": "IL0011831513"
+    },
+    "506022": {
+        "name": "GIVOT     PU",
+        "symbol": "GIVO.TA",
+        "ISIN": "IL0005060228"
+    },
+    "744011": {
+        "name": "GIX",
+        "symbol": "GIX.TA",
+        "ISIN": "IL0007440113"
+    },
+    "1179290": {
+        "name": "GLOBAL KNAF B3",
+        "symbol": "GKL-B3.TA",
+        "ISIN": "IL0011792905"
+    },
+    "1141316": {
+        "name": "GLOBAL KNAFAIM",
+        "symbol": "GKL.TA",
+        "ISIN": "IL0011413163"
+    },
+    "1081983": {
+        "name": "GLOBAL PAY-M",
+        "symbol": "GPAY-M.TA",
+        "ISIN": "IL0010819832"
+    },
+    "1119833": {
+        "name": "GLOBE PU-M",
+        "symbol": "GLEN-M.TA",
+        "ISIN": "IL0011198335"
+    },
+    "1147487": {
+        "name": "GLOBRANDS",
+        "symbol": "GLRS.TA",
+        "ISIN": "IL0011474876"
+    },
+    "1091933": {
+        "name": "GOLAN INDUS",
+        "symbol": "GRIN.TA",
+        "ISIN": "IL0010919335"
+    },
+    "149013": {
+        "name": "GOLD",
+        "symbol": "GOLD.TA",
+        "ISIN": "IL0001490130"
+    },
+    "1216159": {
+        "name": "GOLDEN ENERG W3",
+        "symbol": "GLDE-W3.TA",
+        "ISIN": "IL0012161597"
+    },
+    "1216167": {
+        "name": "GOLDEN ENERG W4",
+        "symbol": "GLDE-W4.TA",
+        "ISIN": "IL0012161670"
+    },
+    "1083443": {
+        "name": "GOLDEN ENERGY",
+        "symbol": "GLDE.TA",
+        "ISIN": "IL0010834435"
+    },
+    "235010": {
+        "name": "GOLDEN HOUSE",
+        "symbol": "GOHO.TA",
+        "ISIN": "IL0002350101"
+    },
+    "2350130": {
+        "name": "GOLDEN HOUSE B4",
+        "symbol": "GOHO-B4.TA",
+        "ISIN": "IL0023501302"
+    },
+    "1096148": {
+        "name": "GOLF",
+        "symbol": "GOLF.TA",
+        "ISIN": "IL0010961485"
+    },
+    "1176726": {
+        "name": "GOTO",
+        "symbol": "GOTO.TA",
+        "ISIN": "IL0011767261"
+    },
+    "1184365": {
+        "name": "GRACE BREEDING",
+        "symbol": "GRAC.TA",
+        "ISIN": "IL0011843658"
+    },
+    "1213834": {
+        "name": "GREYSTONE B1",
+        "symbol": "GRST-B1.TA",
+        "ISIN": "IL0012138348"
+    },
+    "1180181": {
+        "name": "GROUP 107",
+        "symbol": "G107.TA",
+        "ISIN": "IL0011801813"
+    },
+    "1200922": {
+        "name": "GSE B1",
+        "symbol": "GSED-B1.TA",
+        "ISIN": "IL0012009226"
+    },
+    "1210483": {
+        "name": "GSE B2",
+        "symbol": "GSED-B2.TA",
+        "ISIN": "IL0012104837"
+    },
+    "1226117": {
+        "name": "GSE B3",
+        "symbol": "GSED-B3.TA",
+        "ISIN": "IL0012261173"
+    },
+    "1224849": {
+        "name": "GT REAL EST B1",
+        "symbol": "GTRE-B1.TA",
+        "ISIN": "IL0012248493"
+    },
+    "1095405": {
+        "name": "HADASIT BIO-M",
+        "symbol": "HDST-M.TA",
+        "ISIN": "IL0010954050"
+    },
+    "823013": {
+        "name": "HAGAG",
+        "symbol": "HGG.TA",
+        "ISIN": "IL0008230133"
+    },
+    "8230328": {
+        "name": "HAGAG B11",
+        "symbol": "HGG-B11.TA",
+        "ISIN": "IL0082303285"
+    },
+    "8230377": {
+        "name": "HAGAG B12",
+        "symbol": "HGG-B12.TA",
+        "ISIN": "IL0082303772"
+    },
+    "1206606": {
+        "name": "HAGAG B14",
+        "symbol": "HGG-B14.TA",
+        "ISIN": "IL0012066069"
+    },
+    "1216647": {
+        "name": "HAGAG B15",
+        "symbol": "HGG-B15.TA",
+        "ISIN": "IL0012166471"
+    },
+    "1143635": {
+        "name": "HAGAG EURO",
+        "symbol": "HGGE.TA",
+        "ISIN": "IL0011436354"
+    },
+    "1182682": {
+        "name": "HAGAG EURO B3",
+        "symbol": "HGGE-B3.TA",
+        "ISIN": "IL0011826828"
+    },
+    "1190131": {
+        "name": "HAGAG EURO B4",
+        "symbol": "HGGE-B4.TA",
+        "ISIN": "IL0011901316"
+    },
+    "1218833": {
+        "name": "HAGAG EURO B5",
+        "symbol": "HGGE-B5.TA",
+        "ISIN": "IL0012188335"
+    },
+    "1218841": {
+        "name": "HAGAG EURO W1",
+        "symbol": "HGGE-W1.TA",
+        "ISIN": "IL0012188418"
+    },
+    "1216654": {
+        "name": "HAGAG W1",
+        "symbol": "HGG-W1.TA",
+        "ISIN": "IL0012166547"
+    },
+    "1104785": {
+        "name": "HAMAMA",
+        "symbol": "HMAM.TA",
+        "ISIN": "IL0011047854"
+    },
+    "1104959": {
+        "name": "HAMASHBIR 365",
+        "symbol": "MSBI.TA",
+        "ISIN": "IL0011049595"
+    },
+    "384016": {
+        "name": "HAMAT",
+        "symbol": "HAMAT.TA",
+        "ISIN": "IL0003840167"
+    },
+    "585018": {
+        "name": "HAREL",
+        "symbol": "HARL.TA",
+        "ISIN": "IL0005850180"
+    },
+    "1209113": {
+        "name": "HAREL  EXCHA B4",
+        "symbol": "HRPK-B4.TA",
+        "ISIN": "IL0012091133"
+    },
+    "1162502": {
+        "name": "HAREL EXCHA B2",
+        "symbol": "HRPK-B2.TA",
+        "ISIN": "IL0011625022"
+    },
+    "1191386": {
+        "name": "HAREL EXCHA B3",
+        "symbol": "HRPK-B3.TA",
+        "ISIN": "IL0011913865"
+    },
+    "1214360": {
+        "name": "HAREL INT B1",
+        "symbol": "HRIN-B1.TA",
+        "ISIN": "IL0012143603"
+    },
+    "1218783": {
+        "name": "HAREL INT B2",
+        "symbol": "HRIN-B2.TA",
+        "ISIN": "IL0012187832"
+    },
+    "1221993": {
+        "name": "HAREL INT B3",
+        "symbol": "HRIN-B3.TA",
+        "ISIN": "IL0012219932"
+    },
+    "1228584": {
+        "name": "HAREL INT B4",
+        "symbol": "HRIN-B4.TA",
+        "ISIN": "IL0012285842"
+    },
+    "1229202": {
+        "name": "HAREL INT B5",
+        "symbol": "HRIN-B5.TA",
+        "ISIN": "IL0012292020"
+    },
+    "5850110": {
+        "name": "HAREL INVST B1",
+        "symbol": "HARL-B1.TA",
+        "ISIN": "IL0058501102"
+    },
+    "1134030": {
+        "name": "HAREL ISSUE  B9",
+        "symbol": "HRIS-B9.TA",
+        "ISIN": "IL0011340309"
+    },
+    "1134048": {
+        "name": "HAREL ISSUE B10",
+        "symbol": "HRIS-B10.TA",
+        "ISIN": "IL0011340481"
+    },
+    "1136316": {
+        "name": "HAREL ISSUE B11",
+        "symbol": "HRIS-B11.TA",
+        "ISIN": "IL0011363160"
+    },
+    "1138163": {
+        "name": "HAREL ISSUE B12",
+        "symbol": "HRIS-B12.TA",
+        "ISIN": "IL0011381634"
+    },
+    "1138171": {
+        "name": "HAREL ISSUE B13",
+        "symbol": "HRIS-B13.TA",
+        "ISIN": "IL0011381717"
+    },
+    "1143122": {
+        "name": "HAREL ISSUE B14",
+        "symbol": "HRIS-B14.TA",
+        "ISIN": "IL0011431223"
+    },
+    "1143130": {
+        "name": "HAREL ISSUE B15",
+        "symbol": "HRIS-B15.TA",
+        "ISIN": "IL0011431306"
+    },
+    "1157601": {
+        "name": "HAREL ISSUE B16",
+        "symbol": "HRIS-B16.TA",
+        "ISIN": "IL0011576019"
+    },
+    "1161454": {
+        "name": "HAREL ISSUE B17",
+        "symbol": "HRIS-B17.TA",
+        "ISIN": "IL0011614547"
+    },
+    "1182666": {
+        "name": "HAREL ISSUE B18",
+        "symbol": "HRIS-B18.TA",
+        "ISIN": "IL0011826661"
+    },
+    "1192772": {
+        "name": "HAREL ISSUE B19",
+        "symbol": "HRIS-B19.TA",
+        "ISIN": "IL0011927725"
+    },
+    "1207984": {
+        "name": "HAREL ISSUE B20",
+        "symbol": "HRIS-B20.TA",
+        "ISIN": "IL0012079849"
+    },
+    "1220607": {
+        "name": "HAREL ISSUE B21",
+        "symbol": "HRIS-B21.TA",
+        "ISIN": "IL0012206079"
+    },
+    "1228345": {
+        "name": "HAREL ISSUE B22",
+        "symbol": "HRIS-B22.TA",
+        "ISIN": "IL0012283458"
+    },
+    "1228352": {
+        "name": "HAREL ISSUE B23",
+        "symbol": "HRIS-B23.TA",
+        "ISIN": "IL0012283524"
+    },
+    "1142603": {
+        "name": "HERTZ PROP   B1",
+        "symbol": "HRZP-B1.TA",
+        "ISIN": "IL0011426033"
+    },
+    "1169945": {
+        "name": "HIGHCON SYSTM-M",
+        "symbol": "HICN-M.TA",
+        "ISIN": "IL0011699456"
+    },
+    "1084698": {
+        "name": "HILAN",
+        "symbol": "HLAN.TA",
+        "ISIN": "IL0010846983"
+    },
+    "1206770": {
+        "name": "HILLA B2",
+        "symbol": "HILA-B2.TA",
+        "ISIN": "IL0012067703"
+    },
+    "1209063": {
+        "name": "HILLA B3",
+        "symbol": "HILA-B3.TA",
+        "ISIN": "IL0012090630"
+    },
+    "1184985": {
+        "name": "HIPER GLOBAL",
+        "symbol": "HIPR.TA",
+        "ISIN": "IL0011849853"
+    },
+    "150011": {
+        "name": "HIRON",
+        "symbol": "HRON.TA",
+        "ISIN": "IL0001500110"
+    },
+    "1177765": {
+        "name": "HIVE 2040 PU",
+        "symbol": "HIVE.TA",
+        "ISIN": "IL0011777658"
+    },
+    "351015": {
+        "name": "HOD",
+        "symbol": "HOD.TA",
+        "ISIN": "IL0003510158"
+    },
+    "1175819": {
+        "name": "HODAYAT HAARE-M",
+        "symbol": "HDHA-M.TA",
+        "ISIN": "IL0011758195"
+    },
+    "1142587": {
+        "name": "HOLMES PLACE",
+        "symbol": "HLMS.TA",
+        "ISIN": "IL0011425878"
+    },
+    "1172204": {
+        "name": "HOMEBIOGAS",
+        "symbol": "HMGS.TA",
+        "ISIN": "IL0011722043"
+    },
+    "1170000": {
+        "name": "HUMAN XT-M",
+        "symbol": "HUMX-M.TA",
+        "ISIN": "IL0011700007"
+    },
+    "1173343": {
+        "name": "I ARGENTO PU",
+        "symbol": "IARG.TA",
+        "ISIN": "IL0011733438"
+    },
+    "1218676": {
+        "name": "IBI DEPO B1",
+        "symbol": "IBID-B1.TA",
+        "ISIN": "IL0012186768"
+    },
+    "1221720": {
+        "name": "IBI DEPO B2",
+        "symbol": "IBID-B2.TA",
+        "ISIN": "IL0012217209"
+    },
+    "1223692": {
+        "name": "IBI DEPO B3",
+        "symbol": "IBI-B3.TA",
+        "ISIN": "IL0012236928"
+    },
+    "1227719": {
+        "name": "IBI DEPO B4",
+        "symbol": "IBI-B4.TA",
+        "ISIN": "IL0012277195"
+    },
+    "175018": {
+        "name": "IBI INV HOUSE",
+        "symbol": "IBI.TA",
+        "ISIN": "IL0001750186"
+    },
+    "1084482": {
+        "name": "IBI UNDERWRIT",
+        "symbol": "IBIU.TA",
+        "ISIN": "IL0010844822"
+    },
+    "281014": {
+        "name": "ICL",
+        "symbol": "ICL.TA",
+        "ISIN": "IL0002810146"
+    },
+    "2810372": {
+        "name": "ICL          B7",
+        "symbol": "ICL-B7.TA",
+        "ISIN": "IL0028103724"
+    },
+    "1182484": {
+        "name": "ICON GROUP",
+        "symbol": "ICON.TA",
+        "ISIN": "IL0011824849"
+    },
+    "1177450": {
+        "name": "IDENTI",
+        "symbol": "IDNT.TA",
+        "ISIN": "IL0011774507"
+    },
+    "1217777": {
+        "name": "IDENTI W3",
+        "symbol": "IDNT-W3.TA",
+        "ISIN": "IL0012177775"
+    },
+    "1217785": {
+        "name": "IDENTI W4",
+        "symbol": "IDNT-W4.TA",
+        "ISIN": "IL0012177858"
+    },
+    "1129501": {
+        "name": "IDI INSUR",
+        "symbol": "IDIN.TA",
+        "ISIN": "IL0011295016"
+    },
+    "1155878": {
+        "name": "IDI ISSUES B5",
+        "symbol": "UDII-B5.TA",
+        "ISIN": "IL0011558785"
+    },
+    "1183037": {
+        "name": "IDI ISSUES B6",
+        "symbol": "UDII-B6.TA",
+        "ISIN": "IL0011830374"
+    },
+    "1229350": {
+        "name": "IDI ISSUES B7",
+        "symbol": "UDII-B7.TA",
+        "ISIN": "IL0012293507"
+    },
+    "1176346": {
+        "name": "IDOMOO",
+        "symbol": "IDMO.TA",
+        "ISIN": "IL0011763468"
+    },
+    "431015": {
+        "name": "IES",
+        "symbol": "IES.TA",
+        "ISIN": "IL0004310152"
+    },
+    "1135912": {
+        "name": "ILCPI % 1025",
+        "symbol": "CPI1025.TA",
+        "ISIN": "IL0011359127"
+    },
+    "1169564": {
+        "name": "ILCPI 0.1% 7/26",
+        "symbol": "CPI0726.TA",
+        "ISIN": "IL0011695645"
+    },
+    "1157023": {
+        "name": "ILCPI 0.5% 0529",
+        "symbol": "CPI0529.TA",
+        "ISIN": "IL0011570236"
+    },
+    "1134865": {
+        "name": "ILCPI 1% 0545",
+        "symbol": "CPI0545.TA",
+        "ISIN": "IL0011348658"
+    },
+    "1220722": {
+        "name": "ILCPI 2%0431",
+        "symbol": "CPI0431.TA",
+        "ISIN": "IL0012207226"
+    },
+    "1172220": {
+        "name": "ILCPI0.1% 11/31",
+        "symbol": "CPI1131.TA",
+        "ISIN": "IL0011722209"
+    },
+    "1168301": {
+        "name": "ILCPI0.5% 11/51",
+        "symbol": "CPI1151.TA",
+        "ISIN": "IL0011683013"
+    },
+    "1140847": {
+        "name": "ILCPI0.75% 0527",
+        "symbol": "CPI0527.TA",
+        "ISIN": "IL0011408478"
+    },
+    "1197326": {
+        "name": "ILCPI1.10%1028",
+        "symbol": "CPI1028.TA",
+        "ISIN": "IL0011973265"
+    },
+    "1204379": {
+        "name": "ILCPI1.6%1033",
+        "symbol": "CPI1033.TA",
+        "ISIN": "IL0012043795"
+    },
+    "1120583": {
+        "name": "ILCPI2.75% 0841",
+        "symbol": "CPI0841.TA",
+        "ISIN": "IL0011205833"
+    },
+    "1097708": {
+        "name": "ILCPI4 05/36",
+        "symbol": "CPI0536.TA",
+        "ISIN": "IL0010977085"
+    },
+    "1156025": {
+        "name": "ILD INSUR    B4",
+        "symbol": "ILDN-B4.TA",
+        "ISIN": "IL0011560252"
+    },
+    "1121474": {
+        "name": "ILD RENEWAL",
+        "symbol": "ILDR.TA",
+        "ISIN": "IL0011214744"
+    },
+    "1080753": {
+        "name": "ILEX MEDICAL",
+        "symbol": "ILX.TA",
+        "ISIN": "IL0010807530"
+    },
+    "1166552": {
+        "name": "ILFRNO    11/30",
+        "symbol": "FRN1130.TA",
+        "ISIN": "IL0011665523"
+    },
+    "1141795": {
+        "name": "ILFRNO 05/26",
+        "symbol": "FRN0526.TA",
+        "ISIN": "IL0011417958"
+    },
+    "1205145": {
+        "name": "ILFRNO 11/34",
+        "symbol": "FRN1134.TA",
+        "ISIN": "IL0012051459"
+    },
+    "1226240": {
+        "name": "ILGOV 0728",
+        "symbol": "GOI0728.TA",
+        "ISIN": "IL0012262403"
+    },
+    "1212893": {
+        "name": "ILGOV 0829",
+        "symbol": "GOI0829.TA",
+        "ISIN": "IL0012128935"
+    },
+    "1203579": {
+        "name": "ILGOV 0927",
+        "symbol": "GOI0927.TA",
+        "ISIN": "IL0012035791"
+    },
+    "1160985": {
+        "name": "ILGOV 1% 3/30",
+        "symbol": "GOI0330.TA",
+        "ISIN": "IL0011609851"
+    },
+    "1180660": {
+        "name": "ILGOV 1.3% 0432",
+        "symbol": "GOI0432.TA",
+        "ISIN": "IL0011806606"
+    },
+    "1227784": {
+        "name": "ILGOV 1035",
+        "symbol": "GOI1035.TA",
+        "ISIN": "IL0012277849"
+    },
+    "1139344": {
+        "name": "ILGOV 2.0 03/27",
+        "symbol": "GOI0327.TA",
+        "ISIN": "IL0011393449"
+    },
+    "1150879": {
+        "name": "ILGOV 2.25 9/28",
+        "symbol": "GOI0928.TA",
+        "ISIN": "IL0011508798"
+    },
+    "1184076": {
+        "name": "ILGOV 2.8% 1152",
+        "symbol": "GOI1152.TA",
+        "ISIN": "IL0011840761"
+    },
+    "1140193": {
+        "name": "ILGOV 3.75 3/47",
+        "symbol": "GOI0347.TA",
+        "ISIN": "IL0011401937"
+    },
+    "1202332": {
+        "name": "ILGOV 4% 0335",
+        "symbol": "GOI0335.TA",
+        "ISIN": "IL0012023326"
+    },
+    "1174697": {
+        "name": "ILGOV0.5% 0226",
+        "symbol": "GOI0226.TA",
+        "ISIN": "IL0011746976"
+    },
+    "1166180": {
+        "name": "ILGOV1.5% 05/37",
+        "symbol": "GOI0537.TA",
+        "ISIN": "IL0011661803"
+    },
+    "1194802": {
+        "name": "ILGOV3.75% 0229",
+        "symbol": "GOI0229.TA",
+        "ISIN": "IL0011948028"
+    },
+    "1125400": {
+        "name": "ILGOV5.5 01/42",
+        "symbol": "GOI0142.TA",
+        "ISIN": "IL0011254005"
+    },
+    "1099456": {
+        "name": "ILGOV6.25 10/26",
+        "symbol": "GOI1026.TA",
+        "ISIN": "IL0010994569"
+    },
+    "1219468": {
+        "name": "ILTBIL 02/26",
+        "symbol": "TBIL0226.TA",
+        "ISIN": "IL0012194689"
+    },
+    "1223924": {
+        "name": "ILTBIL 05/26",
+        "symbol": "TBIL0526.TA",
+        "ISIN": "IL0012239245"
+    },
+    "1215326": {
+        "name": "ILTBIL 11/25",
+        "symbol": "TBIL1125.TA",
+        "ISIN": "IL0012153263"
+    },
+    "1183813": {
+        "name": "IMAGESAT  I.S.I",
+        "symbol": "ISI.TA",
+        "ISIN": "IL0011838138"
+    },
+    "282012": {
+        "name": "IMCO",
+        "symbol": "IMCO.TA",
+        "ISIN": "IL0002820129"
+    },
+    "1171230": {
+        "name": "IMED PU",
+        "symbol": "IMED.TA",
+        "ISIN": "IL0011712309"
+    },
+    "1219161": {
+        "name": "IMED W1",
+        "symbol": "IMED-W1.TA",
+        "ISIN": "IL0012191610"
+    },
+    "1132356": {
+        "name": "INROM CONST",
+        "symbol": "INRM.TA",
+        "ISIN": "IL0011323560"
+    },
+    "1080928": {
+        "name": "INTER INDSTRIES",
+        "symbol": "ININ.TA",
+        "ISIN": "IL0010809288"
+    },
+    "1106376": {
+        "name": "INTERCURE",
+        "symbol": "INCR.TA",
+        "ISIN": "IL0011063760"
+    },
+    "174011": {
+        "name": "INTERGAMA",
+        "symbol": "INTR.TA",
+        "ISIN": "IL0001740112"
+    },
+    "1182385": {
+        "name": "INTERN ISSU B12",
+        "symbol": "INIS-B12.TA",
+        "ISIN": "IL0011823858"
+    },
+    "1228469": {
+        "name": "INTERN ISSU B13",
+        "symbol": "INIS-B13.TA",
+        "ISIN": "IL0012284696"
+    },
+    "1167030": {
+        "name": "INTERN ISSU B25",
+        "symbol": "INIS-B25.TA",
+        "ISIN": "IL0011670309"
+    },
+    "1185537": {
+        "name": "INTERN ISSU B26",
+        "symbol": "INIS-B26.TA",
+        "ISIN": "IL0011855371"
+    },
+    "1189497": {
+        "name": "INTERN ISSU B27",
+        "symbol": "INIS-B27.TA",
+        "ISIN": "IL0011894974"
+    },
+    "1228477": {
+        "name": "INTERN ISSU P1",
+        "symbol": "INIS-P1.TA",
+        "ISIN": "IL0012284779"
+    },
+    "1147503": {
+        "name": "IS GAS LINES B4",
+        "symbol": "INGL-B4.TA",
+        "ISIN": "IL0011475030"
+    },
+    "1202290": {
+        "name": "ISPRO B1",
+        "symbol": "ISPR-B1.TA",
+        "ISIN": "IL0012022906"
+    },
+    "1215763": {
+        "name": "ISPRO B2",
+        "symbol": "ISPR-B2.TA",
+        "ISIN": "IL0012157637"
+    },
+    "1223353": {
+        "name": "ISPRO B3",
+        "symbol": "ISPR-B3.TA",
+        "ISIN": "IL0012233537"
+    },
+    "1177625": {
+        "name": "ISR RAILWAYS B3",
+        "symbol": "RAIL-B3.TA",
+        "ISIN": "IL0011776254"
+    },
+    "1157403": {
+        "name": "ISRACARD",
+        "symbol": "ISCD.TA",
+        "ISIN": "IL0011574030"
+    },
+    "1205129": {
+        "name": "ISRACARD B2",
+        "symbol": "ISCD-B2.TA",
+        "ISIN": "IL0012051293"
+    },
+    "1213768": {
+        "name": "ISRACARD P3",
+        "symbol": "ISCD-P3.TA",
+        "ISIN": "IL0012137688"
+    },
+    "1219252": {
+        "name": "ISRACARD P4",
+        "symbol": "ISCD-P4.TA",
+        "ISIN": "IL0012192527"
+    },
+    "4340212": {
+        "name": "ISRAEL CANAD B7",
+        "symbol": "ISCN-B7.TA",
+        "ISIN": "IL0043402127"
+    },
+    "1207836": {
+        "name": "ISRAEL CANAD B8",
+        "symbol": "ISCN-B8.TA",
+        "ISIN": "IL0012078361"
+    },
+    "434019": {
+        "name": "ISRAEL CANADA",
+        "symbol": "ISCN.TA",
+        "ISIN": "IL0004340191"
+    },
+    "5760251": {
+        "name": "ISRAEL COR B12",
+        "symbol": "ILC-B12.TA",
+        "ISIN": "IL0057602513"
+    },
+    "5760269": {
+        "name": "ISRAEL COR B13",
+        "symbol": "ILC-B13.TA",
+        "ISIN": "IL0057602695"
+    },
+    "5760301": {
+        "name": "ISRAEL COR B14",
+        "symbol": "ILC-B14.TA",
+        "ISIN": "IL0057603016"
+    },
+    "5760327": {
+        "name": "ISRAEL COR B15",
+        "symbol": "ILC-B15.TA",
+        "ISIN": "IL0057603271"
+    },
+    "576017": {
+        "name": "ISRAEL CORP",
+        "symbol": "ILCO.TA",
+        "ISIN": "IL0005760173"
+    },
+    "1119924": {
+        "name": "ISRAEL OP    PU",
+        "symbol": "ISOP.TA",
+        "ISIN": "IL0011199242"
+    },
+    "1145564": {
+        "name": "ISRAEL PORTS B1",
+        "symbol": "IPC-B1.TA",
+        "ISIN": "IL0011455644"
+    },
+    "1145572": {
+        "name": "ISRAEL PORTS B2",
+        "symbol": "IPC-B2.TA",
+        "ISIN": "IL0011455727"
+    },
+    "1175033": {
+        "name": "ISRAEL PORTS B4",
+        "symbol": "IPC-B4.TA",
+        "ISIN": "IL0011750333"
+    },
+    "1168533": {
+        "name": "ISRAEL SHIPYARD",
+        "symbol": "ISHI.TA",
+        "ISIN": "IL0011685331"
+    },
+    "1204767": {
+        "name": "ISRAIR C1",
+        "symbol": "ISRG-C1.TA",
+        "ISIN": "IL0012047671"
+    },
+    "1187194": {
+        "name": "ISRAIR GROUP",
+        "symbol": "ISRG.TA",
+        "ISIN": "IL0011871949"
+    },
+    "2320224": {
+        "name": "ISRAMCO      B2",
+        "symbol": "ISRA-B2.TA",
+        "ISIN": "IL0023202240"
+    },
+    "2320232": {
+        "name": "ISRAMCO      B3",
+        "symbol": "ISRA-B3.TA",
+        "ISIN": "IL0023202323"
+    },
+    "232017": {
+        "name": "ISRAMCO     PU",
+        "symbol": "ISRA.TA",
+        "ISIN": "IL0002320179"
+    },
+    "1229244": {
+        "name": "ISRAMCO B4",
+        "symbol": "ISRA-B4.TA",
+        "ISIN": "IL0012292442"
+    },
+    "613034": {
+        "name": "ISRAS",
+        "symbol": "ISRS.TA",
+        "ISIN": "IL0006130343"
+    },
+    "6130199": {
+        "name": "ISRAS       B14",
+        "symbol": "ISRS-B14.TA",
+        "ISIN": "IL0061301995"
+    },
+    "6130207": {
+        "name": "ISRAS       B15",
+        "symbol": "ISRS-B15.TA",
+        "ISIN": "IL0061302076"
+    },
+    "6130223": {
+        "name": "ISRAS       B16",
+        "symbol": "ISRS-B16.TA",
+        "ISIN": "IL0061302233"
+    },
+    "6130280": {
+        "name": "ISRAS       B18",
+        "symbol": "ISRS-B18.TA",
+        "ISIN": "IL0061302803"
+    },
+    "6130348": {
+        "name": "ISRAS B19",
+        "symbol": "IRS-B19.TA",
+        "ISIN": "IL0061303488"
+    },
+    "1202977": {
+        "name": "ISRAS HOLDINGS",
+        "symbol": "ISHO.TA",
+        "ISIN": "IL0012029778"
+    },
+    "1080985": {
+        "name": "ISROTEL",
+        "symbol": "ISRO.TA",
+        "ISIN": "IL0010809858"
+    },
+    "1081074": {
+        "name": "ISSTA",
+        "symbol": "ISTA.TA",
+        "ISIN": "IL0010810740"
+    },
+    "1197128": {
+        "name": "ISSTA C1",
+        "symbol": "ISTA-C1.TA",
+        "ISIN": "IL0011971285"
+    },
+    "1185057": {
+        "name": "JACOB FINANCE",
+        "symbol": "JCFN.TA",
+        "ISIN": "IL0011850570"
+    },
+    "1099787": {
+        "name": "JEEN AI TECH",
+        "symbol": "JEEN.TA",
+        "ISIN": "IL0010997877"
+    },
+    "726018": {
+        "name": "JERUSALEM",
+        "symbol": "JBNK.TA",
+        "ISIN": "IL0007260180"
+    },
+    "1172170": {
+        "name": "JERUSALEM B16",
+        "symbol": "JRIS-B16.TA",
+        "ISIN": "IL0011721706"
+    },
+    "1161769": {
+        "name": "JERUSALEM I B15",
+        "symbol": "JRIS-B15.TA",
+        "ISIN": "IL0011617698"
+    },
+    "1182054": {
+        "name": "JERUSALEM I B18",
+        "symbol": "JRIS-B18.TA",
+        "ISIN": "IL0011820540"
+    },
+    "1201433": {
+        "name": "JERUSALEM I B19",
+        "symbol": "JRIS-B19.TA",
+        "ISIN": "IL0012014333"
+    },
+    "1215219": {
+        "name": "JORDAN ESHEL B2",
+        "symbol": "ESLY-B2.TA",
+        "ISIN": "IL0012152190"
+    },
+    "1225317": {
+        "name": "JORDAN ESHEL B3",
+        "symbol": "ESLY-B3.TA",
+        "ISIN": "IL0012253170"
+    },
+    "1176312": {
+        "name": "JRUSALEM IS B17",
+        "symbol": "JRIS-B17.TA",
+        "ISIN": "IL0011763120"
+    },
+    "1178862": {
+        "name": "JUNGO",
+        "symbol": "JNGO.TA",
+        "ISIN": "IL0011788622"
+    },
+    "1128461": {
+        "name": "KADIMASTEM",
+        "symbol": "KDST.TA",
+        "ISIN": "IL0011284614"
+    },
+    "522011": {
+        "name": "KAFRIT",
+        "symbol": "KAFR.TA",
+        "ISIN": "IL0005220111"
+    },
+    "1094119": {
+        "name": "KAMADA",
+        "symbol": "KMDA.TA",
+        "ISIN": "IL0010941198"
+    },
+    "1210202": {
+        "name": "KARDAN ISRA B5",
+        "symbol": "KRIS-B5.TA",
+        "ISIN": "IL0012102021"
+    },
+    "1113034": {
+        "name": "KARDAN N.V.  B2",
+        "symbol": "KRNV-B2.TA",
+        "ISIN": "IL0011130346"
+    },
+    "1087949": {
+        "name": "KARDAN N.V-M",
+        "symbol": "KRNV-M.TA",
+        "ISIN": "NL0000113652"
+    },
+    "1162353": {
+        "name": "KARDAN REAL B4",
+        "symbol": "KARE-B4.TA",
+        "ISIN": "IL0011623530"
+    },
+    "1172725": {
+        "name": "KARDAN REAL B5",
+        "symbol": "KARE-B5.TA",
+        "ISIN": "IL0011727257"
+    },
+    "1217553": {
+        "name": "KARDAN REAL B6",
+        "symbol": "KARE-B6.TA",
+        "ISIN": "IL0012175530"
+    },
+    "1118447": {
+        "name": "KARDAN REAL ES",
+        "symbol": "KARE.TA",
+        "ISIN": "IL0011184475"
+    },
+    "1210152": {
+        "name": "KARDEN ISRAEL",
+        "symbol": "KRDI.TA",
+        "ISIN": "IL0012101528"
+    },
+    "1105535": {
+        "name": "KARDEN NV    B1",
+        "symbol": "KRNV-B1.TA",
+        "ISIN": "IL0011055352"
+    },
+    "1134139": {
+        "name": "KENON",
+        "symbol": "KEN.TA",
+        "ISIN": "SG9999012629"
+    },
+    "621011": {
+        "name": "KERUR",
+        "symbol": "KRUR.TA",
+        "ISIN": "IL0006210111"
+    },
+    "1182187": {
+        "name": "KEYSTONE B1",
+        "symbol": "KSTN-B1.TA",
+        "ISIN": "IL0011821878"
+    },
+    "1215078": {
+        "name": "KEYSTONE B2",
+        "symbol": "KSTN-B2.TA",
+        "ISIN": "IL0012150780"
+    },
+    "1203991": {
+        "name": "KEYSTONE IN W2",
+        "symbol": "KSTN-W2.TA",
+        "ISIN": "IL0012039918"
+    },
+    "1175934": {
+        "name": "KEYSTONE INFRA",
+        "symbol": "KSTN.TA",
+        "ISIN": "IL0011759342"
+    },
+    "797035": {
+        "name": "KLIL",
+        "symbol": "KLIL.TA",
+        "ISIN": "IL0007970358"
+    },
+    "543017": {
+        "name": "KNAFAIM",
+        "symbol": "KNFM.TA",
+        "ISIN": "IL0005430173"
+    },
+    "826016": {
+        "name": "LACHISH",
+        "symbol": "LHIS.TA",
+        "ISIN": "IL0008260163"
+    },
+    "136010": {
+        "name": "LAHAV",
+        "symbol": "LAHAV.TA",
+        "ISIN": "IL0001360101"
+    },
+    "1360072": {
+        "name": "LAHAV        B2",
+        "symbol": "LAHV-B2.TA",
+        "ISIN": "IL0013600726"
+    },
+    "1193341": {
+        "name": "LAHAV B3",
+        "symbol": "LAHV-B3.TA",
+        "ISIN": "IL0011933418"
+    },
+    "612010": {
+        "name": "LAND DEV",
+        "symbol": "ILDC.TA",
+        "ISIN": "IL0006120104"
+    },
+    "6120224": {
+        "name": "LAND DEV    B21",
+        "symbol": "ILDC-B21.TA",
+        "ISIN": "IL0061202243"
+    },
+    "6120240": {
+        "name": "LAND DEV    B22",
+        "symbol": "ILDC-B22.TA",
+        "ISIN": "IL0061202409"
+    },
+    "6120323": {
+        "name": "LAND DEV B23",
+        "symbol": "ILDC-B23.TA",
+        "ISIN": "IL0061203233"
+    },
+    "1191519": {
+        "name": "LAND DEV B24",
+        "symbol": "ILDC-B24.TA",
+        "ISIN": "IL0011915191"
+    },
+    "1191527": {
+        "name": "LAND DEV B25",
+        "symbol": "ILDC-B25.TA",
+        "ISIN": "IL0011915274"
+    },
+    "1205640": {
+        "name": "LAND DV B26",
+        "symbol": "ILDC-B26.TA",
+        "ISIN": "IL0012056409"
+    },
+    "1191170": {
+        "name": "LANDMARK YAZ B1",
+        "symbol": "LNDY-B1.TA",
+        "ISIN": "IL0011911703"
+    },
+    "1226984": {
+        "name": "LANDMARK YAZ B2",
+        "symbol": "LNDY-B2.TA",
+        "ISIN": "IL0012269846"
+    },
+    "1227628": {
+        "name": "LANTERRA B1",
+        "symbol": "LNTR-B1.TA",
+        "ISIN": "IL0012276288"
+    },
+    "1091248": {
+        "name": "LAPIDOT HEL PU",
+        "symbol": "LPHL.TA",
+        "ISIN": "IL0010912488"
+    },
+    "642017": {
+        "name": "LAPIDOTH   CAP.",
+        "symbol": "LAPD.TA",
+        "ISIN": "IL0006420173"
+    },
+    "6420095": {
+        "name": "LAPIDOTH CAP B1",
+        "symbol": "LAPD-B1.TA",
+        "ISIN": "IL0064200954"
+    },
+    "1140946": {
+        "name": "LESICO",
+        "symbol": "LSCO.TA",
+        "ISIN": "IL0011409468"
+    },
+    "1220540": {
+        "name": "LESICO B2",
+        "symbol": "LSCO-B2.TA",
+        "ISIN": "IL0012205402"
+    },
+    "604611": {
+        "name": "LEUMI",
+        "symbol": "LUMI.TA",
+        "ISIN": "IL0006046119"
+    },
+    "6040372": {
+        "name": "LEUMI      B179",
+        "symbol": "LUM-B179.TA",
+        "ISIN": "IL0060403727"
+    },
+    "6040398": {
+        "name": "LEUMI    B 402",
+        "symbol": "LUM-B402.TA",
+        "ISIN": "IL0060403982"
+    },
+    "6040620": {
+        "name": "LEUMI  B405",
+        "symbol": "LUM-B405.TA",
+        "ISIN": "IL0060406209"
+    },
+    "6040539": {
+        "name": "LEUMI B182",
+        "symbol": "LUM-B182.TA",
+        "ISIN": "IL0060405391"
+    },
+    "6040547": {
+        "name": "LEUMI B183",
+        "symbol": "LUM-B183.TA",
+        "ISIN": "IL0060405474"
+    },
+    "6040604": {
+        "name": "LEUMI B184",
+        "symbol": "LUM-B184.TA",
+        "ISIN": "IL0060406043"
+    },
+    "1201821": {
+        "name": "LEUMI B185",
+        "symbol": "LUM-B185.TA",
+        "ISIN": "IL0012018219"
+    },
+    "1201839": {
+        "name": "LEUMI B186",
+        "symbol": "LUM-B186.TA",
+        "ISIN": "IL0012018391"
+    },
+    "1228659": {
+        "name": "LEUMI B187",
+        "symbol": "LUM-B187.TA",
+        "ISIN": "IL0012286592"
+    },
+    "1228667": {
+        "name": "LEUMI B188",
+        "symbol": "LUM-B188.TA",
+        "ISIN": "IL0012286675"
+    },
+    "1216423": {
+        "name": "LEUMI B406",
+        "symbol": "LUM-B406.TA",
+        "ISIN": "IL0012164237"
+    },
+    "1216415": {
+        "name": "LEUMI P7",
+        "symbol": "LUM-P7.TA",
+        "ISIN": "IL0012164153"
+    },
+    "1220177": {
+        "name": "LEUMI P8",
+        "symbol": "LUM-P8.TA",
+        "ISIN": "IL0012201773"
+    },
+    "1228675": {
+        "name": "LEUMI P9",
+        "symbol": "LUM-P9.TA",
+        "ISIN": "IL0012286758"
+    },
+    "7190242": {
+        "name": "LEVI B8",
+        "symbol": "LEV-B8.TA",
+        "ISIN": "IL0071902428"
+    },
+    "2000206": {
+        "name": "LEVINSKI B4",
+        "symbol": "LEOF-B4.TA",
+        "ISIN": "IL0020002064"
+    },
+    "1226299": {
+        "name": "LEVINSKI B5",
+        "symbol": "LEOF-B5.TA",
+        "ISIN": "IL0012262999"
+    },
+    "200014": {
+        "name": "LEVINSKI OFER",
+        "symbol": "LEOF.TA",
+        "ISIN": "IL0002000144"
+    },
+    "1226307": {
+        "name": "LEVINSKY W2",
+        "symbol": "LEOF-W2.TA",
+        "ISIN": "IL0012263070"
+    },
+    "573014": {
+        "name": "LEVINSTEIN ENG",
+        "symbol": "LEVI.TA",
+        "ISIN": "IL0005730143"
+    },
+    "1139716": {
+        "name": "LEVINSTEIN P B2",
+        "symbol": "LVPR-B2.TA",
+        "ISIN": "IL0011397168"
+    },
+    "1182799": {
+        "name": "LEVINSTEIN P B3",
+        "symbol": "LVPR-B3.TA",
+        "ISIN": "IL0011827990"
+    },
+    "1190586": {
+        "name": "LEVNSTEN B5",
+        "symbol": "LEVI-B5.TA",
+        "ISIN": "IL0011905861"
+    },
+    "1217959": {
+        "name": "LEVNSTEN ENG B6",
+        "symbol": "LEVI-B6.TA",
+        "ISIN": "IL0012179599"
+    },
+    "1222496": {
+        "name": "LIAM B1",
+        "symbol": "LIAM-B1.TA",
+        "ISIN": "IL0012224965"
+    },
+    "584011": {
+        "name": "LIBENTAL",
+        "symbol": "LBTL.TA",
+        "ISIN": "IL0005840116"
+    },
+    "1176981": {
+        "name": "LIBRA",
+        "symbol": "LBRA.TA",
+        "ISIN": "IL0011769812"
+    },
+    "1160746": {
+        "name": "LIGHTSTON    B2",
+        "symbol": "LGTS-B2.TA",
+        "ISIN": "IL0011607467"
+    },
+    "1190099": {
+        "name": "LIGHTSTON B3",
+        "symbol": "LGTS-B3.TA",
+        "ISIN": "IL0011900995"
+    },
+    "1204296": {
+        "name": "LIGHTSTON B4",
+        "symbol": "LGTS-B4.TA",
+        "ISIN": "IL0012042961"
+    },
+    "1212588": {
+        "name": "LIGHTSTON B5",
+        "symbol": "LGTS-B5.TA",
+        "ISIN": "IL0012125881"
+    },
+    "1216514": {
+        "name": "LIGHTSTON B6",
+        "symbol": "LGTS-B6.TA",
+        "ISIN": "IL0012165143"
+    },
+    "1136365": {
+        "name": "LINEAGE THERAP",
+        "symbol": "LCTX.TA",
+        "ISIN": "US53566P1093"
+    },
+    "1123017": {
+        "name": "LIVEPERSON",
+        "symbol": "LPSN.TA",
+        "ISIN": "US5381461012"
+    },
+    "1230051": {
+        "name": "LIVIING STON B1",
+        "symbol": "LIVI-B1.TA",
+        "ISIN": "IL0012300518"
+    },
+    "753012": {
+        "name": "LODZIA",
+        "symbol": "LODZ.TA",
+        "ISIN": "IL0007530129"
+    },
+    "1081439": {
+        "name": "LUDAN",
+        "symbol": "LUDN.TA",
+        "ISIN": "IL0010814395"
+    },
+    "1226992": {
+        "name": "LUDAN-TECH",
+        "symbol": "LUDT.TA",
+        "ISIN": "IL0012269929"
+    },
+    "473017": {
+        "name": "LUZON GROUP",
+        "symbol": "LUZN.TA",
+        "ISIN": "IL0004730177"
+    },
+    "4730180": {
+        "name": "LUZON GROUP  C9",
+        "symbol": "LUZN-C9.TA",
+        "ISIN": "IL0047301804"
+    },
+    "1206986": {
+        "name": "LUZON GROUP B11",
+        "symbol": "LUZN-B11.TA",
+        "ISIN": "IL0012069865"
+    },
+    "4730305": {
+        "name": "LUZON GROUP W7",
+        "symbol": "LUZN-W7.TA",
+        "ISIN": "IL0047303057"
+    },
+    "1202597": {
+        "name": "LUZON RON",
+        "symbol": "LURO.TA",
+        "ISIN": "IL0012025974"
+    },
+    "1202340": {
+        "name": "LUZON RON B1",
+        "symbol": "LURO-B1.TA",
+        "ISIN": "IL0012023409"
+    },
+    "1198217": {
+        "name": "M.W. INV B1",
+        "symbol": "MWIN-B1.TA",
+        "ISIN": "IL0011982175"
+    },
+    "1204122": {
+        "name": "M.W. INV B2",
+        "symbol": "MWIN-B2.TA",
+        "ISIN": "IL0012041229"
+    },
+    "1208388": {
+        "name": "M.W. INV B3",
+        "symbol": "MWIN-B3.TA",
+        "ISIN": "IL0012083882"
+    },
+    "1217256": {
+        "name": "M.W. INV B4",
+        "symbol": "MWIN-B4.TA",
+        "ISIN": "IL0012172560"
+    },
+    "1082312": {
+        "name": "MAGIC",
+        "symbol": "MGIC.TA",
+        "ISIN": "IL0010823123"
+    },
+    "156018": {
+        "name": "MALAM TEAM",
+        "symbol": "MLTM.TA",
+        "ISIN": "IL0001560189"
+    },
+    "731018": {
+        "name": "MALAM-TEAM HOLD",
+        "symbol": "MLTH.TA",
+        "ISIN": "IL0007310183"
+    },
+    "2380053": {
+        "name": "MAMAN       B3",
+        "symbol": "MMAN-B3.TA",
+        "ISIN": "IL0023800530"
+    },
+    "1106749": {
+        "name": "MASLAVI",
+        "symbol": "MSLA.TA",
+        "ISIN": "IL0011067498"
+    },
+    "1172006": {
+        "name": "MASLAVI      B6",
+        "symbol": "MSLA-B6.TA",
+        "ISIN": "IL0011720062"
+    },
+    "1215094": {
+        "name": "MASLAVI B8",
+        "symbol": "MSLA-B8.TA",
+        "ISIN": "IL0012150947"
+    },
+    "1181676": {
+        "name": "MASLAVI C7-L",
+        "symbol": "MSL-C7-L.TA",
+        "ISIN": "IL0011816761"
+    },
+    "1172972": {
+        "name": "MASSIVIT",
+        "symbol": "MSVT.TA",
+        "ISIN": "IL0011729725"
+    },
+    "1221407": {
+        "name": "MASSIVIT W1",
+        "symbol": "MSVT-W1.TA",
+        "ISIN": "IL0012214073"
+    },
+    "1176791": {
+        "name": "MATRICELF",
+        "symbol": "MTLF.TA",
+        "ISIN": "IL0011767915"
+    },
+    "1176809": {
+        "name": "MATRICELF.W1",
+        "symbol": "MTLF-W1.TA",
+        "ISIN": "IL0011768095"
+    },
+    "445015": {
+        "name": "MATRIX",
+        "symbol": "MTRX.TA",
+        "ISIN": "IL0004450156"
+    },
+    "1189646": {
+        "name": "MATRIX B2",
+        "symbol": "MTRX-B2.TA",
+        "ISIN": "IL0011896466"
+    },
+    "1225143": {
+        "name": "MAX B5",
+        "symbol": "MAX-B5.TA",
+        "ISIN": "IL0012251430"
+    },
+    "1220466": {
+        "name": "MAX IT P5",
+        "symbol": "MAX-P5.TA",
+        "ISIN": "IL0012204660"
+    },
+    "1168558": {
+        "name": "MAX STOCK",
+        "symbol": "MAXO.TA",
+        "ISIN": "IL0011685588"
+    },
+    "1091065": {
+        "name": "MAYTRONICS",
+        "symbol": "MTRN.TA",
+        "ISIN": "IL0010910656"
+    },
+    "1218023": {
+        "name": "MDG REAL ES B10",
+        "symbol": "MDG-B10.TA",
+        "ISIN": "IL0012180233"
+    },
+    "1184308": {
+        "name": "MDG REAL EST B4",
+        "symbol": "MDG-B4.TA",
+        "ISIN": "IL0011843088"
+    },
+    "1209170": {
+        "name": "MDG REAL EST B7",
+        "symbol": "MDG-B7.TA",
+        "ISIN": "IL0012091703"
+    },
+    "1211655": {
+        "name": "MDG REAL EST B8",
+        "symbol": "MDG-B8.TA",
+        "ISIN": "IL0012116559"
+    },
+    "1215243": {
+        "name": "MDG REAL EST B9",
+        "symbol": "MDG-B9.TA",
+        "ISIN": "IL0012152430"
+    },
+    "1161348": {
+        "name": "MEDIPOWER    B2",
+        "symbol": "MDPR-B2.TA",
+        "ISIN": "IL0011613481"
+    },
+    "1139955": {
+        "name": "MEDIPOWER 0.1$",
+        "symbol": "MDPR.TA",
+        "ISIN": "CY0100361019"
+    },
+    "1182898": {
+        "name": "MEDIPRSS PU",
+        "symbol": "MPRS.TA",
+        "ISIN": "IL0011828980"
+    },
+    "1131523": {
+        "name": "MEDITR TOWER",
+        "symbol": "MDTR.TA",
+        "ISIN": "IL0011315236"
+    },
+    "1168517": {
+        "name": "MEDITR TOWER B5",
+        "symbol": "MDTR-B5.TA",
+        "ISIN": "IL0011685174"
+    },
+    "1199124": {
+        "name": "MEDITR TOWER B6",
+        "symbol": "MDTR-B6.TA",
+        "ISIN": "IL0011991242"
+    },
+    "1217694": {
+        "name": "MEDITR TOWER B7",
+        "symbol": "MDTR-B7.TA",
+        "ISIN": "IL0012176942"
+    },
+    "1104488": {
+        "name": "MEGA OR",
+        "symbol": "MGOR.TA",
+        "ISIN": "IL0011044885"
+    },
+    "1138668": {
+        "name": "MEGA OR      B6",
+        "symbol": "MGOR-B6.TA",
+        "ISIN": "IL0011386682"
+    },
+    "1141696": {
+        "name": "MEGA OR      B7",
+        "symbol": "MGOR-B7.TA",
+        "ISIN": "IL0011416968"
+    },
+    "1147602": {
+        "name": "MEGA OR      B8",
+        "symbol": "MGOR-B8.TA",
+        "ISIN": "IL0011476020"
+    },
+    "1165141": {
+        "name": "MEGA OR      B9",
+        "symbol": "MGOR-B9.TA",
+        "ISIN": "IL0011651416"
+    },
+    "1178367": {
+        "name": "MEGA OR B10",
+        "symbol": "MGOR-B10.TA",
+        "ISIN": "IL0011783672"
+    },
+    "1178375": {
+        "name": "MEGA OR B11",
+        "symbol": "MGOR-B11.TA",
+        "ISIN": "IL0011783755"
+    },
+    "1211283": {
+        "name": "MEGA OR B12",
+        "symbol": "MGOR-B12.TA",
+        "ISIN": "IL0012112830"
+    },
+    "1223262": {
+        "name": "MEGA OR P6",
+        "symbol": "MGOR-P6.TA",
+        "ISIN": "IL0012232620"
+    },
+    "1216605": {
+        "name": "MEGIDO",
+        "symbol": "MGDO.TA",
+        "ISIN": "IL0012166059"
+    },
+    "1216373": {
+        "name": "MEGIDO B1",
+        "symbol": "MGDO-B1.TA",
+        "ISIN": "IL0012163734"
+    },
+    "1225184": {
+        "name": "MEGIDO W1",
+        "symbol": "MGDO-W1.TA",
+        "ISIN": "IL0012251844"
+    },
+    "1216621": {
+        "name": "MEGURIT B7",
+        "symbol": "MGRT-B7.TA",
+        "ISIN": "IL0012166216"
+    },
+    "1227057": {
+        "name": "MEGURIT B8",
+        "symbol": "MGRT-B8.TA",
+        "ISIN": "IL0012270570"
+    },
+    "686014": {
+        "name": "MEHADRIN",
+        "symbol": "MEDN.TA",
+        "ISIN": "IL0006860147"
+    },
+    "1211457": {
+        "name": "MEHADRIN B1",
+        "symbol": "MEDN-B1.TA",
+        "ISIN": "IL0012114570"
+    },
+    "1225077": {
+        "name": "MEITAV INV P1",
+        "symbol": "MTAV-P1.TA",
+        "ISIN": "IL0012250770"
+    },
+    "1121763": {
+        "name": "MEITAV INVES B3",
+        "symbol": "MTAV-B3.TA",
+        "ISIN": "IL0011217630"
+    },
+    "1161371": {
+        "name": "MEITAV INVES B4",
+        "symbol": "MTAV-B4.TA",
+        "ISIN": "IL0011613713"
+    },
+    "1081843": {
+        "name": "MEITAV INVEST",
+        "symbol": "MTAV.TA",
+        "ISIN": "IL0010818438"
+    },
+    "1203199": {
+        "name": "MEITAV TR W1",
+        "symbol": "MTRD-W1.TA",
+        "ISIN": "IL0012031998"
+    },
+    "1203181": {
+        "name": "MEITAV TRA",
+        "symbol": "MTRD.TA",
+        "ISIN": "IL0012031816"
+    },
+    "3230265": {
+        "name": "MELIRON     B16",
+        "symbol": "MLSR-B16.TA",
+        "ISIN": "IL0032302650"
+    },
+    "323014": {
+        "name": "MELISRON",
+        "symbol": "MLSR.TA",
+        "ISIN": "IL0003230146"
+    },
+    "3230232": {
+        "name": "MELISRON    B14",
+        "symbol": "MLSR-B14.TA",
+        "ISIN": "IL0032302320"
+    },
+    "3230273": {
+        "name": "MELISRON B17",
+        "symbol": "MLSR-B17.TA",
+        "ISIN": "IL0032302734"
+    },
+    "3230372": {
+        "name": "MELISRON B18",
+        "symbol": "MLSR-B18.TA",
+        "ISIN": "IL0032303724"
+    },
+    "3230398": {
+        "name": "MELISRON B19",
+        "symbol": "MLSR-B19.TA",
+        "ISIN": "IL0032303989"
+    },
+    "3230422": {
+        "name": "MELISRON B20",
+        "symbol": "MLSR-B20.TA",
+        "ISIN": "IL0032304227"
+    },
+    "1194638": {
+        "name": "MELISRON B21",
+        "symbol": "MLSR-B21.TA",
+        "ISIN": "IL0011946386"
+    },
+    "1223064": {
+        "name": "MELISRON P5",
+        "symbol": "MLSR-P5.TA",
+        "ISIN": "IL0012230640"
+    },
+    "1178474": {
+        "name": "MENARA PU",
+        "symbol": "MNRA.TA",
+        "ISIN": "IL0011784746"
+    },
+    "1129444": {
+        "name": "MENDELSON    IF",
+        "symbol": "MNIN.TA",
+        "ISIN": "IL0011294449"
+    },
+    "1170893": {
+        "name": "MENIF",
+        "symbol": "MNIF.TA",
+        "ISIN": "IL0011708935"
+    },
+    "1185883": {
+        "name": "MENIF B1",
+        "symbol": "MNIF-B1.TA",
+        "ISIN": "IL0011858839"
+    },
+    "1198860": {
+        "name": "MENIF B2",
+        "symbol": "MNIF-B2.TA",
+        "ISIN": "IL0011988602"
+    },
+    "1216720": {
+        "name": "MENIF B3",
+        "symbol": "MNIF-B3.TA",
+        "ISIN": "IL0012167206"
+    },
+    "1155928": {
+        "name": "MENINIM REIT B2",
+        "symbol": "MNRT-B2.TA",
+        "ISIN": "IL0011559288"
+    },
+    "1140573": {
+        "name": "MENIVIM REIT",
+        "symbol": "MNRT.TA",
+        "ISIN": "IL0011405730"
+    },
+    "1177658": {
+        "name": "MENIVIM REIT B3",
+        "symbol": "MNRT-B3.TA",
+        "ISIN": "IL0011776585"
+    },
+    "1193929": {
+        "name": "MENIVIM REIT B4",
+        "symbol": "MNRT-B4.TA",
+        "ISIN": "IL0011939290"
+    },
+    "1199322": {
+        "name": "MENIVIM REIT W4",
+        "symbol": "MNRT-W4.TA",
+        "ISIN": "IL0011993222"
+    },
+    "5660063": {
+        "name": "MENORA MIV   B3",
+        "symbol": "MMHD-B3.TA",
+        "ISIN": "IL0056600633"
+    },
+    "566018": {
+        "name": "MENORA MIV HLD",
+        "symbol": "MMHD.TA",
+        "ISIN": "IL0005660183"
+    },
+    "338012": {
+        "name": "MER",
+        "symbol": "CMER.TA",
+        "ISIN": "IL0003380123"
+    },
+    "1219518": {
+        "name": "MERAV DEPO B1",
+        "symbol": "MRPK-B1.TA",
+        "ISIN": "IL0012195181"
+    },
+    "1221902": {
+        "name": "MERAV DEPO B2",
+        "symbol": "MRPK-B2.TA",
+        "ISIN": "IL0012219023"
+    },
+    "1223940": {
+        "name": "MERAV DEPO B3",
+        "symbol": "MRPK-B3.TA",
+        "ISIN": "IL0012239401"
+    },
+    "1171305": {
+        "name": "MERCANTILE B4",
+        "symbol": "MRCN-B4.TA",
+        "ISIN": "IL0011713059"
+    },
+    "257014": {
+        "name": "MERCHAVIA HOLD",
+        "symbol": "MRHL.TA",
+        "ISIN": "IL0002570146"
+    },
+    "1169531": {
+        "name": "MESHEK ENEG B1",
+        "symbol": "MSKE-B1.TA",
+        "ISIN": "IL0011695314"
+    },
+    "1166974": {
+        "name": "MESHEK ENERGY",
+        "symbol": "MSKE.TA",
+        "ISIN": "IL0011669749"
+    },
+    "1217660": {
+        "name": "MESHEK ENRG B2",
+        "symbol": "MSKE-B2.TA",
+        "ISIN": "IL0012176603"
+    },
+    "1223718": {
+        "name": "MESHEK ENRG B3",
+        "symbol": "MSKE-B3.TA",
+        "ISIN": "IL0012237181"
+    },
+    "1139195": {
+        "name": "MGURIT",
+        "symbol": "MGRT.TA",
+        "ISIN": "IL0011391955"
+    },
+    "1168350": {
+        "name": "MGURIT       B2",
+        "symbol": "MGRT-B2.TA",
+        "ISIN": "IL0011683500"
+    },
+    "1175975": {
+        "name": "MGURIT B3",
+        "symbol": "MGRT-B3.TA",
+        "ISIN": "IL0011759755"
+    },
+    "1185834": {
+        "name": "MGURIT B4",
+        "symbol": "MGRT-B4.TA",
+        "ISIN": "IL0011858342"
+    },
+    "1192129": {
+        "name": "MGURIT B5",
+        "symbol": "MGRT-B5.TA",
+        "ISIN": "IL0011921298"
+    },
+    "1203504": {
+        "name": "MGURIT B6",
+        "symbol": "MGRT-B6.TA",
+        "ISIN": "IL0012035049"
+    },
+    "494013": {
+        "name": "MIA DYNAMICS",
+        "symbol": "MIA.TA",
+        "ISIN": "IL0004940131"
+    },
+    "1224617": {
+        "name": "MIA DYNAMICS C1",
+        "symbol": "MIA-C1.TA",
+        "ISIN": "IL0012246174"
+    },
+    "1179753": {
+        "name": "MICHLOL FIN",
+        "symbol": "MCLL.TA",
+        "ISIN": "IL0011797532"
+    },
+    "1187277": {
+        "name": "MICHLOL FIN B1",
+        "symbol": "MCLL-B1.TA",
+        "ISIN": "IL0011872772"
+    },
+    "1214675": {
+        "name": "MICHLOL FIN B2",
+        "symbol": "MCLL-B2.TA",
+        "ISIN": "IL0012146754"
+    },
+    "1172337": {
+        "name": "MICHMAN",
+        "symbol": "MCMN.TA",
+        "ISIN": "IL0011723371"
+    },
+    "1177633": {
+        "name": "MICHMAN B1",
+        "symbol": "MCMN-B1.TA",
+        "ISIN": "IL0011776338"
+    },
+    "1206663": {
+        "name": "MICHMAN B3",
+        "symbol": "MCMN-B3.TA",
+        "ISIN": "IL0012066630"
+    },
+    "1215110": {
+        "name": "MICHMAN B4",
+        "symbol": "MCMN-B4.TA",
+        "ISIN": "IL0012151101"
+    },
+    "1228782": {
+        "name": "MICHMAN B5",
+        "symbol": "MCMN-B5.TA",
+        "ISIN": "IL0012287822"
+    },
+    "1206671": {
+        "name": "MICHMAN W1",
+        "symbol": "MCMN-W1.TA",
+        "ISIN": "IL0012066713"
+    },
+    "1229335": {
+        "name": "MICHPAL TECH",
+        "symbol": "MCPL.TA",
+        "ISIN": "IL0012293358"
+    },
+    "1142785": {
+        "name": "MIGDAL FUND  B6",
+        "symbol": "MGDF-B6.TA",
+        "ISIN": "IL0011427858"
+    },
+    "1156041": {
+        "name": "MIGDAL FUND  B7",
+        "symbol": "MGDF-B7.TA",
+        "ISIN": "IL0011560419"
+    },
+    "1192079": {
+        "name": "MIGDAL FUND B10",
+        "symbol": "MGDF-B10.TA",
+        "ISIN": "IL0011920795"
+    },
+    "1197565": {
+        "name": "MIGDAL FUND B11",
+        "symbol": "MGDF-B11.TA",
+        "ISIN": "IL0011975658"
+    },
+    "1197573": {
+        "name": "MIGDAL FUND B12",
+        "symbol": "MGDF-B12.TA",
+        "ISIN": "IL0011975732"
+    },
+    "1207521": {
+        "name": "MIGDAL FUND B14",
+        "symbol": "MGDF-B14.TA",
+        "ISIN": "IL0012075219"
+    },
+    "1228410": {
+        "name": "MIGDAL FUND B15",
+        "symbol": "MGDF-B15.TA",
+        "ISIN": "IL0012284100"
+    },
+    "1228428": {
+        "name": "MIGDAL FUND B16",
+        "symbol": "MGDF-T16.TA",
+        "ISIN": "IL0012284282"
+    },
+    "1207513": {
+        "name": "MIGDAL FUND B31",
+        "symbol": "MGDF-B13.TA",
+        "ISIN": "IL0012075136"
+    },
+    "1182955": {
+        "name": "MIGDAL FUND B8",
+        "symbol": "MGDF-B8.TA",
+        "ISIN": "IL0011829558"
+    },
+    "1185628": {
+        "name": "MIGDAL FUND B9",
+        "symbol": "MGDF-B9.TA",
+        "ISIN": "IL0011856288"
+    },
+    "1081165": {
+        "name": "MIGDAL INSUR.",
+        "symbol": "MGDL.TA",
+        "ISIN": "IL0010811656"
+    },
+    "1167501": {
+        "name": "MILLENNIUM F PU",
+        "symbol": "MIFT.TA",
+        "ISIN": "IL0011675019"
+    },
+    "1550169": {
+        "name": "MINRAV B4",
+        "symbol": "MNRV-B4.TA",
+        "ISIN": "IL0015501690"
+    },
+    "1204692": {
+        "name": "MINRAV B5",
+        "symbol": "MNRV-B5.TA",
+        "ISIN": "IL0012046921"
+    },
+    "1217355": {
+        "name": "MINRAV B6",
+        "symbol": "MNRV-B6.TA",
+        "ISIN": "IL0012173550"
+    },
+    "1182542": {
+        "name": "MIRLAND B8",
+        "symbol": "MLD-B8.TA",
+        "ISIN": "IL0011825424"
+    },
+    "1182559": {
+        "name": "MIRLAND C9-M",
+        "symbol": "MLD-C9M.TA",
+        "ISIN": "IL0011825598"
+    },
+    "1108638": {
+        "name": "MIRLAND-M",
+        "symbol": "MLD-M.TA",
+        "ISIN": "CY0106902113"
+    },
+    "1105196": {
+        "name": "MISHORIM",
+        "symbol": "MSHR.TA",
+        "ISIN": "IL0011051963"
+    },
+    "1143163": {
+        "name": "MISHORIM     B8",
+        "symbol": "MSHR-B8.TA",
+        "ISIN": "IL0011431637"
+    },
+    "1212547": {
+        "name": "MISHORIM B10",
+        "symbol": "MSHR-B10.TA",
+        "ISIN": "IL0012125477"
+    },
+    "1178797": {
+        "name": "MISHORIM B9",
+        "symbol": "MSHR-B9.TA",
+        "ISIN": "IL0011787970"
+    },
+    "226019": {
+        "name": "MIVNE",
+        "symbol": "MVNE.TA",
+        "ISIN": "IL0002260193"
+    },
+    "2260438": {
+        "name": "MIVNE B16",
+        "symbol": "MVNE-B16.TA",
+        "ISIN": "IL0022604388"
+    },
+    "2260446": {
+        "name": "MIVNE B17",
+        "symbol": "MVNE-B17.TA",
+        "ISIN": "IL0022604461"
+    },
+    "2260487": {
+        "name": "MIVNE B19",
+        "symbol": "MVNE-B19.TA",
+        "ISIN": "IL0022604875"
+    },
+    "2260495": {
+        "name": "MIVNE B20",
+        "symbol": "MVNE-B20.TA",
+        "ISIN": "IL0022604958"
+    },
+    "2260545": {
+        "name": "MIVNE B23",
+        "symbol": "MVNE-B23.TA",
+        "ISIN": "IL0022605450"
+    },
+    "2260552": {
+        "name": "MIVNE B24",
+        "symbol": "MVNE-B24.TA",
+        "ISIN": "IL0022605526"
+    },
+    "2260636": {
+        "name": "MIVNE B25",
+        "symbol": "MVNE-B25.TA",
+        "ISIN": "IL0022606367"
+    },
+    "1220714": {
+        "name": "MIVNE B26",
+        "symbol": "MVNE-B26.TA",
+        "ISIN": "IL0012207143"
+    },
+    "1220680": {
+        "name": "MIVNE P2",
+        "symbol": "MVNE-P2.TA",
+        "ISIN": "IL0012206806"
+    },
+    "127019": {
+        "name": "MIVTACH SHAMIR",
+        "symbol": "MISH.TA",
+        "ISIN": "IL0001270193"
+    },
+    "2310183": {
+        "name": "MIZ TF ISSU B42",
+        "symbol": "MZIS-B42.TA",
+        "ISIN": "IL0023101830"
+    },
+    "2310225": {
+        "name": "MIZ TF ISSU B46",
+        "symbol": "MZIS-B46.TA",
+        "ISIN": "IL0023102259"
+    },
+    "2310282": {
+        "name": "MIZ TF ISSU B49",
+        "symbol": "MZIS-B49.TA",
+        "ISIN": "IL0023102820"
+    },
+    "2310381": {
+        "name": "MIZ TF ISSU B52",
+        "symbol": "MZIS-B52.TA",
+        "ISIN": "IL0023103810"
+    },
+    "2310399": {
+        "name": "MIZ TF ISSU B53",
+        "symbol": "MZIS-B53.TA",
+        "ISIN": "IL0023103992"
+    },
+    "2310464": {
+        "name": "MIZ TF ISSU B61",
+        "symbol": "MZIS-B61.TA",
+        "ISIN": "IL0023104644"
+    },
+    "2310498": {
+        "name": "MIZ TF ISSU B62",
+        "symbol": "MZIS-B62.TA",
+        "ISIN": "IL0023104982"
+    },
+    "2310548": {
+        "name": "MIZ TF ISSU B63",
+        "symbol": "MZIS-B63.TA",
+        "ISIN": "IL0023105484"
+    },
+    "2310555": {
+        "name": "MIZ TF ISSU B64",
+        "symbol": "MZIS-B64.TA",
+        "ISIN": "IL0023105559"
+    },
+    "1191675": {
+        "name": "MIZ TF ISSU B65",
+        "symbol": "MZIS-B65.TA",
+        "ISIN": "IL0011916751"
+    },
+    "1191667": {
+        "name": "MIZ TF ISSU B66",
+        "symbol": "MZIS-B66.TA",
+        "ISIN": "IL0011916678"
+    },
+    "1196807": {
+        "name": "MIZ TF ISSU B67",
+        "symbol": "MZIS-B67.TA",
+        "ISIN": "IL0011968075"
+    },
+    "1202142": {
+        "name": "MIZ TF ISSU B68",
+        "symbol": "MZIS-B68.TA",
+        "ISIN": "IL0012021429"
+    },
+    "1202159": {
+        "name": "MIZ TF ISSU B69",
+        "symbol": "MZIS-B69.TA",
+        "ISIN": "IL0012021593"
+    },
+    "1213883": {
+        "name": "MIZ TF ISSU B70",
+        "symbol": "MZIS-B70.TA",
+        "ISIN": "IL0012138835"
+    },
+    "1213891": {
+        "name": "MIZ TF ISSU B71",
+        "symbol": "MZIS-B71.TA",
+        "ISIN": "IL0012138918"
+    },
+    "1216704": {
+        "name": "MIZ TF ISSU P4",
+        "symbol": "MZIS-P4.TA",
+        "ISIN": "IL0012167040"
+    },
+    "1225622": {
+        "name": "MIZ TF ISSU P5",
+        "symbol": "MZIS-P5.TA",
+        "ISIN": "IL0012256223"
+    },
+    "695437": {
+        "name": "MIZRAHI TEFAHOT",
+        "symbol": "MZTF.TA",
+        "ISIN": "IL0006954379"
+    },
+    "1158468": {
+        "name": "MKOROT     B 10",
+        "symbol": "MKR-B10.TA",
+        "ISIN": "IL0011584682"
+    },
+    "1158476": {
+        "name": "MKOROT     B 11",
+        "symbol": "MKR-B11.TA",
+        "ISIN": "IL0011584765"
+    },
+    "1170950": {
+        "name": "MLRN",
+        "symbol": "MLRN.TA",
+        "ISIN": "IL0011709503"
+    },
+    "1186865": {
+        "name": "MLRN B4",
+        "symbol": "MLRN-B4.TA",
+        "ISIN": "IL0011868655"
+    },
+    "1212679": {
+        "name": "MLRN B5",
+        "symbol": "MLRN-B5.TA",
+        "ISIN": "IL0012126798"
+    },
+    "1219310": {
+        "name": "MLRN B6",
+        "symbol": "MLRN-B6.TA",
+        "ISIN": "IL0012193103"
+    },
+    "1229004": {
+        "name": "MNORA MI HO B10",
+        "symbol": "MNMO-10.TA",
+        "ISIN": "IL0012290040"
+    },
+    "1160241": {
+        "name": "MNORA MIV HO B6",
+        "symbol": "MNMO-B6.TA",
+        "ISIN": "IL0011602419"
+    },
+    "1184191": {
+        "name": "MNORA MIV HO B7",
+        "symbol": "MNMO-B7.TA",
+        "ISIN": "IL0011841918"
+    },
+    "1199470": {
+        "name": "MNORA MIV HO B8",
+        "symbol": "MNMO-B8.TA",
+        "ISIN": "IL0011994709"
+    },
+    "1219369": {
+        "name": "MNORA MIV HO B9",
+        "symbol": "MNMO-B9.TA",
+        "ISIN": "IL0012193699"
+    },
+    "1143411": {
+        "name": "MNORAMIV HO  B5",
+        "symbol": "MNMO-B5.TA",
+        "ISIN": "IL0011434110"
+    },
+    "345017": {
+        "name": "MODIIN     PU",
+        "symbol": "MDIN.TA",
+        "ISIN": "IL0003450173"
+    },
+    "1217215": {
+        "name": "MODIIN B3",
+        "symbol": "MDIN-B3.TA",
+        "ISIN": "IL0012172156"
+    },
+    "1210442": {
+        "name": "MODIIN C2",
+        "symbol": "MDIN-C2.TA",
+        "ISIN": "IL0012104423"
+    },
+    "1141464": {
+        "name": "MORE INVEST",
+        "symbol": "MRIN.TA",
+        "ISIN": "IL0011414641"
+    },
+    "1184381": {
+        "name": "MORE PENSION",
+        "symbol": "MPP.TA",
+        "ISIN": "IL0011843815"
+    },
+    "1184696": {
+        "name": "MRR  B2",
+        "symbol": "MRR-B2.TA",
+        "ISIN": "IL0011846966"
+    },
+    "1171669": {
+        "name": "MULTI RETAIL",
+        "symbol": "MRG.TA",
+        "ISIN": "IL0011716698"
+    },
+    "1214626": {
+        "name": "MY TOWN B1",
+        "symbol": "MYTN-B1.TA",
+        "ISIN": "IL0012146267"
+    },
+    "544015": {
+        "name": "MYDAS",
+        "symbol": "MYDS.TA",
+        "ISIN": "IL0005440156"
+    },
+    "5440284": {
+        "name": "MYDAS B4",
+        "symbol": "MYDS-B4.TA",
+        "ISIN": "IL0054402842"
+    },
+    "1212695": {
+        "name": "MYDAS B5",
+        "symbol": "MYDS-B5.TA",
+        "ISIN": "IL0012126954"
+    },
+    "1225770": {
+        "name": "MYDAS C2",
+        "symbol": "MYDS-C2.TA",
+        "ISIN": "IL0012257700"
+    },
+    "1160258": {
+        "name": "NAMCO        B2",
+        "symbol": "NMCO-B2.TA",
+        "ISIN": "IL0011602583"
+    },
+    "1198761": {
+        "name": "NAMCO B3",
+        "symbol": "NMCO-B3.TA",
+        "ISIN": "IL0011987612"
+    },
+    "1206473": {
+        "name": "NAMCO B4",
+        "symbol": "NMCO-B4.TA",
+        "ISIN": "IL0012064734"
+    },
+    "643015": {
+        "name": "NAPHTHA",
+        "symbol": "NFTA.TA",
+        "ISIN": "IL0006430156"
+    },
+    "1181627": {
+        "name": "NAVITAS PTR C4",
+        "symbol": "NVPT-C4.TA",
+        "ISIN": "IL0011816274"
+    },
+    "1181593": {
+        "name": "NAVITAS PTRO B3",
+        "symbol": "NVPT-B3.TA",
+        "ISIN": "IL0011815938"
+    },
+    "1197912": {
+        "name": "NAVITAS PTRO B5",
+        "symbol": "NVPT-B5.TA",
+        "ISIN": "IL0011979122"
+    },
+    "1204825": {
+        "name": "NAVITAS PTRO B6",
+        "symbol": "NVPT-B6.TA",
+        "ISIN": "IL0012048257"
+    },
+    "1216043": {
+        "name": "NAVITAS PTRO B7",
+        "symbol": "NVPT-B7.TA",
+        "ISIN": "IL0012160433"
+    },
+    "1141969": {
+        "name": "NAVITAS PTRO PU",
+        "symbol": "NVPT.TA",
+        "ISIN": "IL0011419699"
+    },
+    "1228824": {
+        "name": "NAVITAS PTRO W6",
+        "symbol": "NVPT-W6.TA",
+        "ISIN": "IL0012288242"
+    },
+    "208017": {
+        "name": "NAWI",
+        "symbol": "NAWI.TA",
+        "ISIN": "IL0002080179"
+    },
+    "2080273": {
+        "name": "NAWI B6",
+        "symbol": "NAWI-B6.TA",
+        "ISIN": "IL0020802737"
+    },
+    "1225648": {
+        "name": "NAWI B7",
+        "symbol": "NAWI-B7.TA",
+        "ISIN": "IL0012256488"
+    },
+    "1220557": {
+        "name": "NAWI P 10",
+        "symbol": "NAWI-P10.TA",
+        "ISIN": "IL0012205576"
+    },
+    "1175116": {
+        "name": "NAYAX",
+        "symbol": "NYAX.TA",
+        "ISIN": "IL0011751166"
+    },
+    "1218965": {
+        "name": "NAYAX B1",
+        "symbol": "NYAX-B1.TA",
+        "ISIN": "IL0012189655"
+    },
+    "1218981": {
+        "name": "NAYAX W1",
+        "symbol": "NYAX-W1.TA",
+        "ISIN": "IL0012189812"
+    },
+    "1188663": {
+        "name": "NETANEL B13",
+        "symbol": "NTGR-B13.TA",
+        "ISIN": "IL0011886632"
+    },
+    "1208008": {
+        "name": "NETANEL B14",
+        "symbol": "NTGR-B14.TA",
+        "ISIN": "IL0012080086"
+    },
+    "1217363": {
+        "name": "NETANEL B15",
+        "symbol": "NTGR-B15.TA",
+        "ISIN": "IL0012173634"
+    },
+    "421016": {
+        "name": "NETANEL GROUP",
+        "symbol": "NTGR.TA",
+        "ISIN": "IL0004210162"
+    },
+    "1224781": {
+        "name": "NETANEL MEN B1",
+        "symbol": "NTNB-B1.TA",
+        "ISIN": "IL0012247818"
+    },
+    "1194513": {
+        "name": "NETANEL MENIV",
+        "symbol": "NTNB.TA",
+        "ISIN": "IL0011945131"
+    },
+    "1205855": {
+        "name": "NETANEL MNV W1",
+        "symbol": "NTNB-W1.TA",
+        "ISIN": "IL0012058553"
+    },
+    "168013": {
+        "name": "NETO",
+        "symbol": "NTO.TA",
+        "ISIN": "IL0001680136"
+    },
+    "1105097": {
+        "name": "NETO MALINDA",
+        "symbol": "NTML.TA",
+        "ISIN": "IL0011050973"
+    },
+    "1222116": {
+        "name": "NETZ USA B1",
+        "symbol": "NUSA-B1.TA",
+        "ISIN": "IL0012221169"
+    },
+    "475020": {
+        "name": "NEWMED ENERG PU",
+        "symbol": "NWMD.TA",
+        "ISIN": "IL0004750209"
+    },
+    "1176593": {
+        "name": "NEXT VISION",
+        "symbol": "NXSN.TA",
+        "ISIN": "IL0011765935"
+    },
+    "433011": {
+        "name": "NEXTAGE",
+        "symbol": "NXTG.TA",
+        "ISIN": "IL0004330119"
+    },
+    "1095785": {
+        "name": "NEXTCOM",
+        "symbol": "NXTM.TA",
+        "ISIN": "IL0010957855"
+    },
+    "1183714": {
+        "name": "NEXTCOM B3",
+        "symbol": "NXTM-B3.TA",
+        "ISIN": "IL0011837148"
+    },
+    "1171933": {
+        "name": "NEXTFERM-M",
+        "symbol": "NXFR-M.TA",
+        "ISIN": "IL0011719338"
+    },
+    "1083930": {
+        "name": "NEXTGEN",
+        "symbol": "NXGN.TA",
+        "ISIN": "IL0010839301"
+    },
+    "273011": {
+        "name": "NICE",
+        "symbol": "NICE.TA",
+        "ISIN": "IL0002730112"
+    },
+    "660019": {
+        "name": "NISSAN",
+        "symbol": "NISA.TA",
+        "ISIN": "IL0006600196"
+    },
+    "1213214": {
+        "name": "NMCO B5",
+        "symbol": "NMCO-B5.TA",
+        "ISIN": "IL0012132143"
+    },
+    "1223171": {
+        "name": "NMCO B6",
+        "symbol": "NMCO-B6.TA",
+        "ISIN": "IL0012231713"
+    },
+    "1170877": {
+        "name": "NOFAR ENERGY",
+        "symbol": "NOFR.TA",
+        "ISIN": "IL0011708778"
+    },
+    "1179340": {
+        "name": "NOFAR ENRG B1",
+        "symbol": "NOFR-B1.TA",
+        "ISIN": "IL0011793408"
+    },
+    "1198043": {
+        "name": "NOFAR ENRG B3",
+        "symbol": "NOFR-B3.TA",
+        "ISIN": "IL0011980435"
+    },
+    "1211416": {
+        "name": "NOFAR ENRG B4",
+        "symbol": "NOFR-B4.TA",
+        "ISIN": "IL0012114166"
+    },
+    "1198035": {
+        "name": "NOFAR ENRG C2",
+        "symbol": "NOFR-C2.TA",
+        "ISIN": "IL0011980351"
+    },
+    "723007": {
+        "name": "NORSTAR",
+        "symbol": "NSTR.TA",
+        "ISIN": "PAL0605071A3"
+    },
+    "7230402": {
+        "name": "NORSTAR     B12",
+        "symbol": "NSTR-B12.TA",
+        "ISIN": "IL0072304020"
+    },
+    "1193077": {
+        "name": "NORSTAR B13",
+        "symbol": "NSTR-B13.TA",
+        "ISIN": "IL0011930778"
+    },
+    "1223585": {
+        "name": "NORSTAR B14",
+        "symbol": "NSTR-B14.TA",
+        "ISIN": "IL0012235854"
+    },
+    "1084557": {
+        "name": "NOVA",
+        "symbol": "NVMI.TA",
+        "ISIN": "IL0010845571"
+    },
+    "1140151": {
+        "name": "NOVOLOG",
+        "symbol": "NVLG.TA",
+        "ISIN": "IL0011401515"
+    },
+    "1172071": {
+        "name": "NRGENE",
+        "symbol": "NRGN.TA",
+        "ISIN": "IL0011720716"
+    },
+    "1175728": {
+        "name": "NUR",
+        "symbol": "NURI.TA",
+        "ISIN": "IL0011757288"
+    },
+    "1206937": {
+        "name": "NURI W1",
+        "symbol": "NURI-W1.TA",
+        "ISIN": "IL0012069378"
+    },
+    "1166057": {
+        "name": "O.P.C  ENEGY B2",
+        "symbol": "OPCE-B2.TA",
+        "ISIN": "IL0011660573"
+    },
+    "1086230": {
+        "name": "O.R.T.",
+        "symbol": "ORTC.TA",
+        "ISIN": "IL0010862303"
+    },
+    "1223908": {
+        "name": "OFEK B1",
+        "symbol": "OFEK-B1.TA",
+        "ISIN": "IL0012239088"
+    },
+    "161018": {
+        "name": "ONE TECHNOLOGI",
+        "symbol": "ONE.TA",
+        "ISIN": "IL0001610182"
+    },
+    "1094986": {
+        "name": "OPAL BALANCE",
+        "symbol": "OPAL.TA",
+        "ISIN": "IL0010949860"
+    },
+    "1220839": {
+        "name": "OPAL BALANCE B4",
+        "symbol": "OPAL-B4.TA",
+        "ISIN": "IL0012208398"
+    },
+    "1141571": {
+        "name": "OPC ENERGY",
+        "symbol": "OPCE.TA",
+        "ISIN": "IL0011415713"
+    },
+    "1180355": {
+        "name": "OPC ENERGY B3",
+        "symbol": "OPCE-B3.TA",
+        "ISIN": "IL0011803553"
+    },
+    "1203264": {
+        "name": "OPC ENERGY B4",
+        "symbol": "OPCE-B4.TA",
+        "ISIN": "IL0012032640"
+    },
+    "1129543": {
+        "name": "OPKO HEALTH",
+        "symbol": "OPK.TA",
+        "ISIN": "US68375N1037"
+    },
+    "1104496": {
+        "name": "ORAD",
+        "symbol": "ORAD.TA",
+        "ISIN": "IL0011044968"
+    },
+    "1141324": {
+        "name": "ORAMED PHARM",
+        "symbol": "ORMP.TA",
+        "ISIN": "US68403P2039"
+    },
+    "265017": {
+        "name": "ORBIT",
+        "symbol": "ORBI.TA",
+        "ISIN": "IL0002650179"
+    },
+    "1103506": {
+        "name": "ORIAN",
+        "symbol": "ORIN.TA",
+        "ISIN": "IL0011035065"
+    },
+    "1143379": {
+        "name": "ORIAN        B2",
+        "symbol": "ORIN-B2.TA",
+        "ISIN": "IL0011433799"
+    },
+    "1134402": {
+        "name": "ORMAT TECHNO",
+        "symbol": "ORA.TA",
+        "ISIN": "US6866881021"
+    },
+    "1135706": {
+        "name": "ORON GROUP",
+        "symbol": "ORON.TA",
+        "ISIN": "IL0011357063"
+    },
+    "1197763": {
+        "name": "ORON GROUP B3",
+        "symbol": "ORON-B3.TA",
+        "ISIN": "IL0011977639"
+    },
+    "1188549": {
+        "name": "ORSY B4",
+        "symbol": "ORSY-B4.TA",
+        "ISIN": "IL0011885493"
+    },
+    "1209014": {
+        "name": "ORSY B5",
+        "symbol": "ORSY-B5.TA",
+        "ISIN": "IL0012090143"
+    },
+    "1139617": {
+        "name": "OVERSEAS",
+        "symbol": "OVRS.TA",
+        "ISIN": "IL0011396178"
+    },
+    "1091685": {
+        "name": "P.C.B TEC",
+        "symbol": "PCBT.TA",
+        "ISIN": "IL0010916851"
+    },
+    "1163062": {
+        "name": "PACIFIC      B2",
+        "symbol": "PCOK-B2.TA",
+        "ISIN": "IL0011630626"
+    },
+    "1206044": {
+        "name": "PACIFIC B4",
+        "symbol": "PCOK-B4.TA",
+        "ISIN": "IL0012060443"
+    },
+    "1206580": {
+        "name": "PAI DEPOS B3",
+        "symbol": "PIDE-B3.TA",
+        "ISIN": "IL0012065806"
+    },
+    "1222306": {
+        "name": "PAI DEPOS B4",
+        "symbol": "PIDE-B4.TA",
+        "ISIN": "IL0012223066"
+    },
+    "1199454": {
+        "name": "PAI DEPOS. B1",
+        "symbol": "PIDE-B1.TA",
+        "ISIN": "IL0011994543"
+    },
+    "1201144": {
+        "name": "PAI DEPOS. B2",
+        "symbol": "PIDE-B2.TA",
+        "ISIN": "IL0012011446"
+    },
+    "644013": {
+        "name": "PALRAM",
+        "symbol": "PLRM.TA",
+        "ISIN": "IL0006440130"
+    },
+    "1195395": {
+        "name": "PALSTO CARGA W8",
+        "symbol": "PLCR-W8.TA",
+        "ISIN": "IL0011953952"
+    },
+    "1187640": {
+        "name": "PARKOMAT",
+        "symbol": "PRKM.TA",
+        "ISIN": "IL0011876401"
+    },
+    "1083484": {
+        "name": "PARTNER",
+        "symbol": "PTNR.TA",
+        "ISIN": "IL0010834849"
+    },
+    "1156397": {
+        "name": "PARTNER      B7",
+        "symbol": "PTNR-B7.TA",
+        "ISIN": "IL0011563975"
+    },
+    "1182948": {
+        "name": "PARTNER      B8",
+        "symbol": "PTNR-B8.TA",
+        "ISIN": "IL0011829483"
+    },
+    "1180876": {
+        "name": "PAYMENT FINA",
+        "symbol": "PMNT.TA",
+        "ISIN": "IL0011808768"
+    },
+    "412015": {
+        "name": "PAYTON",
+        "symbol": "PAYT.TA",
+        "ISIN": "IL0004120155"
+    },
+    "1100007": {
+        "name": "PAZ ENERGY",
+        "symbol": "PAZ.TA",
+        "ISIN": "IL0011000077"
+    },
+    "1139542": {
+        "name": "PAZ ENERGY B6",
+        "symbol": "PAZ-B6.TA",
+        "ISIN": "IL0011395428"
+    },
+    "1142595": {
+        "name": "PAZ ENERGY B7",
+        "symbol": "PAZ-B7.TA",
+        "ISIN": "IL0011425951"
+    },
+    "1162817": {
+        "name": "PAZ ENERGY B8",
+        "symbol": "PAZ-B8.TA",
+        "ISIN": "IL0011628174"
+    },
+    "1205947": {
+        "name": "PAZ ENERGY B9",
+        "symbol": "PAZ-B9.TA",
+        "ISIN": "IL0012059478"
+    },
+    "1228535": {
+        "name": "PEAKHILL B1",
+        "symbol": "PKHL-B1.TA",
+        "ISIN": "IL0012285354"
+    },
+    "1223999": {
+        "name": "PENINSULA B4",
+        "symbol": "PEN-B4.TA",
+        "ISIN": "IL0012239997"
+    },
+    "333013": {
+        "name": "PENINSULA GROUP",
+        "symbol": "PEN.TA",
+        "ISIN": "IL0003330136"
+    },
+    "1227073": {
+        "name": "PENTHOUSE B1",
+        "symbol": "PENT-B1.TA",
+        "ISIN": "IL0012270737"
+    },
+    "1095819": {
+        "name": "PERION NETWORK",
+        "symbol": "PERI.TA",
+        "ISIN": "IL0010958192"
+    },
+    "1211515": {
+        "name": "PETRO ENRG B2",
+        "symbol": "PTEN-B2.TA",
+        "ISIN": "IL0012115155"
+    },
+    "1189554": {
+        "name": "PETROC    B9",
+        "symbol": "PTCH-B9.TA",
+        "ISIN": "IL0011895542"
+    },
+    "1190297": {
+        "name": "PETROC B10",
+        "symbol": "PTCH-B10.TA",
+        "ISIN": "IL0011902975"
+    },
+    "1221787": {
+        "name": "PETROC B11",
+        "symbol": "PTCH-B11.TA",
+        "ISIN": "IL0012217878"
+    },
+    "1190305": {
+        "name": "PETROC W1",
+        "symbol": "PTC-W1.TA",
+        "ISIN": "IL0011903056"
+    },
+    "1190313": {
+        "name": "PETROC W2",
+        "symbol": "PTC-W2.TA",
+        "ISIN": "IL0011903130"
+    },
+    "756015": {
+        "name": "PETROCHEMICAL",
+        "symbol": "PTCH.TA",
+        "ISIN": "IL0007560159"
+    },
+    "1099761": {
+        "name": "PETROTX     PU",
+        "symbol": "PTX.TA",
+        "ISIN": "IL0010997612"
+    },
+    "1169648": {
+        "name": "PETROTX C2",
+        "symbol": "PTX-C2.TA",
+        "ISIN": "IL0011696486"
+    },
+    "1172360": {
+        "name": "PHINERGY",
+        "symbol": "PNRG.TA",
+        "ISIN": "IL0011723603"
+    },
+    "1225168": {
+        "name": "PHINERGY W1",
+        "symbol": "PNRG-W1.TA",
+        "ISIN": "IL0012251687"
+    },
+    "1225176": {
+        "name": "PHINERGY W2",
+        "symbol": "PNRG-W2.TA",
+        "ISIN": "IL0012251760"
+    },
+    "767012": {
+        "name": "PHOENIX",
+        "symbol": "PHOE.TA",
+        "ISIN": "IL0007670123"
+    },
+    "7670250": {
+        "name": "PHOENIX      B4",
+        "symbol": "PHOE-B4.TA",
+        "ISIN": "IL0076702500"
+    },
+    "7670284": {
+        "name": "PHOENIX      B5",
+        "symbol": "PHOE-B5.TA",
+        "ISIN": "IL0076702849"
+    },
+    "7670334": {
+        "name": "PHOENIX B6",
+        "symbol": "PHOE-B6.TA",
+        "ISIN": "IL0076703342"
+    },
+    "1195585": {
+        "name": "PHONIX B12",
+        "symbol": "PNCP-B12.TA",
+        "ISIN": "IL0011955858"
+    },
+    "1188135": {
+        "name": "PHONIX B13",
+        "symbol": "PNCP-B13.TA",
+        "ISIN": "IL0011881351"
+    },
+    "1201946": {
+        "name": "PHONIX B14",
+        "symbol": "PNCP-B14.TA",
+        "ISIN": "IL0012019464"
+    },
+    "1201953": {
+        "name": "PHONIX B15",
+        "symbol": "PNCP-B15.TA",
+        "ISIN": "IL0012019530"
+    },
+    "1220334": {
+        "name": "PHONIX B16",
+        "symbol": "PNCP-B16.TA",
+        "ISIN": "IL0012203340"
+    },
+    "1220342": {
+        "name": "PHONIX B17",
+        "symbol": "PNCP-B17.TA",
+        "ISIN": "IL0012203423"
+    },
+    "1135417": {
+        "name": "PHONIX CAP   B5",
+        "symbol": "PNCP-B5.TA",
+        "ISIN": "IL0011354177"
+    },
+    "1155522": {
+        "name": "PHONIX CAP B9",
+        "symbol": "PNCP-B9.TA",
+        "ISIN": "IL0011555229"
+    },
+    "1159359": {
+        "name": "PHONIX PAC  B11",
+        "symbol": "PNCP-B11.TA",
+        "ISIN": "IL0011593592"
+    },
+    "1173855": {
+        "name": "PHOTOMYNE",
+        "symbol": "PHTM.TA",
+        "ISIN": "IL0011738551"
+    },
+    "1228915": {
+        "name": "PI INT B1",
+        "symbol": "PIIN-B1.TA",
+        "ISIN": "IL0012289158"
+    },
+    "1213503": {
+        "name": "PI PLUS B1",
+        "symbol": "PPLS-B1.TA",
+        "ISIN": "IL0012135039"
+    },
+    "1214451": {
+        "name": "PI PLUS B2",
+        "symbol": "PPLS-B2.TA",
+        "ISIN": "IL0012144510"
+    },
+    "1216183": {
+        "name": "PI PLUS B3",
+        "symbol": "PPLS-B3.TA",
+        "ISIN": "IL0012161837"
+    },
+    "1218718": {
+        "name": "PI PLUS B4",
+        "symbol": "PPLS-B4.TA",
+        "ISIN": "IL0012187188"
+    },
+    "1186527": {
+        "name": "PIE SIAM",
+        "symbol": "PIES.TA",
+        "ISIN": "IL0011865271"
+    },
+    "1186485": {
+        "name": "PIE SIAM B1",
+        "symbol": "PIES-B1.TA",
+        "ISIN": "IL0011864852"
+    },
+    "1216555": {
+        "name": "PIE SIAM B2",
+        "symbol": "PIES-B2.TA",
+        "ISIN": "IL0012165556"
+    },
+    "1216282": {
+        "name": "PIE SIAM W1",
+        "symbol": "PIES-W1.TA",
+        "ISIN": "IL0012162827"
+    },
+    "1171404": {
+        "name": "PLANT ARC",
+        "symbol": "PLNT.TA",
+        "ISIN": "IL0011714040"
+    },
+    "1081603": {
+        "name": "PLASSON INDUS",
+        "symbol": "PLSN.TA",
+        "ISIN": "IL0010816036"
+    },
+    "727016": {
+        "name": "PLASTO CARGAL",
+        "symbol": "PLCR.TA",
+        "ISIN": "IL0007270163"
+    },
+    "1092840": {
+        "name": "PLASTOFIL",
+        "symbol": "PPIL.TA",
+        "ISIN": "IL0010928401"
+    },
+    "1109917": {
+        "name": "PLAZA CENTERS-L",
+        "symbol": "PLAZ-L.TA",
+        "ISIN": "NL0011882741"
+    },
+    "1109495": {
+        "name": "PLAZA CENTRS B1",
+        "symbol": "PLAZ-B1.TA",
+        "ISIN": "IL0011094955"
+    },
+    "1109503": {
+        "name": "PLAZA CENTRS B2",
+        "symbol": "PLAZ-B2.TA",
+        "ISIN": "IL0011095036"
+    },
+    "1121730": {
+        "name": "PLURI",
+        "symbol": "PLUR.TA",
+        "ISIN": "US72942G2030"
+    },
+    "662577": {
+        "name": "POALIM",
+        "symbol": "POLI.TA",
+        "ISIN": "IL0006625771"
+    },
+    "6620462": {
+        "name": "POALIM       B5",
+        "symbol": "POLI-B5.TA",
+        "ISIN": "IL0066204624"
+    },
+    "1199892": {
+        "name": "POALIM B10",
+        "symbol": "POL-B10.TA",
+        "ISIN": "IL0011998924"
+    },
+    "6620488": {
+        "name": "POALIM B100",
+        "symbol": "PLI-B100.TA",
+        "ISIN": "IL0066204889"
+    },
+    "1223452": {
+        "name": "POALIM B102",
+        "symbol": "POL-B102.TA",
+        "ISIN": "IL0012234527"
+    },
+    "1201466": {
+        "name": "POALIM B11",
+        "symbol": "POL-B11.TA",
+        "ISIN": "IL0012014663"
+    },
+    "1214121": {
+        "name": "POALIM B12",
+        "symbol": "POL-B12.TA",
+        "ISIN": "IL0012141219"
+    },
+    "1214139": {
+        "name": "POALIM B13",
+        "symbol": "POL-B13.TA",
+        "ISIN": "IL0012141391"
+    },
+    "1227438": {
+        "name": "POALIM B14",
+        "symbol": "POL-B14.TA",
+        "ISIN": "IL0012274382"
+    },
+    "1227446": {
+        "name": "POALIM B15",
+        "symbol": "POL-B15.TA",
+        "ISIN": "IL0012274465"
+    },
+    "6620496": {
+        "name": "POALIM B200",
+        "symbol": "PLI-B200.TA",
+        "ISIN": "IL0066204962"
+    },
+    "1191345": {
+        "name": "POALIM B201",
+        "symbol": "PLI-B201.TA",
+        "ISIN": "IL0011913451"
+    },
+    "1199850": {
+        "name": "POALIM B202",
+        "symbol": "POL-B202.TA",
+        "ISIN": "IL0011998502"
+    },
+    "1199868": {
+        "name": "POALIM B203",
+        "symbol": "POL-B203.TA",
+        "ISIN": "IL0011998684"
+    },
+    "1227453": {
+        "name": "POALIM B204",
+        "symbol": "POL-B204.TA",
+        "ISIN": "IL0012274531"
+    },
+    "6620553": {
+        "name": "POALIM B6",
+        "symbol": "POLI-B6.TA",
+        "ISIN": "IL0066205530"
+    },
+    "1191329": {
+        "name": "POALIM B7",
+        "symbol": "POLI-B7.TA",
+        "ISIN": "IL0011913295"
+    },
+    "1218817": {
+        "name": "POALIM P1",
+        "symbol": "POL-P1.TA",
+        "ISIN": "IL0012188178"
+    },
+    "1223437": {
+        "name": "POALIM P2",
+        "symbol": "POL-P2.TA",
+        "ISIN": "IL0012234378"
+    },
+    "745018": {
+        "name": "POLYGON",
+        "symbol": "POLY.TA",
+        "ISIN": "IL0007450187"
+    },
+    "1170216": {
+        "name": "POLYRAM PLS",
+        "symbol": "POLP.TA",
+        "ISIN": "IL0011702169"
+    },
+    "1173434": {
+        "name": "POMVOM",
+        "symbol": "PMVM.TA",
+        "ISIN": "IL0011734345"
+    },
+    "1186246": {
+        "name": "POWERGEN B2",
+        "symbol": "POSA-B2.TA",
+        "ISIN": "IL0011862468"
+    },
+    "1224971": {
+        "name": "PRASH GR B1",
+        "symbol": "ARPR-B1.TA",
+        "ISIN": "IL0012249715"
+    },
+    "1102128": {
+        "name": "PRASHKOVSKY",
+        "symbol": "PRSK.TA",
+        "ISIN": "IL0011021289"
+    },
+    "1183623": {
+        "name": "PRASHKOVSKY B14",
+        "symbol": "PRSK-B14.TA",
+        "ISIN": "IL0011836231"
+    },
+    "1203496": {
+        "name": "PRASHKOVSKY B15",
+        "symbol": "PRSK-B15.TA",
+        "ISIN": "IL0012034968"
+    },
+    "1223411": {
+        "name": "PRASHKOVSKY B16",
+        "symbol": "PRSK-B16.TA",
+        "ISIN": "IL0012234113"
+    },
+    "1174457": {
+        "name": "PRIME ENERGY",
+        "symbol": "PRIM.TA",
+        "ISIN": "IL0011744575"
+    },
+    "1184662": {
+        "name": "PRIME ENERGY B2",
+        "symbol": "PRIM-B2.TA",
+        "ISIN": "IL0011846628"
+    },
+    "1217975": {
+        "name": "PRIME ENERGY B3",
+        "symbol": "PRIM-B3.TA",
+        "ISIN": "IL0012179755"
+    },
+    "1179266": {
+        "name": "PRIME ENERGY C1",
+        "symbol": "PRIM-C1.TA",
+        "ISIN": "IL0011792665"
+    },
+    "1175496": {
+        "name": "PRIMOTEC",
+        "symbol": "PRMG.TA",
+        "ISIN": "IL0011754962"
+    },
+    "328013": {
+        "name": "PRIORTECH",
+        "symbol": "PRTC.TA",
+        "ISIN": "IL0003280133"
+    },
+    "3280138": {
+        "name": "PRIORTECH B1",
+        "symbol": "PRTC-B1.TA",
+        "ISIN": "IL0032801388"
+    },
+    "1223965": {
+        "name": "PRIORTECH B2",
+        "symbol": "PRTC-B2.TA",
+        "ISIN": "IL0012239658"
+    },
+    "1188622": {
+        "name": "PROPDO",
+        "symbol": "PRPD.TA",
+        "ISIN": "IL0011886228"
+    },
+    "1217611": {
+        "name": "PROPDO B1",
+        "symbol": "PRPD-B1.TA",
+        "ISIN": "IL0012176116"
+    },
+    "1214527": {
+        "name": "PROPDO W3",
+        "symbol": "PRPD-W3.TA",
+        "ISIN": "IL0012145277"
+    },
+    "1217629": {
+        "name": "PROPDO W4",
+        "symbol": "PRPD-W4.TA",
+        "ISIN": "IL0012176298"
+    },
+    "6990154": {
+        "name": "PROPE BU     B4",
+        "symbol": "PTBL-B4.TA",
+        "ISIN": "IL0069901549"
+    },
+    "6990204": {
+        "name": "PROPE BU     B8",
+        "symbol": "PTBL-B8.TA",
+        "ISIN": "IL0069902042"
+    },
+    "6990212": {
+        "name": "PROPE BU     B9",
+        "symbol": "PTBL-B9.TA",
+        "ISIN": "IL0069902125"
+    },
+    "1193630": {
+        "name": "PROPE BU B10",
+        "symbol": "PTBL-B10.TA",
+        "ISIN": "IL0011936304"
+    },
+    "1205566": {
+        "name": "PROPE BU B11",
+        "symbol": "PTBL-B11.TA",
+        "ISIN": "IL0012055666"
+    },
+    "699017": {
+        "name": "PROPERT & BUIL",
+        "symbol": "PTBL.TA",
+        "ISIN": "IL0006990175"
+    },
+    "1176700": {
+        "name": "PULSENMORE",
+        "symbol": "PULS.TA",
+        "ISIN": "IL0011767006"
+    },
+    "765016": {
+        "name": "PURPLE BIOTECH",
+        "symbol": "PPBT.TA",
+        "ISIN": "IL0007650166"
+    },
+    "1083955": {
+        "name": "QUALITAU",
+        "symbol": "QLTU.TA",
+        "ISIN": "IL0010839558"
+    },
+    "386011": {
+        "name": "QUEENCO",
+        "symbol": "QNCO.TA",
+        "ISIN": "IL0003860116"
+    },
+    "393017": {
+        "name": "RALCO",
+        "symbol": "RLCO.TA",
+        "ISIN": "IL0003930174"
+    },
+    "1197250": {
+        "name": "RAM ADERET B1",
+        "symbol": "ADRT-B1.TA",
+        "ISIN": "IL0011972507"
+    },
+    "1209436": {
+        "name": "RAM ADERET B2",
+        "symbol": "ADRT-B2.TA",
+        "ISIN": "IL0012094368"
+    },
+    "1217314": {
+        "name": "RAM ADERET B3",
+        "symbol": "ADRT-B3.TA",
+        "ISIN": "IL0012173147"
+    },
+    "1090943": {
+        "name": "RAM ON",
+        "symbol": "RMN.TA",
+        "ISIN": "IL0010909435"
+    },
+    "1104249": {
+        "name": "RAMI LEVI",
+        "symbol": "RMLI.TA",
+        "ISIN": "IL0011042491"
+    },
+    "1182401": {
+        "name": "RAMOT CITY B2",
+        "symbol": "RMOT-B2.TA",
+        "ISIN": "IL0011824013"
+    },
+    "1213750": {
+        "name": "RAMOT CITY B3",
+        "symbol": "RMOT-B3.TA",
+        "ISIN": "IL0012137506"
+    },
+    "1218221": {
+        "name": "RAMOT CITY B4",
+        "symbol": "RMOT-B4.TA",
+        "ISIN": "IL0012182213"
+    },
+    "1143619": {
+        "name": "RANI ZIM",
+        "symbol": "RANI.TA",
+        "ISIN": "IL0011436198"
+    },
+    "1171834": {
+        "name": "RANI ZIM B2",
+        "symbol": "RANI-B2.TA",
+        "ISIN": "IL0011718348"
+    },
+    "1218973": {
+        "name": "RANI ZIM B4",
+        "symbol": "RANI-B4.TA",
+        "ISIN": "IL0012189739"
+    },
+    "1183193": {
+        "name": "RANI ZIM.B3",
+        "symbol": "RANI-B3.TA",
+        "ISIN": "IL0011831935"
+    },
+    "769026": {
+        "name": "RAPAC",
+        "symbol": "RPAC.TA",
+        "ISIN": "IL0007690261"
+    },
+    "394015": {
+        "name": "RATIO      PU",
+        "symbol": "RATI.TA",
+        "ISIN": "IL0003940157"
+    },
+    "1178144": {
+        "name": "RATIO FIN.  B4",
+        "symbol": "RATF-B4.TA",
+        "ISIN": "IL0011781445"
+    },
+    "1139864": {
+        "name": "RATIO PETROL PU",
+        "symbol": "RTPT.TA",
+        "ISIN": "IL0011398646"
+    },
+    "1179993": {
+        "name": "RAV BARIACH",
+        "symbol": "BRIH.TA",
+        "ISIN": "IL0011799934"
+    },
+    "1209824": {
+        "name": "RAV BARIACH C1",
+        "symbol": "BRIH-C1.TA",
+        "ISIN": "IL0012098245"
+    },
+    "526012": {
+        "name": "RAVAD",
+        "symbol": "RAVD.TA",
+        "ISIN": "IL0005260125"
+    },
+    "1103878": {
+        "name": "RAVAL",
+        "symbol": "RVL.TA",
+        "ISIN": "IL0011038788"
+    },
+    "673012": {
+        "name": "RAY TLV GROUP-M",
+        "symbol": "RAYG-M.TA",
+        "ISIN": "IL0006730126"
+    },
+    "1172527": {
+        "name": "RAZOR LABS",
+        "symbol": "RZR.TA",
+        "ISIN": "IL0011725277"
+    },
+    "1223197": {
+        "name": "REISDOR B1",
+        "symbol": "RSDR-B1.TA",
+        "ISIN": "IL0012231978"
+    },
+    "1098920": {
+        "name": "REIT 1",
+        "symbol": "RIT1.TA",
+        "ISIN": "IL0010989205"
+    },
+    "1136753": {
+        "name": "REIT 1       B5",
+        "symbol": "RIT1-B5.TA",
+        "ISIN": "IL0011367534"
+    },
+    "1138544": {
+        "name": "REIT 1       B6",
+        "symbol": "RIT1-B6.TA",
+        "ISIN": "IL0011385445"
+    },
+    "1171271": {
+        "name": "REIT 1 B7",
+        "symbol": "RIT1-B7.TA",
+        "ISIN": "IL0011712713"
+    },
+    "1224096": {
+        "name": "REIT 1 B8",
+        "symbol": "RIT1-B8.TA",
+        "ISIN": "IL0012240961"
+    },
+    "1175769": {
+        "name": "REIT AZORIM B1",
+        "symbol": "AZRT-B1.TA",
+        "ISIN": "IL0011757692"
+    },
+    "1216118": {
+        "name": "REIT AZORIM B3",
+        "symbol": "AZRT-B3.TA",
+        "ISIN": "IL0012161183"
+    },
+    "1183581": {
+        "name": "REIT AZORIM C2",
+        "symbol": "AZRT-C2.TA",
+        "ISIN": "IL0011835811"
+    },
+    "1162775": {
+        "name": "REIT AZORIM LIV",
+        "symbol": "AZRT.TA",
+        "ISIN": "IL0011627754"
+    },
+    "1081009": {
+        "name": "REKAH",
+        "symbol": "REKA.TA",
+        "ISIN": "IL0010810096"
+    },
+    "1199645": {
+        "name": "RENT IT",
+        "symbol": "RENT.TA",
+        "ISIN": "IL0011996456"
+    },
+    "1199546": {
+        "name": "RENT IT B1",
+        "symbol": "RENT-B1.TA",
+        "ISIN": "IL0011995466"
+    },
+    "1173723": {
+        "name": "RETAILMINDS -M",
+        "symbol": "RTMD-M.TA",
+        "ISIN": "IL0011737231"
+    },
+    "1175488": {
+        "name": "RETAILORS",
+        "symbol": "RTLS.TA",
+        "ISIN": "IL0011754889"
+    },
+    "1226885": {
+        "name": "RGA SERVICES",
+        "symbol": "RGAS.TA",
+        "ISIN": "IL0012268855"
+    },
+    "1226893": {
+        "name": "RGA SERVICES W1",
+        "symbol": "RGAS-W1.TA",
+        "ISIN": "IL0012268939"
+    },
+    "1226901": {
+        "name": "RGA SERVICES W2",
+        "symbol": "RGAS-W2.TA",
+        "ISIN": "IL0012269010"
+    },
+    "1178722": {
+        "name": "RIMON",
+        "symbol": "RMON.TA",
+        "ISIN": "IL0011787228"
+    },
+    "1211036": {
+        "name": "RIMON B1",
+        "symbol": "RIMON-B1.TA",
+        "ISIN": "IL0012110362"
+    },
+    "1080456": {
+        "name": "RIMONI",
+        "symbol": "RIMO.TA",
+        "ISIN": "IL0010804560"
+    },
+    "266015": {
+        "name": "ROBOGROUP",
+        "symbol": "ROBO.TA",
+        "ISIN": "IL0002660152"
+    },
+    "1147750": {
+        "name": "ROTEM EN REM PU",
+        "symbol": "RTEN.TA",
+        "ISIN": "IL0011477507"
+    },
+    "1214980": {
+        "name": "ROTEM ENRG W8",
+        "symbol": "RTEN-W8.TA",
+        "ISIN": "IL0012149808"
+    },
+    "1171529": {
+        "name": "ROTEM SHANI",
+        "symbol": "RTSN.TA",
+        "ISIN": "IL0011715294"
+    },
+    "1187897": {
+        "name": "ROTEM SHANI B2",
+        "symbol": "RTSN-B2.TA",
+        "ISIN": "IL0011878977"
+    },
+    "1209295": {
+        "name": "ROTEM SHANI B3",
+        "symbol": "RTSN-B3.TA",
+        "ISIN": "IL0012092958"
+    },
+    "1209303": {
+        "name": "ROTEM SHANI W2",
+        "symbol": "RTSN-W2.TA",
+        "ISIN": "IL0012093030"
+    },
+    "539015": {
+        "name": "ROTSHTEIN",
+        "symbol": "ROTS.TA",
+        "ISIN": "IL0005390153"
+    },
+    "5390273": {
+        "name": "ROTSHTEIN B10",
+        "symbol": "ROTS-B10.TA",
+        "ISIN": "IL0053902735"
+    },
+    "1204189": {
+        "name": "ROTSHTEIN B12",
+        "symbol": "ROTS-B12.TA",
+        "ISIN": "IL0012041898"
+    },
+    "1212646": {
+        "name": "ROTSHTEIN B13",
+        "symbol": "ROTS-B13.TA",
+        "ISIN": "IL0012126467"
+    },
+    "1222462": {
+        "name": "RP OPTICAL",
+        "symbol": "RPOL.TA",
+        "ISIN": "IL0012224627"
+    },
+    "299016": {
+        "name": "RSL",
+        "symbol": "RSEL.TA",
+        "ISIN": "IL0002990161"
+    },
+    "422014": {
+        "name": "S.R ACCORD",
+        "symbol": "SRAC.TA",
+        "ISIN": "IL0004220146"
+    },
+    "4220372": {
+        "name": "S.R ACCORD B2",
+        "symbol": "SRAC-B2.TA",
+        "ISIN": "IL0042203724"
+    },
+    "1214790": {
+        "name": "S.R ACCORD B3",
+        "symbol": "SRAC-B3.TA",
+        "ISIN": "IL0012147901"
+    },
+    "341016": {
+        "name": "SADE REAL ESTAT",
+        "symbol": "SADE.TA",
+        "ISIN": "IL0003410169"
+    },
+    "813014": {
+        "name": "SANO",
+        "symbol": "SANO1.TA",
+        "ISIN": "IL0008130143"
+    },
+    "1087659": {
+        "name": "SAPIENS",
+        "symbol": "SPNS.TA",
+        "ISIN": "KYG7T16G1039"
+    },
+    "1141936": {
+        "name": "SAPIENS      B2",
+        "symbol": "SPNS-B2.TA",
+        "ISIN": "IL0011419368"
+    },
+    "3650140": {
+        "name": "SAPIR COR   B18",
+        "symbol": "SPIR-B18.TA",
+        "ISIN": "IL0036501406"
+    },
+    "1188648": {
+        "name": "SAPIR COR   B19",
+        "symbol": "SPIR-B19.TA",
+        "ISIN": "IL0011886483"
+    },
+    "1211010": {
+        "name": "SAPIR DEPO B1",
+        "symbol": "SPRD-B1.TA",
+        "ISIN": "IL0012110107"
+    },
+    "1219039": {
+        "name": "SAPIR DEPO B2",
+        "symbol": "SPRD-B2.TA",
+        "ISIN": "IL0012190398"
+    },
+    "1222397": {
+        "name": "SAPIR DEPO B3",
+        "symbol": "SPRD-B3.TA",
+        "ISIN": "IL0012223975"
+    },
+    "1226133": {
+        "name": "SAPIR DEPO B4",
+        "symbol": "SPRD-B4.TA",
+        "ISIN": "IL0012261330"
+    },
+    "425017": {
+        "name": "SARFATI",
+        "symbol": "SRFT.TA",
+        "ISIN": "IL0004250176"
+    },
+    "4250270": {
+        "name": "SARFATI  B12",
+        "symbol": "SRFT-B12.TA",
+        "ISIN": "IL0042502703"
+    },
+    "4250254": {
+        "name": "SARFATI B11",
+        "symbol": "SRFT-B11.TA",
+        "ISIN": "IL0042502547"
+    },
+    "1204734": {
+        "name": "SARFATI B13",
+        "symbol": "SRFT-B13.TA",
+        "ISIN": "IL0012047341"
+    },
+    "1092725": {
+        "name": "SARINE TECH",
+        "symbol": "SARN.TA",
+        "ISIN": "IL0010927254"
+    },
+    "1166693": {
+        "name": "SAVER ONE",
+        "symbol": "SVRE.TA",
+        "ISIN": "IL0011666935"
+    },
+    "1169978": {
+        "name": "SAVOREAT-M",
+        "symbol": "SVRT-M.TA",
+        "ISIN": "IL0011699787"
+    },
+    "1103571": {
+        "name": "SCHNAPP",
+        "symbol": "SHNP.TA",
+        "ISIN": "IL0011035719"
+    },
+    "1178490": {
+        "name": "SCODIX",
+        "symbol": "SCDX.TA",
+        "ISIN": "IL0011784902"
+    },
+    "288019": {
+        "name": "SCOPE",
+        "symbol": "SCOP.TA",
+        "ISIN": "IL0002880198"
+    },
+    "249011": {
+        "name": "SEACH MEDICAL",
+        "symbol": "SEMG.TA",
+        "ISIN": "IL0002490113"
+    },
+    "1205087": {
+        "name": "SELLA REAL B5",
+        "symbol": "SLARL-B5.TA",
+        "ISIN": "IL0012050873"
+    },
+    "1109644": {
+        "name": "SELLA REAL EST",
+        "symbol": "SLARL.TA",
+        "ISIN": "IL0011096448"
+    },
+    "1205095": {
+        "name": "SELLA REAL W4",
+        "symbol": "SLARL-W4.TA",
+        "ISIN": "IL0012050956"
+    },
+    "1138973": {
+        "name": "SELLA REALES B3",
+        "symbol": "SLARL-B3.TA",
+        "ISIN": "IL0011389736"
+    },
+    "1167147": {
+        "name": "SELLA REALS B4",
+        "symbol": "SLARL-B4.TA",
+        "ISIN": "IL0011671471"
+    },
+    "1138379": {
+        "name": "SHAGRIR",
+        "symbol": "SHGR.TA",
+        "ISIN": "IL0011383796"
+    },
+    "1176239": {
+        "name": "SHAMAYM",
+        "symbol": "SHMM.TA",
+        "ISIN": "IL0011762395"
+    },
+    "1221373": {
+        "name": "SHAMAYM W2",
+        "symbol": "SHMM-W2.TA",
+        "ISIN": "IL0012213737"
+    },
+    "1080837": {
+        "name": "SHANIV",
+        "symbol": "SHAN.TA",
+        "ISIN": "IL0010808371"
+    },
+    "1133875": {
+        "name": "SHAPIR      ENG",
+        "symbol": "SPEN.TA",
+        "ISIN": "IL0011338758"
+    },
+    "1141951": {
+        "name": "SHAPIR ENG   B2",
+        "symbol": "SPEN-B2.TA",
+        "ISIN": "IL0011419517"
+    },
+    "1178417": {
+        "name": "SHAPIR ENG   B3",
+        "symbol": "SPEN-B3.TA",
+        "ISIN": "IL0011784175"
+    },
+    "1226331": {
+        "name": "SHAPIR ENG B4",
+        "symbol": "SPEN-B4.TA",
+        "ISIN": "IL0012263310"
+    },
+    "1220326": {
+        "name": "SHEMEN C 1",
+        "symbol": "SMNR-C1.TA",
+        "ISIN": "IL0012203266"
+    },
+    "634030": {
+        "name": "SHEMEN ESTATE",
+        "symbol": "SMNR.TA",
+        "ISIN": "IL0006340306"
+    },
+    "1188242": {
+        "name": "SHIKN&BINUI ENE",
+        "symbol": "SBEN.TA",
+        "ISIN": "IL0011882425"
+    },
+    "1081942": {
+        "name": "SHIKUN & BINUI",
+        "symbol": "SKBN.TA",
+        "ISIN": "IL0010819428"
+    },
+    "1175132": {
+        "name": "SHIKUN BIN B10",
+        "symbol": "SKBN-B10.TA",
+        "ISIN": "IL0011751323"
+    },
+    "1228766": {
+        "name": "SHIKUN BIN B11",
+        "symbol": "SKBN-B11.TA",
+        "ISIN": "IL0012287665"
+    },
+    "1135888": {
+        "name": "SHIKUN BIN B8",
+        "symbol": "SKBN-B8.TA",
+        "ISIN": "IL0011358889"
+    },
+    "1167386": {
+        "name": "SHIKUN BIN B9",
+        "symbol": "SKBN-B9.TA",
+        "ISIN": "IL0011673865"
+    },
+    "1157668": {
+        "name": "SHIR SHLOMO  B4",
+        "symbol": "SLMO-B4.TA",
+        "ISIN": "IL0011576688"
+    },
+    "1198571": {
+        "name": "SHKN & BI EN B1",
+        "symbol": "SBEN-B1.TA",
+        "ISIN": "IL0011985715"
+    },
+    "1229046": {
+        "name": "SHKN & BI EN B2",
+        "symbol": "SBEN-B2.TA",
+        "ISIN": "IL0012290461"
+    },
+    "1410299": {
+        "name": "SHLOMO HOLD B17",
+        "symbol": "SHLD-B17.TA",
+        "ISIN": "IL0014102995"
+    },
+    "1410307": {
+        "name": "SHLOMO HOLD B18",
+        "symbol": "SHLD-B18.TA",
+        "ISIN": "IL0014103076"
+    },
+    "1192731": {
+        "name": "SHLOMO HOLD B19",
+        "symbol": "SHLD-B19.TA",
+        "ISIN": "IL0011927311"
+    },
+    "1192749": {
+        "name": "SHLOMO HOLD B20",
+        "symbol": "SHLD-B20.TA",
+        "ISIN": "IL0011927493"
+    },
+    "1214865": {
+        "name": "SHMUEL BR B1",
+        "symbol": "SMBR-B1.TA",
+        "ISIN": "IL0012148651"
+    },
+    "1182047": {
+        "name": "SHOHAM BUSI B4",
+        "symbol": "SHOM-B4.TA",
+        "ISIN": "IL0011820474"
+    },
+    "1213537": {
+        "name": "SHOHAM BUSI B5",
+        "symbol": "SHOM-B5.TA",
+        "ISIN": "IL0012135377"
+    },
+    "1082007": {
+        "name": "SHOHAM BUSINESS",
+        "symbol": "SHOM.TA",
+        "ISIN": "IL0010820079"
+    },
+    "1207968": {
+        "name": "SHOVAL",
+        "symbol": "SHVL.TA",
+        "ISIN": "IL0012079682"
+    },
+    "1207927": {
+        "name": "SHOVAL B1",
+        "symbol": "SHVL-B1.TA",
+        "ISIN": "IL0012079278"
+    },
+    "1217488": {
+        "name": "SHOVAL B2",
+        "symbol": "SHVL-B2.TA",
+        "ISIN": "IL0012174889"
+    },
+    "1215961": {
+        "name": "SHOVAL ENG W1",
+        "symbol": "SHVL-W1.TA",
+        "ISIN": "IL0012159617"
+    },
+    "777037": {
+        "name": "SHUFERSAL",
+        "symbol": "SAE.TA",
+        "ISIN": "IL0007770378"
+    },
+    "7770191": {
+        "name": "SHUFERSAL    B4",
+        "symbol": "SAE-B4.TA",
+        "ISIN": "IL0077701915"
+    },
+    "7770209": {
+        "name": "SHUFERSAL    B5",
+        "symbol": "SAE-B5.TA",
+        "ISIN": "IL0077702095"
+    },
+    "7770217": {
+        "name": "SHUFERSAL    B6",
+        "symbol": "SAE-B6.TA",
+        "ISIN": "IL0077702178"
+    },
+    "7770258": {
+        "name": "SHUFERSAL    B7",
+        "symbol": "SAE-B7.TA",
+        "ISIN": "IL0077702582"
+    },
+    "1097054": {
+        "name": "SILVER CASTLE",
+        "symbol": "SLCL.TA",
+        "ISIN": "IL0010970544"
+    },
+    "1160597": {
+        "name": "SILVER PROP B2",
+        "symbol": "SILV-B2.TA",
+        "ISIN": "IL0011605974"
+    },
+    "1211648": {
+        "name": "SILVER PROP B3",
+        "symbol": "SILV-B3.TA",
+        "ISIN": "IL0012116484"
+    },
+    "1131556": {
+        "name": "SKYLINE",
+        "symbol": "SKLN.TA",
+        "ISIN": "CA83084Y1007"
+    },
+    "1177518": {
+        "name": "SLRM",
+        "symbol": "SLRM.TA",
+        "ISIN": "IL0011775181"
+    },
+    "1169481": {
+        "name": "SMART AGRO PU",
+        "symbol": "SMAG.TA",
+        "ISIN": "IL0011694812"
+    },
+    "1175439": {
+        "name": "SOFWAVE",
+        "symbol": "SOFW.TA",
+        "ISIN": "IL0011754392"
+    },
+    "1172287": {
+        "name": "SOLAER",
+        "symbol": "SOLR.TA",
+        "ISIN": "IL0011722878"
+    },
+    "1183730": {
+        "name": "SOLAER B1",
+        "symbol": "SOLR-B1.TA",
+        "ISIN": "IL0011837304"
+    },
+    "1214832": {
+        "name": "SOLAER B2",
+        "symbol": "SOLR-B2.TA",
+        "ISIN": "IL0012148321"
+    },
+    "1217918": {
+        "name": "SOLAER W1",
+        "symbol": "SOLR-W1.TA",
+        "ISIN": "IL0012179185"
+    },
+    "169011": {
+        "name": "SOLTERRA",
+        "symbol": "SOLT.TA",
+        "ISIN": "IL0001690119"
+    },
+    "1226877": {
+        "name": "SONOL",
+        "symbol": "SONR.TA",
+        "ISIN": "IL0012268772"
+    },
+    "1226273": {
+        "name": "SONOL RE B1",
+        "symbol": "SONR-B1.TA",
+        "ISIN": "IL0012262734"
+    },
+    "1170539": {
+        "name": "SONOVIA",
+        "symbol": "SONO.TA",
+        "ISIN": "IL0011705394"
+    },
+    "1092345": {
+        "name": "SPACE COM",
+        "symbol": "SCC.TA",
+        "ISIN": "IL0010923451"
+    },
+    "1139922": {
+        "name": "SPACE COM   B16",
+        "symbol": "SCC-B16.TA",
+        "ISIN": "IL0011399222"
+    },
+    "1158518": {
+        "name": "SPACE COM   B18",
+        "symbol": "SCC-B18.TA",
+        "ISIN": "IL0011585184"
+    },
+    "1140888": {
+        "name": "SPACE COM   C17",
+        "symbol": "SCC-C17.TA",
+        "ISIN": "IL0011408882"
+    },
+    "1229434": {
+        "name": "SPACE COM B19",
+        "symbol": "SCC-B19.TA",
+        "ISIN": "IL0012294349"
+    },
+    "1229442": {
+        "name": "SPACE COM B20",
+        "symbol": "SCC-B20.TA",
+        "ISIN": "IL0012294422"
+    },
+    "1178284": {
+        "name": "SPEEDVALUE",
+        "symbol": "SPDV.TA",
+        "ISIN": "IL0011782849"
+    },
+    "1139898": {
+        "name": "SPENCER B2",
+        "symbol": "SPNR-B2.TA",
+        "ISIN": "IL0011398984"
+    },
+    "1188788": {
+        "name": "SPENCER B4",
+        "symbol": "SPNR-B4.TA",
+        "ISIN": "IL0011887887"
+    },
+    "1212851": {
+        "name": "SPENCER B5",
+        "symbol": "SPNR-B5.TA",
+        "ISIN": "IL0012128513"
+    },
+    "1212869": {
+        "name": "SPENCER B6",
+        "symbol": "SPNR-B6.TA",
+        "ISIN": "IL0012128695"
+    },
+    "1224112": {
+        "name": "SPENCER B7",
+        "symbol": "SPNR-B7.TA",
+        "ISIN": "IL0012241126"
+    },
+    "1097344": {
+        "name": "SPRING",
+        "symbol": "SPRG.TA",
+        "ISIN": "IL0010973449"
+    },
+    "1090117": {
+        "name": "SPUNTECH",
+        "symbol": "SPNTC.TA",
+        "ISIN": "IL0010901176"
+    },
+    "1181239": {
+        "name": "STATE ISR 01/27",
+        "symbol": "ILG0127.TA",
+        "ISIN": "XS1551294256"
+    },
+    "1181221": {
+        "name": "STATE ISR 01/29",
+        "symbol": "ILG0129.TA",
+        "ISIN": "XS1936100483"
+    },
+    "1181197": {
+        "name": "STATE ISR 07/30",
+        "symbol": "ILG0730.TA",
+        "ISIN": "US46513JB346"
+    },
+    "1181205": {
+        "name": "STATE ISR 3/26",
+        "symbol": "ILG0326.TA",
+        "ISIN": "US46513CXR23"
+    },
+    "1209899": {
+        "name": "STBRY INC B1",
+        "symbol": "STRW-B1.TA",
+        "ISIN": "IL0012098997"
+    },
+    "1223734": {
+        "name": "STBRY INC B2",
+        "symbol": "STRW-B2.TA",
+        "ISIN": "IL0012237348"
+    },
+    "550012": {
+        "name": "STG",
+        "symbol": "STG.TA",
+        "ISIN": "IL0005500124"
+    },
+    "1122654": {
+        "name": "STORAGE DROP",
+        "symbol": "STRG.TA",
+        "ISIN": "IL0011226540"
+    },
+    "1214485": {
+        "name": "STORAGE W9",
+        "symbol": "STRG-W9.TA",
+        "ISIN": "IL0012144858"
+    },
+    "7460389": {
+        "name": "STRAUS GROUP B5",
+        "symbol": "STRS-B5.TA",
+        "ISIN": "IL0074603890"
+    },
+    "7460421": {
+        "name": "STRAUS GROUP B6",
+        "symbol": "STRS-B6.TA",
+        "ISIN": "IL0074604211"
+    },
+    "746016": {
+        "name": "STRAUSS GROUP",
+        "symbol": "STRS.TA",
+        "ISIN": "IL0007460160"
+    },
+    "1179019": {
+        "name": "STRAWBERRY B3",
+        "symbol": "STRB-B3.TA",
+        "ISIN": "IL0011790198"
+    },
+    "1197029": {
+        "name": "STRAWBERRY B4",
+        "symbol": "STRB-B4.TA",
+        "ISIN": "IL0011970295"
+    },
+    "1205913": {
+        "name": "STRAWBERRY INC",
+        "symbol": "STRW.TA",
+        "ISIN": "US8631821019"
+    },
+    "1181569": {
+        "name": "SUFRIN",
+        "symbol": "SFRN.TA",
+        "ISIN": "IL0011815698"
+    },
+    "1210236": {
+        "name": "SUFRIN B2",
+        "symbol": "SFRN-B2.TA",
+        "ISIN": "IL0012102369"
+    },
+    "1197748": {
+        "name": "SUFRIN C1",
+        "symbol": "SFRN-C1.TA",
+        "ISIN": "IL0011977480"
+    },
+    "1081686": {
+        "name": "SUMMIT",
+        "symbol": "SMT.TA",
+        "ISIN": "IL0010816861"
+    },
+    "1138940": {
+        "name": "SUMMIT       B8",
+        "symbol": "SMT-B8.TA",
+        "ISIN": "IL0011389405"
+    },
+    "1143395": {
+        "name": "SUMMIT      B10",
+        "symbol": "SMT-B10.TA",
+        "ISIN": "IL0011433955"
+    },
+    "1183920": {
+        "name": "SUMMIT B12",
+        "symbol": "SMT-B12.TA",
+        "ISIN": "IL0011839201"
+    },
+    "1208495": {
+        "name": "SUMMIT B13",
+        "symbol": "SMT-B13.TA",
+        "ISIN": "IL0012084955"
+    },
+    "1228972": {
+        "name": "SUMMIT B14",
+        "symbol": "SMT-B14.TA",
+        "ISIN": "IL0012289729"
+    },
+    "1224914": {
+        "name": "SUMMIT P3",
+        "symbol": "SMIT-P3.TA",
+        "ISIN": "IL0012249145"
+    },
+    "1098755": {
+        "name": "SUNFLOWER",
+        "symbol": "SNFL.TA",
+        "ISIN": "IL0010987555"
+    },
+    "1082353": {
+        "name": "SUNY COMMUN",
+        "symbol": "SNCM.TA",
+        "ISIN": "IL0010823537"
+    },
+    "1175090": {
+        "name": "SURE TECH PU",
+        "symbol": "STEC.TA",
+        "ISIN": "IL0011750903"
+    },
+    "1084953": {
+        "name": "SYNEL",
+        "symbol": "SNEL.TA",
+        "ISIN": "IL0010849532"
+    },
+    "2580132": {
+        "name": "TADIRAN GROU B3",
+        "symbol": "TDRN-B3.TA",
+        "ISIN": "IL0025801320"
+    },
+    "1208784": {
+        "name": "TADIRAN GROU B4",
+        "symbol": "TDRN-B4.TA",
+        "ISIN": "IL0012087842"
+    },
+    "258012": {
+        "name": "TADIRAN GROUP",
+        "symbol": "TDRN.TA",
+        "ISIN": "IL0002580129"
+    },
+    "1141357": {
+        "name": "TAMAR PET",
+        "symbol": "TMRP.TA",
+        "ISIN": "IL0011413577"
+    },
+    "1143593": {
+        "name": "TAMAR PETRO  B2",
+        "symbol": "TMRP-B2.TA",
+        "ISIN": "IL0011435935"
+    },
+    "1141332": {
+        "name": "TAMAR PETRO B1",
+        "symbol": "TMRP-B1.TA",
+        "ISIN": "IL0011413320"
+    },
+    "666016": {
+        "name": "TARYA",
+        "symbol": "TRA.TA",
+        "ISIN": "IL0006660166"
+    },
+    "1159029": {
+        "name": "TASE",
+        "symbol": "TASE.TA",
+        "ISIN": "IL0011590291"
+    },
+    "1082726": {
+        "name": "TAT TECHNO",
+        "symbol": "TATT.TA",
+        "ISIN": "IL0010827264"
+    },
+    "796011": {
+        "name": "TAYA INV",
+        "symbol": "TAYA.TA",
+        "ISIN": "IL0007960110"
+    },
+    "216010": {
+        "name": "TECTONA",
+        "symbol": "TECT.TA",
+        "ISIN": "IL0002160104"
+    },
+    "142018": {
+        "name": "TEDEA",
+        "symbol": "TEDE.TA",
+        "ISIN": "IL0001420186"
+    },
+    "1082585": {
+        "name": "TEFRON",
+        "symbol": "TFRLF.TA",
+        "ISIN": "IL0010825854"
+    },
+    "354019": {
+        "name": "TELSYS",
+        "symbol": "TLSY.TA",
+        "ISIN": "IL0003540197"
+    },
+    "1162544": {
+        "name": "TEMPO BEV    B3",
+        "symbol": "TMBV-B3.TA",
+        "ISIN": "IL0011625444"
+    },
+    "1180173": {
+        "name": "TERA LIGHT",
+        "symbol": "TRLT.TA",
+        "ISIN": "IL0011801730"
+    },
+    "1178714": {
+        "name": "TERMINAL X",
+        "symbol": "TRX.TA",
+        "ISIN": "IL0011787145"
+    },
+    "290023": {
+        "name": "TEUZA",
+        "symbol": "TUZA.TA",
+        "ISIN": "IL0002900236"
+    },
+    "629014": {
+        "name": "TEVA",
+        "symbol": "TEVA.TA",
+        "ISIN": "IL0006290147"
+    },
+    "1105022": {
+        "name": "TGBR",
+        "symbol": "TIGBUR.TA",
+        "ISIN": "IL0011050221"
+    },
+    "1090141": {
+        "name": "TGI",
+        "symbol": "TGI.TA",
+        "ISIN": "IL0010901416"
+    },
+    "1178920": {
+        "name": "THE LESER B7",
+        "symbol": "TLSR-B7.TA",
+        "ISIN": "IL0011789208"
+    },
+    "1193192": {
+        "name": "THE LESER B8",
+        "symbol": "TLSR-B8.TA",
+        "ISIN": "IL0011931925"
+    },
+    "1205681": {
+        "name": "THE LESER B9",
+        "symbol": "TLSR-B9.TA",
+        "ISIN": "IL0012056813"
+    },
+    "1137975": {
+        "name": "THE ZARASAI  B3",
+        "symbol": "TZRS-B3.TA",
+        "ISIN": "IL0011379752"
+    },
+    "1169556": {
+        "name": "THE ZARASAI  B5",
+        "symbol": "TZRS-B5.TA",
+        "ISIN": "IL0011695561"
+    },
+    "1097229": {
+        "name": "THEMIS",
+        "symbol": "TMIS.TA",
+        "ISIN": "IL0010972292"
+    },
+    "397018": {
+        "name": "THIRDEYE",
+        "symbol": "THES.TA",
+        "ISIN": "IL0003970188"
+    },
+    "1173871": {
+        "name": "TIGI",
+        "symbol": "TIGI.TA",
+        "ISIN": "IL0011738718"
+    },
+    "1084367": {
+        "name": "TIKUN OLAM CANB",
+        "symbol": "TKUN.TA",
+        "ISIN": "IL0010843675"
+    },
+    "103010": {
+        "name": "TIV TAAM",
+        "symbol": "TTAM.TA",
+        "ISIN": "IL0001030100"
+    },
+    "1189919": {
+        "name": "TNUPORT B2",
+        "symbol": "TNUP-B2.TA",
+        "ISIN": "IL0011899197"
+    },
+    "462010": {
+        "name": "TOGETHER",
+        "symbol": "TGTR.TA",
+        "ISIN": "IL0004620105"
+    },
+    "1129493": {
+        "name": "TOMER ENERGY",
+        "symbol": "TOEN.TA",
+        "ISIN": "IL0011294936"
+    },
+    "1147479": {
+        "name": "TOMER ENERGY B1",
+        "symbol": "TOEN-B1.TA",
+        "ISIN": "IL0011474793"
+    },
+    "1180686": {
+        "name": "TONDO SMART",
+        "symbol": "TNDO.TA",
+        "ISIN": "IL0011806861"
+    },
+    "1083377": {
+        "name": "TOP GROUP",
+        "symbol": "TOPG.TA",
+        "ISIN": "IL0010833775"
+    },
+    "1179142": {
+        "name": "TOP GUM",
+        "symbol": "TPGM.TA",
+        "ISIN": "IL0011791428"
+    },
+    "1082379": {
+        "name": "TOWER",
+        "symbol": "TSEM.TA",
+        "ISIN": "IL0010823792"
+    },
+    "8261018": {
+        "name": "TREASR BND 1016",
+        "symbol": "TR1016.TA",
+        "ISIN": "IL0082610184"
+    },
+    "8251118": {
+        "name": "TREASR BND 1115",
+        "symbol": "TR1115.TA",
+        "ISIN": "IL0082511184"
+    },
+    "8260119": {
+        "name": "TREASR BND 116",
+        "symbol": "TR116.TA",
+        "ISIN": "IL0082601191"
+    },
+    "8251217": {
+        "name": "TREASR BND 1215",
+        "symbol": "TR1215.TA",
+        "ISIN": "IL0082512174"
+    },
+    "8260218": {
+        "name": "TREASR BND 216",
+        "symbol": "TR216.TA",
+        "ISIN": "IL0082602181"
+    },
+    "8260317": {
+        "name": "TREASR BND 316",
+        "symbol": "TR316.TA",
+        "ISIN": "IL0082603171"
+    },
+    "8260416": {
+        "name": "TREASR BND 416",
+        "symbol": "TR416.TA",
+        "ISIN": "IL0082604161"
+    },
+    "8260515": {
+        "name": "TREASR BND 516",
+        "symbol": "TR516.TA",
+        "ISIN": "IL0082605150"
+    },
+    "8260614": {
+        "name": "TREASR BND 616",
+        "symbol": "TR616.TA",
+        "ISIN": "IL0082606141"
+    },
+    "8260721": {
+        "name": "TREASR BND 726",
+        "symbol": "TR726.TA",
+        "ISIN": "IL0082607214"
+    },
+    "8260812": {
+        "name": "TREASR BND 816",
+        "symbol": "TR816.TA",
+        "ISIN": "IL0082608121"
+    },
+    "8260911": {
+        "name": "TREASR BND 916",
+        "symbol": "TR916.TA",
+        "ISIN": "IL0082609111"
+    },
+    "1174093": {
+        "name": "TRUCKNET",
+        "symbol": "TRAN.TA",
+        "ISIN": "IL0011740938"
+    },
+    "1209477": {
+        "name": "TSG",
+        "symbol": "TSG.TA",
+        "ISIN": "IL0012094772"
+    },
+    "1181742": {
+        "name": "TURBOGEN",
+        "symbol": "TURB.TA",
+        "ISIN": "IL0011817421"
+    },
+    "1175611": {
+        "name": "TURPAZ",
+        "symbol": "TRPZ.TA",
+        "ISIN": "IL0011756116"
+    },
+    "1184282": {
+        "name": "UMH",
+        "symbol": "UMH.TA",
+        "ISIN": "US9030021037"
+    },
+    "1184167": {
+        "name": "UMH PROP B1",
+        "symbol": "UMH-B1.TA",
+        "ISIN": "IL0011841678"
+    },
+    "1225739": {
+        "name": "UMH PROP B2",
+        "symbol": "UMH-B2.TA",
+        "ISIN": "IL0012257395"
+    },
+    "1168657": {
+        "name": "UNICORN TECH PU",
+        "symbol": "UNCT.TA",
+        "ISIN": "IL0011686578"
+    },
+    "1174846": {
+        "name": "UNIC-TECH PU",
+        "symbol": "UNTC.TA",
+        "ISIN": "IL0011748469"
+    },
+    "1227354": {
+        "name": "UNIC-TECH W2",
+        "symbol": "UNTC-W2.TA",
+        "ISIN": "IL0012273541"
+    },
+    "1083831": {
+        "name": "UNITRONICS",
+        "symbol": "UNIT.TA",
+        "ISIN": "IL0010838311"
+    },
+    "1144773": {
+        "name": "UNIVERSAL",
+        "symbol": "UNMI.TA",
+        "ISIN": "IL0011447732"
+    },
+    "1160670": {
+        "name": "UNIVERSAL    B3",
+        "symbol": "UNMI-B3.TA",
+        "ISIN": "IL0011606709"
+    },
+    "1172253": {
+        "name": "UNIVERSAL    B4",
+        "symbol": "UNMI-B4.TA",
+        "ISIN": "IL0011722530"
+    },
+    "1192608": {
+        "name": "UNIVERSAL B5",
+        "symbol": "UNMI-B5.TA",
+        "ISIN": "IL0011926081"
+    },
+    "1192616": {
+        "name": "UNIVERSAL B6",
+        "symbol": "UNMI-B6.TA",
+        "ISIN": "IL0011926164"
+    },
+    "1093558": {
+        "name": "UNIVO-M",
+        "symbol": "UNVO-M.TA",
+        "ISIN": "IL0010935588"
+    },
+    "456012": {
+        "name": "UPSELLON BRANDS",
+        "symbol": "UPSL.TA",
+        "ISIN": "IL0004560129"
+    },
+    "1223809": {
+        "name": "URBAN BRAND B1",
+        "symbol": "MUTG-B1.TA",
+        "ISIN": "IL0012238098"
+    },
+    "1220755": {
+        "name": "URBANICA",
+        "symbol": "URBC.TA",
+        "ISIN": "IL0012207556"
+    },
+    "1157114": {
+        "name": "UTRON",
+        "symbol": "UTRN.TA",
+        "ISIN": "IL0011571143"
+    },
+    "1176387": {
+        "name": "VERIDIS",
+        "symbol": "VRDS.TA",
+        "ISIN": "IL0011763872"
+    },
+    "1123777": {
+        "name": "VICTORY",
+        "symbol": "VCTR.TA",
+        "ISIN": "IL0011237778"
+    },
+    "1161488": {
+        "name": "VICTORY      B2",
+        "symbol": "VCTR-B2.TA",
+        "ISIN": "IL0011614885"
+    },
+    "416016": {
+        "name": "VILLAR",
+        "symbol": "VILR.TA",
+        "ISIN": "IL0004160169"
+    },
+    "4160164": {
+        "name": "VILLAR       B9",
+        "symbol": "VILR-B9.TA",
+        "ISIN": "IL0041601647"
+    },
+    "1193952": {
+        "name": "VILLAR      B10",
+        "symbol": "VILR-B10.TA",
+        "ISIN": "IL0011939522"
+    },
+    "1223155": {
+        "name": "VILLAR B11",
+        "symbol": "VILR-B11.TA",
+        "ISIN": "IL0012231556"
+    },
+    "350017": {
+        "name": "VISION SIGMA",
+        "symbol": "VISN.TA",
+        "ISIN": "IL0003500175"
+    },
+    "1109966": {
+        "name": "VITANIA",
+        "symbol": "VTNA.TA",
+        "ISIN": "IL0011099665"
+    },
+    "1150903": {
+        "name": "VITANIA B5",
+        "symbol": "VTNA-B5.TA",
+        "ISIN": "IL0011509036"
+    },
+    "1193143": {
+        "name": "VITANIA B6",
+        "symbol": "VYNA-B6.TA",
+        "ISIN": "IL0011931438"
+    },
+    "1216241": {
+        "name": "VITANIA B7",
+        "symbol": "VYNA-B7.TA",
+        "ISIN": "IL0012162413"
+    },
+    "1180306": {
+        "name": "WATER IO",
+        "symbol": "WATR.TA",
+        "ISIN": "IL0011803066"
+    },
+    "1229145": {
+        "name": "WATER IO W2",
+        "symbol": "WATR-W2.TA",
+        "ISIN": "IL0012291451"
+    },
+    "1161322": {
+        "name": "WESTDALE     B2",
+        "symbol": "WSDL-B2.TA",
+        "ISIN": "IL0011613226"
+    },
+    "1208511": {
+        "name": "WESTDALE B3",
+        "symbol": "WSDL-B3.TA",
+        "ISIN": "IL0012085119"
+    },
+    "1229228": {
+        "name": "WESURE B1",
+        "symbol": "WESR-B1.TA",
+        "ISIN": "IL0012292285"
+    },
+    "1173228": {
+        "name": "WESURE GLOBALT",
+        "symbol": "WESR.TA",
+        "ISIN": "IL0011732281"
+    },
+    "1229251": {
+        "name": "WESURE W1",
+        "symbol": "WESR-W1.TA",
+        "ISIN": "IL0012292517"
+    },
+    "278010": {
+        "name": "WILK",
+        "symbol": "WILK.TA",
+        "ISIN": "IL0002780109"
+    },
+    "2780245": {
+        "name": "WILK W3",
+        "symbol": "WILK-W3.TA",
+        "ISIN": "IL0027802458"
+    },
+    "1192269": {
+        "name": "WILK W4",
+        "symbol": "WILK-W4.TA",
+        "ISIN": "IL0011922692"
+    },
+    "1082858": {
+        "name": "WILLI FOOD INTE",
+        "symbol": "WILC.TA",
+        "ISIN": "IL0010828585"
+    },
+    "371013": {
+        "name": "WILLY FOOD",
+        "symbol": "WLFD.TA",
+        "ISIN": "IL0003710139"
+    },
+    "1105162": {
+        "name": "WIND BUZZ",
+        "symbol": "WNBZ.TA",
+        "ISIN": "IL0011051625"
+    },
+    "1219203": {
+        "name": "WIND BUZZ W4",
+        "symbol": "WNB-W4.TA",
+        "ISIN": "IL0012192030"
+    },
+    "1085497": {
+        "name": "XTL BIO",
+        "symbol": "XTLB.TA",
+        "ISIN": "IL0010854979"
+    },
+    "1203314": {
+        "name": "Y BOX W3",
+        "symbol": "YBOX-W3.TA",
+        "ISIN": "IL0012033143"
+    },
+    "111013": {
+        "name": "Y.B RENEWAL",
+        "symbol": "YBRD.TA",
+        "ISIN": "IL0001110134"
+    },
+    "1227321": {
+        "name": "YAAZ",
+        "symbol": "YAAZ.TA",
+        "ISIN": "IL0012273210"
+    },
+    "1227339": {
+        "name": "YAAZ W1",
+        "symbol": "YAAZ-W1.TA",
+        "ISIN": "IL0012273392"
+    },
+    "1142421": {
+        "name": "YACOBI GROUP",
+        "symbol": "YACO.TA",
+        "ISIN": "IL0011424210"
+    },
+    "486027": {
+        "name": "YBOX",
+        "symbol": "YBOX.TA",
+        "ISIN": "IL0004860271"
+    },
+    "1204841": {
+        "name": "YBOX B5",
+        "symbol": "YBOX-B5.TA",
+        "ISIN": "IL0012048414"
+    },
+    "4860177": {
+        "name": "YBOX C3",
+        "symbol": "YBOX-C3.TA",
+        "ISIN": "IL0048601772"
+    },
+    "1214881": {
+        "name": "YBOX T6",
+        "symbol": "YBOX-B6.TA",
+        "ISIN": "IL0012148818"
+    },
+    "1188416": {
+        "name": "YESODOT",
+        "symbol": "YESD.TA",
+        "ISIN": "IL0011884165"
+    },
+    "1218650": {
+        "name": "YESODOT C2",
+        "symbol": "YESD-C2.TA",
+        "ISIN": "IL0012186503"
+    },
+    "1161264": {
+        "name": "YOCHANANOF",
+        "symbol": "YHNF.TA",
+        "ISIN": "IL0011612640"
+    },
+    "1187418": {
+        "name": "YOCHANANOF B1",
+        "symbol": "YHNF-B1.TA",
+        "ISIN": "IL0011874182"
+    },
+    "1219336": {
+        "name": "YOZMOT B1",
+        "symbol": "YOZM-B1.TA",
+        "ISIN": "IL0012193368"
+    },
+    "1186907": {
+        "name": "YUVALIM B2",
+        "symbol": "YBKB-B2.TA",
+        "ISIN": "IL0011869075"
+    },
+    "1198696": {
+        "name": "YUVALIM B3",
+        "symbol": "YBKB-B3.TA",
+        "ISIN": "IL0011986960"
+    },
+    "1204023": {
+        "name": "YUVALIM B4",
+        "symbol": "YBKB-B4.TA",
+        "ISIN": "IL0012040239"
+    },
+    "1216449": {
+        "name": "YUVALIM B5",
+        "symbol": "YBKB-B5.TA",
+        "ISIN": "IL0012164492"
+    },
+    "130013": {
+        "name": "ZANLAKOL",
+        "symbol": "ZNKL.TA",
+        "ISIN": "IL0001300131"
+    },
+    "1194695": {
+        "name": "ZEPHYRUS",
+        "symbol": "ZPRS.TA",
+        "ISIN": "IL0011946956"
+    },
+    "1222231": {
+        "name": "ZEPHYRUS B1",
+        "symbol": "ZPRS-B1.TA",
+        "ISIN": "IL0012222316"
+    },
+    "1194703": {
+        "name": "ZEPHYRUS W1",
+        "symbol": "ZPRS-W1.TA",
+        "ISIN": "IL0011947038"
+    },
+    "1174184": {
+        "name": "ZOOZ POWER",
+        "symbol": "ZOOZ.TA",
+        "ISIN": "IL0011741845"
+    },
+    "730010": {
+        "name": "ZUR",
+        "symbol": "ZUR.TA",
+        "ISIN": "IL0007300101"
+    },
+    "7300171": {
+        "name": "ZUR         B10",
+        "symbol": "ZUR-B10.TA",
+        "ISIN": "IL0073001716"
+    },
+    "7300247": {
+        "name": "ZUR        B 11",
+        "symbol": "ZUR-B11.TA",
+        "ISIN": "IL0073002474"
+    },
+    "1205798": {
+        "name": "ZUR B12",
+        "symbol": "ZUR-B12.TA",
+        "ISIN": "IL0012057985"
+    },
+    "1224666": {
+        "name": "ZUR B13",
+        "symbol": "ZUR-B13.TA",
+        "ISIN": "IL0012246661"
+    },
+    "1183441": {
+        "name": "Invesco S&P 500 UCITS ETF",
+        "symbol": "IN-FF1.TA",
+        "ISIN": "IE00B3YCGJ38"
+    },
+    "1183458": {
+        "name": "Invesco S&P 500 ESG Ucits ETF",
+        "symbol": "IN-FF2.TA",
+        "ISIN": "IE00BKS7L097"
+    },
+    "1183466": {
+        "name": "Invesco Financial S&P US Select Sector UCITS ETF",
+        "symbol": "IN-FF3.TA",
+        "ISIN": "IE00B42Q4896"
+    },
+    "1183474": {
+        "name": "Invesco Health Care S&P US Select Sector UCITS ETF",
+        "symbol": "IN-FF4.TA",
+        "ISIN": "IE00B3WMTH43"
+    },
+    "1183482": {
+        "name": "Invesco KBW NASDAQ Fintech UCITS ETF",
+        "symbol": "IN-FF5.TA",
+        "ISIN": "IE00BYMS5W68"
+    },
+    "1183490": {
+        "name": "Invesco MSCI Emerging Markets UCITS ETF",
+        "symbol": "IN-FF6.TA",
+        "ISIN": "IE00B3DWVS88"
+    },
+    "1185164": {
+        "name": "Source MSCI World UCITS ETF",
+        "symbol": "IN-FF7.TA",
+        "ISIN": "IE00B60SX394"
+    },
+    "1185172": {
+        "name": "Invesco STOXX Europe 600 UCITS ETF",
+        "symbol": "IN-FF8.TA",
+        "ISIN": "IE00B60SWW18"
+    },
+    "1185180": {
+        "name": "Invesco Technology S&P US Select Sector UCITS ETF",
+        "symbol": "IN-FF9.TA",
+        "ISIN": "IE00B3VSSL01"
+    },
+    "1185206": {
+        "name": "Invesco AT 1 Capital Bond UCITS ETF",
+        "symbol": "IN-FF10.TA",
+        "ISIN": "IE00BFZPF322"
+    },
+    "1186063": {
+        "name": "Invesco NASDAQ-100 Swap UCITS ETF Acc",
+        "symbol": "IN-FF12.TA",
+        "ISIN": "IE00BNRQM384"
+    },
+    "1186071": {
+        "name": "Invesco MSCI China All Shrs Stk Cnnct UCITS ETF Acc",
+        "symbol": "IN-FF13.TA",
+        "ISIN": "IE00BK80XL30"
+    },
+    "1207190": {
+        "name": "Invesco EURO STOXX 50 UCITS ETF Acc",
+        "symbol": "IN-FF14.TA",
+        "ISIN": "IE00B60SWX25"
+    },
+    "1206895": {
+        "name": "Invesco Russell 2000 UCITS ETF Acc",
+        "symbol": "IN-FF15.TA",
+        "ISIN": "IE00B60SX402"
+    },
+    "1207208": {
+        "name": "Invesco S&P 500 Equal Weight UCITS ETF Acc",
+        "symbol": "IN-FF16.TA",
+        "ISIN": "IE00BNGJJT35"
+    },
+    "1209220": {
+        "name": "Invesco FTSE All World UCITS ETF Acc",
+        "symbol": "IN-FF17.TA",
+        "ISIN": "IE000716YHJ7"
+    },
+    "1159169": {
+        "name": "iShares Core MSCI EM IMI UCITS ETF USD Acc",
+        "symbol": "IS-FF101.TA",
+        "ISIN": "IE00BKM4GZ66"
+    },
+    "1159177": {
+        "name": "iShares USD Treasury Bond 1-3yr UCITS ETF",
+        "symbol": "IS-FF102.TA",
+        "ISIN": "IE00BYXPSP02"
+    },
+    "1159185": {
+        "name": "iShares USD Corp Bond UCITS ETF",
+        "symbol": "IS-FF103.TA",
+        "ISIN": "IE00BYXYYJ35"
+    },
+    "1158989": {
+        "name": "iShares J.P. Morgan USD EM Bond UCITS ETF Acc",
+        "symbol": "IS-FF201.TA",
+        "ISIN": "IE00BYXYYK40"
+    },
+    "1159060": {
+        "name": "iShares USD TIPS UCITS ETF",
+        "symbol": "IS-FF202.TA",
+        "ISIN": "IE00B1FZSC47"
+    },
+    "1159078": {
+        "name": "iShares USD High Yield Corp Bond UCITS ETF",
+        "symbol": "IS-FF203.TA",
+        "ISIN": "IE00BYXYYL56"
+    },
+    "1159086": {
+        "name": "iShares USD Floating Rate Bond UCITS ETF",
+        "symbol": "IS-FF204.TA",
+        "ISIN": "IE00BDFGJ627"
+    },
+    "1159094": {
+        "name": "iShares Core MSCI Europe UCITS ETF EUR ACC",
+        "symbol": "IS-FF301.TA",
+        "ISIN": "IE00B4K48X80"
+    },
+    "1159102": {
+        "name": "iShares Core Global Aggregate Bond UCITS ETF",
+        "symbol": "IS-FF302.TA",
+        "ISIN": "IE00BZ043R46"
+    },
+    "1159110": {
+        "name": "iShares MSCI China A UCITS ETF",
+        "symbol": "IS-FF401.TA",
+        "ISIN": "IE00BQT3WG13"
+    },
+    "1159128": {
+        "name": "iShares Healthcare Innovation UCITS ETF",
+        "symbol": "IS-FF402.TA",
+        "ISIN": "IE00BYZK4776"
+    },
+    "1159136": {
+        "name": "iShares Digitalisation UCITS ETF",
+        "symbol": "IS-FF403.TA",
+        "ISIN": "IE00BYZK4883"
+    },
+    "1159144": {
+        "name": "iShares Automation & Robotics UCITS ETF",
+        "symbol": "IS-FF404.TA",
+        "ISIN": "IE00BYZK4552"
+    },
+    "1159151": {
+        "name": "iShares USD Short Duration Corp Bond UCITS ETF",
+        "symbol": "IS-FF405.TA",
+        "ISIN": "IE00BYXYYP94"
+    },
+    "1159193": {
+        "name": "iShares S&P 500 Information Technology Sector UCITS ETF",
+        "symbol": "IS-FF501.TA",
+        "ISIN": "IE00B3WJKG14"
+    },
+    "1159201": {
+        "name": "iShares S&P 500 Health Care Sector UCITS ETF",
+        "symbol": "IS-FF502.TA",
+        "ISIN": "IE00B43HR379"
+    },
+    "1159219": {
+        "name": "iShares S&P 500 Financials Sector UCITS ETF",
+        "symbol": "IS-FF503.TA",
+        "ISIN": "IE00B4JNQZ49"
+    },
+    "1159227": {
+        "name": "iShares S&P 500 Consumer Discretionary Sector UCITS ETF",
+        "symbol": "IS-FF504.TA",
+        "ISIN": "IE00B4MCHD36"
+    },
+    "1159235": {
+        "name": "iShares MSCI ACWI UCITS ETF",
+        "symbol": "IS-FF505.TA",
+        "ISIN": "IE00B6R52259"
+    },
+    "1159243": {
+        "name": "iShares NASDAQ 100 UCITS ETF",
+        "symbol": "IS-FF701.TA",
+        "ISIN": "IE00B53SZB19"
+    },
+    "1159250": {
+        "name": "iShares Core S&P 500 UCITS ETF",
+        "symbol": "IS-FF702.TA",
+        "ISIN": "IE00B5BMR087"
+    },
+    "1159268": {
+        "name": "iShares USD Treasury Bond 7-10YR UCITS ETF",
+        "symbol": "IS-FF703.TA",
+        "ISIN": "IE00B3VWN518"
+    },
+    "1159276": {
+        "name": "iShares USD Treasury Bond 3-7YR UCITS ETF",
+        "symbol": "IS-FF704.TA",
+        "ISIN": "IE00B3VWN393"
+    }
+}

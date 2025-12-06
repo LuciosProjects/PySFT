@@ -17,3 +17,7 @@ Import this module wherever shared constants are needed to keep values
 declarative, discoverable, and maintainable.
 """
 
+# Indicator request dictionary fields
+INDICATOR_FIELD     = "indicator"
+FETCH_TYPE_FIELD    = "fetch_type"
+REQUEST_FIELD       = "request"
