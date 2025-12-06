@@ -17,5 +17,3 @@ Import this module wherever shared constants are needed to keep values
 declarative, discoverable, and maintainable.
 """
 
-# Application environment keys
-PYSFT_VERSION = "0.0.1"

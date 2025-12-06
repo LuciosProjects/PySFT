@@ -10,7 +10,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Lucio" }]
 license = { text = "Proprietary" }
-dependencies = []
+dependencies = ["numpy", 
+                "pandas", 
+                "requests"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
