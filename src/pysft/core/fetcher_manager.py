@@ -1,12 +1,12 @@
-from typing import TYPE_CHECKING
-from aiohttp import request
+from typing import TYPE_CHECKING, Any
 import pandas as pd
 
 # ---- Package imports ----
-from pysft.models import _indicator_data, fetcher_settings
+from pysft.core.models import fetcher_settings
+from pysft.core.utilities import classify_fetch_types
 
 if TYPE_CHECKING:
-    from pysft.models import _fetchRequest
+    from pysft.core.models import _fetchRequest
 
 class fetcher_manager:
     """
@@ -26,7 +26,8 @@ class fetcher_manager:
 
         self.parsedInput = request
         self.settings = fetcher_settings(request)
-        self.fetched_data = pd.DataFrame()
+        self.requests: dict[str, dict[str, Any]] = {}
+        self.fetched_data: pd.DataFrame # output field to be populated with fetched data
 
     def managerRoutine(self) -> None:
         """
@@ -34,8 +35,10 @@ class fetcher_manager:
         
         Populates self.fetched_data with retrieved indicator information.
         """
-        
-        pass
+
+        classify_fetch_types(self)
+
+        ...
 
     def getResults(self) -> pd.DataFrame:
         """

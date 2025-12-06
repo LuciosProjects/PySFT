@@ -17,7 +17,6 @@ class E_FetchType(Enum):
     TASE_FAST       = 1
     TASE_HISTORICAL = 2
 
-
 class E_IndicatorType(Enum):
     NULL        = -1
     YFINANCE    = 0

@@ -1,8 +1,8 @@
 import pandas as pd
 
 # ---- Package imports ----
-from pysft.models import _fetchRequest
-from pysft.data.fetcher_manager import fetcher_manager
+from pysft.core.models import _fetchRequest
+from pysft.core.fetcher_manager import fetcher_manager
 
 def fetchData(
         indicators: str | list[str],

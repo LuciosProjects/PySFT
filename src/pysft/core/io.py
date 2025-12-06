@@ -1,13 +1,9 @@
 from __future__ import annotations
 
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Iterable, List, Tuple
-from dataclasses import dataclass
 import pandas as pd
-
-# Package imports
-from pysft.enums import E_FetchType
 
 # -----------------------------
 # Input parsing helpers
@@ -122,7 +118,8 @@ def _resolve_range(
             # default: end minus 1 day
             s = (e or pd.Timestamp.utcnow()).floor("D") - pd.Timedelta(days=1)
         if not e:
-            e = pd.Timestamp.utcnow().floor("D")
+            # default: start plus 1 day
+            e = (s or pd.Timestamp.utcnow()).floor("D") + pd.Timedelta(days=1)
         return s, e
     return None, None
 
