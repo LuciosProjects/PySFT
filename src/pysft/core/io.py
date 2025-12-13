@@ -115,11 +115,11 @@ def _resolve_range(
         raise ValueError("Start date must be <= end date.")
     if s or e:
         if not s:
-            # default: end minus 1 day
-            s = (e or pd.Timestamp.utcnow()).floor("D") - pd.Timedelta(days=1)
+            # default: end or today if end is not provided
+            s = e.floor("D") if e else pd.Timestamp.utcnow().floor("D")
         if not e:
-            # default: start plus 1 day
-            e = (s or pd.Timestamp.utcnow()).floor("D") + pd.Timedelta(days=1)
+            # default: start or today if start is not provided
+            e = s.floor("D") if s else pd.Timestamp.utcnow().floor("D")
         return s, e
     return None, None
 
