@@ -17,6 +17,40 @@ Import this module wherever shared constants are needed to keep values
 declarative, discoverable, and maintainable.
 """
 
+from pysft.core.structures import CTimeRepr
+
+# General package constants
+PACKAGE_NAME = "pysft"
+
+# Memory-related constants
+ONE_MB                      = (1024**2)         # One MB in bytes (1024 bytes in 1 KB, 1024 KB in 1 MB and so on...)
+ONE_GB                      = (ONE_MB * 1024)   # One GB in bytes
+
+# Fetcher constants
+MAX_ATTEMPTS            = 3  # max fetch attempts
+MAX_YF_ATTEMPTS         = 6  # max yfinance fetch attempts, takes more bacause of batching and rate limits
+INITIAL_DAYS_HALF_SPAN  = 3 # initial days half-span for data fetch window
+HALF_SPAN_INCREMENT     = 3 # days to increment half-span per attempt
+
+CURRENCY_NORMALIZATION = {
+    # Currency conversion factors for calculations
+
+    "USD": {"factor": 1.0, "alias": "USD"},     # US Dollar
+    "EUR": {"factor": 1.0, "alias": "EUR"},     # Euro
+    "ILS": {"factor": 1.0, "alias": "ILS"},     # Israeli Shekel
+    "ILA": {"factor": 0.01, "alias": "ILS"},    # Israeli Agora (1 ILS = 100 ILA)
+}
+
+# YFinance-specific constants
+YF_REQUIRED_DATAFRAME_COLUMNS = ["Open", "High", "Low", "Close", "Volume"]
+YFINANCE_DATE_FORMAT = "%Y-%m-%d"
+YF_API_CALL_TIMEOUT = CTimeRepr(20)  # seconds
+
+# multi-processing constants
+YF_BATCH_SIZE = 30  # max indicators per yfinance batch request
+YF_CONCURRENCY_LIMIT = 3  # max concurrent yfinance batch requests
+YF_RATELIMIT_PAUSE = CTimeRepr(2)  # seconds to pause on rate limit hit
+
 # Indicator request dictionary fields
 INDICATOR_FIELD     = "indicator"
 FETCH_TYPE_FIELD    = "fetch_type"

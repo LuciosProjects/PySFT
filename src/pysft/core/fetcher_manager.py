@@ -2,8 +2,8 @@ from typing import TYPE_CHECKING, Any
 import pandas as pd
 
 # ---- Package imports ----
+from pysft.core.utilities import classify_fetch_types, create_task_list
 from pysft.core.models import fetcher_settings
-from pysft.core.utilities import classify_fetch_types
 
 if TYPE_CHECKING:
     from pysft.core.models import _fetchRequest
@@ -37,8 +37,12 @@ class fetcher_manager:
         """
 
         classify_fetch_types(self)
+        taskList = create_task_list(self)
 
-        ...
+        # Initialize task scheduler with taskList, for now we will just serialy execute them
+        for task in taskList:
+            task.execute()
+        
 
     def getResults(self) -> pd.DataFrame:
         """

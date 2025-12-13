@@ -9,22 +9,6 @@ class TASE_SEC_URLs:
     SECURITY = lambda indicator: f"https://market.tase.co.il/en/market_data/security/{indicator}/historical_data/eod?pType=7&oId=0{indicator}" # Base URL for TASE Security historical data page (5 years)
     THEMARKER = lambda indicator: f"https://finance.themarker.com/etf/{indicator}" # Base URL for TheMarker
 
-
-def has_tase_indicators(indicators: list[str]) -> tuple[bool, list[bool]]:
-    """
-    Check if the list of indicators contains any TASE indicators.
-    
-    Args:
-        indicators (list[str]): List of financial indicators.
-        
-    Returns:
-        bool: True if any indicator is a TASE indicator, False otherwise.
-    """
-
-    is_tase_indicators = [indicator.isdigit() or indicator.startswith("126.") 
-                          for indicator in indicators]
-    return any(is_tase_indicators), is_tase_indicators
-
 def determine_tase_currency(indicator: str) -> str:
     """
     Determine the currency for a specific TASE indicator.
