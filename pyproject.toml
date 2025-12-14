@@ -12,7 +12,7 @@ authors = [{ name = "Lucio" }]
 license = { text = "Proprietary" }
 dependencies = ["numpy", 
                 "pandas", 
-                "requests"]
+                "yfinance"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
