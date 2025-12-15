@@ -79,20 +79,59 @@ def _parse_tase_data(html_content: str, indicator_type: E_IndicatorType) -> Opti
     
     Returns:
         Optional[dict]: Dictionary containing parsed financial data, or None if parsing fails
+        
+    Note:
+        This is a placeholder implementation. The actual HTML parsing logic needs to be
+        implemented based on the specific structure of TASE websites:
+        
+        For TASE_MTF (maya.tase.co.il):
+            - Locate mutual fund price data (usually in specific div/span elements)
+            - Extract fund name from page header or title
+            - Parse date from page or data table
+            - Extract NAV (Net Asset Value) as the primary price
+            
+        For TASE_ETF (market.tase.co.il/etf):
+            - Find ETF price in the market data section
+            - Extract trading volume from the data table
+            - Parse open/high/low/close prices
+            - Get ETF name and description
+            
+        For TASE_SEC (market.tase.co.il/security):
+            - Similar to ETF but for stocks/securities
+            - Extract additional fields like market cap if available
+            
+        Implementation steps:
+            1. Inspect actual HTML from target URLs
+            2. Identify CSS classes, IDs, or XPath selectors for data elements
+            3. Use BeautifulSoup methods (find, find_all, select) to extract data
+            4. Handle variations in HTML structure (missing data, different layouts)
+            5. Convert extracted strings to appropriate types (float, int, datetime)
     """
     try:
         soup = BeautifulSoup(html_content, 'lxml')
         data = {}
         
-        # This is a placeholder implementation - actual parsing depends on TASE website structure
-        # The parsing logic would need to be customized based on the actual HTML structure
-        # of each TASE page type (MTF, ETF, SEC)
-        
-        # Example parsing patterns (to be adjusted based on actual website structure):
-        # - Look for price data in specific HTML elements
-        # - Extract company/fund name
-        # - Extract trading volume
-        # - Extract date information
+        # TODO: Implement actual HTML parsing based on TASE website structure
+        # The following is a template showing expected data structure:
+        #
+        # if indicator_type == E_IndicatorType.TASE_MTF:
+        #     # Parse Maya TASE mutual fund page
+        #     data['name'] = soup.find('h1', class_='fund-name').text.strip()
+        #     data['price'] = float(soup.find('span', class_='nav-value').text.strip())
+        #     data['date'] = pd.to_datetime(soup.find('span', class_='date').text.strip())
+        #     # ... extract other fields
+        #
+        # elif indicator_type == E_IndicatorType.TASE_ETF:
+        #     # Parse TASE ETF page
+        #     data['name'] = soup.find('h2', class_='etf-title').text.strip()
+        #     price_elem = soup.find('td', {'data-field': 'lastPrice'})
+        #     data['price'] = float(price_elem.text.strip()) if price_elem else 0.0
+        #     # ... extract other fields
+        #
+        # elif indicator_type == E_IndicatorType.TASE_SEC:
+        #     # Parse TASE security page
+        #     # Similar structure to ETF
+        #     pass
         
         # For now, return None to indicate parsing needs implementation
         logger.warning("TASE HTML parsing not yet implemented for website structure")
