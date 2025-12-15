@@ -31,10 +31,15 @@ def _determine_indicator_type(indicator: str) -> E_IndicatorType:
         
     Note:
         Pure numeric indicators are assumed to be securities (TASE_SEC).
+        Indicators starting with "126." are mutual funds (MTF).
+        Other formats default to TASE_SEC to attempt fetching.
         The distinction between ETF and other securities cannot be determined
         from the indicator format alone and would require additional data sources
         or metadata lookup.
     """
+    if not indicator or not isinstance(indicator, str):
+        return E_IndicatorType.NULL
+        
     if indicator.startswith("126."):
         # TASE mutual funds (MTF) typically start with 126.
         return E_IndicatorType.TASE_MTF
@@ -42,7 +47,9 @@ def _determine_indicator_type(indicator: str) -> E_IndicatorType:
         # Pure numeric indicators are assumed to be securities
         return E_IndicatorType.TASE_SEC
     else:
-        return E_IndicatorType.NULL
+        # Default to TASE_SEC for other formats to attempt fetching
+        # This handles mixed alphanumeric or other valid TASE formats
+        return E_IndicatorType.TASE_SEC
 
 
 def _fetch_from_url(url: str, timeout: int = 10) -> Optional[str]:
@@ -229,7 +236,10 @@ def fetch_TASE_fast(request: indicatorRequest):
         
         # Calculate change percentage if we have both current and previous prices
         # Use the last field which is always scalar, unlike price which can be list[float]
-        if 'previous_close' in parsed_data and parsed_data['previous_close'] > 0:
+        if ('previous_close' in parsed_data and 
+            parsed_data['previous_close'] > 0 and 
+            request.data.last is not None and 
+            request.data.last != 0):
             change_pct = ((request.data.last / parsed_data['previous_close']) - 1.0) * 100.0
             request.data.change_pct = change_pct
         
