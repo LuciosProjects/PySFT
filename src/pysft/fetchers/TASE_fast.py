@@ -223,8 +223,15 @@ def fetch_TASE_fast(request: indicatorRequest):
         # Populate data fields from parsed data
         # For fast fetch, we expect single-point data (not time series)
         if 'date' in parsed_data:
-            request.data.dates = parsed_data['date']
-        # If no date provided, keep the default from indicatorRequest initialization
+            # Ensure date is converted to pd.Timestamp
+            date_value = parsed_data['date']
+            if isinstance(date_value, pd.Timestamp):
+                request.data.dates = date_value
+            elif isinstance(date_value, str):
+                request.data.dates = pd.to_datetime(date_value)
+            elif isinstance(date_value, list):
+                request.data.dates = [pd.to_datetime(d) for d in date_value]
+            # If no valid date, keep the default from indicatorRequest initialization
         
         request.data.price = parsed_data.get('price', 0.0)
         request.data.last = request.data.price
@@ -235,11 +242,12 @@ def fetch_TASE_fast(request: indicatorRequest):
         request.data.name = parsed_data.get('name', '')
         
         # Calculate change percentage if we have both current and previous prices
-        # Use the last field which is always scalar, unlike price which can be list[float]
+        # Use the last field which should be scalar for single-point fast fetch
         if ('previous_close' in parsed_data and 
             parsed_data['previous_close'] > 0 and 
             request.data.last is not None and 
-            request.data.last != 0):
+            request.data.last != 0 and
+            not isinstance(request.data.last, list)):  # Ensure scalar value
             change_pct = ((request.data.last / parsed_data['previous_close']) - 1.0) * 100.0
             request.data.change_pct = change_pct
         
