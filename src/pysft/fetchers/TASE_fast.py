@@ -28,13 +28,18 @@ def _determine_indicator_type(indicator: str) -> E_IndicatorType:
     
     Returns:
         E_IndicatorType: The determined indicator type
+        
+    Note:
+        Pure numeric indicators are assumed to be securities (TASE_SEC).
+        The distinction between ETF and other securities cannot be determined
+        from the indicator format alone and would require additional data sources
+        or metadata lookup.
     """
     if indicator.startswith("126."):
         # TASE mutual funds (MTF) typically start with 126.
         return E_IndicatorType.TASE_MTF
     elif indicator.isdigit():
-        # Pure numeric indicators could be stocks/securities or ETFs
-        # For now, we'll try TASE_SEC first, then fallback to ETF
+        # Pure numeric indicators are assumed to be securities
         return E_IndicatorType.TASE_SEC
     else:
         return E_IndicatorType.NULL
@@ -209,7 +214,11 @@ def fetch_TASE_fast(request: indicatorRequest):
         request.data.currency = determine_tase_currency(indicator)
         
         # Populate data fields from parsed data
-        request.data.dates = parsed_data.get('date', pd.Timestamp.now())
+        # For fast fetch, we expect single-point data (not time series)
+        if 'date' in parsed_data:
+            request.data.dates = parsed_data['date']
+        # If no date provided, keep the default from indicatorRequest initialization
+        
         request.data.price = parsed_data.get('price', 0.0)
         request.data.last = request.data.price
         request.data.open = parsed_data.get('open', 0.0)
@@ -219,8 +228,9 @@ def fetch_TASE_fast(request: indicatorRequest):
         request.data.name = parsed_data.get('name', '')
         
         # Calculate change percentage if we have both current and previous prices
+        # Use the last field which is always scalar, unlike price which can be list[float]
         if 'previous_close' in parsed_data and parsed_data['previous_close'] > 0:
-            change_pct = ((request.data.price / parsed_data['previous_close']) - 1.0) * 100.0
+            change_pct = ((request.data.last / parsed_data['previous_close']) - 1.0) * 100.0
             request.data.change_pct = change_pct
         
         request.success = True
