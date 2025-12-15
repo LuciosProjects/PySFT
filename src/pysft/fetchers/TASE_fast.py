@@ -237,6 +237,7 @@ def fetch_TASE_fast(request: indicatorRequest):
             # If no valid date or conversion failed, keep the default from indicatorRequest initialization
         
         request.data.price = parsed_data.get('price', 0.0)
+        # For single-point fast fetch, last price equals current price
         request.data.last = request.data.price
         request.data.open = parsed_data.get('open', 0.0)
         request.data.high = parsed_data.get('high', 0.0)
@@ -246,12 +247,13 @@ def fetch_TASE_fast(request: indicatorRequest):
         
         # Calculate change percentage if we have both current and previous prices
         # Use the last field which should be scalar for single-point fast fetch
-        if ('previous_close' in parsed_data and 
-            parsed_data['previous_close'] != 0 and  # Allow negative prices, just not zero
+        prev_close = parsed_data.get('previous_close')
+        if (prev_close is not None and 
+            prev_close != 0 and  # Allow negative prices, just not zero
             request.data.last is not None and 
             request.data.last != 0 and
             not isinstance(request.data.last, list)):  # Ensure scalar value
-            change_pct = ((request.data.last / parsed_data['previous_close']) - 1.0) * 100.0
+            change_pct = ((request.data.last / prev_close) - 1.0) * 100.0
             request.data.change_pct = change_pct
         
         request.success = True
