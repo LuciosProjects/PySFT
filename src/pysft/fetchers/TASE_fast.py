@@ -44,7 +44,7 @@ def _determine_indicator_type(indicator: str) -> E_IndicatorType:
         # TASE mutual funds (MTF) typically start with 126.
         return E_IndicatorType.TASE_MTF
     elif indicator.isdigit():
-        # Pure numeric indicators are assumed to be securities
+        # Pure numeric indicators (without dots or special characters) are assumed to be securities
         return E_IndicatorType.TASE_SEC
     else:
         # Default to TASE_SEC for other formats to attempt fetching
@@ -224,14 +224,17 @@ def fetch_TASE_fast(request: indicatorRequest):
         # For fast fetch, we expect single-point data (not time series)
         if 'date' in parsed_data:
             # Ensure date is converted to pd.Timestamp
-            date_value = parsed_data['date']
-            if isinstance(date_value, pd.Timestamp):
-                request.data.dates = date_value
-            elif isinstance(date_value, str):
-                request.data.dates = pd.to_datetime(date_value)
-            elif isinstance(date_value, list):
-                request.data.dates = [pd.to_datetime(d) for d in date_value]
-            # If no valid date, keep the default from indicatorRequest initialization
+            try:
+                date_value = parsed_data['date']
+                if isinstance(date_value, pd.Timestamp):
+                    request.data.dates = date_value
+                elif isinstance(date_value, str):
+                    request.data.dates = pd.to_datetime(date_value)
+                elif isinstance(date_value, list):
+                    request.data.dates = [pd.to_datetime(d) for d in date_value]
+            except Exception as e:
+                logger.warning(f"Failed to convert date value: {e}. Using default date.")
+            # If no valid date or conversion failed, keep the default from indicatorRequest initialization
         
         request.data.price = parsed_data.get('price', 0.0)
         request.data.last = request.data.price
@@ -244,7 +247,7 @@ def fetch_TASE_fast(request: indicatorRequest):
         # Calculate change percentage if we have both current and previous prices
         # Use the last field which should be scalar for single-point fast fetch
         if ('previous_close' in parsed_data and 
-            parsed_data['previous_close'] > 0 and 
+            parsed_data['previous_close'] != 0 and  # Allow negative prices, just not zero
             request.data.last is not None and 
             request.data.last != 0 and
             not isinstance(request.data.last, list)):  # Ensure scalar value
