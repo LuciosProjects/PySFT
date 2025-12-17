@@ -6,7 +6,9 @@ from pysft.core.utilities import classify_fetch_types, create_task_list
 from pysft.core.models import fetcher_settings
 
 if TYPE_CHECKING:
+    from pysft.core.structures import indicatorRequest
     from pysft.core.models import _fetchRequest
+    from pysft.core.fetch_task import fetchTask
 
 class fetcher_manager:
     """
@@ -29,6 +31,7 @@ class fetcher_manager:
         self.requests: dict[str, dict[str, Any]] = {}
         self.fetched_data: pd.DataFrame # output field to be populated with fetched data
 
+
     def managerRoutine(self) -> None:
         """
         Execute the main routine to fetch and process data based on the request.
@@ -43,6 +46,44 @@ class fetcher_manager:
         for task in taskList:
             task.execute()
         
+        # Aggregate results to dataframe, unfold lists if needed
+        self.aggregate_task_results(taskList)
+
+    
+    def aggregate_task_results(self, taskList: list['fetchTask']) -> None:
+        """
+        Aggregate results from all fetch tasks into a single DataFrame.
+        """
+
+        results: list[indicatorRequest] = []
+        for task in taskList:
+            task_result = task.get_results()
+            if isinstance(task_result, list):
+                results.extend(task_result)
+            else:
+                results.append(task_result)
+
+        # Reorder result list according to the original indicators order
+        ordered_results: list[indicatorRequest] = []
+        for indicator in self.parsedInput.indicators:
+            for res in results:
+                if getattr(res, "original_indicator") == indicator:
+                    ordered_results.append(res)
+                    break
+
+        # Convert to DataFrame
+        self.fetched_data = pd.DataFrame()
+        for res in ordered_results:
+            indicator_DF = pd.DataFrame({field: getattr(res.data, field) for field in self.parsedInput.attributes}, 
+                                        index=res.data.dates)
+            
+            # Add multi-level column labels: (indicator, attribute)
+            indicator_DF.columns = pd.MultiIndex.from_product(
+                [[getattr(res, "original_indicator")], self.parsedInput.attributes],
+                names=['Indicator', 'Attribute']
+            )
+            self.fetched_data = pd.concat([self.fetched_data, indicator_DF], axis=1)
+
 
     def getResults(self) -> pd.DataFrame:
         """
@@ -51,7 +92,5 @@ class fetcher_manager:
         Returns:
             pd.DataFrame: The fetched indicator data.
         """
-
-        # _inidicator_data merging logic would go here? we will see later...
 
         return self.fetched_data

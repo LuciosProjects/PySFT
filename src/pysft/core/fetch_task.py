@@ -4,7 +4,8 @@ import asyncio
 
 # ---- Package imports ----
 from pysft.core.enums import E_FetchType
-from pysft.core.structures import outputCls
+from pysft.core.structures import outputCls, indicatorRequest
+import pysft.core.utilities as utils
 
 from pysft.fetchers.fetch_yfinance import fetch_yfinance
 from pysft.fetchers.TASE_fast import fetch_TASE_fast
@@ -15,6 +16,7 @@ class fetchTask:
         self.fetch_type = fetch_type
         self.data: outputCls = data
         self.fetchFcn: Callable
+        self.result: indicatorRequest | list[indicatorRequest] = []
 
         self.setFetchFcn()
 
@@ -36,16 +38,31 @@ class fetchTask:
         Execute the fetch function synchronously.
         """
         self.fetchFcn(self.data)
+        self.prepare_results()
 
     def execute_async(self):
         """
         Execute the fetch function asynchronously.
         """
+        utils.random_delay(1.5, 2.5) # delay task execution in async mode to avoid rate limiting
+
         loop = asyncio.get_event_loop()
         loop.run_in_executor(None, self.fetchFcn, self.data)
 
-    def get_results(self) -> outputCls | list[outputCls]:
+        self.prepare_results()
+
+    def prepare_results(self):
+        """
+        Prepare the results after fetching is done.
+        """
+        if hasattr(self.data, 'requests'):
+            self.result = getattr(self.data, 'requests')
+        else:
+            self.result = getattr(self, 'data')
+
+    def get_results(self) -> indicatorRequest | list[indicatorRequest]:
         """
         Retrieve the fetched data after execution.
         """
-        return self.data
+
+        return self.result
