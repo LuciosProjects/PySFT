@@ -25,6 +25,7 @@ PACKAGE_NAME = "pysft"
 # Memory-related constants
 ONE_MB                      = (1024**2)         # One MB in bytes (1024 bytes in 1 KB, 1024 KB in 1 MB and so on...)
 ONE_GB                      = (ONE_MB * 1024)   # One GB in bytes
+INSTANCE_MAX_MEMORY         = ONE_GB * 2       # Max memory per PySFT instance (2 GB)
 
 # Fetcher constants
 MAX_ATTEMPTS            = 3  # max fetch attempts

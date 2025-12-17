@@ -3,7 +3,7 @@
     This module defines the primary data structures utilized throughout the PySFT that don't rely on other project's modules.    
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import pandas as pd
 from datetime import date as Date
 
@@ -11,6 +11,7 @@ class outputCls:
     """
     This class is a base for all output representations.
     """
+
     def __init__(self):
         pass
 
@@ -26,7 +27,7 @@ class _indicator_data:
     ''' Brief information or description about the indicator'''
     quoteType: str = ""
     ''' Type of quote (e.g., equity, mutual fund, exchange traded fund, etc.)'''
-    dates: pd.Timestamp | list[pd.Timestamp] = pd.Timestamp(Date.today())
+    dates: list[pd.Timestamp] = field(default_factory=lambda: [pd.Timestamp(Date.today())])
     ''' Dates corresponding to the fetched data points.'''
     currency: str = ""
     ''' Currency code (e.g., 'USD', 'EUR', 'ILS')'''
@@ -66,6 +67,7 @@ class indicatorRequest(outputCls):
     """
     
     data: _indicator_data
+
     indicator: str              = ""
     original_indicator: str     = ""
 
@@ -76,7 +78,7 @@ class indicatorRequest(outputCls):
     fromInception: bool         = False
     message: str                = ""
 
-    def __init__(self, indicator: str, dates: pd.Timestamp | list[pd.Timestamp] | None = None):
+    def __init__(self, indicator: str, dates: list[pd.Timestamp] | None = None):
         self.indicator          = indicator
         self.original_indicator = indicator
         self.data               = _indicator_data(indicator=indicator, dates=dates) if dates else _indicator_data(indicator=indicator)

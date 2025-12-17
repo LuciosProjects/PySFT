@@ -146,16 +146,13 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
         container.success = True
         
     logger.info(container.message)
-    print("breakpoint")
+    # print("breakpoint")
         
 def process_successful_request(request: indicatorRequest, data: pd.DataFrame, closest_dates: pd.DatetimeIndex, tckr: yf.Ticker):
     """Process a request that has valid data."""
 
     dates = utils.safe_extract_date_ts(closest_dates)
-    if dates.__len__() == 1:
-        request.data.dates = dates[0]
-    else:
-        request.data.dates = dates
+    request.data.dates = dates
 
     request.data.price  = yf_utils.safe_extract_value_float(data["Close"][closest_dates])
     request.data.open   = yf_utils.safe_extract_value_float(data["Open"][closest_dates])

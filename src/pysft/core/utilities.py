@@ -15,6 +15,8 @@
 
 # ---- Standard library imports ----
 from typing import TYPE_CHECKING, Any
+import numpy as np
+import time
 import os
 import json
 import pandas as pd
@@ -116,17 +118,18 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
 def create_task_list(manager: 'fetcher_manager') -> list[fetchTask]:
     """
-    Create a mapping of fetch types to their corresponding indicator requests.
+    Create a list of fetch tasks from classified indicator requests.
 
-    Organizes the indicator requests based on their classified fetch types,
-    facilitating efficient data retrieval from the appropriate sources.
+    Constructs fetchTask objects for each indicator based on their fetch type.
+    YFinance requests are batched together (up to YF_BATCH_SIZE) for efficiency,
+    while TASE requests are created individually.
 
     Args:
         manager (fetcher_manager): Manager instance containing classified requests.
+    
     Returns:
-        list[tuple[E_FetchType, indicatorRequest | list[indicatorRequest]]]
-            A list of tuples, each containing a fetch type and its associated
-            indicator request or list of requests.
+        list[fetchTask]: List of fetch tasks ready for execution, with YFinance
+            requests batched and TASE requests individual.
     """
 
     tasks: list[fetchTask] = []
@@ -175,6 +178,7 @@ def unique(arr: list[Any]) -> tuple[list[Any], dict[Any, int]]:
 
     return unique_list, itemRepetitions
 
+
 # String manipulation utilities
 def add_attempt2msg(msg: str, attempt: int )-> str:
     """
@@ -212,3 +216,12 @@ def safe_extract_date_ts(dates: pd.DatetimeIndex) -> list[pd.Timestamp]:
             logger.error(f"Failed to convert dates to ts array.")
 
     return date_ts
+
+# Misc. utilities
+def random_delay(min_seconds: float = 0.0, max_seconds: float = 1.0):
+    """
+    Add a random delay to simulate human behavior.
+    """
+
+    delay = np.random.uniform(min_seconds, max_seconds)
+    time.sleep(delay)

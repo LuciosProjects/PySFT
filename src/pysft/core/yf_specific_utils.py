@@ -132,32 +132,35 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
     if request.data.price is not None:
         # Convert price according to currency factor (this is not currency conversion! just adjustment)
 
-        # Closing price
-        if isinstance(request.data.price, float):
-            request.data.price *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
-        elif isinstance(request.data.price, list) or isinstance(request.data.price, np.ndarray):
-            request.data.price = [p * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for p in request.data.price]
-
-        # Open price
-        if isinstance(request.data.open, float):
-            request.data.open *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
-        elif isinstance(request.data.open, list) or isinstance(request.data.open, np.ndarray):
-            request.data.open  = [o * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for o in request.data.open]
-
-        # High price
-        if isinstance(request.data.high, float):
-            request.data.high *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
-        elif isinstance(request.data.high, list) or isinstance(request.data.high, np.ndarray):
-            request.data.high  = [h * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for h in request.data.high]
-        
-        # Low price
-        if isinstance(request.data.low, float):
-            request.data.low  *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
-        elif isinstance(request.data.low, list) or isinstance(request.data.low, np.ndarray):
-            request.data.low   = [l * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for l in request.data.low]
-
         try:
-            # Convert to true currency
+            # Closing price
+            if isinstance(request.data.price, float):
+                request.data.price *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+            elif isinstance(request.data.price, list) or isinstance(request.data.price, np.ndarray):
+                request.data.price = [p * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for p in request.data.price]
+            
+            # Last price
+            request.data.last *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+
+            # Open price
+            if isinstance(request.data.open, float):
+                request.data.open *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+            elif isinstance(request.data.open, list) or isinstance(request.data.open, np.ndarray):
+                request.data.open  = [o * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for o in request.data.open]
+
+            # High price
+            if isinstance(request.data.high, float):
+                request.data.high *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+            elif isinstance(request.data.high, list) or isinstance(request.data.high, np.ndarray):
+                request.data.high  = [h * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for h in request.data.high]
+            
+            # Low price
+            if isinstance(request.data.low, float):
+                request.data.low  *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+            elif isinstance(request.data.low, list) or isinstance(request.data.low, np.ndarray):
+                request.data.low   = [l * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for l in request.data.low]
+
+            # Put currency alias
             request.data.currency = const.CURRENCY_NORMALIZATION[request.data.currency]["alias"]
         except KeyError:
             # If currency not found in aliases, keep original
