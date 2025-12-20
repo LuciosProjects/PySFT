@@ -5,7 +5,7 @@
 * @LuciosProjects
 
 # Core package code
-/pysft/ @LuciosProjects
+/src/pysft/ @LuciosProjects
 
 # Tests must be reviewed
 /tests/ @LuciosProjects
