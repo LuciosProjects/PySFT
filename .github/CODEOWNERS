@@ -1,6 +1,21 @@
-# You as the sole owner
+# PySFT Code Owners
+# These owners will be automatically requested for review when PRs modify these files
+
+# Default owner for everything in the repo
 * @LuciosProjects
 
-# Specific paths
-/pysft/ @LuciosProjects
+# Core package code
+/src/pysft/ @LuciosProjects
+
+# Tests must be reviewed
 /tests/ @LuciosProjects
+
+# CI/CD workflows require careful review
+/.github/workflows/ @LuciosProjects
+
+# Documentation
+*.md @LuciosProjects
+/docs/ @LuciosProjects
+
+# Package configuration
+/pyproject.toml @LuciosProjects
