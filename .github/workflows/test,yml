@@ -2,11 +2,11 @@ name: Test Pipeline
 
 on:
   push:
-    branches-ignore:
+    branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened, edited, closed, assigned, labeled, ready_for_review]
-    branches-ignore:
+    branches:
       - main
 
 jobs:
