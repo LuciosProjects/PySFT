@@ -18,4 +18,4 @@
 /docs/ @LuciosProjects
 
 # Package configuration
-pyproject.toml @LuciosProjects
+/pyproject.toml @LuciosProjects
