@@ -51,24 +51,23 @@ def find_closest_date(data_frame: Series, target_dates: pd.DatetimeIndex) -> pd.
 def safe_extract_value_float(data: pd.DataFrame | Series) -> float | list[float]:
     """Safely extract value from pandas data, handling various formats"""
 
-    dtype = data.values.dtype
     try:
         if hasattr(data, 'values'):
             values = data.values
         else:
-            return dtype.type(0)
+            return 0.0
         
         # Check if value is NaN
         if pd.isna(values).any():
             # No need to dig out the NaN values since they were already dealt with in the "find_closest_date" subroutine
             # Return zero of appropriate type
-            return dtype.type(0)
+            return 0.0
         
         # Return the extracted value cast to appropriate type
-        return dtype.type(values)
+        return values.tolist() if len(values) > 1 else float(values[0])
     except:
         # In case of any error, return zero of appropriate type
-        return dtype.type(0)
+        return 0.0
     
 def safe_extract_value_int(data: pd.DataFrame | Series) -> int | list[int]:
     """Safely extract value from pandas data, handling various formats"""

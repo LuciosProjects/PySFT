@@ -55,21 +55,20 @@ class fetcher_manager:
         Aggregate results from all fetch tasks into a single DataFrame.
         """
 
-        results: list[indicatorRequest] = []
+        results: dict[str, indicatorRequest] = {}
         for task in taskList:
             task_result = task.get_results()
             if isinstance(task_result, list):
-                results.extend(task_result)
+                for res in task_result:
+                    results[res.original_indicator] = res
             else:
-                results.append(task_result)
+                results[task_result.original_indicator] = task_result
 
         # Reorder result list according to the original indicators order
         ordered_results: list[indicatorRequest] = []
         for indicator in self.parsedInput.indicators:
-            for res in results:
-                if getattr(res, "original_indicator") == indicator:
-                    ordered_results.append(res)
-                    break
+            if indicator in results: # sanity check
+                ordered_results.append(results[indicator])
 
         # Convert to DataFrame
         self.fetched_data = pd.DataFrame()

@@ -47,10 +47,19 @@ YF_REQUIRED_DATAFRAME_COLUMNS = ["Open", "High", "Low", "Close", "Volume"]
 YFINANCE_DATE_FORMAT = "%Y-%m-%d"
 YF_API_CALL_TIMEOUT = CTimeRepr(20)  # seconds
 
+# TASE specific constants
+TASE_REQUEST_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Accept-Encoding': 'gzip, deflate',
+    'Connection': 'keep-alive',
+}
+
 # multi-processing constants
 YF_BATCH_SIZE = 30  # max indicators per yfinance batch request
 YF_CONCURRENCY_LIMIT = 3  # max concurrent yfinance batch requests
-YF_RATELIMIT_PAUSE = CTimeRepr(2)  # seconds to pause on rate limit hit
+RATELIMIT_PAUSE = CTimeRepr(2)  # nominal seconds to pause on rate limit hit
 
 # Indicator request dictionary fields
 INDICATOR_FIELD     = "indicator"
