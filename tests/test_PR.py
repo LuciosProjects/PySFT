@@ -1,5 +1,4 @@
 # -------- Standard library imports --------
-from datetime import date
 
 # -------- Third-party imports --------
 import pytest
