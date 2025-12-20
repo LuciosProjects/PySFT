@@ -85,7 +85,7 @@ def test_multiple_indicators_fetch(getTestIndicators, getDateRange):
     print(f"Testing multiple indicators fetch for total: {len(getTestIndicators)} indicators.")
     print_indicators_list(getTestIndicators)
 
-    quotes = fetchData(indicators=getTestIndicators,start=getDateRange[0], end=getDateRange[1])
+    quotes = fetchData(indicators=getTestIndicators, start=getDateRange[0], end=getDateRange[1])
 
     # Basic existence checks
     assert quotes is not None, "in 'test_multiple_indicators_fetch', fetched data is None."
