@@ -3,9 +3,10 @@ from typing import Callable
 import asyncio
 
 # ---- Package imports ----
+from pysft.core import constants as const
 from pysft.core.enums import E_FetchType
 from pysft.core.structures import outputCls, indicatorRequest
-import pysft.core.utilities as utils
+from pysft.core import utilities as utils
 
 from pysft.fetchers.fetch_yfinance import fetch_yfinance
 from pysft.fetchers.TASE_fast import fetch_TASE_fast
@@ -44,7 +45,8 @@ class fetchTask:
         """
         Execute the fetch function asynchronously.
         """
-        utils.random_delay(1.5, 2.5) # delay task execution in async mode to avoid rate limiting
+        rate_limit_nominal_seconds = const.RATELIMIT_PAUSE.seconds()
+        utils.random_delay(rate_limit_nominal_seconds - 0.5, rate_limit_nominal_seconds + 0.5) # delay task execution in async mode to avoid rate limiting
 
         loop = asyncio.get_event_loop()
         loop.run_in_executor(None, self.fetchFcn, self.data)
