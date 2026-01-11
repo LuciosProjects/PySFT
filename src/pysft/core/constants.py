@@ -17,7 +17,13 @@ Import this module wherever shared constants are needed to keep values
 declarative, discoverable, and maintainable.
 """
 
+# import os
+# from dotenv import load_dotenv
+
 from pysft.core.structures import CTimeRepr
+
+# Load environment variables from .env file
+# load_dotenv()
 
 # General package constants
 PACKAGE_NAME = "pysft"
@@ -48,13 +54,33 @@ YFINANCE_DATE_FORMAT = "%Y-%m-%d"
 YF_API_CALL_TIMEOUT = CTimeRepr(20)  # seconds
 
 # TASE specific constants
-TASE_REQUEST_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+USE_INTERNATIONAL_VAULT = False
+SKIP_BIZPORTAL          = False
+SKIP_THEMARKER          = True
+SKIP_TASE               = False
+
+TASE_GET_REQUEST_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Language': 'en-US,en;q=0.5',
     'Accept-Encoding': 'gzip, deflate',
     'Connection': 'keep-alive',
 }
+
+TASE_CONTENT_REQUEST_HEADERS = {
+    "accept": "*/*",
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    "origin": "REPLACE_WITH_ACTUAL_ORIGIN_URL",
+    "Referer": "REPLACE_WITH_ACTUAL_REFERER_URL",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+}
+
+THEMARKER_QUOTE_TYPES = ["mtf", "etf", "stock"]
+THEMARKER_QUERY_HASH = "1dcdf5374e423ecf9026280b13306f4409e9a4f24192667700f5d1ba11618d8b" 
+
+TASE_HEAD_REQUEST_TIMEOUT = CTimeRepr(10)  # seconds
+HTTPX_CLIENT_TIMEOUT = CTimeRepr(30)  # seconds
+TASE_HTML_FETCH_TIMEOUT = CTimeRepr(60) # seconds
 
 # multi-processing constants
 YF_BATCH_SIZE = 30  # max indicators per yfinance batch request
@@ -65,3 +91,52 @@ RATELIMIT_PAUSE = CTimeRepr(2)  # nominal seconds to pause on rate limit hit
 INDICATOR_FIELD     = "indicator"
 FETCH_TYPE_FIELD    = "fetch_type"
 REQUEST_FIELD       = "request"
+
+# Database constants
+DB_ENABLED = False  # Enable database caching
+DB_PATH = "pysft_cache.db"  # Default SQLite database path
+
+# Cache TTL (Time-To-Live) in days
+LONGTERM_TTL_DAYS = 365  # 1 year for rarely changing fields
+MEDIUM_TTL_DAYS = 90     # 90 days for infrequently changing fields
+SHORT_TTL_DAYS = 7       # 7 days for frequently changing metrics
+
+# Field categorization by freshness requirements
+IMMUTABLE_FIELDS = [
+    "ISIN",  # Never changes
+]
+
+LONGTERM_TTL_FIELDS = [
+    "name",       # Rarely changes (rebranding)
+    "quoteType",  # Rarely reclassified
+    "currency",   # Almost never changes
+]
+
+MEDIUM_TTL_FIELDS = [
+    "briefSummary",  # Business updates, restructuring
+]
+
+SHORT_TTL_FIELDS = [
+    "expense_rate",        # Fund fees
+    "dividendYield",       # Dividend data
+    "trailingPE",          # Price-to-earnings
+    "forwardPE",           # Forward PE
+    "beta",                # Volatility measure
+    "avgDailyVolume3mnth", # Volume metrics
+]
+
+# Price fields - these are always fetched fresh for current data
+# For historical data, they use date-based caching
+PRICE_FIELDS = [
+    "last",
+    "open",
+    "high",
+    "low",
+    "volume",
+    "price",
+    "change_pct",
+    "market_cap",
+]
+
+# Historical fields that are stored with dates
+HISTORICAL_FIELDS = PRICE_FIELDS + ["dates"]

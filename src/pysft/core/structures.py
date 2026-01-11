@@ -23,8 +23,12 @@ class _indicator_data:
     indicator: str = ""
     name: str = "" 
     ''' Full name of the indicator (company/security/fund/etc.)'''
-    briefSummary: str = ""
-    ''' Brief information or description about the indicator'''
+    ISIN: str = ""
+    ''' International Securities Identification Number'''
+    # briefSummary: str = ""
+    # ''' Brief information or description about the indicator'''
+    inceptionDate: pd.Timestamp | None = None
+    ''' Date when the indicator was first issued or became available'''
     quoteType: str = ""
     ''' Type of quote (e.g., equity, mutual fund, exchange traded fund, etc.)'''
     dates: list[pd.Timestamp] = field(default_factory=lambda: [pd.Timestamp(Date.today())])
@@ -51,6 +55,8 @@ class _indicator_data:
     ''' Percentage change in price per timestamp'''
     market_cap: float | list[float] = 0.0
     ''' Market capitalization per timestamp'''
+    # ebitda: float = 0.0
+    # ''' Earnings Before Interest, Taxes, Depreciation, and Amortization'''
     dividendYield: float = 0.0
     ''' Dividend yield as a percentage'''
     trailingPE: float = 0.0
@@ -59,6 +65,8 @@ class _indicator_data:
     ''' Forward Price-to-Earnings ratio (if available)'''
     beta: float = 0.0
     ''' Beta value indicating volatility compared to the market'''
+    # sharpeRatio: float = 0.0
+    # ''' Sharpe Ratio indicating risk-adjusted return'''
 
 @dataclass
 class indicatorRequest(outputCls):
@@ -77,6 +85,8 @@ class indicatorRequest(outputCls):
     success: bool               = False
     fromInception: bool         = False
     message: str                = ""
+
+    is_tase_indicator: bool     = False
 
     def __init__(self, indicator: str, dates: list[pd.Timestamp] | None = None):
         self.indicator          = indicator

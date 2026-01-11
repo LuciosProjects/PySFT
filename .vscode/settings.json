@@ -5,5 +5,8 @@
         "${workspaceFolder}/lib",
         "${workspaceFolder}/app",
         "${workspaceFolder}/modules"
-    ]
+    ],
+    "workbench.editorAssociations": { "viewType": "jupyter-notebook", "filenamePattern": "jupyter-notebook" },
+    "python.languageServer": "Pylance",
+    "editor.semanticHighlighting.enabled": true
 }

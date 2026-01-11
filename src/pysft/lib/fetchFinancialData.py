@@ -10,7 +10,7 @@ def fetchData(
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
-        interval: str = "1d"
+        # interval: str = "1d"
         ) -> pd.DataFrame:
     """
         Fetch financial data.
@@ -25,7 +25,8 @@ def fetchData(
             pd.DataFrame: DataFrame containing the fetched financial data.
     """
 
-    request = _fetchRequest(indicators, attributes, period, start, end, interval)
+    # request = _fetchRequest(indicators, attributes, period, start, end, interval)
+    request = _fetchRequest(indicators, attributes, period, start, end)
     
     manager = fetcher_manager(request)
     manager.managerRoutine()
@@ -39,7 +40,7 @@ def fetch_data(
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
-        interval: str = "1d"
+        # interval: str = "1d"
         ) -> pd.DataFrame:
     """
         PEP 8 alias for fetchData.
@@ -50,5 +51,5 @@ def fetch_data(
         period=period,
         start=start,
         end=end,
-        interval=interval,
+        # interval=interval,
     )
