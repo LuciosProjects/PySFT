@@ -17,20 +17,22 @@ class _fetchRequest:
     attributes: list[str]
     start_ts: pd.Timestamp | None
     end_ts: pd.Timestamp | None
-    interval: str
+    # interval: str
 
     def __init__(self,
                  indicators: str | list[str],
                  attributes: str | list[str],
                  period: str | None,
                  start_ts: str | None,
-                 end_ts: str | None,
-                 interval: str):
+                 end_ts: str | None): # ,
+                #  interval: str):
         
         self.indicators             = _normalize_indicators(indicators)
+        self._original_indicators   = self.indicators.copy()
         self.attributes             = _parse_attributes(attributes)
+        self._original_attributes   = self.attributes.copy()
         self.start_ts, self.end_ts  = _resolve_range(period, start_ts, end_ts)
-        self.interval               = _validate_interval(interval)
+        # self.interval               = _validate_interval(interval)
 
 @dataclass
 class _YF_fetchReq_Container(outputCls):
@@ -54,8 +56,9 @@ class _YF_fetchReq_Container(outputCls):
 # -----------------------------------------------    
 class fetcher_settings:
     def __init__(self, request: '_fetchRequest'):
-        self.NEED_TASE_FAST:    bool = False
-        self.NEED_HISTORICAL:   bool = False
+        self.NEED_TASE:         bool = False
+        # self.NEED_TASE_FAST:    bool = False
+        # self.NEED_HISTORICAL:   bool = False
         self.NEED_YFINANCE:     bool = False
 
         self.data_length:       int = 0

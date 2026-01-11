@@ -92,10 +92,18 @@ def safe_extract_value_int(data: pd.DataFrame | Series) -> int | list[int]:
         return dtype.type(0)
     
 def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
+    """
+    Extract additional info data from yfinance Ticker object and populate request data fields.
+    """
+
+    request.data.ISIN = (ticker.isin if ticker.isin else "") if not request.is_tase_indicator else request.data.ISIN
     try:
         info = ticker.info
 
-        request.data.briefSummary = info.get("longBusinessSummary", "")
+        # request.data.briefSummary = info.get("longBusinessSummary", "")
+        history = ticker.history(period="max", auto_adjust=True)
+        if history is not None and not history.empty:
+            request.data.inceptionDate = history.index[0].tz_localize(None)
 
         if request.data.name == "": # Only update name if not already set
             request.data.name = info.get("longName", str(request.indicator))
@@ -104,6 +112,7 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
         if request.data.currency == "ILA" or request.data.currency == "ILS":
             # request.data.expense_rate = get_TheMarker_Expense_Rate(request)
             request.data.expense_rate = 0.0 # Placeholder for TheMarker expense rate fetch, TBD
+
         else:
             request.data.expense_rate = info.get("netExpenseRatio", 0.0)
 
@@ -115,11 +124,10 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
         elif request.data.quoteType in ["EQUITY"]:
             request.data.market_cap = info.get("marketCap", 0.0)
                 
-        request.data.dividendYield  = info.get("yield", info.get("dividendYield", 0.0)*0.01) * 100.0 # Convert to percentage
+        request.data.dividendYield  = info.get("yield", info.get("dividendYield", 0.0)*0.01) # Convert to percentage
         request.data.trailingPE     = info.get("trailingPE", 0.0)
         request.data.forwardPE      = info.get("forwardPE", 0.0)
         request.data.beta           = info.get("beta", info.get('beta3Year', 0.0))
-            
 
     except Exception as e:
         request.message = f"Failed to extract additional info data: {str(e)}."
@@ -169,7 +177,7 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
             logger.warning(request.message)
     
     if request.message == '':
-        request.message = f"{request.indicator} - Additional info data extracted successfully."
+        request.message = f"{request.indicator} - Data fetch from yfinance successful."
         request.success = True
 
         logger.info(request.message)

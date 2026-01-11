@@ -10,9 +10,13 @@ readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Lucio" }]
 license = { text = "Proprietary" }
-dependencies = ["numpy", 
+dependencies = ["python-dotenv",
+                "scrapy",
+                "numpy", 
                 "pandas", 
-                "yfinance"]
+                "yfinance",
+                "exchange_calendars",
+                "googletrans"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

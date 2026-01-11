@@ -14,7 +14,7 @@
 """
 
 # ---- Standard library imports ----
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Callable
 import numpy as np
 import time
 import os
@@ -68,15 +68,17 @@ def classify_fetch_types(manager: 'fetcher_manager'):
     """
 
     indicators = manager.parsedInput.indicators
-    current_file = os.path.abspath(__file__)
-    current_dir = os.path.dirname(current_file)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     json_path = os.path.join(current_dir, '../data/indicator_international_symbols.json')
     
-    with open(json_path, 'r') as f:
-        international_vault: dict = json.load(f)
+    international_vault: dict = {}
+    if const.USE_INTERNATIONAL_VAULT:
+        with open(json_path, 'r') as f:
+            international_vault = json.load(f)
 
     has_tase, is_tase_indicator = has_tase_indicators(indicators)
-    is_historical = has_tase and (manager.settings.data_length > 1)
+    # is_historical = has_tase and (manager.settings.data_length > 1)
+    is_historical = False # Always use TASE_FAST for TASE indicators for now
     
     date_range = [pd.Timestamp(date) for date in pd.date_range(start=manager.settings.start_date, end=manager.settings.end_date)]
 
@@ -87,12 +89,14 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
         fetchType = E_FetchType.NULL
         if is_tase_indicator[i]:
-            if indicators[i] in international_vault.keys():
+            if const.USE_INTERNATIONAL_VAULT and indicators[i] in international_vault.keys():
                 # If the indicator is found in the international vault, use yfinance
                 requests[indicators[i]][const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
 
                 requests[indicators[i]][const.REQUEST_FIELD].indicator = international_vault[indicators[i]]['symbol']
                 requests[indicators[i]][const.REQUEST_FIELD].data.name = international_vault[indicators[i]]['name']
+                requests[indicators[i]][const.REQUEST_FIELD].data.ISIN = international_vault[indicators[i]]['ISIN']
+                requests[indicators[i]][const.REQUEST_FIELD].is_tase_indicator = True
 
                 # Toggle YFinance flag if necessary
                 if not manager.settings.NEED_YFINANCE:
@@ -102,10 +106,10 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
             fetchType = E_FetchType.TASE_HISTORICAL if is_historical else E_FetchType.TASE_FAST
 
-            if not manager.settings.NEED_HISTORICAL and fetchType == E_FetchType.TASE_HISTORICAL:
-                manager.settings.NEED_HISTORICAL = True
-            elif not manager.settings.NEED_TASE_FAST and fetchType == E_FetchType.TASE_FAST:
-                manager.settings.NEED_TASE_FAST = True
+            if not manager.settings.NEED_TASE and fetchType == E_FetchType.TASE_HISTORICAL:
+                manager.settings.NEED_TASE = True
+            elif not manager.settings.NEED_TASE and fetchType == E_FetchType.TASE_FAST:
+                manager.settings.NEED_TASE = True
         else:
             fetchType = E_FetchType.YFINANCE
 
@@ -198,6 +202,21 @@ def add_attempt2msg(msg: str, attempt: int )-> str:
 
     return msg
 
+def handle_fetch_attempt_failure(attempt: int, max_attempts: int, base_msg: str, random_delay_func: Callable, random_delay_args: tuple[float, float]) -> bool:
+    """
+    Handle a failed fetch attempt by logging and determining whether to retry.
+    """
+    
+    if attempt == max_attempts - 1:
+        msg = base_msg + " - Max attempts reached."
+        logger.error(msg)
+        return False
+    else:
+        msg = base_msg + f" - Retrying ({attempt + 1}/{max_attempts})"
+        random_delay_func(random_delay_args[0], random_delay_args[1])  # polite delay between attempts
+        logger.warning(msg)
+        return True
+
 def safe_extract_date_ts(dates: pd.DatetimeIndex) -> list[pd.Timestamp]:
     """
     Safely extract date strings from a Pandas DatetimeIndex.
@@ -224,4 +243,14 @@ def random_delay(min_seconds: float = 0.0, max_seconds: float = 1.0):
     """
 
     delay = np.random.uniform(min_seconds, max_seconds)
+    time.sleep(delay)
+
+
+def random_delay_normal(mean_seconds: float = 1.0, stddev_seconds: float = 0.5):
+    """
+    Add a random delay based on a normal distribution to simulate human behavior.
+    """
+
+    delay = np.random.normal(mean_seconds, stddev_seconds)
+    delay = max(0.0, delay)  # Ensure non-negative delay
     time.sleep(delay)

@@ -11,6 +11,7 @@ import pandas as pd
 
 # Canonical attribute names and simple aliases
 _ATTR_ALIASES = {
+    "all": "all",
     "name": "name",
     "briefsummary": "briefSummary",
     "brief_summary": "briefSummary",
@@ -72,19 +73,30 @@ def _parse_attributes(attributes: str | Iterable[str]) -> List[str]:
     Accepts a comma-separated string or a list; maps to canonical attribute names.
     Unknown attributes raise ValueError to fail fast.
     """
+    get_all_attributes = False
+
     if isinstance(attributes, str):
         raw = [a for a in re.split(r"[,\s]+", attributes) if a]
     else:
         raw = [str(a) for a in attributes]
 
+    if "all" in [a.strip().lower() for a in raw]:
+        get_all_attributes = True
+
     canon: List[str] = []
-    for a in raw:
-        key = a.strip().lower()
-        if key not in _ATTR_ALIASES:
-            raise ValueError(
-                f"Unsupported attribute '{a}'. Supported: {sorted(set(_ATTR_ALIASES.keys()))}"
-            )
-        canon.append(_ATTR_ALIASES[key])
+    if get_all_attributes:
+        for a in _ATTR_ALIASES.values():
+            if a != "all":
+                canon.append(a)
+    else:
+        for a in raw:
+            key = a.strip().lower()
+            if key not in _ATTR_ALIASES:
+                raise ValueError(
+                    f"Unsupported attribute '{a}'. Supported: {sorted(set(_ATTR_ALIASES.keys()))}"
+                )
+            canon.append(_ATTR_ALIASES[key])
+            
     # dedupe while preserving order
     seen = set()
     out = []

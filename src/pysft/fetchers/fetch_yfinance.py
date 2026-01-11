@@ -198,7 +198,7 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
             yf_utils.extract_info_data(request, tckr)
 
             temp = request.message
-            request.message = f"{request.indicator} - Data fetched from inception date {inception_date.date()}, {temp.replace(request.indicator + ' - ', '')}"
+            request.message = f"{request.indicator} - Data fetched from inception date {inception_date.date()}, {temp.replace(request.indicator + ' - ', '')} (yfinance)."
 
             request.fromInception   = True
             request.success         = True
