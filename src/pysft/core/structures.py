@@ -38,7 +38,7 @@ class _indicator_data:
     price: float | list[float] = 0.0 
     ''' fetched price data'''
     expense_rate: float = 0.0 
-    ''' Annual expense rate as a percentage (range is 0.0 to 1.0)'''
+    ''' Annual expense rate as a percentage '''
     last: float | list[float] = 0.0
     ''' Last traded price per timestamp'''
     open: float | list[float] = 0.0

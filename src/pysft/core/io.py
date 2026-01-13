@@ -12,14 +12,25 @@ import pandas as pd
 # Canonical attribute names and simple aliases
 _ATTR_ALIASES = {
     "all": "all",
+    # primary identifier / tickers
+    "indicator": "indicator",
+    "symbol": "indicator",
+    "ticker": "indicator",
     "name": "name",
-    "briefsummary": "briefSummary",
-    "brief_summary": "briefSummary",
-    "summary": "briefSummary",
+    "isin": "ISIN",
+    "ISIN": "ISIN",
+    # brief/summary fields (not currently in _indicator_data)
+    # "briefsummary": "briefSummary",
+    # "brief_summary": "briefSummary",
+    # "summary": "briefSummary",
+
+    # quote / type / currency
     "quotetype": "quoteType",
     "quote_type": "quoteType",
     "type": "quoteType",
     "currency": "currency",
+
+    # price/time series fields
     "price": "price",
     "last": "last",
     "close": "last",
@@ -28,28 +39,49 @@ _ATTR_ALIASES = {
     "low": "low",
     "volume": "volume",
     "vol": "volume",
+    "dates": "dates",
+    "date": "dates",
+    "period": "dates",
+    "periods": "dates",
+
+    # averages / aggregated values
     "avgdailyvolume3mnth": "avgDailyVolume3mnth",
     "avg_daily_volume_3mnth": "avgDailyVolume3mnth",
     "avgvolume": "avgDailyVolume3mnth",
+
+    # percentage / change / metrics
     "change%": "change_pct",
     "change_pct": "change_pct",
     "change": "change_pct",
+
     "marketcap": "market_cap",
     "market_cap": "market_cap",
     "cap": "market_cap",
+
     "expenserate": "expense_rate",
     "expense_rate": "expense_rate",
     "expense": "expense_rate",
+
     "dividendyield": "dividendYield",
     "dividend_yield": "dividendYield",
     "dividend": "dividendYield",
     "yield": "dividendYield",
+
     "trailingpe": "trailingPE",
     "trailing_pe": "trailingPE",
     "pe": "trailingPE",
     "forwardpe": "forwardPE",
     "forward_pe": "forwardPE",
+
     "beta": "beta",
+
+    # inception / metadata
+    "inceptiondate": "inceptionDate",
+    "inception_date": "inceptionDate",
+
+    # Misc / potential future fields (not present in _indicator_data)
+    # "ebitda": "ebitda",
+    # "sharpeRatio": "sharpeRatio",
 }
 _ALLOWED_INTERVALS = {"1d", "1wk", "1mo", "1y"}
 

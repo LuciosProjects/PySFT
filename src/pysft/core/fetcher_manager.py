@@ -2,7 +2,8 @@ from typing import TYPE_CHECKING, Any
 import pandas as pd
 
 # ---- Package imports ----
-# from pysft.core.enums import E_FetchType
+import pysft.core.constants as const
+from pysft.core.enums import E_FetchType
 from pysft.core.utilities import classify_fetch_types, create_task_list
 from pysft.core.models import fetcher_settings
 from pysft.core.database import get_db_manager
@@ -52,6 +53,9 @@ class fetcher_manager:
         
         # Only classify and fetch for indicators not fully cached
         classify_fetch_types(self)
+
+        # find a YF equivalent amonth teh TASE indicators to reduce TASE fetch load
+        self.settings.NEED_TASE = tase_utils.find_YF_equivalent(self.requests)
 
         if self.settings.NEED_TASE:
             tase_utils.get_tase_mtf_listing() # Initialize the TASE_MTF_LISTINGS global variable

@@ -429,7 +429,7 @@ class DatabaseManager:
             open=opens,
             high=highs,
             low=lows,
-            last=closes,
+            last=closes[-1],  # last traded prices
             volume=volumes,
             change_pct=change_pcts,
             market_cap=market_caps

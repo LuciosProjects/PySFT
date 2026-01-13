@@ -160,7 +160,7 @@ def process_successful_request(request: indicatorRequest, data: pd.DataFrame, cl
     request.data.low    = yf_utils.safe_extract_value_float(data["Low"][closest_dates])
     request.data.volume = yf_utils.safe_extract_value_int(data["Volume"][closest_dates])
 
-    request.data.last = request.data.price[-1] if isinstance(request.data.price, list) else request.data.price
+    request.data.last = request.data.price[-1] if isinstance(request.data.price, list) else request.data.price # Most recent closing price
     i_start = np.argmin(np.abs(data.index.to_numpy() - closest_dates[0].to_numpy()))
     i_end   = np.argmin(np.abs(data.index.to_numpy() - closest_dates[-1].to_numpy()))
 

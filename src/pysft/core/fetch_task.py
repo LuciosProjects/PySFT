@@ -9,8 +9,8 @@ from pysft.core.structures import outputCls, indicatorRequest
 from pysft.core import utilities as utils
 
 from pysft.fetchers.fetch_yfinance import fetch_yfinance
-from pysft.fetchers.TASE_fast import fetch_TASE_fast
-from pysft.fetchers.TASE_historical import fetch_TASE_historical
+from pysft.fetchers.TASE import fetch_TASE
+# from pysft.fetchers.TASE_historical import fetch_TASE_historical
 
 class fetchTask:
     def __init__(self, fetch_type: E_FetchType, data: outputCls):
@@ -27,10 +27,10 @@ class fetchTask:
         """
         if self.fetch_type == E_FetchType.YFINANCE:
             self.fetchFcn = fetch_yfinance
-        elif self.fetch_type == E_FetchType.TASE_FAST:
-            self.fetchFcn = fetch_TASE_fast
-        elif self.fetch_type == E_FetchType.TASE_HISTORICAL:
-            self.fetchFcn = fetch_TASE_historical
+        elif self.fetch_type == E_FetchType.TASE:
+            self.fetchFcn = fetch_TASE
+        # elif self.fetch_type == E_FetchType.TASE_HISTORICAL:
+        #     self.fetchFcn = fetch_TASE
         else:
             raise ValueError(f"Unsupported fetch type encountered: {self.fetch_type}")
         

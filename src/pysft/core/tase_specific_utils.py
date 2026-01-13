@@ -17,6 +17,7 @@ import exchange_calendars
 import sqlite3
 
 import pysft.core.constants as const
+from pysft.core.enums import E_FetchType
 from pysft.core.enums import E_TheMarkerPeriods
 from pysft.core.structures import indicatorRequest, _indicator_data
 import pysft.core.utilities as utils
@@ -82,6 +83,9 @@ class TASE_URLS:
     BIZPORTAL_GENERALVIEW = lambda quoteType, indicator:    f"https://www.bizportal.co.il/mutualfunds/quote/generalview/{indicator}" if quoteType == "MTF" else \
                                                             f"https://www.bizportal.co.il/tradedfund/quote/generalview/{indicator}" if quoteType == "ETF" else \
                                                             f"https://www.bizportal.co.il/capitalmarket/quote/generalview/{indicator}"
+    BIZPORTAL_DIVIDENDS = lambda quoteType, indicator:      f"https://www.bizportal.co.il/mutualfunds/quote/dividends/{indicator}" if quoteType == "MTF" else \
+                                                            f"https://www.bizportal.co.il/tradedfund/quote/dividends/{indicator}" if quoteType == "ETF" else \
+                                                            f"https://www.bizportal.co.il/capitalmarket/quote/dividends/{indicator}"
     BIZPORTAL_GRAPHDATA = "https://www.bizportal.co.il/ajax/biz_papers_helper.ashx"
 
 @dataclass
@@ -236,6 +240,31 @@ def get_tase_company_listings():
                 return
 
 
+def find_YF_equivalent(requests: dict[str, dict[str, Any]]) -> bool:
+    '''
+    For a given TASE indicator request, find its equivalent yfinance ticker using the local TASE security database.
+    '''
+
+    if TASE_SECURITY_DB is not None:
+        for request in requests.values():
+            # lookup security info from local TASE security list database
+            dataPt = TASE_SECURITY_DB.execute(f'''
+                SELECT isin, symbol
+                FROM security_list
+                WHERE indicator = ?
+            ''', (request[const.REQUEST_FIELD].indicator,))
+                
+            row = dataPt.fetchall()
+            if row.__len__() > 0:
+                row = row[0]
+                # If found, set request to YFINANCE (prefer yfinance over TASE if possible)
+                request[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
+                request[const.REQUEST_FIELD].data.ISIN = row[0]
+                request[const.REQUEST_FIELD].indicator = request[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
+
+    return not any([req[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for req in requests.values()])
+
+
 def get_TASE_globals(type: Literal["MTF", "SECURITY", "COMPANY"]) -> list | None:
     """
     Fetch and set global TASE data such as MTF listings or Security listings.
@@ -285,6 +314,149 @@ def tase_determine_quote_type(data: _indicator_data, session: requests.Session, 
 
     
 # Bizportal routines
+def get_Bizportal_dividend_data(data: _indicator_data, session: requests.Session) -> bool:
+    """
+    Fetch dividend data from Bizportal for a given TASE indicator.
+    Args:
+        data (_indicator_data): Indicator data object to populate with extracted information
+    """
+
+    if const.SKIP_BIZPORTAL:
+        return False # Skipping Bizportal related fetch as per settings
+
+    session.headers.pop("Accept-Encoding", None)
+    session.headers["user-agent"] = const.TASE_CONTENT_REQUEST_HEADERS["user-agent"]
+
+    response = None
+    for attempt in range(const.MAX_ATTEMPTS):
+        try:
+            response = session.get( TASE_URLS.BIZPORTAL_DIVIDENDS(data.quoteType, data.indicator), 
+                                    timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
+            response.raise_for_status()
+
+            if response is None:
+                continue
+            elif response.status_code == 200:
+                break  # Successful fetch
+
+        except Exception as e:
+            if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
+                                                    f"Failed to fetch Bizportal dividend data for {data.indicator}: {str(e)}", 
+                                                    utils.random_delay, (0.2, 1)):
+                continue
+            else:
+                return False
+    utils.random_delay(0.2, 0.3)  # polite delay between requests
+    
+    if response is None:
+        return False
+    
+    try:
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        dividend_table_wrapper = soup.find("div", class_="biz_tbl_wrap")
+        tbl_head = dividend_table_wrapper.find("thead") if dividend_table_wrapper else None
+        tbl_body = dividend_table_wrapper.find("tbody") if dividend_table_wrapper else None
+
+        if tbl_body is None:
+            # logger.info(f"No dividend data found for {data.indicator} on Bizportal.")
+            return True  # No dividend data available is not an error
+        else:
+            # Get current price for yield calculation
+            current_price_element = soup.find('div', class_='paper_rate')
+            current_price = 0.0
+            if current_price_element:
+                current_price = float(current_price_element.get_text(strip=True).replace(",", "")) # price in agorot
+            else:
+                return False # Cannot find current price, cannot proceed
+
+            # Parse table headers to find relevant columns
+            header_elements = tbl_head.find_all("th") if tbl_head else []
+            headers = [he.get_text(strip=True) for he in header_elements]
+
+            event_idx   = headers.index("אירוע") if "אירוע" in headers else -1
+            payment_idx = headers.index("תשלום") if "תשלום" in headers else -1
+
+            rows = tbl_body.find_all("tr")
+
+            for row in rows:
+                # Stop at the first row that has a dividend (דיבידנד) event on it
+                content_elements = row.find_all("td")
+                contents = [ce.get_text(strip=True) for ce in content_elements]
+
+                if event_idx != -1 and contents[event_idx] == "דיבידנד":
+                    if payment_idx != -1:
+                        dividend_yield = float(contents[payment_idx].replace(",", ""))/current_price * 100.0
+                        data.dividendYield = dividend_yield
+                        break # Found the dividend, exit loop
+
+        return True
+        
+    except Exception as e:
+        logger.error(f"Error parsing Bizportal dividend content for {data.indicator}: {str(e)}")
+        return False
+
+def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session | None = None) -> bool:
+    '''
+    Fetch expense rate data from Bizportal for a given TASE indicator.
+    '''
+
+    if not session:
+        session = requests.Session()
+    
+    if const.SKIP_BIZPORTAL:
+        return False # Skipping Bizportal related fetch as per settings
+    
+    session.headers.pop("Accept-Encoding", None)
+    session.headers["user-agent"] = const.TASE_CONTENT_REQUEST_HEADERS["user-agent"]
+
+    response = None
+    utils.random_delay(0, 0.5)  # polite delay between requests
+    for attempt in range(const.MAX_ATTEMPTS):
+        try:
+            response = session.get( TASE_URLS.BIZPORTAL_GENERALVIEW(data.quoteType, data.indicator), 
+                                    timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
+            response.raise_for_status()
+
+            if response is None:
+                continue
+            elif response.status_code == 200:
+                break  # Successful fetch
+
+        except Exception as e:
+            if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
+                                                    f"Failed to fetch Bizportal expense rate data for {data.indicator}: {str(e)}", 
+                                                    utils.random_delay, (0.2, 1)):
+                continue
+            else:
+                return False
+            
+    if response is None:
+        return False
+    
+    try:
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        dt_tags = soup.select("dl dt")
+        dd_tags = soup.select("dl dd")
+
+        pairs = {}
+        for dd, dt in zip(dd_tags, dt_tags):
+            key = dt.get_text(strip=True)
+            value = dd.get_text(strip=True)
+            pairs[key] = value
+
+        if data.quoteType not in ["STOCK", "EQUITY"]:
+            data.expense_rate = (float(pairs["דמי ניהול"].replace("%", "")) + \
+                                float(pairs["דמי נאמנות"].replace("%", "")))
+        else:
+            data.expense_rate = 0.0 # No expense rate for stocks
+    except Exception as e:
+        logger.error(f"Error parsing Bizportal expense rate content for {data.indicator}: {str(e)}")
+        return False
+
+    return True
+
 def get_Bizportal_general_indicator_data(data: _indicator_data, session: requests.Session) -> bool:
     """
     Fetch general indicator data from Bizportal for a given TASE indicator.
@@ -357,7 +529,7 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
         # Extract fees and inception date
         if data.quoteType != "STOCK":
             data.expense_rate = (float(pairs["דמי ניהול"].replace("%", "")) + \
-                                float(pairs["דמי נאמנות"].replace("%", ""))) / 100.0
+                                float(pairs["דמי נאמנות"].replace("%", "")))
         
             data.inceptionDate = pd.to_datetime(pairs["תאריך הקמה"], format="%d/%m/%Y")
 
@@ -451,7 +623,7 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
         data.open   = data.price
         data.high   = data.price
         data.low    = data.price
-        data.last   = data.price
+        data.last   = data.price[-1] if data.price else 0.0 # Last price is the most recent price
         data.volume = [json_data[i]["V_p"] for i in indices]
 
         data.change_pct = [(json_data[i]["C_p"]/json_data[i+1]["C_p"] - 1) if (i+1) < len(json_data) else 0.0 for i in indices]
@@ -463,7 +635,7 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
     return True
 
 # MAYA TASE routines
-def get_MAAYA_TASE_general_url(data: _indicator_data) -> str:
+def get_MAYA_TASE_general_url(data: _indicator_data) -> str:
    
     if not data.ISIN.startswith("IL"):
         return MAYA_TASE_URLS.SECURITY(data.indicator)
@@ -491,7 +663,7 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
         return False # Skipping TASE related fetch as per settings
 
     # "Contaminate" sesseion headers to mimic a browser request from market.tase.co.il
-    general_data_url = get_MAAYA_TASE_general_url(data)
+    general_data_url = get_MAYA_TASE_general_url(data)
     for attempt in range(const.MAX_ATTEMPTS):
         try:
             get_response = session.get(general_data_url, timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
@@ -515,7 +687,7 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
         "cl": 0,
         "cgt": 1,
         "oId": int(data.indicator),
-        "dFrom": data.dates[0].strftime("%d/%m/%Y"),
+        "dFrom": (data.dates[0] - pd.Timedelta(days=1)).strftime("%d/%m/%Y"), # Take one day before the required initial date for percentage change calculation
         "dTo": data.dates[-1].strftime("%d/%m/%Y"),
     }
 
@@ -570,14 +742,15 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
             volumes.append(approx_volume)
         
         # Filter data to match requested dates
-        data.dates = dates
-        data.price = list(np.array(closes)/100.0)  # MAYA TASE prices are in agorot
-        data.open = list(np.array(opens)/100.0)
-        data.high = list(np.array(highs)/100.0)
-        data.low = list(np.array(lows)/100.0)
-        data.volume = volumes
+        data.dates = dates[1:]
+        data.price = list(np.array(closes[1:])/100.0)  # MAYA TASE prices are in agorot
+        data.open = list(np.array(opens[1:])/100.0)
+        data.high = list(np.array(highs[1:])/100.0)
+        data.low = list(np.array(lows[1:])/100.0)
+        data.volume = volumes[1:]
+        data.last = data.price[-1] if data.price else 0.0 # Last price is the most recent price
 
-        data.last = data.price
+        data.change_pct = [(closes[i]/closes[i-1] - 1)*100 if i > 0 else 0.0 for i in range(1, len(closes))]
     else:
         # No data fetched
         return False

@@ -15,8 +15,8 @@ class E_FetchType(Enum):
     NULL            = -1 # Undefined fetch type
     YFINANCE        = 0 # Fetch data from Yahoo Finance
     TASE            = 1 # Fetch data from TASE
-    TASE_FAST       = 2 # Fetch real-time data from TASE
-    TASE_HISTORICAL = 3 # Fetch historical data from TASE
+    # TASE_FAST       = 2 # Fetch real-time data from TASE
+    # TASE_HISTORICAL = 3 # Fetch historical data from TASE
     DATABASE        = 4 # Fetch data from local database
 
 class E_IndicatorType(Enum):

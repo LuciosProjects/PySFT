@@ -13,7 +13,7 @@ from pysft.tools.logger import get_logger
 
 logger = get_logger(__name__)
 
-def fetch_TASE_fast(request: indicatorRequest):
+def fetch_TASE(request: indicatorRequest):
     """
     Fetch data for the given indicator using TASE fast fetcher.
     
@@ -51,25 +51,38 @@ def fetch_TASE_fast(request: indicatorRequest):
             logger.warning(request.message)
             continue
         
+        # Check for any dividend data before fetching main data
+        if not tase_utils.get_Bizportal_dividend_data(request.data, session):
+            request.message = f"{request.indicator} - Failed to fetch dividend data from Bizportal on attempt {attempt + 1}"
+            request.message = utils.add_attempt2msg(request.message, attempt)
+            logger.warning(request.message)
+            continue
+
         # Route the fetch based on quote type
         if request.data.quoteType == "MTF":
             # Fetch MTF data
-            if not const.SKIP_BIZPORTAL and (tase_utils.get_Bizportal_general_indicator_data(request.data, session) and
-                                             tase_utils.get_Bizportal_graph_data(request.data, session)):
-                request.success = True
-                request.message = f"{request.indicator} - Successfully fetched MTF data from Bizportal"
+            if tase_utils.get_Bizportal_general_indicator_data(request.data, session):
+                if tase_utils.get_Bizportal_graph_data(request.data, session):
+                    request.success = True
+                    request.message = f"{request.indicator} - Successfully fetched MTF data from Bizportal"
+                else:
+                    request.message = f"{request.indicator} - Failed to fetch MTF graph data from Bizportal on attempt {attempt + 1}"
+                    request.message = utils.add_attempt2msg(request.message, attempt)
+                    logger.warning(request.message)
+                    continue
             else:
-                request.message = f"{request.indicator} - Failed to fetch MTF data from Bizportal on attempt {attempt + 1}"
+                request.message = f"{request.indicator} - Failed to fetch MTF general data from Bizportal on attempt {attempt + 1}"
                 request.message = utils.add_attempt2msg(request.message, attempt)
                 logger.warning(request.message)
                 continue 
 
         elif request.data.quoteType in ["ETF", "STOCK"]:
 
+            isForeign = False
             if tase_utils.TASE_SECURITY_DB is not None:
                 # lookup security info from local TASE security list database
                 dataPt = tase_utils.TASE_SECURITY_DB.execute(f'''
-                    SELECT securityId, isin, companyName
+                    SELECT securityId, isin, companyName, symbol
                     FROM security_list
                     WHERE indicator = ?
                 ''', (request.indicator,))
@@ -85,16 +98,17 @@ def fetch_TASE_fast(request: indicatorRequest):
                         request.data.ISIN = row[1] # ISIN
                         request.data.name = row[-1] # Company or security Name
 
-
-            if not const.SKIP_BIZPORTAL and tase_utils.get_Bizportal_general_indicator_data(request.data, session):
+            # Get general data and graph data from Bizportal and MAYA TASE
+            if tase_utils.get_Bizportal_general_indicator_data(request.data, session):
                 request.success = True
             else:
                 request.message = f"{request.indicator} - Failed to fetch general data from Bizportal on attempt {attempt + 1}"
                 request.message = utils.add_attempt2msg(request.message, attempt)
                 logger.warning(request.message)
                 continue
+            
 
-            if not const.SKIP_TASE and tase_utils.get_MAYA_TASE_graph_data(request.data, session):
+            if tase_utils.get_MAYA_TASE_graph_data(request.data, session):
                 request.success = True
                 request.message += f"{request.original_indicator} - Successfully fetched data"
             else:
@@ -103,4 +117,6 @@ def fetch_TASE_fast(request: indicatorRequest):
                 logger.warning(request.message)
                 continue
 
+        request.data.currency = "ILS" # After converting all prices from agorot to shekels, set currency to ILS
+        logger.info(request.message)
         break

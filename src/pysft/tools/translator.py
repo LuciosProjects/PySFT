@@ -8,7 +8,7 @@ import asyncio
 import requests
 from googletrans import Translator
 
-TRANLATOR_TIMEOUT_SECONDS = 6
+TRANSLATOR_TIMEOUT_SECONDS = 6
 TRANSLATOR_MAX_CHUNK_SIZE = 200  # max characters per translation chunk
 
 class He2En_Translator:
@@ -89,7 +89,7 @@ class He2En_Translator:
         params = {'q': text, 'langpair': 'he|en'}
         # if self.email:
         #     params['de'] = self.email
-        r = requests.get('https://api.mymemory.translated.net/get', params=params, timeout=TRANLATOR_TIMEOUT_SECONDS)
+        r = requests.get('https://api.mymemory.translated.net/get', params=params, timeout=TRANSLATOR_TIMEOUT_SECONDS)
         if r.status_code != 200:
             return ""
         data = r.json()
