@@ -376,19 +376,29 @@ def get_Bizportal_dividend_data(data: _indicator_data, session: requests.Session
 
             event_idx   = headers.index("אירוע") if "אירוע" in headers else -1
             payment_idx = headers.index("תשלום") if "תשלום" in headers else -1
+            pay_day_idx = headers.index("תאריך תשלום") if "תאריך תשלום" in headers else -1
 
             rows = tbl_body.find_all("tr")
-
+            # Calculate trailing 18 months dividend yield
+            mostRecentDate, date18M_Ago, acc_amount = None, None, 0.0
             for row in rows:
                 # Stop at the first row that has a dividend (דיבידנד) event on it
                 content_elements = row.find_all("td")
                 contents = [ce.get_text(strip=True) for ce in content_elements]
 
                 if event_idx != -1 and contents[event_idx] == "דיבידנד":
-                    if payment_idx != -1:
-                        dividend_yield = float(contents[payment_idx].replace(",", ""))/current_price * 100.0
-                        data.dividendYield = dividend_yield
-                        break # Found the dividend, exit loop
+                    event_date = pd.to_datetime(contents[pay_day_idx], format="%d/%m/%Y")
+
+                    if mostRecentDate is None:
+                        mostRecentDate = event_date
+                        date18M_Ago = mostRecentDate - pd.DateOffset(months=19) # use 19 months to be safe
+
+                    if payment_idx != -1 and pay_day_idx != -1 and event_date >= date18M_Ago:
+                        acc_amount += float(contents[payment_idx].replace(",", ""))
+                    elif event_date < date18M_Ago:
+                        break  # No need to check older rows
+
+            data.dividendYield = acc_amount/current_price * 100.0
 
         return True
         

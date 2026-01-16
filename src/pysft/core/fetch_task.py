@@ -1,4 +1,5 @@
 # ---- Standard library imports ----
+import time
 from typing import Callable
 import asyncio
 
@@ -21,6 +22,10 @@ class fetchTask:
 
         self.setFetchFcn()
 
+        self.est_mem_req_bytes = const.MAX_TASK_MEMORY_ALLOCATION # estimated memory requirement in bytes
+        
+        self.created_at = time.time()
+
     def setFetchFcn(self):
         """
         This method sets the appropriate fetch function based on the fetch type.
@@ -41,7 +46,7 @@ class fetchTask:
         self.fetchFcn(self.data)
         self.prepare_results()
 
-    def execute_async(self):
+    async def execute_async(self):
         """
         Execute the fetch function asynchronously.
         """
@@ -49,7 +54,7 @@ class fetchTask:
         utils.random_delay(rate_limit_nominal_seconds - 0.5, rate_limit_nominal_seconds + 0.5) # delay task execution in async mode to avoid rate limiting
 
         loop = asyncio.get_event_loop()
-        loop.run_in_executor(None, self.fetchFcn, self.data)
+        await loop.run_in_executor(None, self.fetchFcn, self.data)
 
         self.prepare_results()
 

@@ -31,7 +31,8 @@ PACKAGE_NAME = "pysft"
 # Memory-related constants
 ONE_MB                      = (1024**2)         # One MB in bytes (1024 bytes in 1 KB, 1024 KB in 1 MB and so on...)
 ONE_GB                      = (ONE_MB * 1024)   # One GB in bytes
-INSTANCE_MAX_MEMORY         = ONE_GB * 2       # Max memory per PySFT instance (2 GB)
+INSTANCE_MAX_MEMORY         = ONE_GB * 2        # Max memory per PySFT instance (2 GB)
+MAX_TASK_MEMORY_ALLOCATION  = ONE_MB * 200      # Max memory allocation per fetch task (200 MB)
 
 # Fetcher constants
 MAX_ATTEMPTS            = 3  # max fetch attempts
@@ -86,6 +87,9 @@ TASE_HTML_FETCH_TIMEOUT = CTimeRepr(60) # seconds
 YF_BATCH_SIZE = 30  # max indicators per yfinance batch request
 YF_CONCURRENCY_LIMIT = 3  # max concurrent yfinance batch requests
 RATELIMIT_PAUSE = CTimeRepr(2)  # nominal seconds to pause on rate limit hit
+
+YF_K_SEMAPHORES = 5  # number of semaphores for limiting concurrency in yfinance fetcher
+TASE_K_SEMAPHORES = 3  # number of semaphores for limiting concurrency in TASE fetcher
 
 # Indicator request dictionary fields
 INDICATOR_FIELD     = "indicator"
