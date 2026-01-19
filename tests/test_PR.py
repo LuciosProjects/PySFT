@@ -93,7 +93,7 @@ def _module_banner():
 # pytest fixures
 @pytest.fixture
 def getTestIndicators() -> list[str]:
-    indicators = indicatorsDB.US
+    indicators = indicatorsDB.getShuffeledPortfolio("PORTFOLIO")
 
     print(f"Setting up indicators for test - total: {len(indicators)}")
 
