@@ -88,8 +88,8 @@ YF_BATCH_SIZE = 30  # max indicators per yfinance batch request
 YF_CONCURRENCY_LIMIT = 3  # max concurrent yfinance batch requests
 RATELIMIT_PAUSE = CTimeRepr(2)  # nominal seconds to pause on rate limit hit
 
-YF_K_SEMAPHORES = 5  # number of semaphores for limiting concurrency in yfinance fetcher
-TASE_K_SEMAPHORES = 3  # number of semaphores for limiting concurrency in TASE fetcher
+YF_K_SEMAPHORES     = 5  # number of semaphores for limiting concurrency in yfinance fetcher
+TASE_K_SEMAPHORES   = 3  # number of semaphores for limiting concurrency in TASE fetcher
 
 # Indicator request dictionary fields
 INDICATOR_FIELD     = "indicator"

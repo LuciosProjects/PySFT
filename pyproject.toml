@@ -10,7 +10,8 @@ readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Lucio" }]
 license = { text = "Proprietary" }
-dependencies = ["python-dotenv",
+dependencies = ["psutil",
+                "python-dotenv",
                 "scrapy",
                 "numpy", 
                 "pandas", 

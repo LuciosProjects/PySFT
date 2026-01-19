@@ -1,443 +1,418 @@
-
-# import time
-# import psutil
-# import asyncio
-# from collections import deque
-# from dataclasses import dataclass
-# from typing import Optional, Any
-# from enum import Enum
-
-# import DataFetcher_Utilities as Utilities
-# from DataFetcher_Utilities import fetchRequest
-# import DataFetcher_Constants as Constants
-# from DataFetcher_Constants import E_FetchType
-
-# from InstanceMonitor import INSTANCE_MONITOR
-# from ResourceManager import RESOURCEMANAGER
-
-# from DF_TheMarker import fetch_tase_fast, fetch_tase_historical
-# from DF_YFinance import fetch_yfinance_data
-
-# class taskState(Enum):
-#     QUEUED      = "queued"
-#     RUNNING     = "running" 
-#     COMPLETED   = "completed"
-#     FAILED      = "failed"
-
-# @dataclass
-# class taskContainer:
-#     """Container for task metadata and tracking"""
-#     index: int
-#     fetch_type: Constants.E_FetchType
-#     task_data: Any
-
-#     state: taskState = taskState.QUEUED
-
-#     created_at: Optional[float] = None
-#     started_at: Optional[float] = None
-#     completed_at: Optional[float] = None
-
-#     attempt_count: int = 0
-    
-#     # Post initialization to set created_at timestamp
-#     def __post_init__(self):
-#         if self.created_at is None:
-#             self.created_at = time.time()
-    
-#     @property
-#     def task_id(self) -> str:
-#         """Unique task identifier"""
-#         if self.created_at:
-#             return f"{self.fetch_type.name}_{self.index}_{int(self.created_at)}"
-#         return f"{self.fetch_type.name}_{self.index}_unknown"
-    
-#     @property
-#     def elapsed_time(self) -> float:
-#         """Time since task was created"""
-#         if self.created_at:
-#             return time.time() - self.created_at
-#         return 0.0
-
-# class taskScheduler:
-#     """ 
-#         Scheduler to manage and execute tasks with resource constraints.
-#     """
-
-#     def __init__(self, tasks: list[tuple[E_FetchType, fetchRequest | list[fetchRequest]]]):
-#         self.activeTasks = 0
-
-#         self.activeYFinance         = 0
-#         self.activeTASE             = 0
-
-#         # Task queue
-#         self.queue: deque[taskContainer] = deque()  # Primary FIFO queue
-        
-#         # Active task tracking
-#         self.running_tasks = {}  # task_id -> taskContainer
-#         self.completed_tasks = {}  # task_id -> taskContainer
-
-#         # Timer settings
-#         self.timeout: float = Constants.RESOURCE_WAIT_TIMEOUT.seconds()
-#         self.check_interval = 0.2 # [sec] time interval between resource checks
-
-#         # Scheduler time tracking
-#         self.scheduler_start_time = None
-#         self.last_execution_time = None
-
-#         self._initialize_tasks(tasks)
-
-#     def _initialize_tasks(self, tasks: list[tuple[E_FetchType, fetchRequest | list[fetchRequest]]]):
-#         """
-#             Initialize task containers and add to main queue
-#         """
-
-#         for task_idx, (fetch_type, task_data) in enumerate(tasks):
-#             task_container = taskContainer(
-#                                             index=task_idx, 
-#                                             fetch_type=fetch_type, 
-#                                             task_data=task_data
-#                                             )
-#             self.queue.append(task_container)
-
-#     async def execute(self):
-#         """
-#             Execute all tasks in the queues and wait until all tasks are completed
-#         """
-
-#         if not self.queue:
-#             if Constants.CLOUD_RUN_DEBUG_MODE:
-#                 print("No tasks to execute in the scheduler.")
-#             return
-        
-#         # Start scheduler timer
-#         self.scheduler_start_time = time.time()
-#         self.last_execution_time = self.scheduler_start_time
-
-#         while self.queue:
-#             # Check global scheduler timeout
-#             current_time = time.time()
-#             time_since_last_execution = current_time - self.last_execution_time
-
-#             if time_since_last_execution >= self.timeout:
-#                 raise TimeoutError(f"Scheduler execution timeout reached after {self.timeout} seconds.")
-
-#             # Get first task in queue
-#             task = self.queue[0]
-
-#             if not self.check_task_status(task.fetch_type):
-#                 # No resources available, rotate task to end of queue
-#                 rotated_task = self.queue.popleft()
-#                 self.queue.append(rotated_task)
-#                 continue
-
-#             # Small delay in order to reduce resource contention
-#             if task.fetch_type == E_FetchType.YFINANCE:
-#                 await asyncio.sleep(Constants.DELAY_0p5_SEC.seconds())
-#             elif task.fetch_type == E_FetchType.TASE_FAST:
-#                 await asyncio.sleep(Constants.DELAY_1_SEC.seconds())
-#             elif task.fetch_type == E_FetchType.TASE_HISTORICAL:
-#                 await asyncio.sleep(Constants.DELAY_3_SEC.seconds())
-
-#             if self.can_execute_task(task.fetch_type):
-#                 executed_task = self.queue.popleft()
-
-#                 if Constants.CLOUD_RUN_DEBUG_MODE:
-#                     print(f"Resources available - executing {executed_task.task_id}") # task id contains fetch type, index and timestamp
-
-#                 # Reset timer since we're executing a task
-#                 self.last_execution_time = current_time
-
-#                 # Execute task in parallel
-#                 asyncio.create_task(self._execute_task(executed_task))
-
-#                 # CRITICAL FIX: Give event loop a chance to start the task
-#                 await asyncio.sleep(Constants.DELAY_1_SEC.seconds())  # Yield control to event loop immediately
-
-#             else:
-#                 self.decrease_task_count(task.fetch_type) # Decrease specific active task counter
-                
-#                 # No resources available
-#                 rotated_task = self.queue.popleft()
-#                 self.queue.append(rotated_task)
-
-#                 # Wait before next resource check
-#                 await asyncio.sleep(self.check_interval)
-
-#         # Wait for all running tasks to complete
-#         while self.running_tasks:
-#             if Constants.CLOUD_RUN_DEBUG_MODE:
-#                 print(f"Waiting for {len(self.running_tasks)} running tasks to complete...")
-#             await asyncio.sleep(Constants.TASK_TYPICAL_TIME.seconds())
-
-#         total_time = time.time() - self.scheduler_start_time
-#         successful_tasks = len([t for t in self.completed_tasks.values() if t.state == taskState.COMPLETED])
-#         failed_tasks = len([t for t in self.completed_tasks.values() if t.state == taskState.FAILED])
-
-#         print(f"All tasks completed in {total_time:.2f}s - Successful: {successful_tasks}, Failed: {failed_tasks}")
-
-#     @staticmethod
-#     def can_execute_task(task_type: E_FetchType) -> bool:
-#         """ 
-#             Check if there are enough resources to execute the task. 
-#         """
-
-#         req = Constants.RESOURCE_REQ.get_requirements(task_type)
-
-#         try:
-#             total_cpu = psutil.cpu_count()
-#             current_cpu_pct = psutil.cpu_percent()
-
-#             if total_cpu:
-#                 # Calculate the number of CPUs currently in use, including the one used for the main process
-#                 current_cpu_in_use = (current_cpu_pct / 100) * total_cpu
-#             else:
-#                 print(f"Resource check failed: Unable to determine CPU count")
-#                 return False # Unable to determine CPU count
-
-#             current_memory_in_use = psutil.virtual_memory().used
-#             available_memory = psutil.virtual_memory().total - current_memory_in_use
-            
-#             # Check if we have enough resources + buffer
-#             cpu_needed = req["cpu"] # number of CPUs needed
-#             memory_needed = req["memory"] # in bytes
-
-#             if Constants.CLOUD_RUN_DEBUG_MODE:
-#                 RESOURCEMANAGER.log_current_resources()
-
-#             return (((current_cpu_in_use + cpu_needed) < (total_cpu - Constants.RESOURCE_BUFFER["cpu"])) and
-#                     (((available_memory - memory_needed) > Constants.RESOURCE_BUFFER["memory"])))
-
-#         except Exception as e:
-#             print(f"Resource check failed: {e}")
-#             return False
-
-#     async def _execute_task(self, task: taskContainer):
-#         """ 
-#             Execute a task 
-#         """
-
-#         task.state                          = taskState.RUNNING
-#         task.started_at                     = time.time()
-#         self.running_tasks[task.task_id]    = task
-#         self.activeTasks                    += 1
-
-#         if Constants.CLOUD_RUN_DEBUG_MODE:
-#             print(f"Executing task {task.task_id} (active: {self.activeTasks})")
-        
-#         try:
-#             # Here we'll call the actual fetch functions
-#             await self._dispatch_task_execution(task)
-            
-#             # Mark as completed
-#             task.state = taskState.COMPLETED
-#             task.completed_at = time.time()
-            
-#             execution_time = task.completed_at - task.started_at
-
-#             if Constants.CLOUD_RUN_DEBUG_MODE:
-#                 print(f"Task {task.task_id} completed in {execution_time:.2f}s")
-            
-#         except Exception as e:
-#             # Mark as failed
-#             task.state = taskState.FAILED
-#             task.completed_at = time.time()
-            
-#             if Constants.CLOUD_RUN_DEBUG_MODE:
-#                 print(f"Task {task.task_id} failed: {str(e)}")
-        
-#         finally:
-#             # Cleanup
-#             if task.task_id in self.running_tasks:
-#                 del self.running_tasks[task.task_id]
-            
-#             self.completed_tasks[task.task_id] = task
-#             self.activeTasks -= 1
-            
-#             self.decrease_task_count(task.fetch_type) # Decrease specific active task counter
-
-#             if Constants.CLOUD_RUN_DEBUG_MODE:
-#                 print(f"Task {task.task_id} finished (active: {self.activeTasks})")
-
-
-#     async def _dispatch_task_execution(self, task: taskContainer):
-#         """ 
-#             Dispatch the actual task execution based on fetch type 
-#         """
-#         # Here we would call the actual data fetching functions
-#         # For demonstration, we'll simulate with asyncio.sleep
-        
-#         if task.fetch_type == E_FetchType.YFINANCE:
-#             # YFinance fetch is a sync function
-#             loop = asyncio.get_event_loop()
-#             await loop.run_in_executor(None, fetch_yfinance_data, task.task_data)
-#         elif task.fetch_type == E_FetchType.TASE_FAST:
-#             # TASE fast price fetch is a sync function
-#             loop = asyncio.get_event_loop()
-#             await loop.run_in_executor(None, fetch_tase_fast, task.task_data)
-#         elif task.fetch_type == E_FetchType.TASE_HISTORICAL:
-#             # TASE historical fetch is an async function
-#             await fetch_tase_historical(task.task_data)
-#         else:
-#             raise ValueError(f"Unsupported fetch type: {task.fetch_type}")
-
-#     def get_status(self) -> dict:
-#         """ 
-#             Get current status of the scheduler 
-#         """
-#         return {
-#             "queue_size": len(self.queue),
-#             "active_tasks": self.activeTasks,
-#             "running_tasks": list(self.running_tasks.keys()),
-#             "completed_tasks": len(self.completed_tasks),
-#             "scheduler_uptime": time.time() - self.scheduler_start_time if self.scheduler_start_time else 0,
-#             "time_since_last_execution": time.time() - self.last_execution_time if self.last_execution_time else 0
-#         }
-    
-#     def check_task_status(self, task_type: E_FetchType) -> bool:
-#         """ 
-#             check if there are not too many tasks running at the same time 
-#         """
-
-#         # Check specific task type limits
-#         if (task_type == E_FetchType.YFINANCE and self.activeYFinance < Constants.MAX_YFINANCE_TASKS):
-#             self.activeYFinance += 1
-#             return True
-#         elif (task_type == E_FetchType.TASE_FAST or task_type == E_FetchType.TASE_HISTORICAL) and self.activeTASE < Constants.MAX_TASE_TASKS:
-#             self.activeTASE += 1
-#             return True
-#         else:
-#             return False
-    
-#     def decrease_task_count(self, task_type: E_FetchType):
-#         """ 
-#             Decrease the active task count for a specific fetch type 
-#         """
-
-#         # Decrement specific active task counters
-#         if task_type == E_FetchType.YFINANCE:
-#             self.activeYFinance -= 1
-#         elif task_type == E_FetchType.TASE_FAST or task_type == E_FetchType.TASE_HISTORICAL:
-#             self.activeTASE -= 1
-#         else:
-#             raise ValueError(f"Unsupported fetch type: {task_type}")
-
-# # Async Caller Functions - Use Dedicated Browsers for True Parallelization
-# async def fetch_yfinance_data_async(requests: list[fetchRequest]) -> list[fetchRequest]:
-#     """
-#     Async caller for YFinance data fetching.
-#     Limited by semaphore to control concurrent API requests.
-#     """
-
-#     # async with request_semaphore:  # Limit concurrent API requests
-#     start_time = time.time()
-#     while time.time() - start_time < INSTANCE_MONITOR.waitTimeout:
-#         decision = INSTANCE_MONITOR.can_start_task("YFinance")
-#         if decision["can_start"]:
-#             # Can start task, acquiring API slot
-
-#             task_name = f"YFinance-{len(requests)}"
-
-#             INSTANCE_MONITOR.start_task(task_name)
-
-#             try:
-#                 async with RESOURCEMANAGER.acquire_api_slot("YFinance"):  # Limit concurrent API requests
-#                     loop = asyncio.get_event_loop()
-#                     # Run the sync YFinance function in executor (no browser needed)
-#                     await loop.run_in_executor(None, fetch_yfinance_data, requests)
-
-#             except Exception as e:
-#                 for request in requests:
-#                     request.fetched_price = None
-#                     request.success = False
-#                     request.message = f"Error in async YFinance fetch: {str(e)}"
-            
-#             finally:
-#                 # complete task
-#                 INSTANCE_MONITOR.complete_task(task_name) 
-            
-#             return requests
-#         else:
-#             await asyncio.sleep(decision["wait_time"])
-
-#     for request in requests:
-#         request.success = False
-#         request.message = "Timeout reached while waiting for resources to fetch YFinance data"
-
-#     return requests
-
-# # async def fetch_tase_fast_price_async(request: fetchRequest, request_semaphore: asyncio.Semaphore) -> fetchRequest:
-# async def fetch_tase_fast_price_async(request: fetchRequest) -> fetchRequest:
-#     """
-#         Async caller for TASE current price fetching using fast requests method.
-#         Limited by semaphore to control concurrent requests.
-#     """
-
-#     start_time = time.time()
-#     while time.time() - start_time < INSTANCE_MONITOR.waitTimeout:
-#         decision = INSTANCE_MONITOR.can_start_task("TASE-Fast")
-#         if decision["can_start"]:
-#             # Can start task, acquiring API slot
-
-#             task_name = f"TASE-Fast-{request.indicator}"
-
-#             INSTANCE_MONITOR.start_task(task_name)
-
-#             try:
-#                 async with RESOURCEMANAGER.acquire_api_slot(task_name):  # Limit concurrent API requests
-#                     loop = asyncio.get_event_loop()
-#                     # Run the sync current price function in executor (no browser needed)
-#                     await loop.run_in_executor(None, fetch_tase_fast, request)
-
-#             except Exception as e:
-#                 request.success = False
-#                 request.message = f"Error in async TASE current price fetch: {str(e)}"
-            
-#             finally:
-#                 # complete task
-#                 INSTANCE_MONITOR.complete_task(task_name) 
-            
-#             return request
-#         else:
-#             await asyncio.sleep(decision["wait_time"])
-    
-#     request.success = False
-#     request.message = "Timeout reached while waiting for resources to fetch TASE fast price"
-#     return request
-
-# async def fetch_tase_historical_data_async(request: fetchRequest) -> fetchRequest:
-#     """
-#         Async caller for TASE historical data with DEDICATED browser instance.
-#         Limited by semaphore to control concurrent browser instances.
-#     """
-
-#     start_time = time.time()
-#     while time.time() - start_time < INSTANCE_MONITOR.waitTimeout:
-#         decision = INSTANCE_MONITOR.can_start_task("TASE-Historical")
-#         if decision["can_start"]:
-#             # Can start task, acquiring browser and memory slots
-
-#             task_name = f"TASE-Historical-{request.indicator}"
-
-#             INSTANCE_MONITOR.start_task(task_name)
-
-#             try:
-#                 async with RESOURCEMANAGER.acquire_browser_slot(task_name):  # Limit concurrent browser instances
-#                     async with RESOURCEMANAGER.acquire_memory_slot(task_name):
-#                         # Run the sync function in executor for true parallelism
-#                         await fetch_tase_historical(request)
-
-#             except Exception as e:
-#                 request.success = False
-#                 request.message = f"Error in async TASE historical fetch: {str(e)}"
-            
-#             finally:
-#                 # complete task
-#                 INSTANCE_MONITOR.complete_task(task_name) 
-            
-#             return request
-#         else:
-#             await asyncio.sleep(decision["wait_time"])
-        
-#     request.success = False
-#     request.message = "Timeout reached while waiting for resources to fetch TASE historical data"
-#     return request
+# ---- Standard library imports ----
+from __future__ import annotations
+
+import asyncio
+import inspect
+import random
+import time
+import traceback
+from dataclasses import dataclass
+from typing import Any, Callable, Iterable
+import psutil
+
+# ---- Package imports ----
+from pysft.core import constants as const
+from pysft.core.enums import E_FetchType
+from pysft.core.fetch_task import fetchTask
+from pysft.core.structures import outputCls
+from pysft.core.models import indicatorRequest
+import pysft.core.utilities as utils
+
+# ---------------------------
+# Result structures
+# ---------------------------
+
+@dataclass(slots=True)
+class TaskEnvelope:
+    task: fetchTask
+    est_mem_bytes: int
+    timeout_s: float
+    retries: int
+    backoff_base_s: float
+
+
+@dataclass(slots=True)
+class TaskSuccess:
+    task: fetchTask
+    result: Any
+    started_at: float
+    ended_at: float
+
+    @property
+    def duration_s(self) -> float:
+        return self.ended_at - self.started_at
+
+
+@dataclass(slots=True)
+class TaskFailure:
+    task: fetchTask
+    fetch_type: E_FetchType
+    attempt: int
+    exception: BaseException
+    tb: str
+    started_at: float
+    ended_at: float
+
+    @property
+    def duration_s(self) -> float:
+        return self.ended_at - self.started_at
+
+
+# ---------------------------
+# Resource gates
+# ---------------------------
+
+class MemoryBudget:
+    """A token-based RAM budget.
+
+    This avoids oscillations and overfitting to live RSS measurements.
+    Each task declares an *estimate* (in bytes). The scheduler guarantees
+    the sum of inflight estimates does not exceed the configured budget.
+    """
+
+    def __init__(self, max_bytes: int):
+        self.max_bytes = max(0, int(max_bytes))
+        self._used_bytes = 0
+        self._cond = asyncio.Condition()
+
+    @property
+    def used_bytes(self) -> int:
+        return self._used_bytes
+
+    @property
+    def free_bytes(self) -> int:
+        return max(0, self.max_bytes - self._used_bytes)
+
+    async def acquire(self, amount_bytes: int) -> None:
+        amount_bytes = max(0, int(amount_bytes))
+        if amount_bytes == 0:
+            return
+        async with self._cond:
+            while self._used_bytes + amount_bytes > self.max_bytes:
+                await self._cond.wait()
+            self._used_bytes += amount_bytes
+
+    async def release(self, amount_bytes: int) -> None:
+        amount_bytes = max(0, int(amount_bytes))
+        if amount_bytes == 0:
+            return
+        async with self._cond:
+            self._used_bytes = max(0, self._used_bytes - amount_bytes)
+            self._cond.notify_all()
+
+
+class _SemaphoreCM:
+    def __init__(self, sem: asyncio.Semaphore):
+        self._sem = sem
+
+    async def __aenter__(self):
+        await self._sem.acquire()
+
+    async def __aexit__(self, exc_type, exc, tb):
+        self._sem.release()
+        return False
+
+
+# ---------------------------
+# Scheduler
+# ---------------------------
+
+class taskScheduler:
+    """Task scheduler for managing and executing fetch tasks."""
+
+    def __init__(
+        self,
+        taskList: list[fetchTask],
+        *,
+        # Per-fetch-type concurrency limits (defaults from constants)
+        concurrency_by_type: dict[E_FetchType, int] | None = None,
+        # Total RAM budget for inflight tasks (defaults to INSTANCE_MAX_MEMORY)
+        mem_budget_bytes: int | None = None,
+        # Default per-task memory estimates
+        default_task_mem_bytes: dict[E_FetchType, int] | None = None,
+        # Optional CPU soft-guard (system CPU percent). None disables.
+        cpu_guard_percent: float | None = None,
+        cpu_poll_s: float = 0.20,
+        # Timeouts / retries defaults
+        default_timeout_s: float = 180.0,
+        default_retries: int = const.MAX_ATTEMPTS,
+        backoff_base_s: float = 0.75,
+        # Worker count (defaults to sum of per-type limits)
+        global_max_workers: int | None = None,
+        # Optional callbacks
+        on_success: Callable[[TaskSuccess], None] | None = None,
+        on_failure: Callable[[TaskFailure], None] | None = None,
+    ):
+        self._queue: asyncio.Queue[TaskEnvelope | None] = asyncio.Queue()
+
+        if concurrency_by_type is None:
+            concurrency_by_type = {
+                E_FetchType.YFINANCE: int(const.YF_K_SEMAPHORES),
+                E_FetchType.TASE: int(const.TASE_K_SEMAPHORES),
+            }
+
+        self.semaphores: dict[E_FetchType, asyncio.Semaphore] = {
+            ft: asyncio.Semaphore(max(1, int(k))) for ft, k in concurrency_by_type.items()
+        }
+
+        if mem_budget_bytes is None:
+            mem_budget_bytes = int(getattr(const, "INSTANCE_MAX_MEMORY", const.ONE_GB))
+
+        self._mem_budget = MemoryBudget(int(mem_budget_bytes))
+
+        if default_task_mem_bytes is None:
+            # Keep within your declared max allocation if present.
+            max_task = int(getattr(const, "MAX_TASK_MEMORY_ALLOCATION", 200 * const.ONE_MB))
+            default_task_mem_bytes = {
+                E_FetchType.YFINANCE: min(max_task, 200 * const.ONE_MB),
+                E_FetchType.TASE: min(max_task, 500 * const.ONE_MB),
+            }
+
+        self._default_task_mem_bytes = default_task_mem_bytes
+        self._default_timeout_s = float(default_timeout_s)
+        self._default_retries = max(0, int(default_retries))
+        self._backoff_base_s = float(backoff_base_s)
+
+        if global_max_workers is None:
+            global_max_workers = max(1, sum(concurrency_by_type.values()))
+        self._global_max_workers = int(global_max_workers)
+
+        self._cpu_guard_percent = float(cpu_guard_percent) if cpu_guard_percent is not None else None
+        self._cpu_poll_s = float(cpu_poll_s)
+        if self._cpu_guard_percent is not None and psutil is not None:
+            try:
+                psutil.cpu_percent(interval=None)  # prime measurement
+            except Exception:
+                pass
+
+        self._on_success = on_success
+        self._on_failure = on_failure
+
+        self._results: list[TaskSuccess] = []
+        self._failures: list[TaskFailure] = []
+        self._list_lock = asyncio.Lock()
+
+        self._workers: list[asyncio.Task[None]] = []
+        self._started = False
+
+        self.initialize_queue(taskList)
+
+    # ---------------------------
+    # Public API
+    # ---------------------------
+
+    @property
+    def results(self) -> list[TaskSuccess]:
+        return list(self._results)
+
+    @property
+    def failures(self) -> list[TaskFailure]:
+        return list(self._failures)
+
+    @property
+    def mem_budget_bytes(self) -> int:
+        return self._mem_budget.max_bytes
+
+    @property
+    def mem_used_bytes(self) -> int:
+        return self._mem_budget.used_bytes
+
+    def initialize_queue(self, taskList: list[fetchTask]) -> None:
+        """Queue task objects for later execution.
+
+        IMPORTANT:
+        - We do NOT call asyncio.create_task() here.
+        - We only enqueue TaskEnvelope objects.
+        """
+        for t in taskList:
+            est = int(self._default_task_mem_bytes.get(t.fetch_type, 64 * const.ONE_MB))
+            env = TaskEnvelope(
+                task=t,
+                est_mem_bytes=est,
+                timeout_s=self._default_timeout_s,
+                retries=self._default_retries,
+                backoff_base_s=self._backoff_base_s,
+            )
+            self._queue.put_nowait(env)
+
+    def submit(
+        self,
+        task: fetchTask,
+        *,
+        est_mem_bytes: int | None = None,
+        timeout_s: float | None = None,
+        retries: int | None = None,
+        backoff_base_s: float | None = None,
+    ) -> None:
+        """Submit an additional task before run_async()."""
+        env = TaskEnvelope(
+            task=task,
+            est_mem_bytes=int(est_mem_bytes) if est_mem_bytes is not None else int(self._default_task_mem_bytes.get(task.fetch_type, 64 * const.ONE_MB)),
+            timeout_s=float(timeout_s) if timeout_s is not None else self._default_timeout_s,
+            retries=int(retries) if retries is not None else self._default_retries,
+            backoff_base_s=float(backoff_base_s) if backoff_base_s is not None else self._backoff_base_s,
+        )
+        self._queue.put_nowait(env)
+
+    def submit_many(self, tasks: Iterable[fetchTask], **kwargs) -> None:
+        for t in tasks:
+            self.submit(t, **kwargs)
+
+    async def run_async(self) -> tuple[list[TaskSuccess], list[TaskFailure]]:
+        """Run until all queued tasks reach a conclusion."""
+        if not self._started:
+            self._start_workers()
+
+        await self._queue.join()
+
+        # Stop workers
+        for _ in range(len(self._workers)):
+            self._queue.put_nowait(None)
+        await asyncio.gather(*self._workers, return_exceptions=False)
+
+        return list(self._results), list(self._failures)
+
+    def run(self) -> tuple[list[TaskSuccess], list[TaskFailure]]:
+        """Convenience wrapper for non-async callers."""
+        return asyncio.run(self.run_async())
+
+    # ---------------------------
+    # Internal
+    # ---------------------------
+
+    def _start_workers(self) -> None:
+        self._workers = [
+            asyncio.create_task(self._worker(i), name=f"pysft-task-worker-{i}")
+            for i in range(self._global_max_workers)
+        ]
+        self._started = True
+
+    async def _wait_for_cpu_headroom(self) -> None:
+        if self._cpu_guard_percent is None:
+            return
+        while True:
+            try:
+                cpu_now = psutil.cpu_percent(interval=0.0)
+            except Exception:
+                return
+            if cpu_now < self._cpu_guard_percent:
+                return
+            await asyncio.sleep(self._cpu_poll_s)
+
+    async def _worker(self, worker_id: int) -> None:
+        while True:
+            env = await self._queue.get()
+            if env is None:
+                self._queue.task_done()
+                return
+
+            task = env.task
+            ft = task.fetch_type
+
+            sem = self.semaphores.get(ft)
+            if sem is None:
+                # Unknown type -> fail fast (still mark queue task done)
+                started = time.monotonic()
+                ended = started
+                failure = TaskFailure(
+                    task=task,
+                    fetch_type=ft,
+                    attempt=1,
+                    exception=ValueError(f"Unsupported fetch type: {ft}"),
+                    tb="",
+                    started_at=started,
+                    ended_at=ended,
+                )
+                async with self._list_lock:
+                    self._failures.append(failure)
+                if self._on_failure:
+                    self._on_failure(failure)
+                self._queue.task_done()
+                continue
+
+            async with _SemaphoreCM(sem):
+                await self._mem_budget.acquire(env.est_mem_bytes)
+                started = time.monotonic()
+                try:
+                    await self._wait_for_cpu_headroom()
+                    result = await self._run_with_retries(env)
+                    ended = time.monotonic()
+                    success = TaskSuccess(task=task, result=result, started_at=started, ended_at=ended)
+                    async with self._list_lock:
+                        self._results.append(success)
+                    if self._on_success:
+                        self._on_success(success)
+                except asyncio.CancelledError:
+                    raise
+                except BaseException as e:
+                    ended = time.monotonic()
+                    failure = TaskFailure(
+                        task=task,
+                        fetch_type=ft,
+                        attempt=int(getattr(e, "_pysft_attempts", env.retries + 1)),
+                        exception=e,
+                        tb=traceback.format_exc(),
+                        started_at=started,
+                        ended_at=ended,
+                    )
+                    async with self._list_lock:
+                        self._failures.append(failure)
+                    if self._on_failure:
+                        self._on_failure(failure)
+                finally:
+                    await self._mem_budget.release(env.est_mem_bytes)
+                    self._queue.task_done()
+
+    async def _run_with_retries(self, env: TaskEnvelope) -> Any:
+        last_exc: BaseException | None = None
+        for attempt in range(env.retries + 1):
+            try:
+                return await asyncio.wait_for(self._invoke_task(env.task), timeout=env.timeout_s)
+            except asyncio.TimeoutError as e:
+                last_exc = e
+            except BaseException as e:
+                last_exc = e
+
+            if attempt < env.retries:
+                base = env.backoff_base_s * (2 ** attempt)
+                jitter = random.uniform(0.0, 0.25 * base)
+                await asyncio.sleep(base + jitter)
+
+        assert last_exc is not None
+        try:
+            setattr(last_exc, "_pysft_attempts", env.retries + 1)
+        except Exception:
+            pass
+        raise last_exc
+
+    async def _invoke_task(self, task: fetchTask) -> Any:
+        """Invoke a task using the best available interface.
+
+        Preference order:
+        1) await task.run() (if implemented)
+        2) await task.execute_async()
+        3) run task.execute() in a background thread
+        """
+        run_maybe = getattr(task, "run", None)
+        if callable(run_maybe):
+            out = run_maybe()
+            if inspect.isawaitable(out):
+                return await out
+            return out
+
+        exa = getattr(task, "execute_async", None)
+        if callable(exa):
+            out = exa()
+            if inspect.isawaitable(out):
+                return await out
+            return out
+
+        exe = getattr(task, "execute", None)
+        if not callable(exe):
+            raise ValueError("Task has no run(), execute_async(), or execute()")
+
+        await asyncio.to_thread(exe)
+        get_results = getattr(task, "get_results", None)
+        if callable(get_results):
+            return get_results()
+        return None

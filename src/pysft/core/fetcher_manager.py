@@ -13,6 +13,8 @@ from pysft.core.constants import DB_ENABLED
 
 import pysft.core.tase_specific_utils as tase_utils
 
+from pysft.core.task_scheduler import taskScheduler
+
 if TYPE_CHECKING:
     from pysft.core.structures import indicatorRequest
     from pysft.core.models import _fetchRequest
@@ -54,7 +56,7 @@ class fetcher_manager:
         # Only classify and fetch for indicators not fully cached
         classify_fetch_types(self)
 
-        # find a YF equivalent amonth teh TASE indicators to reduce TASE fetch load
+        # find a YF equivalent amonth teh TASE indicators to reduce TASE fetch load, it MUST be done after fetch type classification
         self.settings.NEED_TASE = tase_utils.find_YF_equivalent(self.requests)
 
         if self.settings.NEED_TASE:
@@ -64,9 +66,14 @@ class fetcher_manager:
 
         taskList = create_task_list(self)
 
+        # Initialize and run task scheduler
+        scheduler = taskScheduler(taskList)
+
         # Initialize task scheduler with taskList, for now we will just serialy execute them
-        for task in taskList:
-            task.execute()
+        scheduler.run()
+        
+        # for task in taskList:
+        #     task.execute()
         
         # Cache the newly fetched data
         self._cache_fetched_data(taskList)
@@ -117,6 +124,8 @@ class fetcher_manager:
                 names=['Indicator', 'Attribute']
             )
             self.fetched_data = pd.concat([self.fetched_data, indicator_DF], axis=1)
+            
+            del indicator_DF  # free memory
 
 
     def _check_cache(self) -> None:

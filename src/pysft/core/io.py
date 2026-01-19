@@ -84,6 +84,9 @@ _ATTR_ALIASES = {
     # "sharpeRatio": "sharpeRatio",
 }
 _ALLOWED_INTERVALS = {"1d", "1wk", "1mo", "1y"}
+# _ATTRIBUTES = ["all", "indicator", "name", "ISIN", "quoteType", "currency", "price", "last", "open", "high", "low", "volume", "dates", 
+#                "avgDailyVolume3mnth", "change_pct", "market_cap", "expense_rate", "dividendYield", "trailingPE", "forwardPE", "beta", "inceptionDate"]
+
 
 def _normalize_indicators(indicators: str | Iterable[str]) -> List[str]:
     """

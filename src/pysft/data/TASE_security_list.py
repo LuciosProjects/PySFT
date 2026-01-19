@@ -51,7 +51,7 @@ def initialize_security_list_db() -> sqlite3.Cursor:
 
 cursor = initialize_security_list_db()
 
-def get_TASE_security_list():
+def create_TASE_security_list():
     total_securities = 0
     for date in trading_days:
         print(f"Fetching security list for date: {date.strftime('%d/%m/%Y')}")
@@ -117,4 +117,4 @@ def get_TASE_security_list():
     cursor.connection.close()
 
 if __name__ == "__main__":
-    get_TASE_security_list()
+    create_TASE_security_list()

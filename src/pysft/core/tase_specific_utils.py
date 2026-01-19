@@ -246,23 +246,23 @@ def find_YF_equivalent(requests: dict[str, dict[str, Any]]) -> bool:
     '''
 
     if TASE_SECURITY_DB is not None:
-        for request in requests.values():
+        for req in requests.values():
             # lookup security info from local TASE security list database
             dataPt = TASE_SECURITY_DB.execute(f'''
                 SELECT isin, symbol
                 FROM security_list
                 WHERE indicator = ?
-            ''', (request[const.REQUEST_FIELD].indicator,))
+            ''', (req[const.REQUEST_FIELD].indicator,))
                 
             row = dataPt.fetchall()
             if row.__len__() > 0:
                 row = row[0]
                 # If found, set request to YFINANCE (prefer yfinance over TASE if possible)
-                request[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
-                request[const.REQUEST_FIELD].data.ISIN = row[0]
-                request[const.REQUEST_FIELD].indicator = request[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
+                req[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
+                req[const.REQUEST_FIELD].data.ISIN = row[0]
+                req[const.REQUEST_FIELD].indicator = req[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
 
-    return not any([req[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for req in requests.values()])
+    return any([req[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for req in requests.values()])
 
 
 def get_TASE_globals(type: Literal["MTF", "SECURITY", "COMPANY"]) -> list | None:
@@ -461,6 +461,12 @@ def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session 
                                 float(pairs["דמי נאמנות"].replace("%", "")))
         else:
             data.expense_rate = 0.0 # No expense rate for stocks
+
+        # Extract name as well
+        paper_top_title = soup.find("div", class_="paper_top_title")
+        if paper_top_title:
+            data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+
     except Exception as e:
         logger.error(f"Error parsing Bizportal expense rate content for {data.indicator}: {str(e)}")
         return False
