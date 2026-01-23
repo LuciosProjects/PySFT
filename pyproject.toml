@@ -16,7 +16,7 @@ dependencies = ["psutil>=7.2.1",
                 "numpy>=2.4.1", 
                 "pandas>=2.3.3", 
                 "yfinance>=1.0",
-                "exchange_calendars>4.12",
+                "exchange_calendars>=4.12",
                 "googletrans>=4.0.2"]
 
 [tool.setuptools.packages.find]
