@@ -1,32 +1,32 @@
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python: Test Package",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/tests/testPackage.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "cwd": "${workspaceFolder}"
-        }
-    ]
-}
 // {
 //     "version": "0.2.0",
 //     "configurations": [
 //         {
-//             "name": "Debug pytest",
+//             "name": "Python: Test Package",
 //             "type": "debugpy",
 //             "request": "launch",
-//             "module": "pytest",
-//             "args": [
-//                 "tests/test_PR.py",
-//                 "-v",
-//                 "-s"  // Show print statements
-//             ],
+//             "program": "${workspaceFolder}/tests/testPackage.py",
 //             "console": "integratedTerminal",
-//             "justMyCode": false
+//             "justMyCode": true,
+//             "cwd": "${workspaceFolder}"
 //         }
 //     ]
 // }
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug pytest",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${workspaceFolder}/tests/test_PR.py",
+                "-v",
+                "-s"  // Show print statements
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}

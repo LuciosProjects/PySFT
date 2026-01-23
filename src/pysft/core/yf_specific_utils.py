@@ -8,6 +8,7 @@ import yfinance as yf
 import pysft.core.constants as const
 from pysft.core.structures import indicatorRequest
 
+import pysft.core.tase_specific_utils as tase_utils
 import pysft.core.utilities as utils
 
 from pysft.tools.logger import get_logger
@@ -96,9 +97,11 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
     Extract additional info data from yfinance Ticker object and populate request data fields.
     """
 
-    request.data.ISIN = (ticker.isin if ticker.isin else "") if not request.is_tase_indicator else request.data.ISIN
+    request.data.ISIN = ((ticker.isin if ticker.isin else "") if not request.is_tase_indicator else request.data.ISIN) if request.data.ISIN == "" else request.data.ISIN
     try:
         info = ticker.info
+
+        request.data.quoteType = info.get("quoteType", "N/A")
 
         # request.data.briefSummary = info.get("longBusinessSummary", "")
         history = ticker.history(period="max", auto_adjust=True)
@@ -110,21 +113,24 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
         request.data.currency = info.get("currency", info.get("financialCurrency", "USD"))
 
         if request.data.currency == "ILA" or request.data.currency == "ILS":
-            # request.data.expense_rate = get_TheMarker_Expense_Rate(request)
-            request.data.expense_rate = 0.0 # Placeholder for TheMarker expense rate fetch, TBD
+            request.data.indicator = request.original_indicator # Keep original indicator for ILS securities (TASE)
+            if not tase_utils.get_Bizportal_expense_rate(request.data):
+                request.data.expense_rate = 0.0 # If failed to get expense rate from TASE Bizportal, set to 0.0
+            
+            # Revert indicator to its YF format
+            request.data.indicator = request.indicator
 
         else:
             request.data.expense_rate = info.get("netExpenseRatio", 0.0)
 
         request.data.avgDailyVolume3mnth    = info.get("averageDailyVolume3Month", 0)
-        request.data.quoteType              = info.get("quoteType", "N/A")
 
         if request.data.quoteType in ["ETF", "MTF"]:
             request.data.market_cap = info.get("totalAssets", 0.0)
         elif request.data.quoteType in ["EQUITY"]:
             request.data.market_cap = info.get("marketCap", 0.0)
                 
-        request.data.dividendYield  = info.get("yield", info.get("dividendYield", 0.0)*0.01) # Convert to percentage
+        request.data.dividendYield  = info.get("yield", info.get("dividendYield", 0.0)*0.01)*100 # Convert to percentage
         request.data.trailingPE     = info.get("trailingPE", 0.0)
         request.data.forwardPE      = info.get("forwardPE", 0.0)
         request.data.beta           = info.get("beta", info.get('beta3Year', 0.0))
@@ -176,6 +182,10 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
 
             logger.warning(request.message)
     
+    if request.data.quoteType == "EQUITY":
+        # Set quote type to STOCK for consistency
+        request.data.quoteType = "STOCK"
+
     if request.message == '':
         request.message = f"{request.indicator} - Data fetch from yfinance successful."
         request.success = True

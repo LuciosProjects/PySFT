@@ -2,7 +2,8 @@ from typing import TYPE_CHECKING, Any
 import pandas as pd
 
 # ---- Package imports ----
-# from pysft.core.enums import E_FetchType
+import pysft.core.constants as const
+from pysft.core.enums import E_FetchType
 from pysft.core.utilities import classify_fetch_types, create_task_list
 from pysft.core.models import fetcher_settings
 from pysft.core.database import get_db_manager
@@ -11,6 +12,8 @@ from pysft.core.constants import DB_ENABLED
 # from pysft.core.io import _parse_attributes
 
 import pysft.core.tase_specific_utils as tase_utils
+
+from pysft.core.task_scheduler import taskScheduler
 
 if TYPE_CHECKING:
     from pysft.core.structures import indicatorRequest
@@ -38,6 +41,7 @@ class fetcher_manager:
         self.requests: dict[str, dict[str, Any]] = {}
         self.fetched_data: pd.DataFrame # output field to be populated with fetched data
         self.cached_indicators: set[str] = set()  # Track which indicators came from cache
+        self.cached_indicators: set[str] = set()  # Track which indicators came from cache
 
 
     def managerRoutine(self) -> None:
@@ -51,7 +55,14 @@ class fetcher_manager:
         self._check_cache()
         
         # Only classify and fetch for indicators not fully cached
+        # Check cache first
+        self._check_cache()
+        
+        # Only classify and fetch for indicators not fully cached
         classify_fetch_types(self)
+
+        # find a YF equivalent amonth teh TASE indicators to reduce TASE fetch load, it MUST be done after fetch type classification
+        self.settings.NEED_TASE = tase_utils.find_YF_equivalent(self.requests)
 
         if self.settings.NEED_TASE:
             tase_utils.get_tase_mtf_listing() # Initialize the TASE_MTF_LISTINGS global variable
@@ -60,9 +71,14 @@ class fetcher_manager:
 
         taskList = create_task_list(self)
 
+        # Initialize and run task scheduler
+        scheduler = taskScheduler(taskList)
+
         # Initialize task scheduler with taskList, for now we will just serialy execute them
-        for task in taskList:
-            task.execute()
+        scheduler.run()
+        
+        # for task in taskList:
+        #     task.execute()
         
         # Cache the newly fetched data
         self._cache_fetched_data(taskList)
@@ -113,6 +129,8 @@ class fetcher_manager:
                 names=['Indicator', 'Attribute']
             )
             self.fetched_data = pd.concat([self.fetched_data, indicator_DF], axis=1)
+            
+            del indicator_DF  # free memory
 
 
     def _check_cache(self) -> None:

@@ -53,3 +53,23 @@ def fetch_data(
         end=end,
         # interval=interval,
     )
+
+def fetch_data_as_dict(
+        indicators: str | list[str],
+        attributes: str | list[str] = "price",
+        period: str | None = None,
+        start: str | None = None,
+        end: str | None = None,
+        # interval: str = "1d"
+        ) -> dict:
+    """
+        PEP 8 alias for fetchData returning a dictionary.
+    """
+    return fetchData(
+        indicators=indicators,
+        attributes=attributes,
+        period=period,
+        start=start,
+        end=end,
+        # interval=interval,
+    ).to_dict()

@@ -66,7 +66,7 @@ def classify_fetch_types(manager: 'fetcher_manager'):
     Returns:
         None. Updates manager.requests with fetch type classifications for all indicators.
     """
-
+    
     indicators = manager.parsedInput.indicators
     current_dir = os.path.dirname(os.path.abspath(__file__))
     json_path = os.path.join(current_dir, '../data/indicator_international_symbols.json')
@@ -78,7 +78,7 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
     has_tase, is_tase_indicator = has_tase_indicators(indicators)
     # is_historical = has_tase and (manager.settings.data_length > 1)
-    is_historical = False # Always use TASE_FAST for TASE indicators for now
+    # is_historical = False # Always use TASE_FAST for TASE indicators for now
     
     date_range = [pd.Timestamp(date) for date in pd.date_range(start=manager.settings.start_date, end=manager.settings.end_date)]
 
@@ -104,12 +104,17 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
                 continue
 
-            fetchType = E_FetchType.TASE_HISTORICAL if is_historical else E_FetchType.TASE_FAST
+            # fetchType = E_FetchType.TASE_HISTORICAL if is_historical else E_FetchType.TASE_FAST
+            fetchType = E_FetchType.TASE
 
-            if not manager.settings.NEED_TASE and fetchType == E_FetchType.TASE_HISTORICAL:
+            # if not manager.settings.NEED_TASE and fetchType == E_FetchType.TASE_HISTORICAL:
+            #     manager.settings.NEED_TASE = True
+            # elif not manager.settings.NEED_TASE and fetchType == E_FetchType.TASE_FAST:
+            #     manager.settings.NEED_TASE = True
+
+            if not manager.settings.NEED_TASE:
                 manager.settings.NEED_TASE = True
-            elif not manager.settings.NEED_TASE and fetchType == E_FetchType.TASE_FAST:
-                manager.settings.NEED_TASE = True
+
         else:
             fetchType = E_FetchType.YFINANCE
 
@@ -151,11 +156,14 @@ def create_task_list(manager: 'fetcher_manager') -> list[fetchTask]:
             tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range)))
             YF_BatchList = []
 
-        elif fetchType == E_FetchType.TASE_FAST:
-            tasks.append(fetchTask(E_FetchType.TASE_FAST, request[1][const.REQUEST_FIELD]))
+        # elif fetchType == E_FetchType.TASE_FAST:
+        #     tasks.append(fetchTask(E_FetchType.TASE_FAST, request[1][const.REQUEST_FIELD]))
         
-        elif fetchType == E_FetchType.TASE_HISTORICAL:
-            tasks.append(fetchTask(E_FetchType.TASE_HISTORICAL, request[1][const.REQUEST_FIELD]))
+        # elif fetchType == E_FetchType.TASE_HISTORICAL:
+        #     tasks.append(fetchTask(E_FetchType.TASE_HISTORICAL, request[1][const.REQUEST_FIELD]))
+
+        elif fetchType == E_FetchType.TASE:
+            tasks.append(fetchTask(E_FetchType.TASE, request[1][const.REQUEST_FIELD]))
 
     if YF_BatchList:
         tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range)))

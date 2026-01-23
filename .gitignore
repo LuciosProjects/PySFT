@@ -27,6 +27,7 @@ share/python-wheels/
 __pycache__/*
 .env
 prototyping/*
+fromChatGPT/*
 
 MANIFEST
 

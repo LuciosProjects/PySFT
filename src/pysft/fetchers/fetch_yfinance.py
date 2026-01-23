@@ -151,20 +151,26 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
 def process_successful_request(request: indicatorRequest, data: pd.DataFrame, closest_dates: pd.DatetimeIndex, tckr: yf.Ticker):
     """Process a request that has valid data."""
 
+    valid_data = data.dropna(how='any') # Drop rows where data is NaN
+
     dates = utils.safe_extract_date_ts(closest_dates)
     request.data.dates = dates
 
-    request.data.price  = yf_utils.safe_extract_value_float(data["Close"][closest_dates])
-    request.data.open   = yf_utils.safe_extract_value_float(data["Open"][closest_dates])
-    request.data.high   = yf_utils.safe_extract_value_float(data["High"][closest_dates])
-    request.data.low    = yf_utils.safe_extract_value_float(data["Low"][closest_dates])
-    request.data.volume = yf_utils.safe_extract_value_int(data["Volume"][closest_dates])
+    request.data.price  = yf_utils.safe_extract_value_float(valid_data["Close"][closest_dates])
+    request.data.open   = yf_utils.safe_extract_value_float(valid_data["Open"][closest_dates])
+    request.data.high   = yf_utils.safe_extract_value_float(valid_data["High"][closest_dates])
+    request.data.low    = yf_utils.safe_extract_value_float(valid_data["Low"][closest_dates])
+    request.data.volume = yf_utils.safe_extract_value_int(valid_data["Volume"][closest_dates])
 
-    request.data.last = request.data.price[-1] if isinstance(request.data.price, list) else request.data.price
-    i_start = np.argmin(np.abs(data.index.to_numpy() - closest_dates[0].to_numpy()))
-    i_end   = np.argmin(np.abs(data.index.to_numpy() - closest_dates[-1].to_numpy()))
+    request.data.last = request.data.price[-1] if isinstance(request.data.price, list) else request.data.price # Most recent closing price
+    i_start = np.argmin(np.abs(valid_data.index.to_numpy() - closest_dates[0].to_numpy()))
+    i_end   = np.argmin(np.abs(valid_data.index.to_numpy() - closest_dates[-1].to_numpy()))
 
-    request.data.change_pct = [((data["Close"][data.index[i_ts]] / data["Close"][data.index[i_ts-1]]) - 1.0)*100.0 for i_ts in range(i_start, i_end+1)]
+    if request.data.dates.__len__() > 1:
+        request.data.change_pct = [((valid_data["Close"][valid_data.index[i_ts]] / valid_data["Close"][valid_data.index[i_ts-1]]) - 1.0)*100.0 for i_ts in range(i_start, i_end+1)]
+    else:
+        # Try to aquire change_pct from close/open of the same day
+        request.data.change_pct = (request.data.price/request.data.open - 1.0) * 100.0
 
     # Extract additional info data
     yf_utils.extract_info_data(request, tckr)
