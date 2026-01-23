@@ -41,6 +41,7 @@ class fetcher_manager:
         self.requests: dict[str, dict[str, Any]] = {}
         self.fetched_data: pd.DataFrame # output field to be populated with fetched data
         self.cached_indicators: set[str] = set()  # Track which indicators came from cache
+        self.cached_indicators: set[str] = set()  # Track which indicators came from cache
 
 
     def managerRoutine(self) -> None:
@@ -50,6 +51,10 @@ class fetcher_manager:
         Populates self.fetched_data with retrieved indicator information.
         """
 
+        # Check cache first
+        self._check_cache()
+        
+        # Only classify and fetch for indicators not fully cached
         # Check cache first
         self._check_cache()
         

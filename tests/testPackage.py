@@ -20,13 +20,6 @@ if __name__ == "__main__":
     # All together fetch
     # quote = pysft.lib.fetchData(indicators, attributes=["name", "price", "high", "low", "open", "volume"], period="1m")
 
-    # All together fetch for today's date only
-    # quote = pysft.lib.fetchData('5138094', attributes=["all"], start="2024-01-01", end="2026-01-03") # MTF
-    # quote = pysft.lib.fetchData('1144633', attributes=["all"], start="2025-08-01", end="2025-08-15") # ETF
-    # quote = pysft.lib.fetchData('1186063', attributes=["all"], start="2025-08-01", end="2025-08-15") # Internationally traded ETF
-    # quote = pysft.lib.fetchData(['5138094', '1186063', '1081124', '604611'], attributes=["all"], start="2025-08-01", end="2025-08-15") # STOCKS
-    # quote = pysft.lib.fetchData('604611', attributes=["all"], start="2025-08-01", end="2025-08-15") # STOCKS
-
     # quote = pysft.lib.fetchData(indicators, attributes=["name", "price", "high", "low", "open", "volume"], start="2025-07-01", end="2025-08-01")
 
     today_quote = pysft.lib.fetchData(indicators, attributes=["all"])
