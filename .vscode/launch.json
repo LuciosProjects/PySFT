@@ -21,7 +21,7 @@
 //             "request": "launch",
 //             "module": "pytest",
 //             "args": [
-//                 "tests/test_PR.py",
+//                 "${workspaceFolder}/tests/test_PR.py",
 //                 "-v",
 //                 "-s"  // Show print statements
 //             ],
