@@ -42,7 +42,7 @@ pyasn1_modules==0.4.2
 pycparser==2.23
 PyDispatcher==2.0.7
 pyluach==2.3.0
-pyOpenSSL==25.3.0S
+pyOpenSSL==25.3.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
 pytz==2025.2
@@ -63,3 +63,4 @@ w3lib==2.3.1
 websockets==16.0
 yfinance==1.0
 zope.interface==8.2
+pytest==9.0.2
