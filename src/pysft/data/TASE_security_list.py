@@ -7,8 +7,11 @@ import pysft.core.utilities as utils
 import pysft.core.constants as const
 
 first_date = datetime.date(2008, 1, 1)
-date_range = [first_date+ datetime.timedelta(days=x) for x in range(0, (datetime.date.today() - first_date).days)]
-trading_days = TASE_CALENDAR.sessions_in_range(date_range[0], date_range[-1])
+print(f"TASE_secutiry_list.py: first_date - {first_date}")
+last_date = datetime.date.today()
+print(f"TASE_secutiry_list.py: last_date - {last_date}")
+
+trading_days = TASE_CALENDAR.sessions_in_range(first_date, last_date)
 
 def initialize_security_list_db() -> sqlite3.Cursor:
     """
@@ -49,9 +52,9 @@ def initialize_security_list_db() -> sqlite3.Cursor:
 
     return cursor
 
-cursor = initialize_security_list_db()
-
 def create_TASE_security_list():
+    cursor = initialize_security_list_db()
+    
     total_securities = 0
     for date in trading_days:
         print(f"Fetching security list for date: {date.strftime('%d/%m/%Y')}")
