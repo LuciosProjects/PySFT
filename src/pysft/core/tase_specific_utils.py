@@ -12,7 +12,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from pandas import Timestamp
+from pandas import Timestamp, Timedelta
 import exchange_calendars
 import sqlite3
 
@@ -602,7 +602,7 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
                                     params=payload,
                                     headers=headers,
                                     timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds(),
-)
+                                    )
             response.raise_for_status()
 
             text = response.content.decode('utf-8')
@@ -627,15 +627,34 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
     data.currency = alias
 
     if json_data is not None:
-        indices, dates = zip(*[(i, pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y")) for i, data_pt in enumerate(json_data) if \
-                                    pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y") >= data.dates[0] and \
-                                    pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y") <= data.dates[-1]])
-        indices     = list(indices)[::-1] # Reverse to chronological order
-        data.dates  = list(dates)[::-1]  # Reverse to chronological order
+        # indices, dates = zip(*[(i, pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y")) for i, data_pt in enumerate(json_data)])
+        dates = [pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y") for data_pt in json_data]
 
-        all_prices = [data_pt["C_p"]*currency_factor for data_pt in json_data][::-1]
+        if dates[0] < data.dates[-1]:
+            # most recent requested date is after the most recent available date in the data
+            data.dates[-1] = dates[0]
+        if dates[0] < data.dates[0]:
+            # earliest requested date is after the most recent available date in the data
+            data.dates[0] = dates[0]
 
-        data.price  = [all_prices[i] for i in indices]
+        all_prices  = []
+        all_dates   = []
+        indices     = set()
+        for idx, date in enumerate(dates):
+            if data.dates[0] <= date <= data.dates[-1]:
+                all_prices.append(json_data[idx]["C_p"]*currency_factor)
+                all_dates.append(date)
+                indices.add(idx)
+            elif date < data.dates[0]:
+                break  # No need to check older dates
+            
+        indices    = list(indices)[::-1] # Reverse to chronological order
+        all_dates  = all_dates[::-1]  # Reverse to chronological order
+        all_prices = all_prices[::-1]  # Reverse to chronological order
+
+        data.dates  = all_dates
+
+        data.price  = all_prices
         data.open   = data.price
         data.high   = data.price
         data.low    = data.price
