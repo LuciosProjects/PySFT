@@ -107,6 +107,10 @@ def getRequiredAttributes() -> list[str]:
 def getDateRange() -> tuple[str, str]:
     return ("2025-07-01", "2025-08-01")
 
+@pytest.fixture
+def getDatePeriod() -> pd.DateOffset:
+    return "3m"
+
 # Test functions
 
 # Single indicator fetch test
@@ -117,6 +121,8 @@ def test_single_indicator_fetch(getTestIndicators):
     """
 
     singleInd = getTestIndicators[0]
+    # singleInd = "5138094"  # Hardcoded for TASE testing
+
     print(f"Testing single indicator fetch for: {singleInd}")
 
     quote = fetchData(indicators=singleInd)
@@ -140,9 +146,9 @@ def test_single_indicator_fetch(getTestIndicators):
 
     print(f"Single indicator fetch test for {singleInd} passed.")
 
-# Multiple indicators fetch test, with date range
+# Multiple indicators fetch test, with date period
 @banner
-def test_multiple_indicators_fetch(getTestIndicators, getDateRange):
+def test_multiple_indicators_fetch(getTestIndicators, getDatePeriod):
     """
     Test fetching data for multiple indicators.
     """
@@ -150,7 +156,7 @@ def test_multiple_indicators_fetch(getTestIndicators, getDateRange):
     print(f"Testing multiple indicators fetch for total: {len(getTestIndicators)} indicators.")
     print_indicators_list(getTestIndicators)
 
-    quotes = fetchData(indicators=getTestIndicators, start=getDateRange[0], end=getDateRange[1])
+    quotes = fetchData(indicators=getTestIndicators, period=getDatePeriod)
 
     # Basic existence checks
     assert quotes is not None, "in 'test_multiple_indicators_fetch', fetched data is None."
@@ -168,7 +174,20 @@ def test_multiple_indicators_fetch(getTestIndicators, getDateRange):
         assert not quotes[indicator].empty, f"in 'test_multiple_indicators_fetch', fetched data for indicator {indicator} is empty."
 
         if not dateRange_check:
-            assert (quotes[indicator].index >= pd.to_datetime(getDateRange[0])).all() and (quotes[indicator].index <= pd.to_datetime(getDateRange[1])).all(), f"in 'test_multiple_indicators_fetch', index is not DatetimeIndex of the specified date range for indicator."
+            scale = getDatePeriod[-1]
+            date_end_period = pd.to_datetime("now")
+
+            if scale == 'd':
+                date_start_period = date_end_period - pd.Timedelta(days=int(getDatePeriod[:-1]))
+            elif scale == 'w':
+                date_start_period = date_end_period - pd.Timedelta(weeks=int(getDatePeriod[:-1]))
+            elif scale == 'm':
+                date_start_period = date_end_period - pd.Timedelta(days=int(31*int(getDatePeriod[:-1])))
+            elif scale == 'y':
+                date_start_period = date_end_period - pd.Timedelta(days=int(365*int(getDatePeriod[:-1])))
+                assert False, f"in 'test_multiple_indicators_fetch', invalid date period scale: {scale}."
+
+            assert (quotes[indicator].index >= date_start_period).all() and (quotes[indicator].index <= date_end_period).all(), f"in 'test_multiple_indicators_fetch', index is not DatetimeIndex of the specified date range for indicator."
             dateRange_check = True
 
         assert 'price' in quotes[indicator].columns, f"in 'test_multiple_indicators_fetch', 'price' attribute not found for indicator {indicator}."
