@@ -12,7 +12,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+    env:
+      TASE_DATAHUB_API_KEY: ${{ secrets.TASE_DATAHUB_API_KEY }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
