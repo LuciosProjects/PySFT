@@ -189,9 +189,9 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
             request.success = False
             return
         else:
-            inception_date = history.index[0]
+            inception_date = history.index[0].tz_localize(None)  # Remove timezone info if present
 
-            request.data.dates = history.index[0]
+            request.data.dates = inception_date
             request.data.price = float(history['Close'].iloc[0])
             request.data.open  = float(history['Open'].iloc[0])
             request.data.high  = float(history['High'].iloc[0])
@@ -200,6 +200,8 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
 
             request.data.last = request.data.price
 
+            request.data.change_pct = 0.0  # No change percentage for inception date
+
             # Extract additional info data
             yf_utils.extract_info_data(request, tckr)
 
@@ -207,7 +209,7 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
             request.message = f"{request.indicator} - Data fetched from inception date {inception_date.date()}, {temp.replace(request.indicator + ' - ', '')} (yfinance)."
 
             request.fromInception   = True
-            request.success         = True
+            request.success         = False  # Mark as unsuccessful to indicate special case
 
     except Exception as e:
         request.message = f"Failed to extract data from inception date: {str(e)}."

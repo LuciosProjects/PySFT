@@ -120,8 +120,13 @@ class fetcher_manager:
         requested_attrs = getattr(self.parsedInput, '_original_attributes', self.parsedInput.attributes)
         self.fetched_data = pd.DataFrame()
         for res in ordered_results:
-            indicator_DF = pd.DataFrame({field: getattr(res.data, field) for field in requested_attrs}, 
+            if res.success:
+                indicator_DF = pd.DataFrame({field: getattr(res.data, field) for field in requested_attrs}, 
                                         index=res.data.dates)
+            else:
+                # Create empty DataFrame with NaN values for requested attributes
+                indicator_DF = pd.DataFrame({field: [float('nan')] * (len(res.data.dates) if isinstance(res.data.dates, list) else 1) for field in requested_attrs}, 
+                                        index=(res.data.dates if isinstance(res.data.dates, list) else [res.data.dates]))
             
             # Add multi-level column labels: (indicator, attribute)
             indicator_DF.columns = pd.MultiIndex.from_product(

@@ -5,6 +5,7 @@ from testIndicators import indicatorsDB
 if __name__ == "__main__":
     # indicators = indicatorsDB.TASE
     indicators = indicatorsDB.PORTFOLIO
+    # indicators = indicatorsDB.getShuffeledPortfolio("YF400_TASE100")
 
     # quote = pysft.lib.fetchData(indicators, start="2025-07-01", end="2025-08-01")
 
@@ -22,8 +23,8 @@ if __name__ == "__main__":
 
     # quote = pysft.lib.fetchData(indicators, attributes=["name", "price", "high", "low", "open", "volume"], start="2025-07-01", end="2025-08-01")
 
-    today_quote = pysft.lib.fetchData(indicators, attributes=["all"])
-    # historical_quote = pysft.lib.fetchData(indicators, attributes=["all"], start="2025-07-01", end="2025-08-01")
+    # today_quote = pysft.lib.fetchData(indicators, attributes=["all"])
+    historical_quote = pysft.lib.fetchData(indicators, attributes=["all"], start="2025-07-01", end="2025-08-01")
 
     # today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
 
