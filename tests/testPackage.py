@@ -1,5 +1,8 @@
 import pysft
 
+from pysft.core.database import resetDatabase
+resetDatabase()
+
 from testIndicators import indicatorsDB
 
 if __name__ == "__main__":
@@ -24,7 +27,11 @@ if __name__ == "__main__":
     # quote = pysft.lib.fetchData(indicators, attributes=["name", "price", "high", "low", "open", "volume"], start="2025-07-01", end="2025-08-01")
 
     # today_quote = pysft.lib.fetchData(indicators, attributes=["all"])
-    historical_quote = pysft.lib.fetchData(indicators, attributes=["all"], start="2025-07-01", end="2025-08-01")
+    historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-07-01", end="2026-03-02")
+    today_quote         = pysft.lib.fetchData("AAPL", attributes=["all"])
+    historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-09-01", end="2025-09-10")
+    historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-08-01", end="2025-11-01")
+    # historical_quote = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-07-10", end="2025-07-25")
 
     # today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
 

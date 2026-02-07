@@ -53,7 +53,7 @@ class _indicator_data:
     ''' Average daily volume over the past 3 months'''
     change_pct: float | list[float] = 0.0 
     ''' Percentage change in price per timestamp'''
-    market_cap: float | list[float] = 0.0
+    market_cap: float = 0.0
     ''' Market capitalization per timestamp'''
     # ebitda: float = 0.0
     # ''' Earnings Before Interest, Taxes, Depreciation, and Amortization'''

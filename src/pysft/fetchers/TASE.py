@@ -98,7 +98,7 @@ def fetch_TASE(request: indicatorRequest):
                         request.data.ISIN = row[1] # ISIN
                         request.data.name = row[-1] # Company or security Name
 
-            # Get general data and graph data from Bizportal and MAYA TASE
+            # Get general data from Bizportal and graph data from MAYA TASE
             if tase_utils.get_Bizportal_general_indicator_data(request.data, session):
                 request.success = True
             else:
