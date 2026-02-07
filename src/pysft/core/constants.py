@@ -17,7 +17,7 @@ Import this module wherever shared constants are needed to keep values
 declarative, discoverable, and maintainable.
 """
 
-# import os
+import os
 # from dotenv import load_dotenv
 
 from pysft.core.structures import CTimeRepr
@@ -97,50 +97,20 @@ FETCH_TYPE_FIELD    = "fetch_type"
 REQUEST_FIELD       = "request"
 
 # Database constants
-DB_ENABLED = False  # Enable database caching
-DB_PATH = "pysft_cache.db"  # Default SQLite database path
+DB_ENABLED = True           # Enable database caching
+DB_PATH = os.path.join(os.path.dirname(__file__),"..","data","pysft_cache.db")  # Default SQLite database path
 
-# Cache TTL (Time-To-Live) in days
-LONGTERM_TTL_DAYS = 365  # 1 year for rarely changing fields
-MEDIUM_TTL_DAYS = 90     # 90 days for infrequently changing fields
-SHORT_TTL_DAYS = 7       # 7 days for frequently changing metrics
+# Cache TTL (Time-To-Live) - simplified 2-tier model
+TTL_MINUTES = 15  # TTL for volatile fields and today's timeseries data
+# TTL_MINUTES = 1440  # TTL for volatile fields and today's timeseries data - set to 1 day for less frequent updates during development
+CACHED_DATES_MAX_DELTA = 31  # days - max delta to consider cached dates as full coverage for requested date range
 
-# Field categorization by freshness requirements
-IMMUTABLE_FIELDS = [
-    "ISIN",  # Never changes
-]
-
-LONGTERM_TTL_FIELDS = [
-    "name",       # Rarely changes (rebranding)
-    "quoteType",  # Rarely reclassified
-    "currency",   # Almost never changes
-]
-
-MEDIUM_TTL_FIELDS = [
-    "briefSummary",  # Business updates, restructuring
-]
-
-SHORT_TTL_FIELDS = [
-    "expense_rate",        # Fund fees
-    "dividendYield",       # Dividend data
-    "trailingPE",          # Price-to-earnings
-    "forwardPE",           # Forward PE
-    "beta",                # Volatility measure
-    "avgDailyVolume3mnth", # Volume metrics
-]
-
-# Price fields - these are always fetched fresh for current data
-# For historical data, they use date-based caching
-PRICE_FIELDS = [
-    "last",
-    "open",
-    "high",
-    "low",
-    "volume",
-    "price",
-    "change_pct",
-    "market_cap",
-]
-
-# Historical fields that are stored with dates
-HISTORICAL_FIELDS = PRICE_FIELDS + ["dates"]
+# Immutable fields - these never change once fetched
+# All other fields follow the 15-minute TTL rule
+IMMUTABLE_FIELD_NAMES = frozenset({
+    "indicator",     # Primary identifier
+    "name",          # Full name (rarely changes)
+    "ISIN",          # International Securities ID (never changes)
+    "inceptionDate", # First issue date (never changes)
+    "quoteType",     # Type classification (rarely changes)
+})

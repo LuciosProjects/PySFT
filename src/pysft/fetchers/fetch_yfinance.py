@@ -122,10 +122,10 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
                 closest_dates = yf_utils.find_closest_date(data["Close"], target_dates)
 
                 if closest_dates is not None:
-                    # Successfully found data for target dates (TEMPORARILY COMMENTED OUT IN ORDER TO TEST INCEPTION DATE ONLY)
+                    # Successfully found data for target dates
                     process_successful_request(matched_request, data, closest_dates, tckrs[symbol])
                 else:
-                    # No data for target dates - try inception date approach
+                    # No data for target dates - try inception date approach (if we got here, it means the fetching attempt has failed)
                     try_inception_date(matched_request, tckrs[symbol])
 
             remaining_requests = [req for req in container.requests if not req.success]

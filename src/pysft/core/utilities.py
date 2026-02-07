@@ -48,8 +48,10 @@ def has_tase_indicators(indicators: list[str]) -> tuple[bool, list[bool]]:
         bool: True if any indicator is a TASE indicator, False otherwise.
     """
 
-    is_tase_indicators = [indicator.isdigit() or indicator.startswith("126.") 
-                          for indicator in indicators]
+    # is_tase_indicators = [indicator.isdigit() or indicator.startswith("126.") 
+                        #   for indicator in indicators]
+    
+    is_tase_indicators = {indicator: indicator.isdigit() or indicator.startswith("126.") for indicator in indicators}
     return any(is_tase_indicators), is_tase_indicators
 
 def classify_fetch_types(manager: 'fetcher_manager'):
@@ -84,19 +86,19 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
     requests: dict[str, dict[str, Any]] = {}
 
-    for i in range(manager.settings.indicators_count):
-        requests[indicators[i]] = {const.FETCH_TYPE_FIELD: E_FetchType.NULL, const.REQUEST_FIELD: indicatorRequest(indicators[i], date_range)}
+    for indicator in indicators:
+        requests[indicator] = {const.FETCH_TYPE_FIELD: E_FetchType.NULL, const.REQUEST_FIELD: indicatorRequest(indicator, date_range)}
 
         fetchType = E_FetchType.NULL
-        if is_tase_indicator[i]:
-            if const.USE_INTERNATIONAL_VAULT and indicators[i] in international_vault.keys():
+        if is_tase_indicator[indicator]:
+            if const.USE_INTERNATIONAL_VAULT and indicator in international_vault.keys():
                 # If the indicator is found in the international vault, use yfinance
-                requests[indicators[i]][const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
+                requests[indicator][const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
 
-                requests[indicators[i]][const.REQUEST_FIELD].indicator = international_vault[indicators[i]]['symbol']
-                requests[indicators[i]][const.REQUEST_FIELD].data.name = international_vault[indicators[i]]['name']
-                requests[indicators[i]][const.REQUEST_FIELD].data.ISIN = international_vault[indicators[i]]['ISIN']
-                requests[indicators[i]][const.REQUEST_FIELD].is_tase_indicator = True
+                requests[indicator][const.REQUEST_FIELD].indicator = international_vault[indicator]['symbol']
+                requests[indicator][const.REQUEST_FIELD].data.name = international_vault[indicator]['name']
+                requests[indicator][const.REQUEST_FIELD].data.ISIN = international_vault[indicator]['ISIN']
+                requests[indicator][const.REQUEST_FIELD].is_tase_indicator = True
 
                 # Toggle YFinance flag if necessary
                 if not manager.settings.NEED_YFINANCE:
@@ -121,7 +123,7 @@ def classify_fetch_types(manager: 'fetcher_manager'):
             if not manager.settings.NEED_YFINANCE:
                 manager.settings.NEED_YFINANCE = True
 
-        requests[indicators[i]][const.FETCH_TYPE_FIELD] = fetchType
+        requests[indicator][const.FETCH_TYPE_FIELD] = fetchType
 
     manager.requests = requests
 
@@ -169,6 +171,7 @@ def create_task_list(manager: 'fetcher_manager') -> list[fetchTask]:
         tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range)))
 
     return tasks
+
 
 # Array manipulation utilities
 def unique(arr: list[Any]) -> tuple[list[Any], dict[Any, int]]:
@@ -244,6 +247,7 @@ def safe_extract_date_ts(dates: pd.DatetimeIndex) -> list[pd.Timestamp]:
 
     return date_ts
 
+
 # Misc. utilities
 def random_delay(min_seconds: float = 0.0, max_seconds: float = 1.0):
     """
@@ -262,3 +266,24 @@ def random_delay_normal(mean_seconds: float = 1.0, stddev_seconds: float = 0.5):
     delay = np.random.normal(mean_seconds, stddev_seconds)
     delay = max(0.0, delay)  # Ensure non-negative delay
     time.sleep(delay)
+
+
+# Type manipulation utilities
+ # Helpers to coerce numpy -> native
+def _to_float(x) -> float | None:
+    if x is None: return None
+    if isinstance(x, np.generic): return float(x.item())
+    return float(x)
+
+def _to_int(x) -> int | None:
+    if x is None: return None
+    if isinstance(x, (bytes, bytearray, memoryview)):
+        # Stored as BLOB by mistake; decode little-endian unsigned
+        return int.from_bytes(bytes(x), byteorder="little", signed=False)
+    if isinstance(x, np.generic): return int(x.item())
+    return int(x)
+
+def _to_date(ts) -> pd.Timestamp | None:
+    if isinstance(ts, pd.Timestamp):
+        return ts.date()
+    return pd.Timestamp(ts).date()
