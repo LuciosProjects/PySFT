@@ -73,3 +73,23 @@ def fetch_data_as_dict(
         end=end,
         # interval=interval,
     ).to_dict()
+
+def fetch_data_as_json(
+        indicators: str | list[str],
+        attributes: str | list[str] = "price",
+        period: str | None = None,
+        start: str | None = None,
+        end: str | None = None,
+        # interval: str = "1d"
+        ) -> str:
+    """
+        PEP 8 alias for fetchData returning a JSON string.
+    """
+    return fetchData(
+        indicators=indicators,
+        attributes=attributes,
+        period=period,
+        start=start,
+        end=end,
+        # interval=interval,
+    ).to_json()
