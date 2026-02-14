@@ -79,13 +79,13 @@ def fetch_TASE(request: indicatorRequest):
         elif request.data.quoteType in ["ETF", "STOCK"]:
 
             isForeign = False
-            if tase_utils.TASE_SECURITY_DB is not None:
-                # lookup security info from local TASE security list database
-                dataPt = tase_utils.TASE_SECURITY_DB.execute(f'''
-                    SELECT securityId, isin, companyName, symbol
-                    FROM security_list
-                    WHERE indicator = ?
-                ''', (request.indicator,))
+            db = tase_utils.get_tase_security_db()
+            # lookup security info from local TASE security list database
+            dataPt = db.execute(f'''
+                SELECT securityId, isin, companyName, symbol
+                FROM security_list
+                WHERE indicator = ?
+            ''', (request.indicator,))
 
                 row = dataPt.fetchall()
                 if row.__len__() > 0:
