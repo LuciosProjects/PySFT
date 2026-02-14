@@ -14,6 +14,8 @@ TTL Rules:
     - Historical timeseries: immutable except today's data (15-min TTL)
 """
 
+import threading
+
 import sqlite3
 import json
 from datetime import datetime, timedelta
@@ -536,27 +538,30 @@ class DatabaseManager:
         return data
 
 
+_thread_local = threading.local()
+
 # Global database manager instance
 _db_manager: Optional[DatabaseManager] = None
 
-
 def get_db_manager() -> DatabaseManager:
-    """Get or create global database manager instance."""
-    global _db_manager
-    if _db_manager is None:
-        _db_manager = DatabaseManager()
-    return _db_manager
-
+    """Get or create a thread-local database manager instance."""
+    manager = getattr(_thread_local, "db_manager", None)
+    if manager is None:
+        manager = DatabaseManager()
+        _thread_local.db_manager = manager
+    return manager
 
 def close_db():
     """Close global database connection."""
-    global _db_manager
-    if _db_manager:
-        _db_manager.close()
-        _db_manager = None
+    """Close the current thread's database connection."""
+    manager = getattr(_thread_local, "db_manager", None)
+    if manager:
+        manager.close()
+        _thread_local.db_manager = None
 
 def resetDatabase():
     """Reset the database by closing and re-initializing."""
+    global _db_manager
     _db_manager = DatabaseManager()
 
     if _db_manager:
