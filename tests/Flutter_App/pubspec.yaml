@@ -1,0 +1,10 @@
+name: pysft_http_client
+description: Minimal Dart client for PySFT HTTP API testing.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  http: ^1.2.0
