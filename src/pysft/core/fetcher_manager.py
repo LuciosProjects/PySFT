@@ -186,11 +186,13 @@ class fetcher_manager:
                 else:
                     # Cached data exists
 
-                    # Check if requested date range is fully covered by cached dates
-                    i_start_span = np.argmin(abs(cached_dates - requested_dates[0]))
-                    i_end_span = np.argmin(abs(cached_dates - requested_dates[-1]))
+                    # Check if requested date range is fully covered by cached dates according to trading calendar logic (allowing for some uncertainty at the edges)
+                    calendar_in_period = tase_utils.TASE_CALENDAR.sessions_in_range(requested_dates[0], requested_dates[-1])
+                    i_start_span = np.argmin(abs(cached_dates - calendar_in_period[0]))
+                    i_end_span = np.argmin(abs(cached_dates - calendar_in_period[-1]))
 
-                    if (abs((cached_dates[i_start_span-1] - requested_dates[0]).days) <= const.CACHED_DATES_MAX_DELTA) and \
+                    if (i_end_span < len(cached_dates) - 1 and \
+                        abs((cached_dates[i_start_span-1] - requested_dates[0]).days) <= const.CACHED_DATES_MAX_DELTA) and \
                           (abs((cached_dates[i_end_span+1] - requested_dates[-1]).days) <= const.CACHED_DATES_MAX_DELTA):
                         requested_dates = pd.DatetimeIndex(cached_dates[i_start_span:i_end_span+1])
                     else:

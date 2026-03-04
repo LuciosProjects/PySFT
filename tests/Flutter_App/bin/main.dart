@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:async';
 import 'dart:io';
 
@@ -112,8 +113,8 @@ Future<String> _resolvePythonExecutable(String? cliPython, String repoRoot) asyn
     if (cliPython != null) cliPython,
     if (envPython != null && envPython.isNotEmpty) envPython,
     venvPython,
-    'python3',
     'python',
+    'python3',
   ];
 
   for (final candidate in candidates) {

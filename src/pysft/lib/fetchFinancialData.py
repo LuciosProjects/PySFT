@@ -1,3 +1,6 @@
+import json
+from typing import Any
+
 import pandas as pd
 
 # ---- Package imports ----
@@ -65,14 +68,15 @@ def fetch_data_as_dict(
     """
         PEP 8 alias for fetchData returning a dictionary.
     """
-    return fetchData(
+    data = fetchData(
         indicators=indicators,
         attributes=attributes,
         period=period,
         start=start,
         end=end,
         # interval=interval,
-    ).to_dict()
+    )
+    return _normalize_fetch_data(data)
 
 def fetch_data_as_json(
         indicators: str | list[str],
@@ -85,11 +89,26 @@ def fetch_data_as_json(
     """
         PEP 8 alias for fetchData returning a JSON string.
     """
-    return fetchData(
+    data = fetch_data_as_dict(
         indicators=indicators,
         attributes=attributes,
         period=period,
         start=start,
         end=end,
         # interval=interval,
-    ).to_json()
+    )
+    return json.dumps(data)
+
+
+def _normalize_fetch_data(frame: pd.DataFrame) -> dict[str, dict[str, Any]]:
+    """Convert a DataFrame with (symbol, attribute) columns into a nested dict."""
+    if not hasattr(frame, "columns"):
+        raise TypeError("Expected a DataFrame-like object with columns")
+
+    nested: dict[str, dict[str, Any]] = {}
+    for column in frame.columns:
+        if not isinstance(column, tuple) or len(column) != 2:
+            raise ValueError("Expected DataFrame columns as (symbol, attribute)")
+        symbol, attribute = column
+        nested.setdefault(str(symbol), {})[str(attribute)] = frame[column].tolist()
+    return nested

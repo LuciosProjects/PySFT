@@ -42,7 +42,6 @@ TASE_CALENDAR = exchange_calendars.get_calendar("XTAE")
 
 _TASE_DB_LOCAL = threading.local()
 
-
 def get_tase_security_db() -> sqlite3.Connection:
     db = getattr(_TASE_DB_LOCAL, "connection", None)
     if db is None:
