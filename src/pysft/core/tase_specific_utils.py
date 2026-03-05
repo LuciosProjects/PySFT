@@ -8,6 +8,7 @@ import numpy as np
 from dataclasses import dataclass
 from datetime import date
 import json
+from contextlib import contextmanager
 
 import requests
 from bs4 import BeautifulSoup
@@ -39,7 +40,21 @@ logger = get_logger(__name__)
 
 TASE_CALENDAR = exchange_calendars.get_calendar("XTAE")
 
-TASE_SECURITY_DB = sqlite3.connect(os.path.join(os.path.dirname(__file__), '../data/tase_security_list.db'))
+TASE_SECURITY_DB_PATH = os.path.join(os.path.dirname(__file__), '../data/tase_security_list.db')
+
+@contextmanager
+def get_tase_security_db_connection():
+    """
+    Context manager for thread-safe database access.
+    Creates a new connection per call and properly closes it.
+    """
+    conn = None
+    try:
+        conn = sqlite3.connect(TASE_SECURITY_DB_PATH)
+        yield conn
+    finally:
+        if conn:
+            conn.close()
 
 TASE_DATAHUB_API_HEADERS = {
     'accept': "application/json",
@@ -243,24 +258,28 @@ def get_tase_company_listings():
 def find_YF_equivalent(requests: dict[str, dict[str, Any]]) -> bool:
     '''
     For a given TASE indicator request, find its equivalent yfinance ticker using the local TASE security database.
+    Thread-safe: creates and closes connection per call.
     '''
 
-    if TASE_SECURITY_DB is not None:
-        for req in requests.values():
-            # lookup security info from local TASE security list database
-            dataPt = TASE_SECURITY_DB.execute(f'''
-                SELECT isin, symbol
-                FROM security_list
-                WHERE indicator = ?
-            ''', (req[const.REQUEST_FIELD].indicator,))
-                
-            row = dataPt.fetchall()
-            if row.__len__() > 0:
-                row = row[0]
-                # If found, set request to YFINANCE (prefer yfinance over TASE if possible)
-                req[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
-                req[const.REQUEST_FIELD].data.ISIN = row[0]
-                req[const.REQUEST_FIELD].indicator = req[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
+    try:
+        with get_tase_security_db_connection() as conn:
+            for req in requests.values():
+                # lookup security info from local TASE security list database
+                dataPt = conn.execute(f'''
+                    SELECT isin, symbol
+                    FROM security_list
+                    WHERE indicator = ?
+                ''', (req[const.REQUEST_FIELD].indicator,))
+                    
+                row = dataPt.fetchall()
+                if row.__len__() > 0:
+                    row = row[0]
+                    # If found, set request to YFINANCE (prefer yfinance over TASE if possible)
+                    req[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
+                    req[const.REQUEST_FIELD].data.ISIN = row[0]
+                    req[const.REQUEST_FIELD].indicator = req[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
+    except Exception as e:
+        logger.warning(f"Failed to lookup TASE security database: {str(e)}")
 
     return any([req[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for req in requests.values()])
 
