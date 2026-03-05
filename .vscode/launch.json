@@ -9,24 +9,19 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Attach to Dart Process",
+            "type": "dart",
+            "request": "attach",
+            "vmServiceUri": "http://127.0.0.1:8181/Krbr1Xtpprw=/"
+        },
+        {
+            "name": "Dart: Fetch Mode",
+            "type": "dart",
+            "request": "launch",
+            "program": "tests/Flutter_App/bin/main.dart",
+            "args": ["--mode", "fetch"]
         }
     ]
 }
-// {
-//     "version": "0.2.0",
-//     "configurations": [
-//         {
-//             "name": "Debug pytest",
-//             "type": "debugpy",
-//             "request": "launch",
-//             "module": "pytest",
-//             "args": [
-//                 "${workspaceFolder}/tests/test_PR.py",
-//                 "-v",
-//                 "-s"  // Show print statements
-//             ],
-//             "console": "integratedTerminal",
-//             "justMyCode": false
-//         }
-//     ]
-// }
