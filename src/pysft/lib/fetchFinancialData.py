@@ -101,14 +101,52 @@ def fetch_data_as_json(
 
 
 def _normalize_fetch_data(frame: pd.DataFrame) -> dict[str, dict[str, Any]]:
-    """Convert a DataFrame with (symbol, attribute) columns into a nested dict."""
+    """Convert a DataFrame with (symbol, attribute) columns into a nested dict with cleaned dates.
+    
+    Each symbol gets its own date vector containing only dates with valid data for that symbol.
+    NaN values are removed from both dates and value arrays.
+    """
     if not hasattr(frame, "columns"):
         raise TypeError("Expected a DataFrame-like object with columns")
 
     nested: dict[str, dict[str, Any]] = {}
+    
+    # Group columns by symbol
+    symbols = set()
+    attributes = set() # multiple symbols contain the same attributes per fetching session, so we can extract them from any symbol's columns, for a single symbol it's trivial
     for column in frame.columns:
         if not isinstance(column, tuple) or len(column) != 2:
             raise ValueError("Expected DataFrame columns as (symbol, attribute)")
-        symbol, attribute = column
-        nested.setdefault(str(symbol), {})[str(attribute)] = frame[column].tolist()
+        symbol, attr = column
+        symbols.add(symbol)
+        attributes.add(attr)
+    
+    # Convert sets to lists for consistent ordering (optional)
+    symbols = list(symbols)
+    attributes = list(attributes)
+
+    # Process each symbol independently
+    for symbol in symbols:
+        symbol_df = frame[symbol]
+        
+        # Find dates with at least one valid value for this symbol
+        valid_mask = symbol_df.notna().any(axis=1)
+        valid_dates = frame.index[valid_mask]
+        
+        # Build date strings (format as YYYY-MM-DD)
+        date_strings = []
+        for ts in valid_dates:
+            if hasattr(ts, 'date'):
+                date_strings.append(str(ts.date()))
+            else:
+                date_strings.append(str(ts))
+        
+        nested[str(symbol)] = {"dates": date_strings}
+        
+        # Add attribute values aligned to valid dates
+        for attr in attributes:
+            # Extract values for valid dates only (preserves order and index alignment)
+            values = symbol_df[attr].loc[valid_dates].tolist()
+            nested[str(symbol)][str(attr)] = values if values else None
+    
     return nested
