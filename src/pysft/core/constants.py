@@ -113,4 +113,5 @@ IMMUTABLE_FIELD_NAMES = frozenset({
     "ISIN",          # International Securities ID (never changes)
     "inceptionDate", # First issue date (never changes)
     "quoteType",     # Type classification (rarely changes)
+    "exchange",      # Exchange market code should remain stable once resolved
 })

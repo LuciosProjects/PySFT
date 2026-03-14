@@ -112,6 +112,9 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
             request.data.name = info.get("longName", str(request.indicator))
         request.data.currency = info.get("currency", info.get("financialCurrency", "USD"))
 
+        request.data.exchange = info.get("exchange", "N/A")
+    
+
         if request.data.currency == "ILA" or request.data.currency == "ILS":
             request.data.indicator = request.original_indicator # Keep original indicator for ILS securities (TASE)
             if not tase_utils.get_Bizportal_expense_rate(request.data):

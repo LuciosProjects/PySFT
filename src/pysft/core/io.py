@@ -29,6 +29,11 @@ _ATTR_ALIASES = {
     "quote_type": "quoteType",
     "type": "quoteType",
     "currency": "currency",
+    # Exchange aliases are normalized to a single output field so callers can
+    # request either provider-style "market" or canonical "exchange".
+    "exchange": "exchange",
+    "market": "exchange",
+    "exc": "exchange",
 
     # price/time series fields
     "price": "price",

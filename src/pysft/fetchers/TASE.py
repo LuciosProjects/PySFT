@@ -117,5 +117,9 @@ def fetch_TASE(request: indicatorRequest):
                 continue
 
         request.data.currency = "ILS" # After converting all prices from agorot to shekels, set currency to ILS
+
+        # TASE fetcher is authoritative for Tel Aviv securities, so expose the
+        request.data.exchange = "TASE"
+
         logger.info(request.message)
         break

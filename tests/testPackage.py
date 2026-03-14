@@ -32,7 +32,7 @@ if __name__ == "__main__":
     # historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-09-01", end="2025-09-10")
     # historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-08-01", end="2025-11-01")
     # historical_quote = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-07-10", end="2025-07-25")
-    result = pysft.lib.fetchData(["MSFT", "AAPL"], attributes=["price", "volume"], period="1m")
+    result = pysft.lib.fetchData(["MSFT", "AAPL"], attributes=["price", "volume", "exchange"], period="1m")
 
     # today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
 

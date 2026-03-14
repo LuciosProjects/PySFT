@@ -35,6 +35,8 @@ class _indicator_data:
     ''' Dates corresponding to the fetched data points.'''
     currency: str = ""
     ''' Currency code (e.g., 'USD', 'EUR', 'ILS')'''
+    exchange: str = ""
+    ''' Exchange market code (e.g., 'XNAS', 'XNYS', 'XTAE') when known.'''
     price: float | list[float] = 0.0 
     ''' fetched price data'''
     expense_rate: float = 0.0 
