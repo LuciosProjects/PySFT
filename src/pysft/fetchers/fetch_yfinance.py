@@ -147,7 +147,13 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
         
     logger.info(container.message)
     # print("breakpoint")
-        
+
+def fetch_yfinance_exposure(container: '_YF_fetchReq_Container'):
+    """Fetch exposure data for the given indicators using yfinance."""
+
+    raise NotImplementedError("Exposure fetching from yfinance is not implemented yet.")
+
+
 def process_successful_request(request: indicatorRequest, data: pd.DataFrame, closest_dates: pd.DatetimeIndex, tckr: yf.Ticker):
     """Process a request that has valid data."""
 

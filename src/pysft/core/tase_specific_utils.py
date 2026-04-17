@@ -541,7 +541,8 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
             value = dd.get_text(strip=True)
             pairs[key] = value
 
-        data.currency = "ILA" # Default currency, most if not all TASE funds are traded in ILA
+        data.currency = TASE_CURRENCY_MAP[pairs["מטבע"]]
+        # data.currency = "ILA" # Default currency, most if not all TASE funds are traded in ILA
 
         if data.quoteType == "MTF" and TASE_MTF_LISTING is not None:
             fund = [res for res in TASE_MTF_LISTING if str(res.get("fundId", "")) == data.indicator]

@@ -260,7 +260,7 @@
         "ISIN": "IL0011731457"
     },
     "1168962": {
-        "name": "ALMEDA      PU",
+        "name": "ALMEDA PU",
         "symbol": "AMDA.TA",
         "ISIN": "IL0011689622"
     },
@@ -7850,7 +7850,7 @@
         "ISIN": "IE000716YHJ7"
     },
     "1159169": {
-        "name": "iShares Core MSCI EM IMI UCITS ETF USD Acc",
+        "name": "iShares Core MSCI Emerging Markets ETF USD Acc",
         "symbol": "IS-FF101.TA",
         "ISIN": "IE00BKM4GZ66"
     },

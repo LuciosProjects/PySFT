@@ -1,7 +1,16 @@
+from pathlib import Path
+import sys
+
+# tests/testPackage.py -> PySFT/src
+pysft_src = Path(__file__).resolve().parents[1] / "src"
+if not (pysft_src / "pysft").is_dir():
+    raise RuntimeError(f"Cannot find pysft package at: {pysft_src}")
+
+sys.path.insert(0, str(pysft_src))
+
 import pysft
 
-from pysft.core.database import resetDatabase
-resetDatabase()
+pysft.core.database.resetDatabase()
 
 from testIndicators import indicatorsDB
 
@@ -32,7 +41,9 @@ if __name__ == "__main__":
     # historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-09-01", end="2025-09-10")
     # historical_quote    = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-08-01", end="2025-11-01")
     # historical_quote = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-07-10", end="2025-07-25")
-    result = pysft.lib.fetchData(["MSFT", "AAPL"], attributes=["price", "volume", "exchange"], period="1m")
+    # result = pysft.lib.fetchData(["MSFT", "AAPL"], attributes=["price", "volume", "exchange"], period="1m")
+    # result = pysft.lib.fetchData(["5138094"], attributes=["price", "volume", "exchange", "currency"], period="1m")
+    result = pysft.lib.fetchAssetExposure(["AAPL", 1159094], requested_fields=["country_exposure", "sector_exposure", "currency_exposure"])
 
     # today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
 
