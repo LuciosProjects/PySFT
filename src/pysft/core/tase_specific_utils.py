@@ -168,8 +168,8 @@ def get_element_by_path(soup: BeautifulSoup, path: str) -> BeautifulSoup | None:
 
         if current_element is None:
             return None
-        
-    return current_element
+    
+    return current_element if isinstance(current_element, BeautifulSoup) else None
 
 def get_tase_mtf_listing():
     """
@@ -413,10 +413,11 @@ def get_Bizportal_dividend_data(data: _indicator_data, session: requests.Session
                         mostRecentDate = event_date
                         date18M_Ago = mostRecentDate - pd.DateOffset(months=19) # use 19 months to be safe
 
-                    if payment_idx != -1 and pay_day_idx != -1 and event_date >= date18M_Ago:
-                        acc_amount += float(contents[payment_idx].replace(",", ""))
-                    elif event_date < date18M_Ago:
-                        break  # No need to check older rows
+                    if date18M_Ago:
+                        if payment_idx != -1 and pay_day_idx != -1 and event_date >= date18M_Ago:
+                            acc_amount += float(contents[payment_idx].replace(",", ""))
+                        elif event_date < date18M_Ago:
+                            break  # No need to check older rows
 
             data.dividendYield = acc_amount/current_price * 100.0
 
@@ -485,7 +486,9 @@ def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session 
         # Extract name as well
         paper_top_title = soup.find("div", class_="paper_top_title")
         if paper_top_title:
-            data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+            temp = paper_top_title.find("h1", class_="paper_h1")
+            if temp:
+                data.name = temp.get_text(strip=True)
 
     except Exception as e:
         logger.error(f"Error parsing Bizportal expense rate content for {data.indicator}: {str(e)}")
@@ -556,12 +559,16 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
                 # fund not found in listing - fallback to HTML extraction, ISIN won't be available in this case
                 paper_top_title = soup.find("div", class_="paper_top_title")
                 if paper_top_title:
-                    data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+                    temp = paper_top_title.find("h1", class_="paper_h1")
+                    if temp:
+                        data.name = temp.get_text(strip=True)
         elif data.quoteType != "STOCK":
             # quote type is not MTF or TASE_MTF_LISTING is not available, extract the name from the HTML as a fallback, ISIN won't be available in this case
             paper_top_title = soup.find("div", class_="paper_top_title")
             if paper_top_title:
-                data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+                temp = paper_top_title.find("h1", class_="paper_h1")
+                if temp:
+                    data.name = temp.get_text(strip=True)
 
         # Extract fees and inception date
         if data.quoteType != "STOCK":
