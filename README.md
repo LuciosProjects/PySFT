@@ -164,21 +164,21 @@ holdings = fetch_fund_holdings(
 | Attribute | Source | Description |
 |-----------|--------|-------------|
 | `currency` | All | Quote currency (USD, ILS, EUR, CHF, etc.) |
-| `market_cap` | YF | Market capitalization |
-| `dividendYield` | YF | Annual dividend yield (%) |
-| `trailingPE` | YF | P/E ratio (trailing 12 months) |
+| `market_cap` | YF, TASE | Market capitalization |
+| `dividendYield` | YF, TASE | Annual dividend yield (%) |
+| `trailingPE` | YF, TASE | P/E ratio (trailing 12 months) |
 | `forwardPE` | YF | P/E ratio (forward estimate) |
 | `beta` | YF | Price volatility vs. market |
-| `expense_rate` | YF | Fund expense ratio (%) |
+| `expense_rate` | YF, TASE | Fund expense ratio (%) |
 
 ### Metadata
 | Attribute | Source | Description |
 |-----------|--------|-------------|
 | `name` | All | Security name |
-| `ISIN` | TASE | International identification number |
-| `quoteType` | YF | Type (EQUITY, ETF, CRYPTOCURRENCY, etc.) |
+| `ISIN` | YF, TASE | International identification number |
+| `quoteType` | YF, TASE | Type (EQUITY, ETF, CRYPTOCURRENCY, etc.) |
 | `exchange` | All | Trading exchange |
-| `inceptionDate` | YF | Fund launch date |
+| `inceptionDate` | YF, TASE | Fund launch date |
 
 ## ⚙️ Advanced Features
 
