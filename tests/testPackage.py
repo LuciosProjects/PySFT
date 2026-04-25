@@ -43,8 +43,7 @@ if __name__ == "__main__":
     # historical_quote = pysft.lib.fetchData("AAPL", attributes=["all"], start="2025-07-10", end="2025-07-25")
     # result = pysft.lib.fetchData(["MSFT", "AAPL"], attributes=["price", "volume", "exchange"], period="1m")
     # result = pysft.lib.fetchData(["5138094"], attributes=["price", "volume", "exchange", "currency"], period="1m")
-    result = pysft.lib.fetchAssetExposure(["AAPL", 1159094], requested_fields=["country_exposure", "sector_exposure", "currency_exposure"])
 
-    # today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
+    today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
 
     ...

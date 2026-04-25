@@ -108,7 +108,7 @@ def getDateRange() -> tuple[str, str]:
     return ("2025-07-01", "2025-08-01")
 
 @pytest.fixture
-def getDatePeriod() -> pd.DateOffset:
+def getDatePeriod() -> str:
     return "3m"
 
 # Test functions
@@ -129,20 +129,17 @@ def test_single_indicator_fetch(getTestIndicators):
 
     # Basic existence checks
     assert quote is not None, "in 'test_single_indicator_fetch', fetched data is None."
-    assert not quote.empty, "in 'test_single_indicator_fetch', fetched data is empty."
-
-    # DataFrame structure checks
-    assert quote.columns.names == ["Indicator", "Attribute"], "in 'test_single_indicator_fetch', Column names do not match, expected - [\"Indicator\", \"Attribute\"]."
+    assert quote, "in 'test_single_indicator_fetch', fetched data is empty."
 
     # Indicator presence check
     assert singleInd in quote, f"in 'test_single_indicator_fetch', fetched data does not contain expected indicator: {singleInd}."
 
     # Indicator content checks
-    assert not quote[singleInd].empty, f"in 'test_single_indicator_fetch', fetched data for indicator {singleInd} is empty."
+    assert quote[singleInd], f"in 'test_single_indicator_fetch', fetched data for indicator {singleInd} is empty."
 
-    assert isinstance(quote[singleInd].index, pd.DatetimeIndex) and quote[singleInd].index.__len__() == 1, "in 'test_single_indicator_fetch', index is not a DatetimeIndex object or does not contain exactly one entry."
-    assert 'price' in quote[singleInd].columns, f"in 'test_single_indicator_fetch', 'price' attribute not found for indicator {singleInd}."
-    assert quote[singleInd]['price'].iloc[0] > 0.0, f"in 'test_single_indicator_fetch', 'price' attribute is invalid (not greater than 0, should expect a positive price number) for indicator {singleInd}."
+    assert len(quote[singleInd].get("dates", [])) == 1, "in 'test_single_indicator_fetch', 'dates' does not contain exactly one entry."
+    assert 'price' in quote[singleInd], f"in 'test_single_indicator_fetch', 'price' attribute not found for indicator {singleInd}."
+    assert quote[singleInd]['price'][0] > 0.0, f"in 'test_single_indicator_fetch', 'price' attribute is invalid (not greater than 0, should expect a positive price number) for indicator {singleInd}."
 
     print(f"Single indicator fetch test for {singleInd} passed.")
 
@@ -160,10 +157,7 @@ def test_multiple_indicators_fetch(getTestIndicators, getDatePeriod):
 
     # Basic existence checks
     assert quotes is not None, "in 'test_multiple_indicators_fetch', fetched data is None."
-    assert not quotes.empty, "in 'test_multiple_indicators_fetch', fetched data is empty."
-
-    # DataFrame structure checks
-    assert quotes.columns.names == ["Indicator", "Attribute"], "in 'test_multiple_indicators_fetch', Column names do not match, expected - [\"Indicator\", \"Attribute\"]."
+    assert quotes, "in 'test_multiple_indicators_fetch', fetched data is empty."
 
     # Indicator presence check
     dateRange_check = False
@@ -171,7 +165,7 @@ def test_multiple_indicators_fetch(getTestIndicators, getDatePeriod):
         assert indicator in quotes, f"in 'test_multiple_indicators_fetch', fetched data does not contain expected indicator: {indicator}."
 
         # Indicator content checks
-        assert not quotes[indicator].empty, f"in 'test_multiple_indicators_fetch', fetched data for indicator {indicator} is empty."
+        assert quotes[indicator], f"in 'test_multiple_indicators_fetch', fetched data for indicator {indicator} is empty."
 
         if not dateRange_check:
             scale = getDatePeriod[-1]
@@ -187,14 +181,14 @@ def test_multiple_indicators_fetch(getTestIndicators, getDatePeriod):
                 date_start_period = date_end_period - pd.Timedelta(days=int(365*int(getDatePeriod[:-1])))
                 assert False, f"in 'test_multiple_indicators_fetch', invalid date period scale: {scale}."
 
-            assert (quotes[indicator].index >= date_start_period).all() and (quotes[indicator].index <= date_end_period).all(), f"in 'test_multiple_indicators_fetch', index is not DatetimeIndex of the specified date range for indicator."
+            dates = pd.to_datetime(quotes[indicator].get("dates", []))
+            assert (dates >= date_start_period).all() and (dates <= date_end_period).all(), f"in 'test_multiple_indicators_fetch', dates are not within the specified date range for indicator."
             dateRange_check = True
 
-        assert 'price' in quotes[indicator].columns, f"in 'test_multiple_indicators_fetch', 'price' attribute not found for indicator {indicator}."
-        # assert pd.notna(quotes[indicator]['price']).all(), f"in 'test_multiple_indicators_fetch', 'price' attribute contains NaN for indicator {indicator}."
+        assert 'price' in quotes[indicator], f"in 'test_multiple_indicators_fetch', 'price' attribute not found for indicator {indicator}."
 
-        valid_data = quotes[indicator]['price'].dropna()
-        assert (valid_data > 0.0).all(), f"in 'test_multiple_indicators_fetch', 'price' attribute has invalid values (not greater than 0, should expect positive price numbers) for indicator {indicator}."
+        valid_data = [v for v in (quotes[indicator].get('price') or []) if v is not None]
+        assert all(v > 0.0 for v in valid_data), f"in 'test_multiple_indicators_fetch', 'price' attribute has invalid values (not greater than 0, should expect positive price numbers) for indicator {indicator}."
 
     print(f"Multiple indicators fetch test for total: {len(getTestIndicators)} indicators passed.")
 
@@ -212,29 +206,25 @@ def test_fetch_with_required_attributes(getTestIndicators, getRequiredAttributes
 
     # Basic existence checks
     assert quotes is not None, "in 'test_fetch_with_required_attributes', fetched data is None."
-    assert not quotes.empty, "in 'test_fetch_with_required_attributes', fetched data is empty."
-
-    # DataFrame structure checks
-    assert quotes.columns.names == ["Indicator", "Attribute"], "in 'test_fetch_with_required_attributes', Column names do not match, expected - [\"Indicator\", \"Attribute\"]."
+    assert quotes, "in 'test_fetch_with_required_attributes', fetched data is empty."
 
     # Indicator presence check
     dateRange_check = False
     for indicator in getTestIndicators:
         assert indicator in quotes, f"in 'test_fetch_with_required_attributes', fetched data does not contain expected indicator: {indicator}."
         # Indicator content checks
-        assert not quotes[indicator].empty, f"in 'test_fetch_with_required_attributes', fetched data for indicator {indicator} is empty."
+        assert quotes[indicator], f"in 'test_fetch_with_required_attributes', fetched data for indicator {indicator} is empty."
 
         if not dateRange_check:
-            assert (quotes[indicator].index >= pd.to_datetime(getDateRange[0])).all() and (quotes[indicator].index <= pd.to_datetime(getDateRange[1])).all(), f"in 'test_multiple_indicators_fetch', index is not DatetimeIndex of the specified date range for indicator."
+            dates = pd.to_datetime(quotes[indicator].get("dates", []))
+            assert (dates >= pd.to_datetime(getDateRange[0])).all() and (dates <= pd.to_datetime(getDateRange[1])).all(), f"in 'test_fetch_with_required_attributes', dates are not within the specified date range for indicator."
             dateRange_check = True
 
         for attribute in getRequiredAttributes:
-            assert attribute in quotes[indicator].columns, f"in 'test_fetch_with_required_attributes', '{attribute}' attribute not found for indicator {indicator}."
+            assert attribute in quotes[indicator], f"in 'test_fetch_with_required_attributes', '{attribute}' attribute not found for indicator {indicator}."
 
             if attribute == 'price':
-                # assert pd.notna(quotes[indicator]['price']).all(), f"in 'test_fetch_with_required_attributes', 'price' attribute contains NaN for indicator {indicator}."
-
-                valid_data = quotes[indicator]['price'].dropna()
-                assert (valid_data > 0.0).all(), f"in 'test_fetch_with_required_attributes', 'price' attribute has invalid values (not greater than 0, should expect positive price numbers) for indicator {indicator}."
+                valid_data = [v for v in (quotes[indicator].get('price') or []) if v is not None]
+                assert all(v > 0.0 for v in valid_data), f"in 'test_fetch_with_required_attributes', 'price' attribute has invalid values (not greater than 0, should expect positive price numbers) for indicator {indicator}."
 
     print(f"Multiple indicators fetch with required attributes test for total: {len(getTestIndicators)} indicators passed.")

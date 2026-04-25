@@ -302,9 +302,16 @@ def get_TASE_globals(type: Literal["MTF", "SECURITY", "COMPANY"]) -> list | None
     else:
         return None
 
-def tase_determine_quote_type(data: _indicator_data, session: requests.Session, url: str, timeout: float = 10) -> bool:
-    """
-    Determine the quote type of a TASE indicator by inspecting the final URL after redirects.
+
+def infer_tase_quote_type_from_url(
+    session: requests.Session,
+    url: str,
+    timeout: float = 10,
+) -> str | None:
+    """Infer TASE quote type from a URL by following redirects.
+
+    Returns an uppercase quote type (e.g. ``MTF``, ``ETF``, ``STOCK``)
+    when resolution succeeds, otherwise ``None``.
     """
 
     real_url = url
@@ -313,24 +320,47 @@ def tase_determine_quote_type(data: _indicator_data, session: requests.Session, 
             head_response = session.head(url, allow_redirects=True, timeout=timeout)
             head_response.raise_for_status()
             real_url = head_response.url
-            break # Successful HEAD request, exit loop
+            break
         except Exception as e:
-            if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to perform HEAD request for {url}: {str(e)}", 
-                                                    utils.random_delay, (0.2, 1)):
+            if utils.handle_fetch_attempt_failure(
+                attempt,
+                const.MAX_ATTEMPTS,
+                f"Failed to perform HEAD request for {url}: {str(e)}",
+                utils.random_delay,
+                (0.2, 1),
+            ):
                 continue
-            else:
-                return False
+            return None
 
-    final_url = real_url
-    url_segments = final_url.split('/')
-
-    for segment in url_segments:
+    for segment in real_url.split('/'):
         if segment in const.THEMARKER_QUOTE_TYPES:
-            data.quoteType = segment.upper()
-            return True
-    logger.warning(f"Could not determine quote type from URL: {final_url}")
-    return False
+            return segment.upper()
+
+    logger.warning(f"Could not determine quote type from URL: {real_url}")
+    return None
+
+
+# def infer_tase_quote_type_for_indicator(indicator: str, timeout: float = 10) -> str | None:
+#     """Infer TASE quote type for an indicator using TheMarker redirects."""
+
+#     with requests.Session() as session:
+#         return infer_tase_quote_type_from_url(
+#             session,
+#             TASE_URLS.THEMARKER(indicator),
+#             timeout=timeout,
+#         )
+
+# def tase_determine_quote_type(data: _indicator_data, session: requests.Session, url: str, timeout: float = 10) -> bool:
+#     """
+#     Determine the quote type of a TASE indicator by inspecting the final URL after redirects.
+#     """
+
+#     quote_type = infer_tase_quote_type_from_url(session, url, timeout=timeout)
+#     if not quote_type:
+#         return False
+
+#     data.quoteType = quote_type
+#     return True
 
     
 # Bizportal routines
@@ -806,7 +836,7 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
         
         # Filter data to match requested dates
         data.dates = dates[1:]
-        data.price = list(np.array(closes[1:])/100.0)  # MAYA TASE prices are in agorot
+        data.price = list(np.array(closes[1:])/100.0)  # MAYA TASE prices are in agorot (mostly...)
         data.open = list(np.array(opens[1:])/100.0)
         data.high = list(np.array(highs[1:])/100.0)
         data.low = list(np.array(lows[1:])/100.0)

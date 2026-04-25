@@ -1,0 +1,3334 @@
+{
+  "AAPL": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "AAPL"
+    ],
+    "name": [
+      "Apple Inc."
+    ],
+    "ISIN": [
+      "US0378331005"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      271.05999755859375
+    ],
+    "last": [
+      271.05999755859375
+    ],
+    "open": [
+      272.760009765625
+    ],
+    "high": [
+      273.05999755859375
+    ],
+    "low": [
+      269.6499938964844
+    ],
+    "volume": [
+      "[38124500]"
+    ],
+    "avgDailyVolume3mnth": [
+      46026709
+    ],
+    "change_pct": [
+      -0.6232629953679902
+    ],
+    "market_cap": [
+      3979469914112
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.38
+    ],
+    "trailingPE": [
+      34.35488
+    ],
+    "forwardPE": [
+      28.92041
+    ],
+    "beta": [
+      1.109
+    ],
+    "inceptionDate": [
+      "1980-12-12 00:00:00"
+    ]
+  },
+  "MSFT": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "MSFT"
+    ],
+    "name": [
+      "Microsoft Corporation"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      424.6199951171875
+    ],
+    "last": [
+      424.6199951171875
+    ],
+    "open": [
+      416.9700012207031
+    ],
+    "high": [
+      424.95001220703125
+    ],
+    "low": [
+      415.79998779296875
+    ],
+    "volume": [
+      "[27413900]"
+    ],
+    "avgDailyVolume3mnth": [
+      37687631
+    ],
+    "change_pct": [
+      1.8346628951935617
+    ],
+    "market_cap": [
+      3155936149504
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.86
+    ],
+    "trailingPE": [
+      26.588602
+    ],
+    "forwardPE": [
+      22.445658
+    ],
+    "beta": [
+      1.107
+    ],
+    "inceptionDate": [
+      "1986-03-13 00:00:00"
+    ]
+  },
+  "GOOGL": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "GOOGL"
+    ],
+    "name": [
+      "Alphabet Inc."
+    ],
+    "ISIN": [
+      "CA02080M1005"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      344.3999938964844
+    ],
+    "last": [
+      344.3999938964844
+    ],
+    "open": [
+      338.7300109863281
+    ],
+    "high": [
+      345.2699890136719
+    ],
+    "low": [
+      335.3900146484375
+    ],
+    "volume": [
+      "[26400000]"
+    ],
+    "avgDailyVolume3mnth": [
+      32171493
+    ],
+    "change_pct": [
+      1.6738944664649535
+    ],
+    "market_cap": [
+      4166206881792
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.24
+    ],
+    "trailingPE": [
+      31.859388
+    ],
+    "forwardPE": [
+      25.513605
+    ],
+    "beta": [
+      1.128
+    ],
+    "inceptionDate": [
+      "2004-08-19 00:00:00"
+    ]
+  },
+  "AMZN": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "AMZN"
+    ],
+    "name": [
+      "Amazon.com, Inc."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      263.989990234375
+    ],
+    "last": [
+      263.989990234375
+    ],
+    "open": [
+      259.9800109863281
+    ],
+    "high": [
+      264.5
+    ],
+    "low": [
+      257.69000244140625
+    ],
+    "volume": [
+      "[53695200]"
+    ],
+    "avgDailyVolume3mnth": [
+      51525785
+    ],
+    "change_pct": [
+      1.542418293173231
+    ],
+    "market_cap": [
+      2839014801408
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      36.76741
+    ],
+    "forwardPE": [
+      27.862535
+    ],
+    "beta": [
+      1.383
+    ],
+    "inceptionDate": [
+      "1997-05-15 00:00:00"
+    ]
+  },
+  "META": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "META"
+    ],
+    "name": [
+      "Meta Platforms, Inc."
+    ],
+    "ISIN": [
+      "US30303M1027"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      675.030029296875
+    ],
+    "last": [
+      675.030029296875
+    ],
+    "open": [
+      660.3200073242188
+    ],
+    "high": [
+      680.6699829101562
+    ],
+    "low": [
+      653.8400268554688
+    ],
+    "volume": [
+      "[13333400]"
+    ],
+    "avgDailyVolume3mnth": [
+      15726200
+    ],
+    "change_pct": [
+      2.227711080914374
+    ],
+    "market_cap": [
+      1713511989248
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.31
+    ],
+    "trailingPE": [
+      28.736912
+    ],
+    "forwardPE": [
+      18.719633
+    ],
+    "beta": [
+      1.309
+    ],
+    "inceptionDate": [
+      "2012-05-18 00:00:00"
+    ]
+  },
+  "TSLA": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "TSLA"
+    ],
+    "name": [
+      "Tesla, Inc."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      376.29998779296875
+    ],
+    "last": [
+      376.29998779296875
+    ],
+    "open": [
+      373.5
+    ],
+    "high": [
+      382.760009765625
+    ],
+    "low": [
+      370.7300109863281
+    ],
+    "volume": [
+      "[62753700]"
+    ],
+    "avgDailyVolume3mnth": [
+      63404909
+    ],
+    "change_pct": [
+      0.7496620596971315
+    ],
+    "market_cap": [
+      1413278859264
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      345.22934
+    ],
+    "forwardPE": [
+      142.72385
+    ],
+    "beta": [
+      1.915
+    ],
+    "inceptionDate": [
+      "2010-06-29 00:00:00"
+    ]
+  },
+  "NVDA": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "NVDA"
+    ],
+    "name": [
+      "NVIDIA Corporation"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      208.27000427246094
+    ],
+    "last": [
+      208.27000427246094
+    ],
+    "open": [
+      199.9600067138672
+    ],
+    "high": [
+      210.9499969482422
+    ],
+    "low": [
+      199.80999755859375
+    ],
+    "volume": [
+      "[213780100]"
+    ],
+    "avgDailyVolume3mnth": [
+      173868400
+    ],
+    "change_pct": [
+      4.155829805749578
+    ],
+    "market_cap": [
+      5062002737152
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.02
+    ],
+    "trailingPE": [
+      42.591003
+    ],
+    "forwardPE": [
+      18.530712
+    ],
+    "beta": [
+      2.335
+    ],
+    "inceptionDate": [
+      "1999-01-22 00:00:00"
+    ]
+  },
+  "NFLX": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "NFLX"
+    ],
+    "name": [
+      "Netflix, Inc."
+    ],
+    "ISIN": [
+      "US64110L1061"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      92.44000244140625
+    ],
+    "last": [
+      92.44000244140625
+    ],
+    "open": [
+      92.56999969482422
+    ],
+    "high": [
+      93.27999877929688
+    ],
+    "low": [
+      91.80000305175781
+    ],
+    "volume": [
+      "[32467500]"
+    ],
+    "avgDailyVolume3mnth": [
+      46625511
+    ],
+    "change_pct": [
+      -0.14043129939130816
+    ],
+    "market_cap": [
+      389246222336
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      29.819357
+    ],
+    "forwardPE": [
+      24.05494
+    ],
+    "beta": [
+      1.669
+    ],
+    "inceptionDate": [
+      "2002-05-23 00:00:00"
+    ]
+  },
+  "ADBE": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "ADBE"
+    ],
+    "name": [
+      "Adobe Inc."
+    ],
+    "ISIN": [
+      "US00724F1012"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      245.44000244140625
+    ],
+    "last": [
+      245.44000244140625
+    ],
+    "open": [
+      239.77000427246094
+    ],
+    "high": [
+      245.66000366210938
+    ],
+    "low": [
+      238.4199981689453
+    ],
+    "volume": [
+      "[6487500]"
+    ],
+    "avgDailyVolume3mnth": [
+      6016520
+    ],
+    "change_pct": [
+      2.364765428498816
+    ],
+    "market_cap": [
+      99206848512
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      14.303031
+    ],
+    "forwardPE": [
+      9.301793
+    ],
+    "beta": [
+      1.518
+    ],
+    "inceptionDate": [
+      "1986-08-13 00:00:00"
+    ]
+  },
+  "CRM": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "CRM"
+    ],
+    "name": [
+      "Salesforce, Inc."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      178.16000366210938
+    ],
+    "last": [
+      178.16000366210938
+    ],
+    "open": [
+      175.6199951171875
+    ],
+    "high": [
+      178.4499969482422
+    ],
+    "low": [
+      174.39999389648438
+    ],
+    "volume": [
+      "[10807300]"
+    ],
+    "avgDailyVolume3mnth": [
+      14136025
+    ],
+    "change_pct": [
+      1.4463094269117738
+    ],
+    "market_cap": [
+      145744461824
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.9900000000000001
+    ],
+    "trailingPE": [
+      22.841026
+    ],
+    "forwardPE": [
+      11.930432
+    ],
+    "beta": [
+      1.288
+    ],
+    "inceptionDate": [
+      "2004-06-23 00:00:00"
+    ]
+  },
+  "JPM": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "JPM"
+    ],
+    "name": [
+      "JPMorgan Chase & Co."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      308.2799987792969
+    ],
+    "last": [
+      308.2799987792969
+    ],
+    "open": [
+      311.1499938964844
+    ],
+    "high": [
+      311.1499938964844
+    ],
+    "low": [
+      307.8900146484375
+    ],
+    "volume": [
+      "[5211500]"
+    ],
+    "avgDailyVolume3mnth": [
+      10227011
+    ],
+    "change_pct": [
+      -0.9223831507264357
+    ],
+    "market_cap": [
+      826036256768
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      1.95
+    ],
+    "trailingPE": [
+      14.750239
+    ],
+    "forwardPE": [
+      13.112367
+    ],
+    "beta": [
+      1.043
+    ],
+    "inceptionDate": [
+      "1980-03-17 00:00:00"
+    ]
+  },
+  "BAC": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "BAC"
+    ],
+    "name": [
+      "Bank of America Corporation"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      52.04999923706055
+    ],
+    "last": [
+      52.04999923706055
+    ],
+    "open": [
+      52.31999969482422
+    ],
+    "high": [
+      52.5099983215332
+    ],
+    "low": [
+      51.93000030517578
+    ],
+    "volume": [
+      "[30263000]"
+    ],
+    "avgDailyVolume3mnth": [
+      40684782
+    ],
+    "change_pct": [
+      -0.5160559238122087
+    ],
+    "market_cap": [
+      371111723008
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.15
+    ],
+    "trailingPE": [
+      12.947762
+    ],
+    "forwardPE": [
+      10.320173
+    ],
+    "beta": [
+      1.237
+    ],
+    "inceptionDate": [
+      "1973-02-21 00:00:00"
+    ]
+  },
+  "WFC": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "WFC"
+    ],
+    "name": [
+      "Wells Fargo & Company"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      79.41999816894531
+    ],
+    "last": [
+      79.41999816894531
+    ],
+    "open": [
+      80.11000061035156
+    ],
+    "high": [
+      80.37000274658203
+    ],
+    "low": [
+      79.25
+    ],
+    "volume": [
+      "[15418300]"
+    ],
+    "avgDailyVolume3mnth": [
+      17177034
+    ],
+    "change_pct": [
+      -0.8613187319300719
+    ],
+    "market_cap": [
+      243369869312
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.27
+    ],
+    "trailingPE": [
+      12.275116
+    ],
+    "forwardPE": [
+      10.072877
+    ],
+    "beta": [
+      1.056
+    ],
+    "inceptionDate": [
+      "1972-06-01 00:00:00"
+    ]
+  },
+  "GS": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "GS"
+    ],
+    "name": [
+      "The Goldman Sachs Group, Inc."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      926.9099731445312
+    ],
+    "last": [
+      926.9099731445312
+    ],
+    "open": [
+      930.489990234375
+    ],
+    "high": [
+      932.9199829101562
+    ],
+    "low": [
+      919.219970703125
+    ],
+    "volume": [
+      "[1262800]"
+    ],
+    "avgDailyVolume3mnth": [
+      2344809
+    ],
+    "change_pct": [
+      -0.384745362918093
+    ],
+    "market_cap": [
+      275063242752
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      1.94
+    ],
+    "trailingPE": [
+      16.920591
+    ],
+    "forwardPE": [
+      14.185563
+    ],
+    "beta": [
+      1.311
+    ],
+    "inceptionDate": [
+      "1999-05-04 00:00:00"
+    ]
+  },
+  "MS": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "MS"
+    ],
+    "name": [
+      "Morgan Stanley"
+    ],
+    "ISIN": [
+      "US6174464486"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      188.07000732421875
+    ],
+    "last": [
+      188.07000732421875
+    ],
+    "open": [
+      188.7899932861328
+    ],
+    "high": [
+      189.0500030517578
+    ],
+    "low": [
+      187.1199951171875
+    ],
+    "volume": [
+      "[4528600]"
+    ],
+    "avgDailyVolume3mnth": [
+      7237938
+    ],
+    "change_pct": [
+      -0.38136870995214567
+    ],
+    "market_cap": [
+      298628874240
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.13
+    ],
+    "trailingPE": [
+      17.035326
+    ],
+    "forwardPE": [
+      14.855838
+    ],
+    "beta": [
+      1.182
+    ],
+    "inceptionDate": [
+      "1993-02-23 00:00:00"
+    ]
+  },
+  "JNJ": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "JNJ"
+    ],
+    "name": [
+      "Johnson & Johnson"
+    ],
+    "ISIN": [
+      "US4781601046"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      227.5
+    ],
+    "last": [
+      227.5
+    ],
+    "open": [
+      229.02999877929688
+    ],
+    "high": [
+      229.99000549316406
+    ],
+    "low": [
+      227.02000427246094
+    ],
+    "volume": [
+      "[6066100]"
+    ],
+    "avgDailyVolume3mnth": [
+      8354411
+    ],
+    "change_pct": [
+      -0.6680342258444716
+    ],
+    "market_cap": [
+      547641851904
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.36
+    ],
+    "trailingPE": [
+      26.39211
+    ],
+    "forwardPE": [
+      17.898672
+    ],
+    "beta": [
+      0.329
+    ],
+    "inceptionDate": [
+      "1962-01-02 00:00:00"
+    ]
+  },
+  "PFE": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "PFE"
+    ],
+    "name": [
+      "Pfizer Inc."
+    ],
+    "ISIN": [
+      "US7170811035"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      27.0
+    ],
+    "last": [
+      27.0
+    ],
+    "open": [
+      26.690000534057617
+    ],
+    "high": [
+      27.299999237060547
+    ],
+    "low": [
+      26.579999923706055
+    ],
+    "volume": [
+      "[42468300]"
+    ],
+    "avgDailyVolume3mnth": [
+      41801020
+    ],
+    "change_pct": [
+      1.1614816775548986
+    ],
+    "market_cap": [
+      153585614848
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      6.370000000000001
+    ],
+    "trailingPE": [
+      19.852942
+    ],
+    "forwardPE": [
+      9.60772
+    ],
+    "beta": [
+      0.388
+    ],
+    "inceptionDate": [
+      "1972-06-01 00:00:00"
+    ]
+  },
+  "UNH": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "UNH"
+    ],
+    "name": [
+      "UnitedHealth Group Incorporated"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      354.9200134277344
+    ],
+    "last": [
+      354.9200134277344
+    ],
+    "open": [
+      356.489990234375
+    ],
+    "high": [
+      358.2799987792969
+    ],
+    "low": [
+      351.3900146484375
+    ],
+    "volume": [
+      "[8551200]"
+    ],
+    "avgDailyVolume3mnth": [
+      10305665
+    ],
+    "change_pct": [
+      -0.44039856648104836
+    ],
+    "market_cap": [
+      322343043072
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.49
+    ],
+    "trailingPE": [
+      26.806648
+    ],
+    "forwardPE": [
+      17.169998
+    ],
+    "beta": [
+      0.408
+    ],
+    "inceptionDate": [
+      "1984-10-17 00:00:00"
+    ]
+  },
+  "ABBV": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "ABBV"
+    ],
+    "name": [
+      "AbbVie Inc."
+    ],
+    "ISIN": [
+      "US00287Y1091"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      198.7100067138672
+    ],
+    "last": [
+      198.7100067138672
+    ],
+    "open": [
+      198.92999267578125
+    ],
+    "high": [
+      200.25
+    ],
+    "low": [
+      197.13999938964844
+    ],
+    "volume": [
+      "[7605100]"
+    ],
+    "avgDailyVolume3mnth": [
+      7068238
+    ],
+    "change_pct": [
+      -0.11058461268462771
+    ],
+    "market_cap": [
+      351470780416
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.4799999999999995
+    ],
+    "trailingPE": [
+      84.19916
+    ],
+    "forwardPE": [
+      12.353631
+    ],
+    "beta": [
+      0.364
+    ],
+    "inceptionDate": [
+      "2013-01-02 00:00:00"
+    ]
+  },
+  "MRK": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "MRK"
+    ],
+    "name": [
+      "Merck & Co., Inc."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      111.9000015258789
+    ],
+    "last": [
+      111.9000015258789
+    ],
+    "open": [
+      113.73999786376953
+    ],
+    "high": [
+      114.02999877929688
+    ],
+    "low": [
+      111.5
+    ],
+    "volume": [
+      "[7059400]"
+    ],
+    "avgDailyVolume3mnth": [
+      11048790
+    ],
+    "change_pct": [
+      -1.6177214457964495
+    ],
+    "market_cap": [
+      276379500544
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.04
+    ],
+    "trailingPE": [
+      15.370879
+    ],
+    "forwardPE": [
+      11.519339
+    ],
+    "beta": [
+      0.275
+    ],
+    "inceptionDate": [
+      "1962-01-02 00:00:00"
+    ]
+  },
+  "XOM": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "XOM"
+    ],
+    "name": [
+      "Exxon Mobil Corporation"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      148.91000366210938
+    ],
+    "last": [
+      148.91000366210938
+    ],
+    "open": [
+      149.63999938964844
+    ],
+    "high": [
+      150.3000030517578
+    ],
+    "low": [
+      146.9499969482422
+    ],
+    "volume": [
+      "[13730100]"
+    ],
+    "avgDailyVolume3mnth": [
+      22772412
+    ],
+    "change_pct": [
+      -0.48783462344064166
+    ],
+    "market_cap": [
+      618953244672
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.7700000000000005
+    ],
+    "trailingPE": [
+      22.225374
+    ],
+    "forwardPE": [
+      14.827125
+    ],
+    "beta": [
+      0.288
+    ],
+    "inceptionDate": [
+      "1962-01-02 00:00:00"
+    ]
+  },
+  "CVX": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "CVX"
+    ],
+    "name": [
+      "Chevron Corporation"
+    ],
+    "ISIN": [
+      "ARDEUT110087"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      185.2100067138672
+    ],
+    "last": [
+      185.2100067138672
+    ],
+    "open": [
+      185.22999572753906
+    ],
+    "high": [
+      186.4199981689453
+    ],
+    "low": [
+      183.1999969482422
+    ],
+    "volume": [
+      "[9621800]"
+    ],
+    "avgDailyVolume3mnth": [
+      12674807
+    ],
+    "change_pct": [
+      -0.010791456099412677
+    ],
+    "market_cap": [
+      368919576576
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.84
+    ],
+    "trailingPE": [
+      27.935144
+    ],
+    "forwardPE": [
+      16.045849
+    ],
+    "beta": [
+      0.587
+    ],
+    "inceptionDate": [
+      "1962-01-02 00:00:00"
+    ]
+  },
+  "COP": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "COP"
+    ],
+    "name": [
+      "ConocoPhillips"
+    ],
+    "ISIN": [
+      "US20825C1045"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      121.76000213623047
+    ],
+    "last": [
+      121.76000213623047
+    ],
+    "open": [
+      123.47000122070312
+    ],
+    "high": [
+      124.13999938964844
+    ],
+    "low": [
+      120.48999786376953
+    ],
+    "volume": [
+      "[10967800]"
+    ],
+    "avgDailyVolume3mnth": [
+      9666030
+    ],
+    "change_pct": [
+      -1.3849510549659994
+    ],
+    "market_cap": [
+      148407549952
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.76
+    ],
+    "trailingPE": [
+      19.144653
+    ],
+    "forwardPE": [
+      14.97245
+    ],
+    "beta": [
+      0.192
+    ],
+    "inceptionDate": [
+      "1981-12-31 00:00:00"
+    ]
+  },
+  "EOG": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "EOG"
+    ],
+    "name": [
+      "EOG Resources, Inc."
+    ],
+    "ISIN": [
+      "US26875P1012"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      133.1300048828125
+    ],
+    "last": [
+      133.1300048828125
+    ],
+    "open": [
+      133.3300018310547
+    ],
+    "high": [
+      133.69000244140625
+    ],
+    "low": [
+      131.9499969482422
+    ],
+    "volume": [
+      "[2984900]"
+    ],
+    "avgDailyVolume3mnth": [
+      5349444
+    ],
+    "change_pct": [
+      -0.15000145915816665
+    ],
+    "market_cap": [
+      71319846912
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.06
+    ],
+    "trailingPE": [
+      14.597589
+    ],
+    "forwardPE": [
+      9.490752
+    ],
+    "beta": [
+      0.333
+    ],
+    "inceptionDate": [
+      "1989-10-04 00:00:00"
+    ]
+  },
+  "SLB": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "SLB"
+    ],
+    "name": [
+      "SLB N.V."
+    ],
+    "ISIN": [
+      "AN8068571086"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      56.150001525878906
+    ],
+    "last": [
+      56.150001525878906
+    ],
+    "open": [
+      54.33000183105469
+    ],
+    "high": [
+      56.900001525878906
+    ],
+    "low": [
+      54.02000045776367
+    ],
+    "volume": [
+      "[23290400]"
+    ],
+    "avgDailyVolume3mnth": [
+      18902814
+    ],
+    "change_pct": [
+      3.3498980921880195
+    ],
+    "market_cap": [
+      84288634880
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.1
+    ],
+    "trailingPE": [
+      24.735683
+    ],
+    "forwardPE": [
+      16.810068
+    ],
+    "beta": [
+      0.695
+    ],
+    "inceptionDate": [
+      "1981-12-31 00:00:00"
+    ]
+  },
+  "WMT": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "WMT"
+    ],
+    "name": [
+      "Walmart Inc."
+    ],
+    "ISIN": [
+      "CA93267J1012"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      129.9199981689453
+    ],
+    "last": [
+      129.9199981689453
+    ],
+    "open": [
+      131.94000244140625
+    ],
+    "high": [
+      132.1199951171875
+    ],
+    "low": [
+      129.27999877929688
+    ],
+    "volume": [
+      "[16013000]"
+    ],
+    "avgDailyVolume3mnth": [
+      21863126
+    ],
+    "change_pct": [
+      -1.5310021487668246
+    ],
+    "market_cap": [
+      1035591090176
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.76
+    ],
+    "trailingPE": [
+      47.58974
+    ],
+    "forwardPE": [
+      39.581276
+    ],
+    "beta": [
+      0.661
+    ],
+    "inceptionDate": [
+      "1972-08-25 00:00:00"
+    ]
+  },
+  "HD": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "HD"
+    ],
+    "name": [
+      "The Home Depot, Inc."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      335.8900146484375
+    ],
+    "last": [
+      335.8900146484375
+    ],
+    "open": [
+      337.8800048828125
+    ],
+    "high": [
+      340.2699890136719
+    ],
+    "low": [
+      334.67999267578125
+    ],
+    "volume": [
+      "[3255000]"
+    ],
+    "avgDailyVolume3mnth": [
+      3978626
+    ],
+    "change_pct": [
+      -0.588963598205583
+    ],
+    "market_cap": [
+      334555742208
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.7700000000000005
+    ],
+    "trailingPE": [
+      23.587782
+    ],
+    "forwardPE": [
+      20.601871
+    ],
+    "beta": [
+      1.085
+    ],
+    "inceptionDate": [
+      "1981-09-22 00:00:00"
+    ]
+  },
+  "PG": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "PG"
+    ],
+    "name": [
+      "The Procter & Gamble Company"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      148.17999267578125
+    ],
+    "last": [
+      148.17999267578125
+    ],
+    "open": [
+      152.00999450683594
+    ],
+    "high": [
+      152.4199981689453
+    ],
+    "low": [
+      147.6199951171875
+    ],
+    "volume": [
+      "[13784200]"
+    ],
+    "avgDailyVolume3mnth": [
+      10703019
+    ],
+    "change_pct": [
+      -2.5195723764613764
+    ],
+    "market_cap": [
+      346257129472
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.87
+    ],
+    "trailingPE": [
+      21.920116
+    ],
+    "forwardPE": [
+      20.69157
+    ],
+    "beta": [
+      0.403
+    ],
+    "inceptionDate": [
+      "1962-01-02 00:00:00"
+    ]
+  },
+  "KO": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "KO"
+    ],
+    "name": [
+      "The Coca-Cola Company"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      76.62999725341797
+    ],
+    "last": [
+      76.62999725341797
+    ],
+    "open": [
+      76.70999908447266
+    ],
+    "high": [
+      77.01000213623047
+    ],
+    "low": [
+      76.16999816894531
+    ],
+    "volume": [
+      "[12004300]"
+    ],
+    "avgDailyVolume3mnth": [
+      16882217
+    ],
+    "change_pct": [
+      -0.10429126842589342
+    ],
+    "market_cap": [
+      329827254272
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      2.69
+    ],
+    "trailingPE": [
+      25.207235
+    ],
+    "forwardPE": [
+      22.190369
+    ],
+    "beta": [
+      0.361
+    ],
+    "inceptionDate": [
+      "1962-01-02 00:00:00"
+    ]
+  },
+  "PEP": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "PEP"
+    ],
+    "name": [
+      "PepsiCo, Inc."
+    ],
+    "ISIN": [
+      "US7134481081"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      155.44000244140625
+    ],
+    "last": [
+      155.44000244140625
+    ],
+    "open": [
+      155.92999267578125
+    ],
+    "high": [
+      156.27999877929688
+    ],
+    "low": [
+      154.66000366210938
+    ],
+    "volume": [
+      "[5364900]"
+    ],
+    "avgDailyVolume3mnth": [
+      7423576
+    ],
+    "change_pct": [
+      -0.3142373227668971
+    ],
+    "market_cap": [
+      212477296640
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.66
+    ],
+    "trailingPE": [
+      24.401884
+    ],
+    "forwardPE": [
+      16.982391
+    ],
+    "beta": [
+      0.41
+    ],
+    "inceptionDate": [
+      "1972-06-01 00:00:00"
+    ]
+  },
+  "1081124": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "1081124"
+    ],
+    "name": [
+      "ELBIT SYSTEMS"
+    ],
+    "ISIN": [
+      "IL0010811243"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      251100.0
+    ],
+    "last": [
+      251100.0
+    ],
+    "open": [
+      252000.0
+    ],
+    "high": [
+      254300.0
+    ],
+    "low": [
+      250600.0
+    ],
+    "volume": [
+      "[77092]"
+    ],
+    "avgDailyVolume3mnth": [
+      91214
+    ],
+    "change_pct": [
+      -0.3571428571428559
+    ],
+    "market_cap": [
+      117116198912
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.49
+    ],
+    "trailingPE": [
+      73.52855
+    ],
+    "forwardPE": [
+      295.41174
+    ],
+    "beta": [
+      -0.22
+    ],
+    "inceptionDate": [
+      "2002-08-12 00:00:00"
+    ]
+  },
+  "126.1.CHKP": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "126.1.CHKP"
+    ],
+    "name": [
+      "Check Point Software Technologies Ltd."
+    ],
+    "ISIN": [
+      ""
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      134.6699981689453
+    ],
+    "last": [
+      134.6699981689453
+    ],
+    "open": [
+      133.50999450683594
+    ],
+    "high": [
+      135.07000732421875
+    ],
+    "low": [
+      132.38999938964844
+    ],
+    "volume": [
+      "[639100]"
+    ],
+    "avgDailyVolume3mnth": [
+      1267530
+    ],
+    "change_pct": [
+      0.8688515540684616
+    ],
+    "market_cap": [
+      14037030912
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      13.9989605
+    ],
+    "forwardPE": [
+      11.687314
+    ],
+    "beta": [
+      0.648
+    ],
+    "inceptionDate": [
+      "1996-06-28 00:00:00"
+    ]
+  },
+  "273011": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "273011"
+    ],
+    "name": [
+      "NICE"
+    ],
+    "ISIN": [
+      "IL0002730112"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      28750.0
+    ],
+    "last": [
+      28750.0
+    ],
+    "open": [
+      29300.0
+    ],
+    "high": [
+      29550.0
+    ],
+    "low": [
+      28450.0
+    ],
+    "volume": [
+      "[332628]"
+    ],
+    "avgDailyVolume3mnth": [
+      212184
+    ],
+    "change_pct": [
+      -1.8771331058020424
+    ],
+    "market_cap": [
+      17751248896
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      9.910376
+    ],
+    "forwardPE": [
+      23.623665
+    ],
+    "beta": [
+      0.236
+    ],
+    "inceptionDate": [
+      "2002-08-12 00:00:00"
+    ]
+  },
+  "746016": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "STRS.TA"
+    ],
+    "name": [
+      "\u05de\u05e0\u05d9\u05d9\u05ea \u05e9\u05d8\u05e8\u05d0\u05d5\u05e1"
+    ],
+    "ISIN": [
+      "IL0007460160"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "ILS"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      12660.0
+    ],
+    "last": [
+      12660.0
+    ],
+    "open": [
+      12650.0
+    ],
+    "high": [
+      12840.0
+    ],
+    "low": [
+      12570.0
+    ],
+    "volume": [
+      "[138459]"
+    ],
+    "avgDailyVolume3mnth": [
+      160825
+    ],
+    "change_pct": [
+      0.07905138339920903
+    ],
+    "market_cap": [
+      14827874304
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      1.69
+    ],
+    "trailingPE": [
+      36.589596
+    ],
+    "forwardPE": [
+      24.487427
+    ],
+    "beta": [
+      0.131
+    ],
+    "inceptionDate": [
+      "2007-12-31 00:00:00"
+    ]
+  },
+  "1100007": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "PAZ.TA"
+    ],
+    "name": [
+      "\u05de\u05e0\u05d9\u05d9\u05ea \u05e4\u05d6 \u05d0\u05e0\u05e8\u05d2\u05d9\u05d4"
+    ],
+    "ISIN": [
+      "IL0011000077"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "ILS"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      78560.0
+    ],
+    "last": [
+      78560.0
+    ],
+    "open": [
+      78900.0
+    ],
+    "high": [
+      79750.0
+    ],
+    "low": [
+      78050.0
+    ],
+    "volume": [
+      "[11290]"
+    ],
+    "avgDailyVolume3mnth": [
+      19682
+    ],
+    "change_pct": [
+      -0.43092522179974946
+    ],
+    "market_cap": [
+      8454674432
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      6.75
+    ],
+    "trailingPE": [
+      15.174811
+    ],
+    "forwardPE": [
+      0.0
+    ],
+    "beta": [
+      0.487
+    ],
+    "inceptionDate": [
+      "2006-12-07 00:00:00"
+    ]
+  },
+  "695437": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "MZTF.TA"
+    ],
+    "name": [
+      "\u05de\u05e0\u05d9\u05d9\u05ea \u05de\u05d6\u05e8\u05d7\u05d9 \u05d8\u05e4\u05d7\u05d5\u05ea"
+    ],
+    "ISIN": [
+      "IL0006954379"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "ILS"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      23530.0
+    ],
+    "last": [
+      23530.0
+    ],
+    "open": [
+      24000.0
+    ],
+    "high": [
+      24090.0
+    ],
+    "low": [
+      23470.0
+    ],
+    "volume": [
+      "[515953]"
+    ],
+    "avgDailyVolume3mnth": [
+      457626
+    ],
+    "change_pct": [
+      -1.9583333333333286
+    ],
+    "market_cap": [
+      61189373952
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      4.39
+    ],
+    "trailingPE": [
+      11.088596
+    ],
+    "forwardPE": [
+      11.461276
+    ],
+    "beta": [
+      0.235
+    ],
+    "inceptionDate": [
+      "2000-02-01 00:00:00"
+    ]
+  },
+  "1119478": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "AZRG.TA"
+    ],
+    "name": [
+      "\u05de\u05e0\u05d9\u05d9\u05ea \u05e2\u05d6\u05e8\u05d9\u05d0\u05dc\u05d9 \u05e7\u05d1\u05d5\u05e6\u05d4"
+    ],
+    "ISIN": [
+      "IL0011194789"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "ILS"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      45180.0
+    ],
+    "last": [
+      45180.0
+    ],
+    "open": [
+      45910.0
+    ],
+    "high": [
+      46290.0
+    ],
+    "low": [
+      45120.0
+    ],
+    "volume": [
+      "[114807]"
+    ],
+    "avgDailyVolume3mnth": [
+      116357
+    ],
+    "change_pct": [
+      -1.5900675234153727
+    ],
+    "market_cap": [
+      56232865792
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      1.51
+    ],
+    "trailingPE": [
+      29.073359
+    ],
+    "forwardPE": [
+      38.483814
+    ],
+    "beta": [
+      0.537
+    ],
+    "inceptionDate": [
+      "2010-11-09 00:00:00"
+    ]
+  },
+  "126.1.FSLR": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "126.1.FSLR"
+    ],
+    "name": [
+      "First Solar, Inc."
+    ],
+    "ISIN": [
+      ""
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      193.75999450683594
+    ],
+    "last": [
+      193.75999450683594
+    ],
+    "open": [
+      197.24000549316406
+    ],
+    "high": [
+      197.69000244140625
+    ],
+    "low": [
+      190.00999450683594
+    ],
+    "volume": [
+      "[1506400]"
+    ],
+    "avgDailyVolume3mnth": [
+      2303431
+    ],
+    "change_pct": [
+      -1.7643535233265562
+    ],
+    "market_cap": [
+      20819658752
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      13.64507
+    ],
+    "forwardPE": [
+      7.9654117
+    ],
+    "beta": [
+      1.607
+    ],
+    "inceptionDate": [
+      "2006-11-17 00:00:00"
+    ]
+  },
+  "1101534": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "CEL.TA"
+    ],
+    "name": [
+      "\u05de\u05e0\u05d9\u05d9\u05ea \u05e1\u05dc\u05e7\u05d5\u05dd"
+    ],
+    "ISIN": [
+      "IL0011015349"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "ILS"
+    ],
+    "exchange": [
+      "TLV"
+    ],
+    "price": [
+      3482.0
+    ],
+    "last": [
+      3482.0
+    ],
+    "open": [
+      3450.0
+    ],
+    "high": [
+      3549.0
+    ],
+    "low": [
+      3450.0
+    ],
+    "volume": [
+      "[164163]"
+    ],
+    "avgDailyVolume3mnth": [
+      272844
+    ],
+    "change_pct": [
+      0.927536231884063
+    ],
+    "market_cap": [
+      5861685760
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      6.83
+    ],
+    "trailingPE": [
+      10.519637
+    ],
+    "forwardPE": [
+      31.089285
+    ],
+    "beta": [
+      0.638
+    ],
+    "inceptionDate": [
+      "2007-11-19 00:00:00"
+    ]
+  },
+  "ASML": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "ASML"
+    ],
+    "name": [
+      "ASML Holding N.V."
+    ],
+    "ISIN": [
+      "USN070592100"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "EUR"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      1457.699951171875
+    ],
+    "last": [
+      1457.699951171875
+    ],
+    "open": [
+      1459.530029296875
+    ],
+    "high": [
+      1472.6500244140625
+    ],
+    "low": [
+      1441.68994140625
+    ],
+    "volume": [
+      "[1750700]"
+    ],
+    "avgDailyVolume3mnth": [
+      1812668
+    ],
+    "change_pct": [
+      -0.1253881789524791
+    ],
+    "market_cap": [
+      561823285248
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.6
+    ],
+    "trailingPE": [
+      48.077175
+    ],
+    "forwardPE": [
+      30.721357
+    ],
+    "beta": [
+      1.382
+    ],
+    "inceptionDate": [
+      "1995-03-15 00:00:00"
+    ]
+  },
+  "SAP": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "SAP"
+    ],
+    "name": [
+      "SAP SE"
+    ],
+    "ISIN": [
+      "US8030542042"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "EUR"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      175.25999450683594
+    ],
+    "last": [
+      175.25999450683594
+    ],
+    "open": [
+      175.10000610351562
+    ],
+    "high": [
+      175.8300018310547
+    ],
+    "low": [
+      171.55999755859375
+    ],
+    "volume": [
+      "[6846400]"
+    ],
+    "avgDailyVolume3mnth": [
+      3530920
+    ],
+    "change_pct": [
+      0.09136973029328921
+    ],
+    "market_cap": [
+      206619672576
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      1.69
+    ],
+    "trailingPE": [
+      23.975376
+    ],
+    "forwardPE": [
+      17.622871
+    ],
+    "beta": [
+      0.762
+    ],
+    "inceptionDate": [
+      "1995-09-18 00:00:00"
+    ]
+  },
+  "NESN.SW": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "NESN.SW"
+    ],
+    "name": [
+      "Nestl\u00e9 S.A."
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "CHF"
+    ],
+    "exchange": [
+      "EBS"
+    ],
+    "price": [
+      81.16999816894531
+    ],
+    "last": [
+      81.16999816894531
+    ],
+    "open": [
+      80.0
+    ],
+    "high": [
+      81.4000015258789
+    ],
+    "low": [
+      79.47000122070312
+    ],
+    "volume": [
+      "[5711915]"
+    ],
+    "avgDailyVolume3mnth": [
+      4005776
+    ],
+    "change_pct": [
+      1.4624977111816317
+    ],
+    "market_cap": [
+      208787079168
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.82
+    ],
+    "trailingPE": [
+      23.125355
+    ],
+    "forwardPE": [
+      17.333572
+    ],
+    "beta": [
+      0.516
+    ],
+    "inceptionDate": [
+      "1990-01-03 00:00:00"
+    ]
+  },
+  "ROG.SW": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "ROG.SW"
+    ],
+    "name": [
+      "Roche Holding AG"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "CHF"
+    ],
+    "exchange": [
+      "EBS"
+    ],
+    "price": [
+      322.0
+    ],
+    "last": [
+      322.0
+    ],
+    "open": [
+      326.70001220703125
+    ],
+    "high": [
+      326.70001220703125
+    ],
+    "low": [
+      319.70001220703125
+    ],
+    "volume": [
+      "[1021771]"
+    ],
+    "avgDailyVolume3mnth": [
+      0
+    ],
+    "change_pct": [
+      -1.4386323940670187
+    ],
+    "market_cap": [
+      256427556864
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.030299999000000005
+    ],
+    "trailingPE": [
+      20.106049
+    ],
+    "forwardPE": [
+      14.823842
+    ],
+    "beta": [
+      0.211
+    ],
+    "inceptionDate": [
+      "1995-04-03 00:00:00"
+    ]
+  },
+  "NOVN.SW": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "NOVN.SW"
+    ],
+    "name": [
+      "Novartis AG"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "exchange": [
+      "EBS"
+    ],
+    "price": [
+      113.69999694824219
+    ],
+    "last": [
+      113.69999694824219
+    ],
+    "open": [
+      116.19999694824219
+    ],
+    "high": [
+      116.19999694824219
+    ],
+    "low": [
+      113.31999969482422
+    ],
+    "volume": [
+      "[3792959]"
+    ],
+    "avgDailyVolume3mnth": [
+      3279655
+    ],
+    "change_pct": [
+      -2.1514630513403077
+    ],
+    "market_cap": [
+      216956846080
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.25
+    ],
+    "trailingPE": [
+      20.231318
+    ],
+    "forwardPE": [
+      14.710693
+    ],
+    "beta": [
+      0.522
+    ],
+    "inceptionDate": [
+      "1995-04-03 00:00:00"
+    ]
+  },
+  "TSM": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "TSM"
+    ],
+    "name": [
+      "Taiwan Semiconductor Manufacturing Company Limited"
+    ],
+    "ISIN": [
+      "US8740391003"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "TWD"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      402.4599914550781
+    ],
+    "last": [
+      402.4599914550781
+    ],
+    "open": [
+      396.1400146484375
+    ],
+    "high": [
+      409.489990234375
+    ],
+    "low": [
+      393.8500061035156
+    ],
+    "volume": [
+      "[21574200]"
+    ],
+    "avgDailyVolume3mnth": [
+      13456068
+    ],
+    "change_pct": [
+      1.5953896533904555
+    ],
+    "market_cap": [
+      2087318585344
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.8699999999999999
+    ],
+    "trailingPE": [
+      34.486717
+    ],
+    "forwardPE": [
+      20.861303
+    ],
+    "beta": [
+      1.251
+    ],
+    "inceptionDate": [
+      "1997-10-09 00:00:00"
+    ]
+  },
+  "BABA": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "BABA"
+    ],
+    "name": [
+      "Alibaba Group Holding Limited"
+    ],
+    "ISIN": [
+      "-"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "CNY"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      135.82000732421875
+    ],
+    "last": [
+      135.82000732421875
+    ],
+    "open": [
+      133.67999267578125
+    ],
+    "high": [
+      136.1999969482422
+    ],
+    "low": [
+      133.0
+    ],
+    "volume": [
+      "[9017300]"
+    ],
+    "avgDailyVolume3mnth": [
+      10665874
+    ],
+    "change_pct": [
+      1.6008488672106358
+    ],
+    "market_cap": [
+      335146942464
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.77
+    ],
+    "trailingPE": [
+      23.911974
+    ],
+    "forwardPE": [
+      18.308727
+    ],
+    "beta": [
+      0.489
+    ],
+    "inceptionDate": [
+      "2014-09-19 00:00:00"
+    ]
+  },
+  "JD": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "JD"
+    ],
+    "name": [
+      "JD.com, Inc."
+    ],
+    "ISIN": [
+      "US47215P1066"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "CNY"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      30.270000457763672
+    ],
+    "last": [
+      30.270000457763672
+    ],
+    "open": [
+      30.149999618530273
+    ],
+    "high": [
+      30.389999389648438
+    ],
+    "low": [
+      30.030000686645508
+    ],
+    "volume": [
+      "[3830200]"
+    ],
+    "avgDailyVolume3mnth": [
+      10259949
+    ],
+    "change_pct": [
+      0.3980127388115928
+    ],
+    "market_cap": [
+      41343393792
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      3.3000000000000003
+    ],
+    "trailingPE": [
+      16.015873
+    ],
+    "forwardPE": [
+      7.233012
+    ],
+    "beta": [
+      0.373
+    ],
+    "inceptionDate": [
+      "2014-05-22 00:00:00"
+    ]
+  },
+  "NIO": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "NIO"
+    ],
+    "name": [
+      "NIO Inc."
+    ],
+    "ISIN": [
+      "US62914V1061"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "CNY"
+    ],
+    "exchange": [
+      "NYQ"
+    ],
+    "price": [
+      6.210000038146973
+    ],
+    "last": [
+      6.210000038146973
+    ],
+    "open": [
+      6.239999771118164
+    ],
+    "high": [
+      6.28000020980835
+    ],
+    "low": [
+      6.110000133514404
+    ],
+    "volume": [
+      "[18831500]"
+    ],
+    "avgDailyVolume3mnth": [
+      44052033
+    ],
+    "change_pct": [
+      -0.4807649690957594
+    ],
+    "market_cap": [
+      15560193024
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      0.0
+    ],
+    "forwardPE": [
+      -294.8243
+    ],
+    "beta": [
+      0.991
+    ],
+    "inceptionDate": [
+      "2018-09-12 00:00:00"
+    ]
+  },
+  "BIDU": {
+    "dates": [
+      "2026-04-24"
+    ],
+    "indicator": [
+      "BIDU"
+    ],
+    "name": [
+      "Baidu, Inc."
+    ],
+    "ISIN": [
+      "US0567521085"
+    ],
+    "quoteType": [
+      "STOCK"
+    ],
+    "currency": [
+      "CNY"
+    ],
+    "exchange": [
+      "NMS"
+    ],
+    "price": [
+      128.7100067138672
+    ],
+    "last": [
+      128.7100067138672
+    ],
+    "open": [
+      123.94999694824219
+    ],
+    "high": [
+      129.00999450683594
+    ],
+    "low": [
+      121.97000122070312
+    ],
+    "volume": [
+      "[3520900]"
+    ],
+    "avgDailyVolume3mnth": [
+      2202404
+    ],
+    "change_pct": [
+      3.8402661418480255
+    ],
+    "market_cap": [
+      43793924096
+    ],
+    "expense_rate": [
+      0.0
+    ],
+    "dividendYield": [
+      0.0
+    ],
+    "trailingPE": [
+      74.8314
+    ],
+    "forwardPE": [
+      13.847098
+    ],
+    "beta": [
+      0.431
+    ],
+    "inceptionDate": [
+      "2005-08-05 00:00:00"
+    ]
+  }
+}

@@ -7,9 +7,9 @@
 from enum import Enum
 
 class E_FetchMode(Enum):
-    NULL        = -1
-    METADATA    = 0
-    ANALYSIS    = 1
+    ALL         = "all"
+    PRICE       = "price"
+    INFO        = "info"
 
 class E_FetchType(Enum):
     NULL            = -1 # Undefined fetch type

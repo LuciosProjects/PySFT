@@ -13,6 +13,7 @@ from datetime import timedelta
 import pysft.core.constants as const
 import pysft.core.utilities as utils
 import pysft.core.yf_specific_utils as yf_utils
+from pysft.core.enums import E_FetchMode
 from pysft.core.structures import indicatorRequest
 
 from pysft.tools.logger import get_logger
@@ -32,19 +33,20 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
         None: The function updates the request object in place.
     """
 
-    # Parse the target dates
-    try:
-        target_dates = pd.to_datetime([pd.Timestamp(d) for d in pd.date_range(start=container.start_date, end=container.end_date)],format=const.YFINANCE_DATE_FORMAT)
-    except Exception as e:
-        message = f"Could not parse date range: {str(e)}"
-        container.message = message
-        container.success = False
-
-        logger.error(container.message)
-        return
-
     for request in container.requests:
         request.success = False  # Placeholder for actual success status
+
+    if container.mode != E_FetchMode.INFO:
+        # Parse the target dates (only required for price/all modes)
+        try:
+            target_dates = pd.to_datetime([pd.Timestamp(d) for d in pd.date_range(start=container.start_date, end=container.end_date)],format=const.YFINANCE_DATE_FORMAT)
+        except Exception as e:
+            message = f"Could not parse date range: {str(e)}"
+            container.message = message
+            container.success = False
+
+            logger.error(container.message)
+            return
 
     remaining_requests = [req for req in container.requests if not req.success]
 
@@ -62,81 +64,93 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
         except Exception as e:
             # Handle exception for Tickers creation
             message = f"Failed to create Ticker objects: {str(e)}"
-            container.message = message
             container.message = utils.add_attempt2msg(message, attempt)
             container.success = False
 
             logger.warning(container.message)
             continue
 
-        try:
-            # Try to get data around the target date (look back and forward)
-            # Note: the date spans for all requests are assumed to be the same
-            start_date = container.start_date - timedelta(days=const.INITIAL_DAYS_HALF_SPAN + attempt*const.HALF_SPAN_INCREMENT)
-            end_date = container.end_date + timedelta(days=const.INITIAL_DAYS_HALF_SPAN + attempt*const.HALF_SPAN_INCREMENT)
+        if container.mode == E_FetchMode.INFO:
+            for request in remaining_requests:
+                try:
+                    ticker = tckrs.get(request.indicator)
+                    if ticker is None:
+                        ticker = yf.Ticker(request.indicator)
 
-            response = yf.download(
-                remaining_tickers, 
-                start=start_date.strftime(const.YFINANCE_DATE_FORMAT), 
-                end=end_date.strftime(const.YFINANCE_DATE_FORMAT),
-                ignore_tz=True,
-                progress=False,  # Suppress progress bar
-                timeout=int(const.YF_API_CALL_TIMEOUT.seconds()) * N_tckrs,
-                auto_adjust=True,  # Explicitly set to avoid warnings
-                threads=True  # Enable multithreading for better performance
-            )
+                    yf_utils.extract_info_data(request, ticker, fetch_inception_history=False)
+                except Exception as e:
+                    request.success = False
+                    request.message = f"{request.indicator} - Failed to extract metadata from yfinance: {str(e)}"
+                    logger.warning(request.message)
+        else:
+            try:
+                # Try to get data around the target date (look back and forward)
+                # Note: the date spans for all requests are assumed to be the same
+                start_date = container.start_date - timedelta(days=const.INITIAL_DAYS_HALF_SPAN + attempt*const.HALF_SPAN_INCREMENT)
+                end_date = container.end_date + timedelta(days=const.INITIAL_DAYS_HALF_SPAN + attempt*const.HALF_SPAN_INCREMENT)
 
-            if response is None or response.empty:
-                container.message = utils.add_attempt2msg("No data returned from yfinance", attempt)
-                container.success = False
+                response = yf.download(
+                    remaining_tickers, 
+                    start=start_date.strftime(const.YFINANCE_DATE_FORMAT), 
+                    end=end_date.strftime(const.YFINANCE_DATE_FORMAT),
+                    ignore_tz=True,
+                    progress=False,  # Suppress progress bar
+                    timeout=int(const.YF_API_CALL_TIMEOUT.seconds()) * N_tckrs,
+                    auto_adjust=True,  # Explicitly set to avoid warnings
+                    threads=True  # Enable multithreading for better performance
+                )
 
-                logger.warning(container.message)
-                continue  # Try next attempt
+                if response is None or response.empty:
+                    container.message = utils.add_attempt2msg("No data returned from yfinance", attempt)
+                    container.success = False
 
-            if not all(col in response for col in const.YF_REQUIRED_DATAFRAME_COLUMNS):
-                container.message = utils.add_attempt2msg("Incomplete data returned from yfinance", attempt)
-                container.success = False
+                    logger.warning(container.message)
+                    continue  # Try next attempt
 
-                logger.warning(container.message)
-                continue  # Try next attempt
-            
-            # Get all indicators names from response
-            allSymbols = response["Close"].columns.tolist()
+                if not all(col in response for col in const.YF_REQUIRED_DATAFRAME_COLUMNS):
+                    container.message = utils.add_attempt2msg("Incomplete data returned from yfinance", attempt)
+                    container.success = False
 
-            for symbol in allSymbols:
-                data = response.xs(symbol, level=1, axis=1)
-
-                if isinstance(data, Series):
-                    data = data.to_frame()
+                    logger.warning(container.message)
+                    continue  # Try next attempt
                 
-                matched_request = None
-                for req in remaining_requests:
-                    if req.indicator == symbol:
-                        matched_request = req
-                        break
+                # Get all indicators names from response
+                allSymbols = response["Close"].columns.tolist()
 
-                if matched_request is None:
-                    continue
+                for symbol in allSymbols:
+                    data = response.xs(symbol, level=1, axis=1)
 
-                # Try to find data for target dates
-                closest_dates = yf_utils.find_closest_date(data["Close"], target_dates)
+                    if isinstance(data, Series):
+                        data = data.to_frame()
+                    
+                    matched_request = None
+                    for req in remaining_requests:
+                        if req.indicator == symbol:
+                            matched_request = req
+                            break
 
-                if closest_dates is not None:
-                    # Successfully found data for target dates
-                    process_successful_request(matched_request, data, closest_dates, tckrs[symbol])
-                else:
-                    # No data for target dates - try inception date approach (if we got here, it means the fetching attempt has failed)
-                    try_inception_date(matched_request, tckrs[symbol])
+                    if matched_request is None:
+                        continue
 
-            remaining_requests = [req for req in container.requests if not req.success]
+                    # Try to find data for target dates
+                    closest_dates = yf_utils.find_closest_date(data["Close"], target_dates)
 
-        except Exception as e:
-            # Log the error and continue to next attempt
-            container.message = utils.add_attempt2msg(f"Error during data fetch: {str(e)}", attempt)
-            container.success = False
+                    if closest_dates is not None:
+                        # Successfully found data for target dates
+                        process_successful_request(matched_request, data, closest_dates, tckrs[symbol])
+                    else:
+                        # No data for target dates - try inception date approach (if we got here, it means the fetching attempt has failed)
+                        try_inception_date(matched_request, tckrs[symbol])
 
-            logger.warning(container.message)
-            continue
+            except Exception as e:
+                # Log the error and continue to next attempt
+                container.message = utils.add_attempt2msg(f"Error during data fetch: {str(e)}", attempt)
+                container.success = False
+
+                logger.warning(container.message)
+                continue
+
+        remaining_requests = [req for req in container.requests if not req.success]
 
     if remaining_requests:
         container.message = "YFinance fetch completed with some failures."
@@ -176,10 +190,13 @@ def process_successful_request(request: indicatorRequest, data: pd.DataFrame, cl
         request.data.change_pct = [((valid_data["Close"][valid_data.index[i_ts]] / valid_data["Close"][valid_data.index[i_ts-1]]) - 1.0)*100.0 for i_ts in range(i_start, i_end+1)]
     else:
         # Try to aquire change_pct from close/open of the same day
-        request.data.change_pct = (request.data.price/request.data.open - 1.0) * 100.0
+        if isinstance(request.data.open, float) and isinstance(request.data.price, float):
+            request.data.change_pct = (request.data.price/request.data.open - 1.0) * 100.0
+        else:
+            request.data.change_pct = 0.0  # No change percentage if we only have one date and can't calculate it from open price
 
-    # Extract additional info data
-    yf_utils.extract_info_data(request, tckr)
+    if request.mode != E_FetchMode.PRICE:
+        yf_utils.extract_info_data(request, tckr)
 
 
 def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
@@ -208,8 +225,8 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
 
             request.data.change_pct = 0.0  # No change percentage for inception date
 
-            # Extract additional info data
-            yf_utils.extract_info_data(request, tckr)
+            if request.mode != E_FetchMode.PRICE:
+                yf_utils.extract_info_data(request, tckr)
 
             temp = request.message
             request.message = f"{request.indicator} - Data fetched from inception date {inception_date.date()}, {temp.replace(request.indicator + ' - ', '')} (yfinance)."

@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-04-25T10:03:22.880810",
+  "success": true,
+  "calls": {
+    "yf_download": 0,
+    "biz_graph": 0,
+    "maya_graph": 0
+  },
+  "attrs": [
+    "ISIN",
+    "beta",
+    "currency",
+    "dividendYield",
+    "exchange",
+    "expense_rate",
+    "forwardPE",
+    "inceptionDate",
+    "indicator",
+    "market_cap",
+    "name",
+    "quoteType",
+    "trailingPE"
+  ],
+  "shape": [
+    1,
+    39
+  ],
+  "violations": []
+}
