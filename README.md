@@ -434,7 +434,6 @@ Proprietary - See [LICENSE](LICENSE) file
 ## 🔗 Links
 
 - **Repository**: https://github.com/LuciosProjects/PySFT
-- **PyPI**: https://pypi.org/project/pysft/
 - **Data Sources**: 
   - [Yahoo Finance](https://finance.yahoo.com/)
   - [TASE - Tel Aviv Stock Exchange](https://www.tase.co.il/)
