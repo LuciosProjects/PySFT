@@ -4,9 +4,9 @@ from typing import Literal
 import random
 
 MYPORTFOLIO = [ # TASE indicators
-                "5138094", "1144633", "5111422", "5117379", "1159094", "1159169", "1186063", "1183441",
+                "5138094", "1144633", "5111422", "5117379", "1159094", "1159169", "1186063", "1183441", "5142088",
                 # US symbols
-               "GOOG", "NVDA", "IBIT", "DGRO", "JEPI", "SCHD", "IAU", "O"]
+               "GOOG", "NVDA", "IBIT", "DGRO", "JEPI", "SCHD", "IAU", "O", "DTCR"]
 
 US_SYMBOLS = ["GOOG", "SCHD", "NVDA", "VOO", "DGRO", "JEPI", "IBIT", "IAU"]
 EUROPEAN_SYMBOLS = ['ASML', 'SAP', 'NESN.SW', 'ROG.SW', 'NOVN.SW', 'MC.PA', 'OR.PA', 'SAN.PA', 'INGA.AS', 'SIE.DE']

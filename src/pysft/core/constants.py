@@ -49,13 +49,32 @@ CURRENCY_NORMALIZATION = {
     "ILA": {"factor": 0.01, "alias": "ILS"},    # Israeli Agora (1 ILS = 100 ILA)
 }
 
+NUMERIC_SCALE_FACTORS = {
+    "thousand": 1e3,
+    "million": 1e6,
+    "m": 1e6,  # abbreviation for million
+    "M": 1e6,  # abbreviation for million
+    "billion": 1e9,
+    "bn": 1e9, # abbreviation for billion
+    "b": 1e9,  # abbreviation for billion
+    "B": 1e9,  # abbreviation for billion
+}
+
+CURRENCIES_SYM2CODE = {
+    "$": "USD",
+    "€": "EUR",
+    "₪": "ILS",
+    "¥": "JPY",
+    "£": "GBP",
+}
+
 # YFinance-specific constants
 YF_REQUIRED_DATAFRAME_COLUMNS = ["Open", "High", "Low", "Close", "Volume"]
 YFINANCE_DATE_FORMAT = "%Y-%m-%d"
 YF_API_CALL_TIMEOUT = CTimeRepr(20)  # seconds
 
 # TASE specific constants
-USE_INTERNATIONAL_VAULT = False
+USE_INTERNATIONAL_VAULT = True
 SKIP_BIZPORTAL          = False
 SKIP_THEMARKER          = True
 SKIP_TASE               = False
@@ -113,4 +132,5 @@ IMMUTABLE_FIELD_NAMES = frozenset({
     "ISIN",          # International Securities ID (never changes)
     "inceptionDate", # First issue date (never changes)
     "quoteType",     # Type classification (rarely changes)
+    "exchange",      # Exchange market code should remain stable once resolved
 })

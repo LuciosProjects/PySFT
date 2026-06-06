@@ -68,8 +68,20 @@ class fetchTask:
         
     def execute(self):
         """Execute the fetch function synchronously."""
-        self.fetchFcn(self.data)
-        self.prepare_results()
+        try:
+            self.fetchFcn(self.data)
+        except Exception as e:
+            from pysft.tools.logger import get_logger
+            get_logger(__name__).error(f"Unhandled exception in {self.fetch_type} fetch: {e}")
+            if isinstance(self.data, indicatorRequest):
+                self.data.success = False
+                self.data.message = str(e)
+            elif hasattr(self.data, 'requests'):
+                for req in self.data.requests:
+                    req.success = False
+                    req.message = str(e)
+        finally:
+            self.prepare_results()
 
     # async def execute_async(self) -> indicatorRequest | list[indicatorRequest]:
     #     """Execute the fetch function asynchronously.

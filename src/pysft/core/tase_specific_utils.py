@@ -1,4 +1,5 @@
 import os
+import threading
 from dotenv import load_dotenv
 
 from typing import Any, Callable, Literal
@@ -8,6 +9,7 @@ import numpy as np
 from dataclasses import dataclass
 from datetime import date
 import json
+from contextlib import contextmanager
 
 import requests
 from bs4 import BeautifulSoup
@@ -39,7 +41,21 @@ logger = get_logger(__name__)
 
 TASE_CALENDAR = exchange_calendars.get_calendar("XTAE")
 
-TASE_SECURITY_DB = sqlite3.connect(os.path.join(os.path.dirname(__file__), '../data/tase_security_list.db'))
+TASE_SECURITY_DB_PATH = os.path.join(os.path.dirname(__file__), '../data/tase_security_list.db')
+
+@contextmanager
+def get_tase_security_db_connection():
+    """
+    Context manager for thread-safe database access.
+    Creates a new connection per call and properly closes it.
+    """
+    conn = None
+    try:
+        conn = sqlite3.connect(TASE_SECURITY_DB_PATH)
+        yield conn
+    finally:
+        if conn:
+            conn.close()
 
 TASE_DATAHUB_API_HEADERS = {
     'accept': "application/json",
@@ -152,8 +168,8 @@ def get_element_by_path(soup: BeautifulSoup, path: str) -> BeautifulSoup | None:
 
         if current_element is None:
             return None
-        
-    return current_element
+    
+    return current_element if isinstance(current_element, BeautifulSoup) else None
 
 def get_tase_mtf_listing():
     """
@@ -243,24 +259,28 @@ def get_tase_company_listings():
 def find_YF_equivalent(requests: dict[str, dict[str, Any]]) -> bool:
     '''
     For a given TASE indicator request, find its equivalent yfinance ticker using the local TASE security database.
+    Thread-safe: creates and closes connection per call.
     '''
 
-    if TASE_SECURITY_DB is not None:
-        for req in requests.values():
-            # lookup security info from local TASE security list database
-            dataPt = TASE_SECURITY_DB.execute(f'''
-                SELECT isin, symbol
-                FROM security_list
-                WHERE indicator = ?
-            ''', (req[const.REQUEST_FIELD].indicator,))
-                
-            row = dataPt.fetchall()
-            if row.__len__() > 0:
-                row = row[0]
-                # If found, set request to YFINANCE (prefer yfinance over TASE if possible)
-                req[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
-                req[const.REQUEST_FIELD].data.ISIN = row[0]
-                req[const.REQUEST_FIELD].indicator = req[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
+    try:
+        with get_tase_security_db_connection() as conn:
+            for req in requests.values():
+                # lookup security info from local TASE security list database
+                dataPt = conn.execute(f'''
+                    SELECT isin, symbol
+                    FROM security_list
+                    WHERE indicator = ?
+                ''', (req[const.REQUEST_FIELD].indicator,))
+                    
+                row = dataPt.fetchall()
+                if row.__len__() > 0:
+                    row = row[0]
+                    # If found, set request to YFINANCE (prefer yfinance over TASE if possible)
+                    req[const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
+                    req[const.REQUEST_FIELD].data.ISIN = row[0]
+                    req[const.REQUEST_FIELD].indicator = req[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
+    except Exception as e:
+        logger.warning(f"Failed to lookup TASE security database: {str(e)}")
 
     return any([req[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for req in requests.values()])
 
@@ -282,9 +302,16 @@ def get_TASE_globals(type: Literal["MTF", "SECURITY", "COMPANY"]) -> list | None
     else:
         return None
 
-def tase_determine_quote_type(data: _indicator_data, session: requests.Session, url: str, timeout: float = 10) -> bool:
-    """
-    Determine the quote type of a TASE indicator by inspecting the final URL after redirects.
+
+def infer_tase_quote_type_from_url(
+    session: requests.Session,
+    url: str,
+    timeout: float = 10,
+) -> str | None:
+    """Infer TASE quote type from a URL by following redirects.
+
+    Returns an uppercase quote type (e.g. ``MTF``, ``ETF``, ``STOCK``)
+    when resolution succeeds, otherwise ``None``.
     """
 
     real_url = url
@@ -293,24 +320,47 @@ def tase_determine_quote_type(data: _indicator_data, session: requests.Session, 
             head_response = session.head(url, allow_redirects=True, timeout=timeout)
             head_response.raise_for_status()
             real_url = head_response.url
-            break # Successful HEAD request, exit loop
+            break
         except Exception as e:
-            if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to perform HEAD request for {url}: {str(e)}", 
-                                                    utils.random_delay, (0.2, 1)):
+            if utils.handle_fetch_attempt_failure(
+                attempt,
+                const.MAX_ATTEMPTS,
+                f"Failed to perform HEAD request for {url}: {str(e)}",
+                utils.random_delay,
+                (0.2, 1),
+            ):
                 continue
-            else:
-                return False
+            return None
 
-    final_url = real_url
-    url_segments = final_url.split('/')
-
-    for segment in url_segments:
+    for segment in real_url.split('/'):
         if segment in const.THEMARKER_QUOTE_TYPES:
-            data.quoteType = segment.upper()
-            return True
-    logger.warning(f"Could not determine quote type from URL: {final_url}")
-    return False
+            return segment.upper()
+
+    logger.warning(f"Could not determine quote type from URL: {real_url}")
+    return None
+
+
+# def infer_tase_quote_type_for_indicator(indicator: str, timeout: float = 10) -> str | None:
+#     """Infer TASE quote type for an indicator using TheMarker redirects."""
+
+#     with requests.Session() as session:
+#         return infer_tase_quote_type_from_url(
+#             session,
+#             TASE_URLS.THEMARKER(indicator),
+#             timeout=timeout,
+#         )
+
+# def tase_determine_quote_type(data: _indicator_data, session: requests.Session, url: str, timeout: float = 10) -> bool:
+#     """
+#     Determine the quote type of a TASE indicator by inspecting the final URL after redirects.
+#     """
+
+#     quote_type = infer_tase_quote_type_from_url(session, url, timeout=timeout)
+#     if not quote_type:
+#         return False
+
+#     data.quoteType = quote_type
+#     return True
 
     
 # Bizportal routines
@@ -393,10 +443,11 @@ def get_Bizportal_dividend_data(data: _indicator_data, session: requests.Session
                         mostRecentDate = event_date
                         date18M_Ago = mostRecentDate - pd.DateOffset(months=19) # use 19 months to be safe
 
-                    if payment_idx != -1 and pay_day_idx != -1 and event_date >= date18M_Ago:
-                        acc_amount += float(contents[payment_idx].replace(",", ""))
-                    elif event_date < date18M_Ago:
-                        break  # No need to check older rows
+                    if date18M_Ago:
+                        if payment_idx != -1 and pay_day_idx != -1 and event_date >= date18M_Ago:
+                            acc_amount += float(contents[payment_idx].replace(",", ""))
+                        elif event_date < date18M_Ago:
+                            break  # No need to check older rows
 
             data.dividendYield = acc_amount/current_price * 100.0
 
@@ -465,7 +516,9 @@ def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session 
         # Extract name as well
         paper_top_title = soup.find("div", class_="paper_top_title")
         if paper_top_title:
-            data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+            temp = paper_top_title.find("h1", class_="paper_h1")
+            if temp:
+                data.name = temp.get_text(strip=True)
 
     except Exception as e:
         logger.error(f"Error parsing Bizportal expense rate content for {data.indicator}: {str(e)}")
@@ -521,7 +574,8 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
             value = dd.get_text(strip=True)
             pairs[key] = value
 
-        data.currency = "ILA" # Default currency, most if not all TASE funds are traded in ILA
+        data.currency = TASE_CURRENCY_MAP[pairs["מטבע"]]
+        # data.currency = "ILA" # Default currency, most if not all TASE funds are traded in ILA
 
         if data.quoteType == "MTF" and TASE_MTF_LISTING is not None:
             fund = [res for res in TASE_MTF_LISTING if str(res.get("fundId", "")) == data.indicator]
@@ -535,12 +589,16 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
                 # fund not found in listing - fallback to HTML extraction, ISIN won't be available in this case
                 paper_top_title = soup.find("div", class_="paper_top_title")
                 if paper_top_title:
-                    data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+                    temp = paper_top_title.find("h1", class_="paper_h1")
+                    if temp:
+                        data.name = temp.get_text(strip=True)
         elif data.quoteType != "STOCK":
             # quote type is not MTF or TASE_MTF_LISTING is not available, extract the name from the HTML as a fallback, ISIN won't be available in this case
             paper_top_title = soup.find("div", class_="paper_top_title")
             if paper_top_title:
-                data.name = paper_top_title.find("h1", class_="paper_h1").get_text(strip=True)
+                temp = paper_top_title.find("h1", class_="paper_h1")
+                if temp:
+                    data.name = temp.get_text(strip=True)
 
         # Extract fees and inception date
         if data.quoteType != "STOCK":
@@ -778,7 +836,7 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
         
         # Filter data to match requested dates
         data.dates = dates[1:]
-        data.price = list(np.array(closes[1:])/100.0)  # MAYA TASE prices are in agorot
+        data.price = list(np.array(closes[1:])/100.0)  # MAYA TASE prices are in agorot (mostly...)
         data.open = list(np.array(opens[1:])/100.0)
         data.high = list(np.array(highs[1:])/100.0)
         data.low = list(np.array(lows[1:])/100.0)

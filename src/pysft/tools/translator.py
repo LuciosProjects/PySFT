@@ -6,7 +6,10 @@ from typing import Optional, Literal
 import asyncio
 
 import requests
-from googletrans import Translator
+try:
+    from googletrans import Translator
+except Exception:
+    Translator = None
 
 TRANSLATOR_TIMEOUT_SECONDS = 6
 TRANSLATOR_MAX_CHUNK_SIZE = 200  # max characters per translation chunk
@@ -21,7 +24,7 @@ class He2En_Translator:
     #     self.timeout = timeout
     #     self._google = None           # lazy googletrans translator
 
-    _google = Translator()
+    _google = Translator() if Translator is not None else None
 
     @staticmethod
     def translate(text: str, source: Literal["google", "mymemory", "both"] = "google") -> str:
@@ -104,6 +107,9 @@ class He2En_Translator:
         Returns:
             str: The translated English text.
         '''
+        if He2En_Translator._google is None:
+            return ""
+
         tr = He2En_Translator._google.translate(text, src='he', dest='en')
 
         if asyncio.iscoroutine(tr):

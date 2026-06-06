@@ -4,6 +4,7 @@ from datetime import date
 from dataclasses import dataclass
 
 from pysft.core.io import _normalize_indicators, _parse_attributes, _resolve_range, _validate_interval
+from pysft.core.enums import E_FetchMode
 from pysft.core.structures import indicatorRequest, outputCls
 
 # if TYPE_CHECKING:
@@ -17,6 +18,7 @@ class _fetchRequest:
     attributes: list[str]
     start_ts: pd.Timestamp | None
     end_ts: pd.Timestamp | None
+    mode: E_FetchMode
     # interval: str
 
     def __init__(self,
@@ -24,7 +26,8 @@ class _fetchRequest:
                  attributes: str | list[str],
                  period: str | None,
                  start_ts: str | None,
-                 end_ts: str | None): # ,
+                 end_ts: str | None,
+                 mode: E_FetchMode = E_FetchMode.ALL): # ,
                 #  interval: str):
         
         self.indicators             = _normalize_indicators(indicators)
@@ -32,6 +35,7 @@ class _fetchRequest:
         self.attributes             = _parse_attributes(attributes)
         self._original_attributes   = self.attributes.copy()
         self.start_ts, self.end_ts  = _resolve_range(period, start_ts, end_ts)
+        self.mode                   = mode
         # self.interval               = _validate_interval(interval)
 
 @dataclass
@@ -40,12 +44,14 @@ class _YF_fetchReq_Container(outputCls):
 
     start_date: date            = date.today()
     end_date: date              = date.today()
+    mode: E_FetchMode           = E_FetchMode.ALL
 
     success: bool               = False
     message: str                = ""
 
-    def __init__(self, requests: list['indicatorRequest'], dates: pd.Timestamp | list[pd.Timestamp] | None = None):
+    def __init__(self, requests: list['indicatorRequest'], dates: pd.Timestamp | list[pd.Timestamp] | None = None, mode: E_FetchMode = E_FetchMode.ALL):
         self.requests = requests
+        self.mode = mode
 
         if dates:
             self.start_date         = dates[0].date() if isinstance(dates, list) else dates.date()

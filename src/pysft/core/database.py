@@ -19,7 +19,7 @@ import threading
 import sqlite3
 import json
 from datetime import datetime, timedelta
-from typing import Optional, List, Tuple, Set, get_type_hints, get_origin, get_args, Union
+from typing import Any, Optional, List, Tuple, Set, get_type_hints, get_origin, get_args, Union
 import types
 import pandas as pd
 import numpy as np
@@ -252,7 +252,7 @@ class DatabaseManager:
                 is_fresh = False
         
         # Reconstruct _indicator_data from cached values
-        data_dict = {"indicator": indicator}
+        data_dict: dict[str, Any] = {"indicator": indicator}
         for attr, (value, _) in cached_attrs.items():
             # Convert ISO strings back to Timestamps where needed
             if attr == "inceptionDate" and value is not None:
@@ -423,12 +423,12 @@ class DatabaseManager:
         self, 
         indicator: str, 
         dates: List[pd.Timestamp],
-        open_prices: List[float],
-        high_prices: List[float],
-        low_prices: List[float],
-        close_prices: List[float],
-        volumes: List[int],
-        change_pcts: Optional[List[float]] = None
+        open_prices: float | List[float],
+        high_prices: float | List[float],
+        low_prices: float | List[float],
+        close_prices: float | List[float],
+        volumes: int | List[int],
+        change_pcts: Optional[float | List[float]] = None
         # market_caps: Optional[List[float]] = None
     ):
         """
@@ -460,12 +460,12 @@ class DatabaseManager:
             rows.append((
                 indicator,
                 date.date() if hasattr(date, 'date') else date,
-                utils._to_float(open_prices[i]) if (type(open_prices) in [list, np.ndarray]) and i < len(open_prices) else utils._to_float(open_prices),
-                utils._to_float(high_prices[i]) if (type(high_prices) in [list, np.ndarray]) and i < len(high_prices) else utils._to_float(high_prices),
-                utils._to_float(low_prices[i]) if (type(low_prices) in [list, np.ndarray]) and i < len(low_prices) else utils._to_float(low_prices),
-                utils._to_float(close_prices[i]) if (type(close_prices) in [list, np.ndarray]) and i < len(close_prices) else utils._to_float(close_prices),
-                utils._to_int(volumes[i]) if (type(volumes) in [list, np.ndarray]) and i < len(volumes) else utils._to_int(volumes),
-                utils._to_float(change_pcts[i]) if change_pcts and (type(change_pcts) in [list, np.ndarray]) and i < len(change_pcts) else utils._to_float(change_pcts),
+                utils._to_float(open_prices[i]) if isinstance(open_prices, (list, np.ndarray)) and i < len(open_prices) else utils._to_float(open_prices),
+                utils._to_float(high_prices[i]) if isinstance(high_prices, (list, np.ndarray)) and i < len(high_prices) else utils._to_float(high_prices),
+                utils._to_float(low_prices[i]) if isinstance(low_prices, (list, np.ndarray)) and i < len(low_prices) else utils._to_float(low_prices),
+                utils._to_float(close_prices[i]) if isinstance(close_prices, (list, np.ndarray)) and i < len(close_prices) else utils._to_float(close_prices),
+                utils._to_int(volumes[i]) if isinstance(volumes, (list, np.ndarray)) and i < len(volumes) else utils._to_int(volumes),
+                utils._to_float(change_pcts[i]) if change_pcts and isinstance(change_pcts, (list, np.ndarray)) and i < len(change_pcts) else utils._to_float(change_pcts),
                 # market_caps[i] if market_caps and i < len(market_caps) else None,
                 now  # fetched_at timestamp
             ))
@@ -564,7 +564,7 @@ def resetDatabase():
     global _db_manager
     _db_manager = DatabaseManager()
 
-    if _db_manager:
+    if _db_manager and _db_manager.connection:
         cursor = _db_manager.connection.cursor()
 
         # Drop old tables if they exist (fresh schema migration)
