@@ -40,7 +40,7 @@ class fetcher_manager:
         self.parsedInput = request
         self.settings = fetcher_settings(request)
         self.requests: dict[str, dict[str, Any]] = {}
-        self.fetched_data: pd.DataFrame # output field to be populated with fetched data
+        self.fetched_data: dict[str, dict[str, Any]] = {}  # output field to be populated with fetched data
         self.cached_indicators: list[str] = [] # indicators found fully cached in the database
         self._timeseries_fields = _get_timeseries_fields()
 
@@ -79,63 +79,68 @@ class fetcher_manager:
         # Cache the newly fetched data
         self._cache_fetched_data(taskList)
         
-        # Aggregate results to dataframe, unfold lists if needed
+        # Aggregate results into the output dict
         self.aggregate_task_results(taskList)
 
     
     def aggregate_task_results(self, taskList: list['fetchTask']) -> None:
         """
-        Aggregate results from all fetch tasks into a single DataFrame.
-        
+        Aggregate results from all fetch tasks into a nested dict.
+
+        Result structure: {indicator: {"dates": ["YYYY-MM-DD", ...], attr: [values, ...], ...}}
         Handles merging of partially cached indicators with newly fetched data.
         """
 
         results: dict[str, indicatorRequest] = {}
-        db = get_db_manager() if DB_ENABLED else None
-        
+
         # Add cached results first
         if hasattr(self, '_cached_results'):
             results.update(self._cached_results)
-        
-        # Add newly fetched results, merging with partial cache if needed
+
+        # Add newly fetched results
         for task in taskList:
             task_result = task.get_results()
             fetched_results = task_result if isinstance(task_result, list) else [task_result]
-            
+
             for res in fetched_results:
-                indicator = res.original_indicator
-                
-                results[indicator] = res
+                if res is None:
+                    continue
+                results[res.original_indicator] = res
 
-        # Reorder result list according to the original indicators order
-        # Use the original request indicators (before cache filtering)
+        # Reorder according to original request order
         original_indicators = getattr(self.parsedInput, '_original_indicators', self.parsedInput.indicators)
-        ordered_results: list[indicatorRequest] = []
-        for indicator in original_indicators:
-            if indicator in results: # sanity check
-                ordered_results.append(results[indicator])
+        ordered_results: list[indicatorRequest] = [
+            results[ind] for ind in original_indicators if ind in results
+        ]
 
-        # Convert to DataFrame
-        # Use original requested attributes, not the forced "all" attributes
+        # Use original requested attributes (not the force-expanded "all" attrs)
         requested_attrs = getattr(self.parsedInput, '_original_attributes', self.parsedInput.attributes)
-        self.fetched_data = pd.DataFrame()
+
+        self.fetched_data = {}
         for res in ordered_results:
-            if res.success:
-                indicator_DF = pd.DataFrame({field: getattr(res.data, field) for field in requested_attrs}, 
-                                        index=(res.data.dates if isinstance(res.data.dates, list) else [res.data.dates]))
-            else:
-                # Create empty DataFrame with NaN values for requested attributes
-                indicator_DF = pd.DataFrame({field: [float('nan')] * (len(res.data.dates) if isinstance(res.data.dates, list) else 1) for field in requested_attrs}, 
-                                        index=(res.data.dates if isinstance(res.data.dates, list) else [res.data.dates]))
-            
-            # Add multi-level column labels: (indicator, attribute)
-            indicator_DF.columns = pd.MultiIndex.from_product(
-                [[getattr(res, "original_indicator")], requested_attrs],
-                names=['Indicator', 'Attribute']
-            )
-            self.fetched_data = pd.concat([self.fetched_data, indicator_DF], axis=1)
-            
-            del indicator_DF  # free memory
+            # Normalise dates to a list of "YYYY-MM-DD" strings
+            raw_dates = res.data.dates
+            if raw_dates is None:
+                raw_dates = []
+            elif not isinstance(raw_dates, list):
+                raw_dates = [raw_dates]
+            date_strings = [str(d.date()) if hasattr(d, 'date') else str(d) for d in raw_dates]
+
+            entry: dict[str, Any] = {"dates": date_strings}
+
+            for field in requested_attrs:
+                if field == "dates":
+                    continue  # already captured above
+
+                value = getattr(res.data, field, None) if res.success else None
+
+                # Normalise scalar to single-element list for a consistent contract
+                if value is not None and not isinstance(value, list):
+                    value = [value]
+
+                entry[field] = value
+
+            self.fetched_data[res.original_indicator] = entry
 
 
     def _check_cache(self) -> None:
@@ -203,8 +208,8 @@ class fetcher_manager:
                     # All dates cached and scalars fresh - fully cached
                     hist_data = db.get_historical_data(
                         indicator,
-                        self.parsedInput.start_ts,
-                        self.parsedInput.end_ts
+                        pd.Timestamp(self.settings.start_date),
+                        pd.Timestamp(self.settings.end_date)
                     )
                     
                     if hist_data:
@@ -371,12 +376,12 @@ class fetcher_manager:
                 )
 
 
-    def getResults(self) -> pd.DataFrame:
+    def getResults(self) -> dict[str, dict[str, Any]]:
         """
         Retrieve the aggregated fetched data.
 
         Returns:
-            pd.DataFrame: The fetched indicator data.
+            dict: The fetched indicator data as {indicator: {"dates": [...], attr: [...], ...}}.
         """
 
         return self.fetched_data

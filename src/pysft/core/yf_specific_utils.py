@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from pandas.core.series import Series
+from typing import Any
 
 import yfinance as yf
 
@@ -14,6 +15,32 @@ import pysft.core.utilities as utils
 from pysft.tools.logger import get_logger
 
 logger = get_logger(__name__)
+
+
+def extract_ticker_surface_metadata(ticker: yf.Ticker) -> dict[str, str]:
+    """Extract normalized, surface-level metadata from a yfinance ticker."""
+
+    info = ticker.info or {}
+    if not isinstance(info, dict):
+        info = {}
+
+    return {
+        "isin": str(getattr(ticker, "isin", "") or "").strip().upper(),
+        "quote_type": str(info.get("quoteType", "") or "").strip().upper(),
+        "exchange": str(info.get("exchange", "") or "").strip().upper(),
+        "currency": str(info.get("financialCurrency", "") or info.get("currency", "") or "").strip().upper(),
+        "name": str(info.get("longName", "") or info.get("shortName", "") or "").strip(),
+        "cusip": str(info.get("cusip", "") or "").strip().upper(),
+    }
+
+
+def resolve_ticker_surface_metadata(indicator: str) -> dict[str, str] | None:
+    """Resolve normalized ticker metadata by symbol, returning None when empty."""
+
+    metadata = extract_ticker_surface_metadata(yf.Ticker(indicator))
+    if not any(metadata.values()):
+        return None
+    return metadata
 
 def find_closest_date(data_frame: Series, target_dates: pd.DatetimeIndex) -> pd.DatetimeIndex | None:
     """
@@ -65,7 +92,7 @@ def safe_extract_value_float(data: pd.DataFrame | Series) -> float | list[float]
             return 0.0
         
         # Return the extracted value cast to appropriate type
-        return values.tolist() if len(values) > 1 else float(values[0])
+        return [float(v) for v in values] if len(values) > 1 else float(values[0])
     except:
         # In case of any error, return zero of appropriate type
         return 0.0
@@ -92,25 +119,30 @@ def safe_extract_value_int(data: pd.DataFrame | Series) -> int | list[int]:
         # In case of any error, return zero of appropriate type
         return dtype.type(0)
     
-def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
+def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_inception_history: bool = True):
     """
     Extract additional info data from yfinance Ticker object and populate request data fields.
     """
 
-    request.data.ISIN = ((ticker.isin if ticker.isin else "") if not request.is_tase_indicator else request.data.ISIN) if request.data.ISIN == "" else request.data.ISIN
+    metadata = extract_ticker_surface_metadata(ticker)
+    request.data.ISIN = (metadata["isin"] if not request.is_tase_indicator else request.data.ISIN) if request.data.ISIN == "" else request.data.ISIN
     try:
         info = ticker.info
 
-        request.data.quoteType = info.get("quoteType", "N/A")
+        request.data.quoteType = metadata["quote_type"] or info.get("quoteType", "N/A")
 
         # request.data.briefSummary = info.get("longBusinessSummary", "")
-        history = ticker.history(period="max", auto_adjust=True)
-        if history is not None and not history.empty:
-            request.data.inceptionDate = history.index[0].tz_localize(None)
+        if fetch_inception_history:
+            history = ticker.history(period="max", auto_adjust=True)
+            if history is not None and not history.empty:
+                request.data.inceptionDate = history.index[0].tz_localize(None)
 
         if request.data.name == "": # Only update name if not already set
-            request.data.name = info.get("longName", str(request.indicator))
-        request.data.currency = info.get("currency", info.get("financialCurrency", "USD"))
+            request.data.name = metadata["name"] or info.get("longName", str(request.indicator))
+        request.data.currency = metadata["currency"] or info.get("currency", info.get("financialCurrency", "USD"))
+
+        request.data.exchange = metadata["exchange"] or info.get("exchange", "N/A")
+    
 
         if request.data.currency == "ILA" or request.data.currency == "ILS":
             request.data.indicator = request.original_indicator # Keep original indicator for ILS securities (TASE)
@@ -145,42 +177,44 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker):
     if request.data.price is not None:
         # Convert price according to currency factor (this is not currency conversion! just adjustment)
 
-        try:
+        # try:
+            currency_normalization = const.CURRENCY_NORMALIZATION.get(request.data.currency, {"factor": 1, "alias": request.data.currency})
+
             # Closing price
             if isinstance(request.data.price, float):
-                request.data.price *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+                request.data.price *= currency_normalization["factor"]
             elif isinstance(request.data.price, list) or isinstance(request.data.price, np.ndarray):
-                request.data.price = [p * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for p in request.data.price]
+                request.data.price = [p * currency_normalization["factor"] for p in request.data.price]
             
             # Last price
-            request.data.last *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+            request.data.last *= currency_normalization["factor"]
 
             # Open price
             if isinstance(request.data.open, float):
-                request.data.open *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+                request.data.open *= currency_normalization["factor"]
             elif isinstance(request.data.open, list) or isinstance(request.data.open, np.ndarray):
-                request.data.open  = [o * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for o in request.data.open]
+                request.data.open  = [o * currency_normalization["factor"] for o in request.data.open]
 
             # High price
             if isinstance(request.data.high, float):
-                request.data.high *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+                request.data.high *= currency_normalization["factor"]
             elif isinstance(request.data.high, list) or isinstance(request.data.high, np.ndarray):
-                request.data.high  = [h * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for h in request.data.high]
+                request.data.high  = [h * currency_normalization["factor"] for h in request.data.high]
             
             # Low price
             if isinstance(request.data.low, float):
-                request.data.low  *= const.CURRENCY_NORMALIZATION[request.data.currency]["factor"]
+                request.data.low  *= currency_normalization["factor"]
             elif isinstance(request.data.low, list) or isinstance(request.data.low, np.ndarray):
-                request.data.low   = [l * const.CURRENCY_NORMALIZATION[request.data.currency]["factor"] for l in request.data.low]
+                request.data.low   = [l * currency_normalization["factor"] for l in request.data.low]
 
             # Put currency alias
-            request.data.currency = const.CURRENCY_NORMALIZATION[request.data.currency]["alias"]
-        except KeyError:
-            # If currency not found in aliases, keep original
-            request.message += f"Unknown currency '{request.data.currency}', keeping original."
-            request.success = False
+            request.data.currency = currency_normalization["alias"]
+        # except KeyError:
+        #     # If currency not found in aliases, keep original
+        #     request.message += f"Unknown currency '{request.data.currency}', keeping original."
+        #     request.success = False
 
-            logger.warning(request.message)
+        #     logger.warning(request.message)
     
     if request.data.quoteType == "EQUITY":
         # Set quote type to STOCK for consistency

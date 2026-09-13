@@ -4,6 +4,7 @@ import re
 from datetime import date, datetime
 from typing import Iterable, List, Tuple
 import pandas as pd
+import pysft.core.utilities as utils
 
 # -----------------------------
 # Input parsing helpers
@@ -12,6 +13,7 @@ import pandas as pd
 # Canonical attribute names and simple aliases
 _ATTR_ALIASES = {
     "all": "all",
+    "info": "info",
     # primary identifier / tickers
     "indicator": "indicator",
     "symbol": "indicator",
@@ -29,6 +31,11 @@ _ATTR_ALIASES = {
     "quote_type": "quoteType",
     "type": "quoteType",
     "currency": "currency",
+    # Exchange aliases are normalized to a single output field so callers can
+    # request either provider-style "market" or canonical "exchange".
+    "exchange": "exchange",
+    "market": "exchange",
+    "exc": "exchange",
 
     # price/time series fields
     "price": "price",
@@ -84,9 +91,15 @@ _ATTR_ALIASES = {
     # "sharpeRatio": "sharpeRatio",
 }
 _ALLOWED_INTERVALS = {"1d", "1wk", "1mo", "1y"}
-# _ATTRIBUTES = ["all", "indicator", "name", "ISIN", "quoteType", "currency", "price", "last", "open", "high", "low", "volume", "dates", 
-#                "avgDailyVolume3mnth", "change_pct", "market_cap", "expense_rate", "dividendYield", "trailingPE", "forwardPE", "beta", "inceptionDate"]
 
+# Attributes returned when the 'info' group is requested — all metadata fields
+# excluding price/timeseries columns (price, last, open, high, low, volume,
+# dates, change_pct, avgDailyVolume3mnth).
+_INFO_ATTRS: List[str] = [
+    "indicator", "name", "ISIN", "quoteType", "currency", "exchange",
+    "inceptionDate", "market_cap", "expense_rate",
+    "dividendYield", "trailingPE", "forwardPE", "beta",
+]
 
 def _normalize_indicators(indicators: str | Iterable[str]) -> List[str]:
     """
@@ -107,22 +120,30 @@ def _parse_attributes(attributes: str | Iterable[str]) -> List[str]:
     """
     Accepts a comma-separated string or a list; maps to canonical attribute names.
     Unknown attributes raise ValueError to fail fast.
+    Special group aliases: 'all' expands to every attribute; 'info' expands to
+    metadata-only attributes (no price/timeseries fields).
     """
     get_all_attributes = False
+    get_info_attributes = False
 
     if isinstance(attributes, str):
         raw = [a for a in re.split(r"[,\s]+", attributes) if a]
     else:
         raw = [str(a) for a in attributes]
 
-    if "all" in [a.strip().lower() for a in raw]:
+    lowered = [a.strip().lower() for a in raw]
+    if "all" in lowered:
         get_all_attributes = True
+    elif "info" in lowered:
+        get_info_attributes = True
 
     canon: List[str] = []
     if get_all_attributes:
         for a in _ATTR_ALIASES.values():
-            if a != "all":
+            if a not in ("all", "info"):
                 canon.append(a)
+    elif get_info_attributes:
+        canon = _INFO_ATTRS.copy()
     else:
         for a in raw:
             key = a.strip().lower()
@@ -131,14 +152,8 @@ def _parse_attributes(attributes: str | Iterable[str]) -> List[str]:
                     f"Unsupported attribute '{a}'. Supported: {sorted(set(_ATTR_ALIASES.keys()))}"
                 )
             canon.append(_ATTR_ALIASES[key])
-            
-    # dedupe while preserving order
-    seen = set()
-    out = []
-    for c in canon:
-        if c not in seen:
-            seen.add(c)
-            out.append(c)
+
+    out, _ = utils.unique(canon)
     return out
 
 def _parse_period(period: str) -> Tuple[pd.Timestamp, pd.Timestamp]:

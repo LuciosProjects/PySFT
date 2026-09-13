@@ -2,7 +2,7 @@
 Test database caching functionality.
 
 Tests the simplified 2-tier TTL caching model:
-- Immutable fields (indicator, name, ISIN, inceptionDate, quoteType): never expire
+- Immutable fields (indicator, name, ISIN, inceptionDate, quoteType, exchange): never expire
 - Volatile fields: 15-minute TTL
 - Historical timeseries: immutable except today's data (15-min TTL)
 """
@@ -40,7 +40,7 @@ def test_dynamic_field_detection():
     assert "volume" in timeseries, "volume should be a timeseries field"
     
     # Scalar fields should include non-list fields
-    expected_scalar = {"indicator", "name", "ISIN", "inceptionDate", "quoteType", "currency", 
+    expected_scalar = {"indicator", "name", "ISIN", "inceptionDate", "quoteType", "currency", "exchange",
                        "expense_rate", "avgDailyVolume3mnth", "dividendYield", "trailingPE", 
                        "forwardPE", "beta"}
     print(f"   Detected scalar fields: {scalar}")
@@ -48,6 +48,7 @@ def test_dynamic_field_detection():
     assert "indicator" in scalar, "indicator should be a scalar field"
     assert "name" in scalar, "name should be a scalar field"
     assert "currency" in scalar, "currency should be a scalar field"
+    assert "exchange" in scalar, "exchange should be a scalar field"
     
     # No overlap
     assert len(timeseries & scalar) == 0, "No field should be both timeseries and scalar"
@@ -71,6 +72,7 @@ def test_basic_caching():
         quoteType="EQUITY",
         inceptionDate=pd.Timestamp("1980-12-12"),
         currency="USD",
+        exchange="XNAS",
         dates=[pd.Timestamp(date.today())],
         last=150.0,
         open=148.0,
@@ -86,13 +88,13 @@ def test_basic_caching():
     # Test 1: Cache the data
     print("\n1. Caching indicator data...")
     fetched_fields = ["indicator", "name", "ISIN", "quoteType", "inceptionDate", 
-                      "currency", "dividendYield", "trailingPE", "beta"]
+                      "currency", "exchange", "dividendYield", "trailingPE", "beta"]
     db.cache_indicator_data("AAPL", test_data, fetched_fields)
     print("   ✓ Data cached successfully")
     
     # Test 2: Retrieve from cache - should be fresh
     print("\n2. Retrieving cached data (should be fresh)...")
-    cached_data, is_fresh = db.get_cached_data("AAPL", ["name", "ISIN", "dividendYield"])
+    cached_data, is_fresh = db.get_cached_data("AAPL", ["name", "ISIN", "exchange", "dividendYield"])
     
     assert cached_data is not None, "Should find cached data"
     assert cached_data.name == "Apple Inc.", f"Name mismatch: {cached_data.name}"
@@ -100,6 +102,8 @@ def test_basic_caching():
     assert is_fresh, "Data should be fresh"
     print(f"   ✓ Data retrieved: {cached_data.name}")
     print(f"   ✓ ISIN: {cached_data.ISIN}")
+    assert cached_data.exchange == "XNAS", f"Exchange mismatch: {cached_data.exchange}"
+    print(f"   ✓ Exchange: {cached_data.exchange}")
     print(f"   ✓ Is fresh: {is_fresh}")
     
     # Test 3: Cache miss for non-existent indicator
@@ -126,9 +130,10 @@ def test_immutable_fields():
         name="Apple Inc.",
         ISIN="US0378331005",
         quoteType="EQUITY",
+        exchange="XNAS",
     )
     
-    db.cache_indicator_data("AAPL", initial_data, ["indicator", "name", "ISIN", "quoteType"])
+    db.cache_indicator_data("AAPL", initial_data, ["indicator", "name", "ISIN", "quoteType", "exchange"])
     
     # Try to update with new data
     updated_data = _indicator_data(
@@ -136,16 +141,18 @@ def test_immutable_fields():
         name="Apple Corporation",  # Changed name
         ISIN="CHANGED123",         # Changed ISIN
         quoteType="ETF",           # Changed type
+        exchange="XNYS",           # Changed exchange
     )
     
-    db.cache_indicator_data("AAPL", updated_data, ["indicator", "name", "ISIN", "quoteType"])
+    db.cache_indicator_data("AAPL", updated_data, ["indicator", "name", "ISIN", "quoteType", "exchange"])
     
     # Retrieve and verify immutable fields were NOT updated
-    cached_data, is_fresh = db.get_cached_data("AAPL", ["name", "ISIN", "quoteType"])
+    cached_data, is_fresh = db.get_cached_data("AAPL", ["name", "ISIN", "quoteType", "exchange"])
     
     assert cached_data.name == "Apple Inc.", f"Immutable name should not change: {cached_data.name}"
     assert cached_data.ISIN == "US0378331005", f"Immutable ISIN should not change: {cached_data.ISIN}"
     assert cached_data.quoteType == "EQUITY", f"Immutable quoteType should not change: {cached_data.quoteType}"
+    assert cached_data.exchange == "XNAS", f"Immutable exchange should not change: {cached_data.exchange}"
     
     print("   ✓ Immutable fields preserved after update attempt")
     

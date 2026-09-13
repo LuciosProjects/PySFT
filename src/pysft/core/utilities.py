@@ -23,7 +23,7 @@ import pandas as pd
 
 # ---- Package imports ----
 import pysft.core.constants as const
-from pysft.core.enums import E_FetchType
+from pysft.core.enums import E_FetchMode, E_FetchType
 from pysft.core.structures import indicatorRequest, outputCls
 
 from pysft.core.fetch_task import fetchTask
@@ -37,7 +37,7 @@ if TYPE_CHECKING:
 
 logger = get_logger(__name__)
 
-def has_tase_indicators(indicators: list[str]) -> tuple[bool, list[bool]]:
+def has_tase_indicators(indicators: list[str]) -> tuple[bool, dict[str, bool]]:
     """
     Check if the list of indicators contains any TASE indicators.
     
@@ -46,6 +46,7 @@ def has_tase_indicators(indicators: list[str]) -> tuple[bool, list[bool]]:
         
     Returns:
         bool: True if any indicator is a TASE indicator, False otherwise.
+        dict[str, bool]: Dictionary mapping each indicator to a boolean indicating if it's a TASE indicator.
     """
 
     # is_tase_indicators = [indicator.isdigit() or indicator.startswith("126.") 
@@ -85,9 +86,13 @@ def classify_fetch_types(manager: 'fetcher_manager'):
     date_range = [pd.Timestamp(date) for date in pd.date_range(start=manager.settings.start_date, end=manager.settings.end_date)]
 
     requests: dict[str, dict[str, Any]] = {}
+    fetch_mode = getattr(manager.parsedInput, "mode", E_FetchMode.ALL)
 
     for indicator in indicators:
-        requests[indicator] = {const.FETCH_TYPE_FIELD: E_FetchType.NULL, const.REQUEST_FIELD: indicatorRequest(indicator, date_range)}
+        requests[indicator] = {
+            const.FETCH_TYPE_FIELD: E_FetchType.NULL,
+            const.REQUEST_FIELD: indicatorRequest(indicator, date_range, mode=fetch_mode),
+        }
 
         fetchType = E_FetchType.NULL
         if is_tase_indicator[indicator]:
@@ -101,6 +106,18 @@ def classify_fetch_types(manager: 'fetcher_manager'):
                 requests[indicator][const.REQUEST_FIELD].is_tase_indicator = True
 
                 # Toggle YFinance flag if necessary
+                if not manager.settings.NEED_YFINANCE:
+                    manager.settings.NEED_YFINANCE = True
+
+                continue
+
+            elif indicator.startswith("126.") and indicator.count(".") >= 2:
+                # 126.X.TICKER — extract the suffix as the yfinance symbol (e.g. 126.1.CHKP → CHKP)
+                yf_symbol = indicator.split(".", 2)[2]
+                requests[indicator][const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
+                requests[indicator][const.REQUEST_FIELD].indicator = yf_symbol
+                requests[indicator][const.REQUEST_FIELD].is_tase_indicator = True
+
                 if not manager.settings.NEED_YFINANCE:
                     manager.settings.NEED_YFINANCE = True
 
@@ -154,9 +171,9 @@ def create_task_list(manager: 'fetcher_manager') -> list[fetchTask]:
             # fetch type is for yfinance, append to YF batch list
             YF_BatchList.append(request[1][const.REQUEST_FIELD])
         elif fetchType == E_FetchType.YFINANCE:
-            # YF batch is full, add to tasks and reset YF batch list
-            tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range)))
-            YF_BatchList = []
+            # YF batch is full, add to tasks and start a new batch with the current request
+            tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range, mode=getattr(manager.parsedInput, "mode", E_FetchMode.ALL))))
+            YF_BatchList = [request[1][const.REQUEST_FIELD]]
 
         # elif fetchType == E_FetchType.TASE_FAST:
         #     tasks.append(fetchTask(E_FetchType.TASE_FAST, request[1][const.REQUEST_FIELD]))
@@ -168,7 +185,7 @@ def create_task_list(manager: 'fetcher_manager') -> list[fetchTask]:
             tasks.append(fetchTask(E_FetchType.TASE, request[1][const.REQUEST_FIELD]))
 
     if YF_BatchList:
-        tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range)))
+        tasks.append(fetchTask(E_FetchType.YFINANCE, _YF_fetchReq_Container(YF_BatchList, date_range, mode=getattr(manager.parsedInput, "mode", E_FetchMode.ALL))))
 
     return tasks
 
@@ -241,7 +258,9 @@ def safe_extract_date_ts(dates: pd.DatetimeIndex) -> list[pd.Timestamp]:
     date_ts = []
     for date in dates:
         try:
-            date_ts.append(pd.Timestamp(date))
+            converted_date = _to_date(date)
+            if converted_date is not None:
+                date_ts.append(converted_date)
         except Exception:
             logger.error(f"Failed to convert dates to ts array.")
 
@@ -284,6 +303,8 @@ def _to_int(x) -> int | None:
     return int(x)
 
 def _to_date(ts) -> pd.Timestamp | None:
+    if ts is None: return None
+    
     if isinstance(ts, pd.Timestamp):
-        return ts.date()
-    return pd.Timestamp(ts).date()
+        return ts
+    return pd.Timestamp(ts)

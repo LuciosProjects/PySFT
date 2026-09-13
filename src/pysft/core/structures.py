@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 import pandas as pd
 from datetime import date as Date
 
+from pysft.core.enums import E_FetchMode
+
 class outputCls:
     """
     This class is a base for all output representations.
@@ -35,6 +37,8 @@ class _indicator_data:
     ''' Dates corresponding to the fetched data points.'''
     currency: str = ""
     ''' Currency code (e.g., 'USD', 'EUR', 'ILS')'''
+    exchange: str = ""
+    ''' Exchange market code (e.g., 'XNAS', 'XNYS', 'XTAE') when known.'''
     price: float | list[float] = 0.0 
     ''' fetched price data'''
     expense_rate: float = 0.0 
@@ -85,12 +89,14 @@ class indicatorRequest(outputCls):
     success: bool               = False
     fromInception: bool         = False
     message: str                = ""
+    mode: E_FetchMode           = E_FetchMode.ALL
 
     is_tase_indicator: bool     = False
 
-    def __init__(self, indicator: str, dates: list[pd.Timestamp] | None = None):
+    def __init__(self, indicator: str, dates: list[pd.Timestamp] | None = None, mode: E_FetchMode = E_FetchMode.ALL):
         self.indicator          = indicator
         self.original_indicator = indicator
+        self.mode               = mode
         self.data               = _indicator_data(indicator=indicator, dates=dates) if dates else _indicator_data(indicator=indicator)
 
         if dates:

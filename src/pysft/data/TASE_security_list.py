@@ -110,7 +110,14 @@ def create_TASE_security_list():
 
                 break # Successful fetch, exit trial loop
             except requests.RequestException as e:
-                print(f"Attempt {attempt + 1} failed: {e}")
+                if not utils.handle_fetch_attempt_failure(
+                    attempt=attempt,
+                    max_attempts=const.MAX_ATTEMPTS,
+                    base_msg=f"Failed fetching security list for date {date.strftime('%d/%m/%Y')}: {e}",
+                    random_delay_func=utils.random_delay,
+                    random_delay_args=(0.5, 1.0),
+                ):
+                    break
         utils.random_delay(0.5, 1.0)
     
     cursor.execute("INSERT OR REPLACE INTO db_metadata (key, value, key, value) VALUES (?, ?, ?, ?)", 
