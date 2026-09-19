@@ -386,13 +386,53 @@ data = fetch_data(['AAPL'], attributes='all')
 
 ### Environment Variables
 ```bash
-# .env file or system environment
+# Set by the host application or system environment
+TASE_DATAHUB_API_KEY=replace-with-your-key
 PYSFT_DB_ENABLE=true              # Enable/disable caching
 PYSFT_DB_PATH=/custom/cache.db    # Custom cache location
 PYSFT_CACHE_TTL_MINUTES=15        # Cache expiration (default: 15)
 PYSFT_MAX_CONCURRENT=10            # Parallel request limit
 PYSFT_MEMORY_BUDGET_MB=500         # Task queue memory limit
 ```
+
+### API keys when PySFT is a submodule
+
+API keys belong to the parent application, not to the PySFT checkout. PySFT
+reads `TASE_DATAHUB_API_KEY` from the process environment when it makes a
+DataHub request; it does not automatically discover or load `.env` files.
+This avoids working-directory-dependent behavior and lets a parent application
+use its normal secret manager.
+
+For local development, copy the variable name from `.env.example` into the
+parent repository's ignored `.env` file, then load that file in the parent
+application before importing or calling PySFT. For example:
+
+```python
+# Parent application startup code (python-dotenv is owned by the parent)
+from dotenv import load_dotenv
+
+load_dotenv()
+
+from pysft.lib.fetchFinancialData import fetch_data
+```
+
+Shell and deployment environments can inject the variable directly:
+
+```bash
+export TASE_DATAHUB_API_KEY="..."
+python your_parent_app.py
+```
+
+When adding the repository as a submodule, no secret-copy step is needed:
+
+```bash
+git submodule add https://github.com/LuciosProjects/PySFT vendor/PySFT
+git submodule update --init --recursive
+pip install -e vendor/PySFT
+```
+
+Never put a real key in the submodule, `.gitmodules`, source code, or a tracked
+configuration file. CI should continue to inject the key from its secret store.
 
 ### Programmatic Configuration
 ```python

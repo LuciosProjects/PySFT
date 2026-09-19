@@ -18,12 +18,9 @@ declarative, discoverable, and maintainable.
 """
 
 import os
-# from dotenv import load_dotenv
 
 from pysft.core.structures import CTimeRepr
 
-# Load environment variables from .env file
-# load_dotenv()
 
 # General package constants
 PACKAGE_NAME = "pysft"

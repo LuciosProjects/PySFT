@@ -141,9 +141,13 @@ celerybeat.pid
 
 # Environments
 .env
+!.env.example
 .envrc
 .venv
 env/
+
+# Temporary planning documents
+/docs/temp/
 venv/
 ENV/
 env.bak/
