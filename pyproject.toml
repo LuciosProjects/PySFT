@@ -27,3 +27,6 @@ include = ["pysft*"]
 
 [project.urls]
 Homepage = "https://github.com/LuciosProjects/PySFT"
+
+[tool.pytest.ini_options]
+addopts = "--ignore=./prototyping"
