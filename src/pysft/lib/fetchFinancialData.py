@@ -97,7 +97,7 @@ def fetch_data_as_dict(
     """
         Alias for fetchData returning a dictionary (fetchData now returns dict natively).
     """
-    return fetchData(
+    data = fetchData(
         indicators=indicators,
         attributes=attributes,
         period=period,
@@ -105,6 +105,8 @@ def fetch_data_as_dict(
         end=end,
         mode=mode,
     )
+
+    return data
 
 def fetch_data_as_json(
         indicators: str | list[str],

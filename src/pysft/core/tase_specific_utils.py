@@ -1,8 +1,7 @@
 import os
-import threading
 from dotenv import load_dotenv
 
-from typing import Any, Callable, Literal
+from typing import Any, Literal
 import re
 import time
 import numpy as np
@@ -14,17 +13,13 @@ from contextlib import contextmanager
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from pandas import Timestamp, Timedelta
 import exchange_calendars
 import sqlite3
 
 import pysft.core.constants as const
 from pysft.core.enums import E_FetchType
-from pysft.core.enums import E_TheMarkerPeriods
-from pysft.core.structures import indicatorRequest, _indicator_data
+from pysft.core.structures import _indicator_data
 import pysft.core.utilities as utils
-
-from pysft.tools.translator import He2En_Translator
 
 from pysft.tools.logger import get_logger
 
