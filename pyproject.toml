@@ -28,4 +28,11 @@ include = ["pysft*"]
 Homepage = "https://github.com/LuciosProjects/PySFT"
 
 [tool.pytest.ini_options]
-addopts = "--ignore=./prototyping"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+norecursedirs = ["old_code", "prototyping", "tests/Flutter_App"]
+markers = [
+    "unit: focused tests for one module or component",
+    "e2e: deterministic end-to-end tests using controlled provider scenarios",
+    "live: opt-in tests that contact external providers",
+]

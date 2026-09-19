@@ -3,6 +3,7 @@ import sys
 import importlib
 
 import pandas as pd
+import pytest
 
 # tests/* -> project root -> src
 pysft_src = Path(__file__).resolve().parents[1] / "src"
@@ -14,6 +15,8 @@ from pysft.core.models import _YF_fetchReq_Container
 from pysft.core.structures import indicatorRequest
 
 yf_fetcher = importlib.import_module("pysft.fetchers.fetch_yfinance")
+
+pytestmark = [pytest.mark.unit]
 
 
 class _DummyTicker:

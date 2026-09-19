@@ -1,4 +1,9 @@
+import pytest
+
 from pysft.core.tase_specific_utils import get_tase_datahub_api_headers
+
+
+pytestmark = [pytest.mark.unit]
 
 
 def test_tase_api_key_is_read_when_headers_are_built(monkeypatch):

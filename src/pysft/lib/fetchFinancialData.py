@@ -7,6 +7,7 @@ import pandas as pd
 from pysft.core.enums import E_FetchMode
 from pysft.core.models import _fetchRequest
 from pysft.core.fetcher_manager import fetcher_manager
+from pysft.core.io import _parse_attributes
 
 
 def _resolve_mode(mode: Literal["all", "price", "info"]) -> E_FetchMode:
@@ -51,6 +52,10 @@ def fetchData(
             dict: Nested dict {indicator: {"dates": [...], attr: [...], ...}}.
     """
 
+    # Validate the caller-supplied attribute expression even when the selected
+    # mode expands it to a canonical field group below. Invalid public input
+    # must fail before provider or database work starts.
+    _parse_attributes(attributes)
     fetch_mode = _resolve_mode(mode)
     attributes = _mode_to_attributes(fetch_mode)
 

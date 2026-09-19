@@ -10,8 +10,6 @@ sys.path.insert(0, str(pysft_src))
 
 import pysft
 
-pysft.core.database.resetDatabase()
-
 from testIndicators import indicatorsDB
 
 if __name__ == "__main__":

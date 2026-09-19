@@ -12,14 +12,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      TASE_DATAHUB_API_KEY: ${{ secrets.TASE_DATAHUB_API_KEY }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
         
@@ -29,9 +27,11 @@ jobs:
         pip install uv
         uv sync --frozen
 
-        pip install pytest
-        pip install -e .
-        
-    - name: Run tests
+    - name: Run deterministic tests
       run: |
-        pytest tests/test_PR.py -v -s
+        uv run --with pytest --with pytest-cov pytest -m "not live" --cov=src/pysft --cov-report=term-missing
+
+    - name: Verify clean repository
+      run: |
+        git diff --exit-code
+        test -z "$(git status --porcelain)"

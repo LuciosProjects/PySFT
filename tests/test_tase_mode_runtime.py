@@ -3,6 +3,7 @@ import sys
 import importlib
 
 import pandas as pd
+import pytest
 
 # tests/* -> project root -> src
 pysft_src = Path(__file__).resolve().parents[1] / "src"
@@ -14,6 +15,8 @@ from pysft.core.structures import indicatorRequest
 
 tase_fetcher = importlib.import_module("pysft.fetchers.TASE")
 tase_utils   = importlib.import_module("pysft.core.tase_specific_utils")
+
+pytestmark = [pytest.mark.unit]
 
 
 # ---------------------------------------------------------------------------

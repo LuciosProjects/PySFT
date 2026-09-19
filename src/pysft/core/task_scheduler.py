@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 import inspect
 import random
 import time
@@ -176,6 +177,10 @@ class taskScheduler:
         if global_max_workers is None:
             global_max_workers = max(1, sum(concurrency_by_type.values()))
         self._global_max_workers = int(global_max_workers)
+        self._executor = ThreadPoolExecutor(
+            max_workers=self._global_max_workers,
+            thread_name_prefix="pysft-fetch",
+        )
 
         self._cpu_guard_percent = float(cpu_guard_percent) if cpu_guard_percent is not None else None
         self._cpu_poll_s = float(cpu_poll_s)
@@ -260,21 +265,71 @@ class taskScheduler:
 
     async def run_async(self) -> tuple[list[TaskSuccess], list[TaskFailure]]:
         """Run until all queued tasks reach a conclusion."""
-        if not self._started:
-            self._start_workers()
+        try:
+            if not self._started:
+                self._start_workers()
 
-        await self._queue.join()
+            await self._queue.join()
 
-        # Stop workers
-        for _ in range(len(self._workers)):
-            self._queue.put_nowait(None)
-        await asyncio.gather(*self._workers, return_exceptions=False)
+            # Stop workers
+            for _ in range(len(self._workers)):
+                self._queue.put_nowait(None)
+            await asyncio.gather(*self._workers, return_exceptions=False)
 
-        return list(self._results), list(self._failures)
+            return list(self._results), list(self._failures)
+        finally:
+            self._executor.shutdown(wait=True, cancel_futures=True)
 
     def run(self) -> tuple[list[TaskSuccess], list[TaskFailure]]:
-        """Convenience wrapper for non-async callers."""
-        return asyncio.run(self.run_async())
+        """Execute queued tasks deterministically for synchronous callers.
+
+        The public PySFT API is synchronous. Keeping this path synchronous
+        avoids coupling it to event-loop executor shutdown and makes provider
+        ordering predictable. Async callers can use :meth:`run_async`.
+        """
+        try:
+            while True:
+                try:
+                    env = self._queue.get_nowait()
+                except asyncio.QueueEmpty:
+                    break
+                if env is None:
+                    self._queue.task_done()
+                    continue
+
+                started = time.monotonic()
+                try:
+                    env.task.execute()
+                    ended = time.monotonic()
+                    success = TaskSuccess(
+                        task=env.task,
+                        result=env.task.get_results(),
+                        started_at=started,
+                        ended_at=ended,
+                    )
+                    self._results.append(success)
+                    if self._on_success:
+                        self._on_success(success)
+                except BaseException as exc:
+                    ended = time.monotonic()
+                    failure = TaskFailure(
+                        task=env.task,
+                        fetch_type=env.task.fetch_type,
+                        attempt=1,
+                        exception=exc,
+                        tb=traceback.format_exc(),
+                        started_at=started,
+                        ended_at=ended,
+                    )
+                    self._failures.append(failure)
+                    if self._on_failure:
+                        self._on_failure(failure)
+                finally:
+                    self._queue.task_done()
+
+            return list(self._results), list(self._failures)
+        finally:
+            self._executor.shutdown(wait=True, cancel_futures=True)
 
     # ---------------------------
     # Internal
@@ -411,7 +466,8 @@ class taskScheduler:
         if not callable(exe):
             raise ValueError("Task has no run(), execute_async(), or execute()")
 
-        await asyncio.to_thread(exe)
+        loop = asyncio.get_running_loop()
+        await loop.run_in_executor(self._executor, exe)
         get_results = getattr(task, "get_results", None)
         if callable(get_results):
             return get_results()
