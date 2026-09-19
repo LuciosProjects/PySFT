@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 from typing import Any, Literal
 import re
@@ -23,10 +22,7 @@ import pysft.core.utilities as utils
 
 from pysft.tools.logger import get_logger
 
-# Load environment variables from .env file
-load_dotenv()
-
-TASE_DATAHUB_API_KEY = os.environ.get("TASE_DATAHUB_API_KEY", default="")
+TASE_DATAHUB_API_KEY_ENV = "TASE_DATAHUB_API_KEY"
 
 TASE_MTF_LISTING: list | None = None
 TASE_SECURITY_LISTING: list | None = None
@@ -52,11 +48,20 @@ def get_tase_security_db_connection():
         if conn:
             conn.close()
 
-TASE_DATAHUB_API_HEADERS = {
-    'accept': "application/json",
-    'accept-language': "en-US",
-    'apikey': TASE_DATAHUB_API_KEY
-}
+def get_tase_datahub_api_headers(api_key: str | None = None) -> dict[str, str]:
+    """Build DataHub headers without storing credentials in module globals.
+
+    Applications embedding PySFT (including via a Git submodule) own secret
+    loading. They may either set ``TASE_DATAHUB_API_KEY`` in the process
+    environment or pass a key explicitly. PySFT deliberately does not search
+    for or load ``.env`` files at import time.
+    """
+    resolved_key = api_key if api_key is not None else os.environ.get(TASE_DATAHUB_API_KEY_ENV, "")
+    return {
+        "accept": "application/json",
+        "accept-language": "en-US",
+        "apikey": resolved_key,
+    }
 
 TASE_CURRENCY_MAP = {
     "ש\"ח": "ILS",
@@ -177,7 +182,7 @@ def get_tase_mtf_listing():
     for attempt in range(const.MAX_ATTEMPTS):
         try:
             response = requests.get(MAYA_TASE_URLS.MTF_LISTING_API,
-                                    headers=TASE_DATAHUB_API_HEADERS, 
+                                    headers=get_tase_datahub_api_headers(),
                                     timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
             response.raise_for_status()
 
@@ -206,7 +211,7 @@ def get_tase_security_listings(target_date: date):
         try:
             # url = MAYA_TASE_URLS.TRADED_SECURITIES_LISTING_API(target_date.year, target_date.month, target_date.day)
             response = requests.get(MAYA_TASE_URLS.SECURITIES_LISTING_API,
-                                    headers=TASE_DATAHUB_API_HEADERS, 
+                                    headers=get_tase_datahub_api_headers(),
                                     timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
             response.raise_for_status()
 
@@ -234,7 +239,7 @@ def get_tase_company_listings():
         try:
             # url = MAYA_TASE_URLS.TRADED_SECURITIES_LISTING_API(target_date.year, target_date.month, target_date.day)
             response = requests.get(MAYA_TASE_URLS.COMPANIES_LISTING_API,
-                                    headers=TASE_DATAHUB_API_HEADERS, 
+                                    headers=get_tase_datahub_api_headers(),
                                     timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
             response.raise_for_status()
 

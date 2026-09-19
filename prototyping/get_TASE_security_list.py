@@ -2,7 +2,7 @@ import datetime
 import sqlite3
 import requests
 
-from pysft.core.tase_specific_utils import MAYA_TASE_URLS, TASE_DATAHUB_API_HEADERS, TASE_CALENDAR
+from pysft.core.tase_specific_utils import MAYA_TASE_URLS, get_tase_datahub_api_headers, TASE_CALENDAR
 import pysft.core.utilities as utils
 import pysft.core.constants as const
 
@@ -61,7 +61,7 @@ def get_TASE_security_list():
             try:
                 # url = MAYA_TASE_URLS.TRADED_SECURITIES_LISTING_API(target_date.year, target_date.month, target_date.day)
                 response = requests.get(url,
-                                        headers=TASE_DATAHUB_API_HEADERS, 
+                                        headers=get_tase_datahub_api_headers(),
                                         timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
                 response.raise_for_status()
 
