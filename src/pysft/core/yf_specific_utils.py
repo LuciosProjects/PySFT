@@ -80,20 +80,20 @@ def safe_extract_value_float(data: pd.DataFrame | Series) -> float | list[float]
     """Safely extract value from pandas data, handling various formats"""
 
     try:
-        if hasattr(data, 'values'):
-            values = data.values
-        else:
+        values = np.asarray(data.to_numpy(), dtype=np.float64).reshape(-1)
+
+        if values.size == 0:
             return 0.0
-        
+
         # Check if value is NaN
-        if pd.isna(values).any():
+        if np.isnan(values).any():
             # No need to dig out the NaN values since they were already dealt with in the "find_closest_date" subroutine
             # Return zero of appropriate type
             return 0.0
-        
+
         # Return the extracted value cast to appropriate type
-        return [float(v) for v in values] if len(values) > 1 else float(values[0])
-    except:
+        return [float(v) for v in values] if values.size > 1 else float(values.item())
+    except (TypeError, ValueError):
         # In case of any error, return zero of appropriate type
         return 0.0
     
