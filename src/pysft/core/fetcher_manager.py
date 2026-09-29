@@ -32,10 +32,16 @@ def _select_cached_date_span(
     if cached_dates.empty or requested_dates.empty or calendar_in_period.empty:
         return None
 
-    start_distances = np.abs((cached_dates - calendar_in_period[0]).asi8)
-    end_distances = np.abs((cached_dates - calendar_in_period[-1]).asi8)
-    i_start_span = int(start_distances.argmin())
-    i_end_span = int(end_distances.argmin())
+    def nearest_position(target: pd.Timestamp) -> int:
+        return min(
+            range(len(cached_dates)),
+            key=lambda position: abs(
+                (pd.Timestamp(cached_dates[position]) - target).total_seconds()
+            ),
+        )
+
+    i_start_span = nearest_position(pd.Timestamp(calendar_in_period[0]))
+    i_end_span = nearest_position(pd.Timestamp(calendar_in_period[-1]))
 
     if (
         i_start_span == 0
