@@ -9,9 +9,9 @@ Provides endpoints:
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable, Mapping
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Iterable
 from urllib.parse import parse_qs, urlparse
 
 from pysft.lib.fetchFinancialData import fetch_data_as_dict
@@ -82,7 +82,7 @@ class PySFTRequestHandler(BaseHTTPRequestHandler):
         self._send_error(HTTPStatus.NOT_FOUND, "Not Found")
 
 
-def _first(params: dict[str, Iterable[str]], key: str) -> str | None:
+def _first(params: Mapping[str, Iterable[str]], key: str) -> str | None:
     """Return the first query parameter value for the given key."""
     values = params.get(key)
     if not values:
