@@ -21,6 +21,44 @@ if TYPE_CHECKING:
     from pysft.core.models import _fetchRequest
     from pysft.core.fetch_task import fetchTask
 
+
+def _select_cached_date_span(
+    cached_dates: pd.DatetimeIndex,
+    requested_dates: pd.DatetimeIndex,
+    calendar_in_period: pd.DatetimeIndex,
+) -> pd.DatetimeIndex | None:
+    """Return the safely covered cache span, or None when uncertain."""
+
+    if cached_dates.empty or requested_dates.empty or calendar_in_period.empty:
+        return None
+
+    start_distances = np.abs((cached_dates - calendar_in_period[0]).asi8)
+    end_distances = np.abs((cached_dates - calendar_in_period[-1]).asi8)
+    i_start_span = int(start_distances.argmin())
+    i_end_span = int(end_distances.argmin())
+
+    if (
+        i_start_span == 0
+        or i_end_span >= len(cached_dates) - 1
+        or i_start_span > i_end_span
+    ):
+        return None
+
+    previous_delta = abs(
+        (cached_dates[i_start_span - 1] - requested_dates[0]).days
+    )
+    following_delta = abs(
+        (cached_dates[i_end_span + 1] - requested_dates[-1]).days
+    )
+    if (
+        previous_delta > const.CACHED_DATES_MAX_DELTA
+        or following_delta > const.CACHED_DATES_MAX_DELTA
+    ):
+        return None
+
+    return pd.DatetimeIndex(cached_dates[i_start_span : i_end_span + 1])
+
+
 class fetcher_manager:
     """
     Manage the fetching of indicator data based on a fetch request.
@@ -193,17 +231,16 @@ class fetcher_manager:
 
                     # Check if requested date range is fully covered by cached dates according to trading calendar logic (allowing for some uncertainty at the edges)
                     calendar_in_period = tase_utils.TASE_CALENDAR.sessions_in_range(requested_dates[0], requested_dates[-1])
-                    i_start_span = np.argmin(abs(cached_dates - calendar_in_period[0]))
-                    i_end_span = np.argmin(abs(cached_dates - calendar_in_period[-1]))
-
-                    if (i_end_span < len(cached_dates) - 1 and \
-                        abs((cached_dates[i_start_span-1] - requested_dates[0]).days) <= const.CACHED_DATES_MAX_DELTA) and \
-                          (abs((cached_dates[i_end_span+1] - requested_dates[-1]).days) <= const.CACHED_DATES_MAX_DELTA):
-                        requested_dates = pd.DatetimeIndex(cached_dates[i_start_span:i_end_span+1])
-                    else:
+                    cached_span = _select_cached_date_span(
+                        cached_dates,
+                        requested_dates,
+                        calendar_in_period,
+                    )
+                    if cached_span is None:
                         # Uncertainty in cached span, need to fetch
                         indicators_to_fetch.append(indicator)
                         continue
+                    requested_dates = cached_span
                 
                     # All dates cached and scalars fresh - fully cached
                     hist_data = db.get_historical_data(
