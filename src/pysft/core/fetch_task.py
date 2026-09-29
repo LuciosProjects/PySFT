@@ -2,7 +2,7 @@
 
 A `fetchTask` encapsulates:
 - the fetch type (E_FetchType)
-- the input container (outputCls)
+- either a single indicator request or a batched yfinance request container
 - the concrete blocking fetch function
 
 Schedulers should treat a task as a black box and only call:
@@ -19,19 +19,20 @@ from __future__ import annotations
 import time
 
 # ---- Standard library imports ----
-import asyncio
-import random
-from typing import Callable
+from typing import TYPE_CHECKING, Callable
 
 # ---- Package imports ----
 from pysft.core import constants as const
 from pysft.core.enums import E_FetchType
-from pysft.core.structures import outputCls
-from pysft.core.models import indicatorRequest
+from pysft.core.structures import indicatorRequest
 # from pysft.core import utilities as utils
 
 from pysft.fetchers.fetch_yfinance import fetch_yfinance
 from pysft.fetchers.TASE import fetch_TASE
+
+if TYPE_CHECKING:
+    from pysft.core.models import _YF_fetchReq_Container
+
 
 class fetchTask:
     """A single fetch task.
@@ -42,10 +43,14 @@ class fetchTask:
     * `execute_async()` is the canonical coroutine entrypoint.
     """
 
-    def __init__(self, fetch_type: E_FetchType, data: outputCls):
+    def __init__(
+        self,
+        fetch_type: E_FetchType,
+        data: indicatorRequest | _YF_fetchReq_Container,
+    ):
 
         self.fetch_type = fetch_type
-        self.data: outputCls = data
+        self.data: indicatorRequest | _YF_fetchReq_Container = data
         self.fetchFcn: Callable
         self.result: indicatorRequest | list[indicatorRequest] = []
 
@@ -76,7 +81,7 @@ class fetchTask:
             if isinstance(self.data, indicatorRequest):
                 self.data.success = False
                 self.data.message = str(e)
-            elif hasattr(self.data, 'requests'):
+            else:
                 for req in self.data.requests:
                     req.success = False
                     req.message = str(e)
@@ -112,10 +117,10 @@ class fetchTask:
         Prepare the results after fetching is done.
         """
 
-        if hasattr(self.data, 'requests'):
-            self.result = getattr(self.data, 'requests')
+        if isinstance(self.data, indicatorRequest):
+            self.result = self.data
         else:
-            self.result = getattr(self, 'data')
+            self.result = self.data.requests
 
     def get_results(self) -> indicatorRequest | list[indicatorRequest]:
         """Retrieve results after execution of the fetcher function."""
