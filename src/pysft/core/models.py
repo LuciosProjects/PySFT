@@ -1,10 +1,14 @@
-from typing import TYPE_CHECKING
-import pandas as pd
-from datetime import date
+# [Replit Agent] Mark TYPE_CHECKING as an intentional re-export to preserve core imports.
 from dataclasses import dataclass
+from datetime import date
+from typing import TYPE_CHECKING as TYPE_CHECKING  # noqa: PLC0414
 
-from pysft.core.io import _normalize_indicators, _parse_attributes, _resolve_range, _validate_interval
+import pandas as pd
+
 from pysft.core.enums import E_FetchMode
+
+# [Replit Agent] Removed the unused interval validator import.
+from pysft.core.io import _normalize_indicators, _parse_attributes, _resolve_range
 from pysft.core.structures import indicatorRequest, outputCls
 
 # if TYPE_CHECKING:

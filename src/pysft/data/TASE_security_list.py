@@ -1,10 +1,15 @@
 import datetime
 import sqlite3
+
 import requests
 
-from pysft.core.tase_specific_utils import MAYA_TASE_URLS, get_tase_datahub_api_headers, TASE_CALENDAR
-import pysft.core.utilities as utils
 import pysft.core.constants as const
+import pysft.core.utilities as utils
+from pysft.core.tase_specific_utils import (
+    MAYA_TASE_URLS,
+    TASE_CALENDAR,
+    get_tase_datahub_api_headers,
+)
 
 first_date = datetime.date(2008, 1, 1)
 print(f"TASE_secutiry_list.py: first_date - {first_date}")

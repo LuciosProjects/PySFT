@@ -5,9 +5,9 @@ import pandas as pd
 
 # ---- Package imports ----
 from pysft.core.enums import E_FetchMode
-from pysft.core.models import _fetchRequest
 from pysft.core.fetcher_manager import fetcher_manager
 from pysft.core.io import _parse_attributes
+from pysft.core.models import _fetchRequest
 
 
 def _resolve_mode(mode: Literal["all", "price", "info"]) -> E_FetchMode:
@@ -30,9 +30,25 @@ def _mode_to_attributes(mode: E_FetchMode) -> list[str]:
     
     raise ValueError("Unsupported fetch mode.")
 
+
+_PRICE_ATTRIBUTES = frozenset(_parse_attributes(_mode_to_attributes(E_FetchMode.PRICE)))
+
+
+def _mode_for_attributes(attributes: list[str]) -> E_FetchMode:
+    """Choose the provider path needed for an explicit canonical selection."""
+    has_price = any(attribute in _PRICE_ATTRIBUTES for attribute in attributes)
+    has_info = any(attribute not in _PRICE_ATTRIBUTES for attribute in attributes)
+
+    if has_price and has_info:
+        return E_FetchMode.ALL
+    if has_price:
+        return E_FetchMode.PRICE
+    return E_FetchMode.INFO
+
+
 def fetchData(
         indicators: str | list[str],
-        attributes: str | list[str] = "price",
+        attributes: str | list[str] | None = None,
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
@@ -43,7 +59,7 @@ def fetchData(
         Fetch financial data.
         Args:
             indicators (str | list[str]): Financial indicators to fetch.
-            attributes (str | list[str], optional): Attributes of the fetched data. Defaults to "price".
+            attributes (str | list[str] | None, optional): Attributes to fetch. Defaults to the selected mode's preset.
             period (str | None, optional): Time period for the data. Defaults to None.
             start (str | None, optional): Start date for the data. Defaults to None.
             end (str | None, optional): End date for the data. Defaults to None.
@@ -52,16 +68,16 @@ def fetchData(
             dict: Nested dict {indicator: {"dates": [...], attr: [...], ...}}.
     """
 
-    # Validate the caller-supplied attribute expression even when the selected
-    # mode expands it to a canonical field group below. Invalid public input
-    # must fail before provider or database work starts.
-    _parse_attributes(attributes)
     fetch_mode = _resolve_mode(mode)
-    attributes = _mode_to_attributes(fetch_mode)
+    if attributes is None:
+        requested_attributes = _mode_to_attributes(fetch_mode)
+    else:
+        requested_attributes = _parse_attributes(attributes)
+        fetch_mode = _mode_for_attributes(requested_attributes)
+    request = _fetchRequest(
+        indicators, requested_attributes, period, start, end, mode=fetch_mode
+    )
 
-    # request = _fetchRequest(indicators, attributes, period, start, end, interval)
-    request = _fetchRequest(indicators, attributes, period, start, end, mode=fetch_mode)
-    
     manager = fetcher_manager(request)
     manager.managerRoutine()
     financial_data = manager.getResults()
@@ -70,7 +86,7 @@ def fetchData(
 
 def fetch_data(
         indicators: str | list[str],
-        attributes: str | list[str] = "price",
+        attributes: str | list[str] | None = None,
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
@@ -92,7 +108,7 @@ def fetch_data(
 
 def fetch_data_as_dict(
         indicators: str | list[str],
-        attributes: str | list[str] = "price",
+        attributes: str | list[str] | None = None,
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
@@ -115,7 +131,7 @@ def fetch_data_as_dict(
 
 def fetch_data_as_json(
         indicators: str | list[str],
-        attributes: str | list[str] = "price",
+        attributes: str | list[str] | None = None,
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
@@ -139,7 +155,7 @@ def fetch_data_as_json(
 
 def fetchData_as_df(
         indicators: str | list[str],
-        attributes: str | list[str] = "price",
+        attributes: str | list[str] | None = None,
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,
@@ -158,7 +174,7 @@ def fetchData_as_df(
 
 def fetch_data_as_df(
         indicators: str | list[str],
-        attributes: str | list[str] = "price",
+        attributes: str | list[str] | None = None,
         period: str | None = None,
         start: str | None = None,
         end: str | None = None,

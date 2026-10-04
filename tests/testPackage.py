@@ -1,5 +1,5 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # tests/testPackage.py -> PySFT/src
 pysft_src = Path(__file__).resolve().parents[1] / "src"
@@ -8,9 +8,9 @@ if not (pysft_src / "pysft").is_dir():
 
 sys.path.insert(0, str(pysft_src))
 
-import pysft
-
 from testIndicators import indicatorsDB
+
+import pysft
 
 if __name__ == "__main__":
     # indicators = indicatorsDB.TASE
@@ -43,5 +43,3 @@ if __name__ == "__main__":
     # result = pysft.lib.fetchData(["5138094"], attributes=["price", "volume", "exchange", "currency"], period="1m")
 
     today_quote = pysft.lib.fetchData(["1144633"], attributes=["all"])
-
-    ...

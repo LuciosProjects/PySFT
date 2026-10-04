@@ -2,8 +2,12 @@ from __future__ import annotations
 
 import re
 from datetime import date, datetime
-from typing import Iterable, List, Tuple
+
+# Preserve the legacy typing objects available from this module.
+from typing import Iterable, List, Tuple  # noqa: F401, UP035
+
 import pandas as pd
+
 import pysft.core.utilities as utils
 
 # -----------------------------
@@ -95,13 +99,13 @@ _ALLOWED_INTERVALS = {"1d", "1wk", "1mo", "1y"}
 # Attributes returned when the 'info' group is requested — all metadata fields
 # excluding price/timeseries columns (price, last, open, high, low, volume,
 # dates, change_pct, avgDailyVolume3mnth).
-_INFO_ATTRS: List[str] = [
+_INFO_ATTRS: list[str] = [
     "indicator", "name", "ISIN", "quoteType", "currency", "exchange",
     "inceptionDate", "market_cap", "expense_rate",
     "dividendYield", "trailingPE", "forwardPE", "beta",
 ]
 
-def _normalize_indicators(indicators: str | Iterable[str]) -> List[str]:
+def _normalize_indicators(indicators: str | Iterable[str]) -> list[str]:
     """
     Accepts:
       - single string (supports comma/whitespace separated list: 'AAPL, MSFT, 1183441')
@@ -116,7 +120,7 @@ def _normalize_indicators(indicators: str | Iterable[str]) -> List[str]:
 
     return [p.strip().upper() for p in parts if p.strip()]
 
-def _parse_attributes(attributes: str | Iterable[str]) -> List[str]:
+def _parse_attributes(attributes: str | Iterable[str]) -> list[str]:
     """
     Accepts a comma-separated string or a list; maps to canonical attribute names.
     Unknown attributes raise ValueError to fail fast.
@@ -137,7 +141,7 @@ def _parse_attributes(attributes: str | Iterable[str]) -> List[str]:
     elif "info" in lowered:
         get_info_attributes = True
 
-    canon: List[str] = []
+    canon: list[str] = []
     if get_all_attributes:
         for a in _ATTR_ALIASES.values():
             if a not in ("all", "info"):
@@ -156,7 +160,7 @@ def _parse_attributes(attributes: str | Iterable[str]) -> List[str]:
     out, _ = utils.unique(canon)
     return out
 
-def _parse_period(period: str) -> Tuple[pd.Timestamp, pd.Timestamp]:
+def _parse_period(period: str) -> tuple[pd.Timestamp, pd.Timestamp]:
     """
     Parse relative period like '1d', '3w', '2m', '5y' into UTC start/end.
     Months = 30 days, years = 365 days for now.
@@ -186,7 +190,7 @@ def _parse_date_like(d: date | datetime | str | None) -> pd.Timestamp | None:
 
 def _resolve_range(
     period: str | None, start: date | datetime | str | None, end: date | datetime | str | None
-) -> Tuple[pd.Timestamp | None, pd.Timestamp | None]:
+) -> tuple[pd.Timestamp | None, pd.Timestamp | None]:
     """
     Resolve the requested range. period and start/end are mutually exclusive.
     Returns (start_ts, end_ts) or (None, None) for point-in-time requests.

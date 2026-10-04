@@ -2,10 +2,12 @@
 This module contains hebrew to english translation solution tool for PySFT.
 '''
 
-from typing import Optional, Literal
+# [Replit Agent] Removed the unused Optional typing import.
 import asyncio
+from typing import Literal
 
 import requests
+
 try:
     from googletrans import Translator
 except Exception:

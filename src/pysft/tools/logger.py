@@ -3,12 +3,14 @@ Centralized logging configuration for PySFT.
 Enhanced for HTTP API usage with request tracking and log rotation.
 """
 
+import contextvars
 import logging
 import os
-from pathlib import Path
-from typing import Optional
 from logging.handlers import RotatingFileHandler
-import contextvars
+from pathlib import Path
+
+# core's wildcard re-export exposes this legacy typing name.
+from typing import Optional  # noqa: F401
 
 import pysft.core.constants as const
 
@@ -88,7 +90,7 @@ def _setup_root_logger() -> logging.Logger:
     
     return root
 
-def get_logger(name: Optional[str] = None) -> logging.Logger:
+def get_logger(name: str | None = None) -> logging.Logger:
     """
     Get a logger for a module.
     

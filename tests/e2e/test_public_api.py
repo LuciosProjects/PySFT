@@ -7,6 +7,7 @@ import json
 import pandas as pd
 import pytest
 
+from pysft.core.io import _parse_attributes
 from pysft.lib import (
     fetch_data,
     fetch_data_as_df,
@@ -78,6 +79,65 @@ class TestPublicApi:
         result = fetch_data(" aapl, MSFT, AAPL ", mode="price")
 
         assert list(result) == ["AAPL", "MSFT"]
+
+    @pytest.mark.parametrize(
+        ("mode", "attributes"),
+        [
+            ("price", ["name"]),
+            ("info", ["close"]),
+            ("all", ["vol", "dates"]),
+            ("price", "info"),
+            ("info", "all"),
+        ],
+    )
+    def test_explicit_attributes_override_mode_and_aliases_are_canonical(
+        self, pysft_env, provider_gateway, mode, attributes
+    ):
+        provider_gateway.add(YFinanceScenarioFactory.equity())
+
+        result = fetch_data("AAPL", attributes=attributes, mode=mode)["AAPL"]
+
+        assert set(result) == {"dates", *_parse_attributes(attributes)}
+        assert result["dates"] == ["2024-01-02"]
+        if attributes == ["name"]:
+            assert result["name"] == ["AAPL Incorporated"]
+        elif attributes == ["close"]:
+            assert result["last"] == [100.0]
+        elif attributes == ["vol", "dates"]:
+            assert result["volume"] == [1000]
+        elif attributes == "info":
+            assert result["name"] == ["AAPL Incorporated"]
+            assert "price" not in result
+        else:
+            assert result["name"] == ["AAPL Incorporated"]
+            assert result["price"] == [100.0]
+
+    def test_python_aliases_keep_the_explicit_selection_on_cache_hits(
+        self, pysft_env, provider_gateway
+    ):
+        today = pd.Timestamp.now().date().isoformat()
+        provider_gateway.add(YFinanceScenarioFactory.equity(dates=(today,)))
+
+        camel_case = fetchData("AAPL", attributes="name", mode="price")
+        snake_case = fetch_data("AAPL", attributes="name", mode="all")
+        explicit_dict = fetch_data_as_dict(
+            "AAPL", attributes="name", mode="info"
+        )
+        json_output = json.loads(
+            fetch_data_as_json("AAPL", attributes="name", mode="price")
+        )
+        camel_frame = fetchData_as_df(
+            "AAPL", attributes="name", mode="price"
+        )
+        snake_frame = fetch_data_as_df(
+            "AAPL", attributes="name", mode="all"
+        )
+
+        expected = {"AAPL": {"dates": [today], "name": ["AAPL Incorporated"]}}
+        assert camel_case == snake_case == explicit_dict == json_output == expected
+        pd.testing.assert_frame_equal(camel_frame, snake_frame)
+        assert list(camel_frame.columns) == [("AAPL", "name")]
+        assert provider_gateway.calls["AAPL"] == 1
 
 
 class TestPublicInputValidation:

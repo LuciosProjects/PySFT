@@ -61,6 +61,22 @@ curl "http://localhost:8000/fetch?indicators=AAPL,MSFT&attributes=price,volume&p
 curl "http://localhost:8000/health"
 ```
 
+### Fetch preview (Replit development app)
+The Replit preview runs a small browser form for exercising the Python
+`fetchData` routine. Start it locally with:
+
+```bash
+python -m pysft.fetch_preview
+```
+
+In Replit, use the app preview; it starts on port 5000. Enter one or more
+comma-separated indicators and attributes (the attributes field defaults to
+`all`), choose `all`, `price`, or `info`,
+then fetch either by period (for example, `1mo`) or by a start/end date range.
+The page sends a real request through PySFT and displays the complete result as
+formatted JSON. Provider/network failures appear as errors in the page; automated
+tests use controlled provider results and do not contact live providers.
+
 ### Command Line
 ```bash
 # Show version and cache status
@@ -74,6 +90,11 @@ python -m pysft.cli --cache-db /path/to/custom.db
 ```
 
 ## 📚 Usage Examples
+
+When `attributes` is provided, it determines which fields are returned regardless
+of `mode`. If `attributes` is omitted, `mode` selects its usual field preset.
+The `all` and `info` attribute groups are supported, and `dates` is always
+included in each indicator result.
 
 ### Fetch Multiple Indicators with All Data
 ```python
@@ -448,15 +469,20 @@ constants.TASE_TIMEOUT_SEC = 30
 
 Run the comprehensive test suite:
 ```bash
-# All tests
-python -m pytest tests/
+# [Replit Agent] Install locked test tools on Python 3.11 to match CI.
+uv sync --locked --group test --python 3.11
 
-# Specific test
-python -m pytest tests/test_caching_pipeline.py -v
+# [Replit Agent] Run deterministic tests with the locked test group.
+uv run --locked --group test --python 3.11 pytest -m "not live"
 
-# With coverage
-python -m pytest --cov=src/pysft tests/
+# [Replit Agent] Run an existing cache test with the locked test group.
+uv run --locked --group test --python 3.11 pytest tests/test_fetcher_manager_cache.py -v
+
+# [Replit Agent] Record deterministic coverage using locked test tools.
+uv run --locked --group test --python 3.11 pytest -m "not live" --cov=src/pysft --cov-report=term-missing
 ```
+
+See [tests/README.md](tests/README.md) for suite structure and opt-in live tests.
 
 ## 🤝 Contributing
 

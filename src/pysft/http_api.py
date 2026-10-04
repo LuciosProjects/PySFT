@@ -42,7 +42,7 @@ class PySFTRequestHandler(BaseHTTPRequestHandler):
         """Send an error response as JSON."""
         self._send_json(status, {"error": message})
 
-    def do_GET(self) -> None:  # noqa: N802 (HTTPServer naming convention)
+    def do_GET(self) -> None:
         """Handle GET requests for health and fetch endpoints."""
         parsed = urlparse(self.path)
         if parsed.path == "/health":
@@ -59,7 +59,7 @@ class PySFTRequestHandler(BaseHTTPRequestHandler):
                 )
                 return
 
-            attributes = _split_csv(_first(params, "attributes")) or "price"
+            attributes = _split_csv(_first(params, "attributes"))
             period = _first(params, "period")
             start = _first(params, "start")
             end = _first(params, "end")

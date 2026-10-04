@@ -6,6 +6,7 @@
 
 from enum import Enum
 
+
 class E_FetchMode(Enum):
     ALL         = "all"
     PRICE       = "price"

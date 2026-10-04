@@ -2,7 +2,6 @@ import pytest
 
 from pysft.core.tase_specific_utils import get_tase_datahub_api_headers
 
-
 pytestmark = [pytest.mark.unit]
 
 

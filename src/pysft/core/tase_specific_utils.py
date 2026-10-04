@@ -1,25 +1,25 @@
+import json
 import os
-
-from typing import Any, Literal
 import re
+import sqlite3
 import time
-import numpy as np
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import date
-import json
-from contextlib import contextmanager
+from typing import Any, Literal
+from typing import cast as _cast
 
+import exchange_calendars
+import numpy as np
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
-import exchange_calendars
-import sqlite3
+from bs4 import Tag as _Tag
 
 import pysft.core.constants as const
+import pysft.core.utilities as utils
 from pysft.core.enums import E_FetchType
 from pysft.core.structures import _indicator_data
-import pysft.core.utilities as utils
-
 from pysft.tools.logger import get_logger
 
 TASE_DATAHUB_API_KEY_ENV = "TASE_DATAHUB_API_KEY"
@@ -82,26 +82,57 @@ TASE_CURRENCY_MAP = {
 
 @dataclass
 class MAYA_TASE_URLS:
-    MTF_LISTING_API                 = f"https://datawise.tase.co.il/v1/fund/fund-list?listingStatusId=1" # 1 for active funds, the only type that is traded on TASE
-    TRADED_SECURITIES_LISTING_API   = lambda year, month, day: f"https://datawise.tase.co.il/v1/basic-securities/trade-securities-list/{year}/{month}/{day}"
+    # [Replit Agent] Use a plain listing URL because it contains no interpolation.
+    MTF_LISTING_API                 = "https://datawise.tase.co.il/v1/fund/fund-list?listingStatusId=1" # 1 for active funds, the only type that is traded on TASE
+
+    # [Replit Agent] Replace the assigned lambda with a function, keeping its signature and URL.
+    # These legacy namespace functions are called on the class. Explicit Any
+    # preserves their descriptor behavior without inferring a bound self type.
+    def TRADED_SECURITIES_LISTING_API(year: Any, month: int | str, day: int | str) -> str:
+        return f"https://datawise.tase.co.il/v1/basic-securities/trade-securities-list/{year}/{month}/{day}"
+
     SECURITIES_LISTING_API          = "https://datawise.tase.co.il/v1/basic-securities/securities-list"
     COMPANIES_LISTING_API           = "https://datawise.tase.co.il/v1/basic-securities/companies-list"
     CHART                           = "https://api.tase.co.il/api/charts/gethistorydata"
-    MTF                             = lambda indicator: f"https://maya.tase.co.il/he/funds/mutual-funds/{indicator}/major_data" # Base URL for TASE MTF
-    ETF                             = lambda indicator: f"https://market.tase.co.il/en/market_data/etf/{indicator}/major_data" # Base URL for TASE ETF
-    SECURITY                        = lambda indicator: f"https://market.tase.co.il/en/market_data/security/{indicator}/major_data" # Base URL for TASE Security
+
+    # [Replit Agent] Replace the assigned lambda without changing the mutual-fund URL.
+    def MTF(indicator: Any) -> str:
+        return f"https://maya.tase.co.il/he/funds/mutual-funds/{indicator}/major_data" # Base URL for TASE MTF
+
+    # [Replit Agent] Replace the assigned lambda without changing the ETF URL.
+    def ETF(indicator: Any) -> str:
+        return f"https://market.tase.co.il/en/market_data/etf/{indicator}/major_data" # Base URL for TASE ETF
+
+    # [Replit Agent] Replace the assigned lambda without changing the security URL.
+    def SECURITY(indicator: Any) -> str:
+        return f"https://market.tase.co.il/en/market_data/security/{indicator}/major_data" # Base URL for TASE Security
 
 @dataclass
 class TASE_URLS:
-    THEMARKER = lambda indicator: f"https://finance.themarker.com/etf/{indicator}" # Base URL for TheMarker
+    # [Replit Agent] Replace the assigned lambda without changing the TheMarker URL.
+    # Keep the legacy class-callable descriptor; see MAYA_TASE_URLS above.
+    def THEMARKER(indicator: Any) -> str:
+        return f"https://finance.themarker.com/etf/{indicator}" # Base URL for TheMarker
+
     THEMARKER_GQL = "https://www.themarker.com/gql"
     BIZPORTAL = "https://www.bizportal.co.il/"
-    BIZPORTAL_GENERALVIEW = lambda quoteType, indicator:    f"https://www.bizportal.co.il/mutualfunds/quote/generalview/{indicator}" if quoteType == "MTF" else \
-                                                            f"https://www.bizportal.co.il/tradedfund/quote/generalview/{indicator}" if quoteType == "ETF" else \
-                                                            f"https://www.bizportal.co.il/capitalmarket/quote/generalview/{indicator}"
-    BIZPORTAL_DIVIDENDS = lambda quoteType, indicator:      f"https://www.bizportal.co.il/mutualfunds/quote/dividends/{indicator}" if quoteType == "MTF" else \
-                                                            f"https://www.bizportal.co.il/tradedfund/quote/dividends/{indicator}" if quoteType == "ETF" else \
-                                                            f"https://www.bizportal.co.il/capitalmarket/quote/dividends/{indicator}"
+
+    # [Replit Agent] Replace the assigned lambda while retaining all quote-type URL branches.
+    def BIZPORTAL_GENERALVIEW(quoteType: Any, indicator: str) -> str:
+        return (
+            f"https://www.bizportal.co.il/mutualfunds/quote/generalview/{indicator}" if quoteType == "MTF" else
+            f"https://www.bizportal.co.il/tradedfund/quote/generalview/{indicator}" if quoteType == "ETF" else
+            f"https://www.bizportal.co.il/capitalmarket/quote/generalview/{indicator}"
+        )
+
+    # [Replit Agent] Replace the assigned lambda while retaining all dividend URL branches.
+    def BIZPORTAL_DIVIDENDS(quoteType: Any, indicator: str) -> str:
+        return (
+            f"https://www.bizportal.co.il/mutualfunds/quote/dividends/{indicator}" if quoteType == "MTF" else
+            f"https://www.bizportal.co.il/tradedfund/quote/dividends/{indicator}" if quoteType == "ETF" else
+            f"https://www.bizportal.co.il/capitalmarket/quote/dividends/{indicator}"
+        )
+
     BIZPORTAL_GRAPHDATA = "https://www.bizportal.co.il/ajax/biz_papers_helper.ashx"
 
 @dataclass
@@ -152,22 +183,23 @@ def get_element_by_path(soup: BeautifulSoup, path: str) -> BeautifulSoup | None:
     Navigate the BeautifulSoup HTML tree based on a custom path notation.
     """
 
-    current_element = soup
+    current_element: _Tag = soup
     for step in path:
         if step == "^":
-            current_element = current_element.parent
+            next_element = current_element.parent
         elif step == ">":
-            current_element = current_element.find_next_sibling()
+            next_element = current_element.find_next_sibling()
         elif step == "<":
-            current_element = current_element.find_previous_sibling()
+            next_element = current_element.find_previous_sibling()
         elif step == "v":
-            current_element = current_element.findChild()
+            next_element = current_element.findChild()
         else:
             logger.error(f"Invalid path step: {step}")
             return None
 
-        if current_element is None:
+        if next_element is None:
             return None
+        current_element = next_element
     
     return current_element if isinstance(current_element, BeautifulSoup) else None
 
@@ -192,7 +224,7 @@ def get_tase_mtf_listing():
             break # Successful fetch, exit loop
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch MTF listings from TASE DataWise API: {str(e)}", 
+                                                    f"Failed to fetch MTF listings from TASE DataWise API: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
@@ -221,7 +253,7 @@ def get_tase_security_listings(target_date: date):
             break # Successful fetch, exit loop
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch security listings from TASE DataWise API: {str(e)}", 
+                                                    f"Failed to fetch security listings from TASE DataWise API: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
@@ -249,7 +281,7 @@ def get_tase_company_listings():
             break # Successful fetch, exit loop
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch company listings from TASE DataWise API: {str(e)}", 
+                                                    f"Failed to fetch company listings from TASE DataWise API: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
@@ -266,7 +298,8 @@ def find_YF_equivalent(requests: dict[str, dict[str, Any]]) -> bool:
         with get_tase_security_db_connection() as conn:
             for req in requests.values():
                 # lookup security info from local TASE security list database
-                dataPt = conn.execute(f'''
+                # [Replit Agent] Use a plain SQL string; parameters are still bound separately.
+                dataPt = conn.execute('''
                     SELECT isin, symbol
                     FROM security_list
                     WHERE indicator = ?
@@ -280,7 +313,7 @@ def find_YF_equivalent(requests: dict[str, dict[str, Any]]) -> bool:
                     req[const.REQUEST_FIELD].data.ISIN = row[0]
                     req[const.REQUEST_FIELD].indicator = req[const.REQUEST_FIELD].data.indicator = row[1].replace('.','-') + ".TA" # add .TA suffix for TASE securities
     except Exception as e:
-        logger.warning(f"Failed to lookup TASE security database: {str(e)}")
+        logger.warning(f"Failed to lookup TASE security database: {e!s}")
 
     return any([req[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for req in requests.values()])
 
@@ -325,7 +358,7 @@ def infer_tase_quote_type_from_url(
             if utils.handle_fetch_attempt_failure(
                 attempt,
                 const.MAX_ATTEMPTS,
-                f"Failed to perform HEAD request for {url}: {str(e)}",
+                f"Failed to perform HEAD request for {url}: {e!s}",
                 utils.random_delay,
                 (0.2, 1),
             ):
@@ -391,7 +424,7 @@ def get_Bizportal_dividend_data(data: _indicator_data, session: requests.Session
 
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch Bizportal dividend data for {data.indicator}: {str(e)}", 
+                                                    f"Failed to fetch Bizportal dividend data for {data.indicator}: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
@@ -454,7 +487,7 @@ def get_Bizportal_dividend_data(data: _indicator_data, session: requests.Session
         return True
         
     except Exception as e:
-        logger.error(f"Error parsing Bizportal dividend content for {data.indicator}: {str(e)}")
+        logger.error(f"Error parsing Bizportal dividend content for {data.indicator}: {e!s}")
         return False
 
 def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session | None = None) -> bool:
@@ -486,7 +519,7 @@ def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session 
 
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch Bizportal expense rate data for {data.indicator}: {str(e)}", 
+                                                    f"Failed to fetch Bizportal expense rate data for {data.indicator}: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
@@ -521,7 +554,7 @@ def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session 
                 data.name = temp.get_text(strip=True)
 
     except Exception as e:
-        logger.error(f"Error parsing Bizportal expense rate content for {data.indicator}: {str(e)}")
+        logger.error(f"Error parsing Bizportal expense rate content for {data.indicator}: {e!s}")
         return False
 
     return True
@@ -536,46 +569,13 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
     if const.SKIP_BIZPORTAL:
         return False # Skipping Bizportal related fetch as per settings
 
-    session.headers.pop("Accept-Encoding", None)
-    session.headers["user-agent"] = const.TASE_CONTENT_REQUEST_HEADERS["user-agent"]
-
-    response = None
-    for attempt in range(const.MAX_ATTEMPTS):
-        try:
-            response = session.get( TASE_URLS.BIZPORTAL_GENERALVIEW(data.quoteType, data.indicator), 
-                                    timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
-            response.raise_for_status()
-
-            if response is None:
-                continue
-            elif response.status_code == 200:
-                break  # Successful fetch
-
-        except Exception as e:
-            if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch Bizportal data for {data.indicator}: {str(e)}", 
-                                                    utils.random_delay, (0.2, 1)):
-                continue
-            else:
-                return False
-    
-    if response is None:
+    general_view = _get_Bizportal_generalview_data(data, session)
+    if general_view is None:
         return False
-    
+    soup, pairs = general_view
+
     try:
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        dt_tags = soup.select("dl dt")
-        dd_tags = soup.select("dl dd")
-
-        pairs = {}
-        for dd, dt in zip(dd_tags, dt_tags):
-            key = dt.get_text(strip=True)
-            value = dd.get_text(strip=True)
-            pairs[key] = value
-
-        data.currency = TASE_CURRENCY_MAP[pairs["מטבע"]]
-        # data.currency = "ILA" # Default currency, most if not all TASE funds are traded in ILA
+        _set_Bizportal_currency(data, pairs["מטבע"])
 
         if data.quoteType == "MTF" and TASE_MTF_LISTING is not None:
             fund = [res for res in TASE_MTF_LISTING if str(res.get("fundId", "")) == data.indicator]
@@ -604,26 +604,92 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
         if data.quoteType != "STOCK":
             data.expense_rate = (float(pairs["דמי ניהול"].replace("%", "")) + \
                                 float(pairs["דמי נאמנות"].replace("%", "")))
-        
+
             data.inceptionDate = pd.to_datetime(pairs["תאריך הקמה"], format="%d/%m/%Y")
 
             # Find the key that contains "היקף נכסים"
-            asset_key = next((k for k in pairs.keys() if "היקף נכסים" in k), None)
+            asset_key = next((k for k in pairs if "היקף נכסים" in k), None)
         else:
             data.trailingPE = float(pairs["מכפיל רווח(12 חודשים אחרונים)"]) if "מכפיל רווח(12 חודשים אחרונים)" in pairs else 0.0
-            asset_key = next((k for k in pairs.keys() if "שווי שוק" in k), None)
+            asset_key = next((k for k in pairs if "שווי שוק" in k), None)
 
         # Determine market cap scale
-        MC_scale = re.findall(r"\([א-ת]+?'? ₪\)", asset_key) if asset_key else []
-        MC_scale = re.sub(r"[\(\) ₪']", "", MC_scale[0]) if MC_scale else ""
+        MC_scale_matches = re.findall(r"\([א-ת]+?'? ₪\)", asset_key) if asset_key else []
+        MC_scale = re.sub(r"[\(\) ₪']", "", MC_scale_matches[0]) if MC_scale_matches else ""
 
         # Apply scaling to market cap value
-        data.market_cap = scale_value(float(pairs[asset_key].replace(",", "")), MC_scale)
+        data.market_cap = scale_value(float(pairs[_cast(str, asset_key)].replace(",", "")), MC_scale)
 
     except Exception as e:
-        logger.error(f"Error parsing Bizportal content for {data.indicator}: {str(e)}")
+        logger.error(f"Error parsing Bizportal content for {data.indicator}: {e!s}")
         return False
 
+    return True
+
+
+def _get_Bizportal_generalview_data(
+    data: _indicator_data, session: requests.Session
+) -> tuple[BeautifulSoup, dict[str, str]] | None:
+    """Fetch and parse the Bizportal general-view page shared by info and price paths."""
+    session.headers.pop("Accept-Encoding", None)
+    session.headers["user-agent"] = const.TASE_CONTENT_REQUEST_HEADERS["user-agent"]
+
+    response = None
+    for attempt in range(const.MAX_ATTEMPTS):
+        try:
+            response = session.get( TASE_URLS.BIZPORTAL_GENERALVIEW(data.quoteType, data.indicator), 
+                                    timeout=const.TASE_HTML_FETCH_TIMEOUT.seconds())
+            response.raise_for_status()
+
+            if response is None:
+                continue
+            elif response.status_code == 200:
+                break  # Successful fetch
+
+        except requests.RequestException as e:
+            if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
+                                                    f"Failed to fetch Bizportal data for {data.indicator}: {e!s}",
+                                                    utils.random_delay, (0.2, 1)):
+                continue
+            else:
+                return None
+    
+    if response is None:
+        return None
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+    dt_tags = soup.select("dl dt")
+    dd_tags = soup.select("dl dd")
+    pairs = {
+        dt.get_text(strip=True): dd.get_text(strip=True)
+        for dd, dt in zip(dd_tags, dt_tags)
+    }
+    return soup, pairs
+
+
+def _set_Bizportal_currency(data: _indicator_data, currency_label: str) -> None:
+    """Store the public currency alias and transient source quote-unit label."""
+    source_currency = TASE_CURRENCY_MAP[currency_label]
+    data.currency = const.CURRENCY_NORMALIZATION[source_currency]["alias"]
+    # Keep this source-specific label off the public data model and its cache schema.
+    data.__dict__["_bizportal_currency_label"] = currency_label
+
+
+def get_Bizportal_currency(data: _indicator_data, session: requests.Session) -> bool:
+    """Load only Bizportal currency context for price-only MTF fetches."""
+    if const.SKIP_BIZPORTAL:
+        return False
+
+    general_view = _get_Bizportal_generalview_data(data, session)
+    if general_view is None:
+        return False
+
+    _, pairs = general_view
+    try:
+        _set_Bizportal_currency(data, pairs["מטבע"])
+    except KeyError as e:
+        logger.error(f"Error parsing Bizportal currency for {data.indicator}: {e!s}")
+        return False
     return True
 
 def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -> bool:
@@ -637,7 +703,16 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
     if const.SKIP_BIZPORTAL:
         return False # Skipping Bizportal related fetch as per settings
 
-    payload = {
+    # A cached public currency alias does not preserve the provider's quote unit.
+    needs_currency_context = not data.currency or (
+        data.quoteType == "MTF"
+        and data.currency == "ILS"
+        and not getattr(data, "_bizportal_currency_label", "")
+    )
+    if needs_currency_context and not get_Bizportal_currency(data, session):
+        return False
+
+    payload: dict[str, str | int] = {
         "action": "get_paper_yearly_graph",
         "request_type": 1,
         "paper_id": int(data.indicator),
@@ -673,14 +748,23 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
             break  # Successful fetch
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch Bizportal graph data for {data.indicator}: {str(e)}", 
+                                                    f"Failed to fetch Bizportal graph data for {data.indicator}: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
                 return False
             
-    currency_factor = const.CURRENCY_NORMALIZATION[data.currency]['factor']
-    alias           = const.CURRENCY_NORMALIZATION[data.currency]['alias']
+    source_currency_label = getattr(data, "_bizportal_currency_label", "")
+    source_currency = TASE_CURRENCY_MAP.get(source_currency_label, data.currency)
+    normalization = const.CURRENCY_NORMALIZATION.get(source_currency)
+    if normalization is None:
+        logger.error(f"Unknown Bizportal currency {data.currency!r} for {data.indicator}")
+        return False
+
+    currency_factor = normalization["factor"]
+    if data.quoteType == "MTF" and source_currency_label == "ש\"ח":
+        currency_factor *= const.CURRENCY_NORMALIZATION["ILA"]["factor"]
+    alias = normalization["alias"]
 
     data.currency = alias
 
@@ -706,7 +790,7 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
             elif date < data.dates[0]:
                 break  # No need to check older dates
             
-        indices    = list(indices)[::-1] # Reverse to chronological order
+        ordered_indices = list(indices)[::-1] # Reverse to chronological order
         all_dates  = all_dates[::-1]  # Reverse to chronological order
         all_prices = all_prices[::-1]  # Reverse to chronological order
 
@@ -717,9 +801,9 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
         data.high   = data.price
         data.low    = data.price
         data.last   = data.price[-1] if data.price else 0.0 # Last price is the most recent price
-        data.volume = [json_data[i]["V_p"] for i in indices]
+        data.volume = [json_data[i]["V_p"] for i in ordered_indices]
 
-        data.change_pct = [(json_data[i]["C_p"]/json_data[i+1]["C_p"] - 1) if (i+1) < len(json_data) else 0.0 for i in indices]
+        data.change_pct = [(json_data[i]["C_p"]/json_data[i+1]["C_p"] - 1) if (i+1) < len(json_data) else 0.0 for i in ordered_indices]
 
 
     else:
@@ -764,13 +848,13 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
             break  # Successful fetch
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch MAYA TASE general page for {data.indicator}: {str(e)}", 
+                                                    f"Failed to fetch MAYA TASE general page for {data.indicator}: {e!s}",
                                                     utils.random_delay, (0.2, 1)):
                 continue
             else:
                 return False
 
-    payload = {
+    payload: dict[str, str | int] = {
         "ct": 3,     # 3 is for candle chart data
         "ot": 1,
         "lang": 1,
@@ -811,7 +895,7 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
             break  # Successful fetch
         except Exception as e:
             if utils.handle_fetch_attempt_failure(attempt, const.MAX_ATTEMPTS,
-                                                    f"Failed to fetch Bizportal graph data for {data.indicator}: {str(e)}", 
+                                                    f"Failed to fetch Bizportal graph data for {data.indicator}: {e!s}",
                                                     utils.random_delay, (0.5, 3)):
                 continue
             else:

@@ -2,22 +2,23 @@
 from __future__ import annotations
 
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
 import inspect
 import random
 import time
 import traceback
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from typing import Any, Callable, Iterable
+from typing import Any, Callable, Iterable  # noqa: UP035 (legacy module exports)
+from typing import cast as _cast
+
 import psutil
 
 # ---- Package imports ----
 from pysft.core import constants as const
 from pysft.core.enums import E_FetchType
 from pysft.core.fetch_task import fetchTask
-from pysft.core.structures import outputCls
-from pysft.core.models import indicatorRequest
-import pysft.core.utilities as utils
+
+# [Replit Agent] Removed unused outputCls, indicatorRequest, and utilities imports.
 
 # ---------------------------
 # Result structures
@@ -423,7 +424,7 @@ class taskScheduler:
         for attempt in range(env.retries + 1):
             try:
                 return await asyncio.wait_for(self._invoke_task(env.task), timeout=env.timeout_s)
-            except asyncio.TimeoutError as e:
+            except TimeoutError as e:
                 last_exc = e
             except BaseException as e:
                 last_exc = e
@@ -435,7 +436,7 @@ class taskScheduler:
 
         assert last_exc is not None
         try:
-            setattr(last_exc, "_pysft_attempts", env.retries + 1)
+            _cast(Any, last_exc)._pysft_attempts = env.retries + 1
         except Exception:
             pass
         raise last_exc

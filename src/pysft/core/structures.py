@@ -4,10 +4,12 @@
 """
 
 from dataclasses import dataclass, field
-import pandas as pd
 from datetime import date as Date
 
+import pandas as pd
+
 from pysft.core.enums import E_FetchMode
+
 
 class outputCls:
     """

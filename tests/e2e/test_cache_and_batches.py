@@ -32,6 +32,23 @@ class TestCacheLifecycle:
         assert pysft_env.scalar_row_count("AAPL") > 0
         assert pysft_env.price_row_count("AAPL") == 1
 
+    def test_explicit_subset_matches_between_fresh_fetch_and_cache_hit(
+        self, pysft_env, provider_gateway
+    ):
+        today = pd.Timestamp.now().date().isoformat()
+        provider_gateway.add(YFinanceScenarioFactory.equity(dates=(today,)))
+
+        fresh = fetch_data(
+            "AAPL", attributes=["name", "price"], mode="info"
+        )
+        cached = fetch_data(
+            "AAPL", attributes=["name", "price"], mode="price"
+        )
+
+        assert cached == fresh
+        assert set(fresh["AAPL"]) == {"dates", "name", "price"}
+        assert provider_gateway.calls["AAPL"] == 1
+
     def test_expired_metadata_is_refetched(self, pysft_env, provider_gateway):
         provider_gateway.add(YFinanceScenarioFactory.equity())
         fetch_data("AAPL", mode="info")
@@ -39,6 +56,22 @@ class TestCacheLifecycle:
 
         fetch_data("AAPL", mode="info")
 
+        assert provider_gateway.calls["AAPL"] == 2
+
+    def test_explicit_selection_checks_freshness_only_for_selected_fields(
+        self, pysft_env, provider_gateway
+    ):
+        provider_gateway.add(YFinanceScenarioFactory.equity())
+        fetch_data("AAPL", attributes="expense_rate", mode="price")
+        pysft_env.expire_scalar_values("AAPL")
+
+        name = fetch_data("AAPL", attributes="name", mode="price")
+        expense_rate = fetch_data(
+            "AAPL", attributes="expense_rate", mode="price"
+        )
+
+        assert name["AAPL"]["name"] == ["AAPL Incorporated"]
+        assert expense_rate["AAPL"]["expense_rate"] == [0.0]
         assert provider_gateway.calls["AAPL"] == 2
 
     def test_cache_can_be_disabled_without_writing_rows(

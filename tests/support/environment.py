@@ -101,6 +101,18 @@ class PySFTTestEnvironment:
         )
         self.manager.connection.commit()
 
+    def set_price_version(
+        self, indicator: str, version: int | None, date: str | None = None
+    ) -> None:
+        """Simulate legacy cache provenance without touching repository databases."""
+        query = "UPDATE price_history SET normalization_version = ? WHERE indicator = ?"
+        params: tuple[Any, ...] = (version, indicator)
+        if date is not None:
+            query += " AND date = ?"
+            params += (date,)
+        self.manager.connection.execute(query, params)
+        self.manager.connection.commit()
+
     def _row_count(self, table: str, indicator: str | None) -> int:
         if table not in {"indicator_attributes", "price_history"}:
             raise ValueError(f"Unsupported test table: {table}")

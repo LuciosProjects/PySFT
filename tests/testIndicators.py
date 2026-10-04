@@ -1,7 +1,7 @@
 
-from dataclasses import dataclass, field
-from typing import Literal
 import random
+from dataclasses import dataclass
+from typing import Literal
 
 MYPORTFOLIO = [ # TASE indicators
                 "5138094", "1144633", "5111422", "5117379", "1159094", "1159169", "1186063", "1183441", "5142088",

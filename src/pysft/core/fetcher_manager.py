@@ -1,25 +1,28 @@
-from typing import TYPE_CHECKING, Any, Set
-import pandas as pd
+# [Replit Agent] Removed the unused Set typing import.
+from typing import TYPE_CHECKING, Any
+from typing import cast as _cast
+
 import numpy as np
+import pandas as pd
 
 # ---- Package imports ----
+# [Replit Agent] Removed the unused E_FetchType import.
 import pysft.core.constants as const
-from pysft.core.enums import E_FetchType
-from pysft.core.utilities import classify_fetch_types, create_task_list
-from pysft.core.models import fetcher_settings
-from pysft.core.database import get_db_manager, _get_timeseries_fields
-from pysft.core.structures import indicatorRequest, _indicator_data
-from pysft.core.constants import DB_ENABLED
+
 # from pysft.core.io import _parse_attributes
-
 import pysft.core.tase_specific_utils as tase_utils
-
+from pysft.core.constants import DB_ENABLED
+from pysft.core.database import _get_timeseries_fields, get_db_manager
+from pysft.core.enums import E_FetchMode
+from pysft.core.models import fetcher_settings
+from pysft.core.price_normalization import required_price_normalization_version
+from pysft.core.structures import _indicator_data, indicatorRequest
 from pysft.core.task_scheduler import taskScheduler
+from pysft.core.utilities import classify_fetch_types, create_task_list
 
 if TYPE_CHECKING:
-    from pysft.core.structures import indicatorRequest
-    from pysft.core.models import _fetchRequest
     from pysft.core.fetch_task import fetchTask
+    from pysft.core.models import _fetchRequest
 
 
 def _select_cached_date_span(
@@ -36,7 +39,7 @@ def _select_cached_date_span(
         return min(
             range(len(cached_dates)),
             key=lambda position: abs(
-                (pd.Timestamp(cached_dates[position]) - target).total_seconds()
+                 (pd.Timestamp(_cast(pd.Timestamp, cached_dates[position])) - target).total_seconds()
             ),
         )
 
@@ -210,10 +213,22 @@ class fetcher_manager:
         indicators_to_fetch: list[str] = []
 
         # Check if this is a timeseries request (has date range)
+        requested_timeseries = any(
+            attr in self._timeseries_fields for attr in self.parsedInput.attributes
+        )
         is_timeseries_request = self._is_timeseries_request()
         requested_dates = self._get_requested_dates() if is_timeseries_request else pd.DatetimeIndex([])
         
         for indicator in self.parsedInput.indicators:
+            # An obsolete interior row must not turn a partially valid span into
+            # a complete cache hit. Refetch the range without reusing stale prices.
+            if requested_timeseries and db.has_outdated_price_history(
+                indicator,
+                pd.Timestamp(self.settings.start_date),
+                pd.Timestamp(self.settings.end_date),
+            ):
+                indicators_to_fetch.append(indicator)
+                continue
             # Get cached scalar data and check freshness
             cached_data, scalar_fresh = db.get_cached_data(indicator, self.parsedInput.attributes)
             
@@ -246,7 +261,6 @@ class fetcher_manager:
                         # Uncertainty in cached span, need to fetch
                         indicators_to_fetch.append(indicator)
                         continue
-                    requested_dates = cached_span
                 
                     # All dates cached and scalars fresh - fully cached
                     hist_data = db.get_historical_data(
@@ -273,6 +287,27 @@ class fetcher_manager:
                         # No historical data found, need to fetch
                         indicators_to_fetch.append(indicator)
             
+            elif cached_data and scalar_fresh and not requested_timeseries:
+                # Metadata-only selections do not depend on price-history cache
+                # rows. Recreate the request's date envelope without requiring
+                # unrelated historical data to be present.
+                request_dates = list(
+                    pd.date_range(
+                        start=self.settings.start_date, end=self.settings.end_date
+                    )
+                )
+                req = indicatorRequest(
+                    indicator=indicator,
+                    dates=request_dates,
+                    mode=self.parsedInput.mode,
+                )
+                req.data = cached_data
+                req.data.dates = request_dates
+                req.original_indicator = indicator
+                req.success = True
+                req.message = "Data retrieved from database cache."
+                cached_results[indicator] = req
+                self.cached_indicators.append(indicator)
             elif cached_data and scalar_fresh:
                 # Check if price exists in cached_data for the requested date (for non-timeseries, just current price)
                 # All dates cached and scalars fresh - fully cached
@@ -308,6 +343,15 @@ class fetcher_manager:
         
         # Store cached results for aggregation
         if cached_results:
+            if self.parsedInput.mode == E_FetchMode.PRICE:
+                # Match fresh requests: last is the final requested close, not
+                # a scalar metadata default (which can be zero in the cache).
+                for req in cached_results.values():
+                    prices = req.data.price
+                    if isinstance(prices, (list, np.ndarray)) and len(prices):
+                        req.data.last = float(prices[-1])
+                    elif isinstance(prices, (float, int, np.floating)):
+                        req.data.last = float(prices)
             if not hasattr(self, '_cached_results'):
                 self._cached_results = {}
             self._cached_results.update(cached_results)
@@ -398,13 +442,18 @@ class fetcher_manager:
                 for field_name in data.__dataclass_fields__:
                     value = getattr(data, field_name)
                     if  value is not None and \
-                        ((isinstance(value, list) or isinstance(value, np.ndarray)) and len(value) > 0) or \
+                        (isinstance(value, (list, np.ndarray)) and len(value) > 0) or \
                         value != 0 or value != 0.0 or value != "":
                         fetched_fields.append(field_name)
                 
                 # Cache metadata and metrics
                 db.cache_indicator_data(indicator, data, fetched_fields)
                 
+                # Metadata-only fetches have default price fields, not refreshed
+                # prices. Never replace history or certify its unit version.
+                if res.mode == E_FetchMode.INFO:
+                    continue
+
                 # Cache data
                 db.cache_historical_data(
                     indicator=indicator,
@@ -414,7 +463,10 @@ class fetcher_manager:
                     low_prices=data.low,
                     close_prices=data.price,
                     volumes=data.volume,
-                    change_pcts=data.change_pct
+                    change_pcts=data.change_pct,
+                    normalization_version=required_price_normalization_version(
+                        indicator, data.quoteType
+                    ),
                     # market_caps=data.market_cap if isinstance(data.market_cap, list) or isinstance(data.market_cap, np.ndarray) else None
                 )
 

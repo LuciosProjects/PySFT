@@ -4,8 +4,8 @@ Command-line interface for PySFT.
 Provides CLI access to financial data fetching and database management.
 """
 
+# [Replit Agent] Removed the unused sys import; CLI behavior is unchanged.
 import argparse
-import sys
 from pathlib import Path
 
 from pysft.core import constants

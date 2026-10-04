@@ -16,17 +16,18 @@ Most fetchers in PySFT are I/O-bound and blocking (requests / 3rd-party libs).
 """
 
 from __future__ import annotations
+
 import time
 
 # ---- Standard library imports ----
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Callable  # noqa: UP035 (legacy module export)
 
 # ---- Package imports ----
 from pysft.core import constants as const
 from pysft.core.enums import E_FetchType
 from pysft.core.structures import indicatorRequest
-# from pysft.core import utilities as utils
 
+# from pysft.core import utilities as utils
 from pysft.fetchers.fetch_yfinance import fetch_yfinance
 from pysft.fetchers.TASE import fetch_TASE
 

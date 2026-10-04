@@ -14,22 +14,22 @@
 """
 
 # ---- Standard library imports ----
-from typing import TYPE_CHECKING, Any, Callable
-import numpy as np
-import time
-import os
 import json
+import os
+import time
+from typing import TYPE_CHECKING, Any, Callable  # noqa: UP035 (legacy module export)
+
+import numpy as np
 import pandas as pd
 
 # ---- Package imports ----
 import pysft.core.constants as const
 from pysft.core.enums import E_FetchMode, E_FetchType
-from pysft.core.structures import indicatorRequest, outputCls
-
 from pysft.core.fetch_task import fetchTask
-
 from pysft.core.models import _YF_fetchReq_Container
 
+# [Replit Agent] Removed the unused outputCls import.
+from pysft.core.structures import indicatorRequest
 from pysft.tools.logger import get_logger
 
 if TYPE_CHECKING:
@@ -79,7 +79,7 @@ def classify_fetch_types(manager: 'fetcher_manager'):
         with open(json_path, 'r') as f:
             international_vault = json.load(f)
 
-    has_tase, is_tase_indicator = has_tase_indicators(indicators)
+    _has_tase, is_tase_indicator = has_tase_indicators(indicators)
     # is_historical = has_tase and (manager.settings.data_length > 1)
     # is_historical = False # Always use TASE_FAST for TASE indicators for now
     
@@ -96,7 +96,7 @@ def classify_fetch_types(manager: 'fetcher_manager'):
 
         fetchType = E_FetchType.NULL
         if is_tase_indicator[indicator]:
-            if const.USE_INTERNATIONAL_VAULT and indicator in international_vault.keys():
+            if const.USE_INTERNATIONAL_VAULT and indicator in international_vault:
                 # If the indicator is found in the international vault, use yfinance
                 requests[indicator][const.FETCH_TYPE_FIELD] = E_FetchType.YFINANCE
 
@@ -262,7 +262,8 @@ def safe_extract_date_ts(dates: pd.DatetimeIndex) -> list[pd.Timestamp]:
             if converted_date is not None:
                 date_ts.append(converted_date)
         except Exception:
-            logger.error(f"Failed to convert dates to ts array.")
+            # [Replit Agent] Use a plain string because this log message has no interpolation.
+            logger.error("Failed to convert dates to ts array.")
 
     return date_ts
 
@@ -290,20 +291,28 @@ def random_delay_normal(mean_seconds: float = 1.0, stddev_seconds: float = 0.5):
 # Type manipulation utilities
  # Helpers to coerce numpy -> native
 def _to_float(x) -> float | None:
-    if x is None: return None
-    if isinstance(x, np.generic): return float(x.item())
+    # [Replit Agent] Expand one-line branches without changing float conversion behavior.
+    if x is None:
+        return None
+    if isinstance(x, np.generic):
+        return float(x.item())
     return float(x)
 
 def _to_int(x) -> int | None:
-    if x is None: return None
+    # [Replit Agent] Expand one-line branches without changing integer conversion behavior.
+    if x is None:
+        return None
     if isinstance(x, (bytes, bytearray, memoryview)):
         # Stored as BLOB by mistake; decode little-endian unsigned
         return int.from_bytes(bytes(x), byteorder="little", signed=False)
-    if isinstance(x, np.generic): return int(x.item())
+    if isinstance(x, np.generic):
+        return int(x.item())
     return int(x)
 
 def _to_date(ts) -> pd.Timestamp | None:
-    if ts is None: return None
+    # [Replit Agent] Expand the None guard without changing date conversion behavior.
+    if ts is None:
+        return None
     
     if isinstance(ts, pd.Timestamp):
         return ts

@@ -1,13 +1,11 @@
+# from datetime import date
+from datetime import timedelta
 from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
-from pandas.core.series import Series
-
 import yfinance as yf
-
-# from datetime import date
-from datetime import timedelta
+from pandas.core.series import Series
 
 # ---- Package imports ----
 import pysft.core.constants as const
@@ -15,7 +13,6 @@ import pysft.core.utilities as utils
 import pysft.core.yf_specific_utils as yf_utils
 from pysft.core.enums import E_FetchMode
 from pysft.core.structures import indicatorRequest
-
 from pysft.tools.logger import get_logger
 
 logger = get_logger(__name__)
@@ -41,7 +38,7 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
         try:
             target_dates = pd.to_datetime([pd.Timestamp(d) for d in pd.date_range(start=container.start_date, end=container.end_date)],format=const.YFINANCE_DATE_FORMAT)
         except Exception as e:
-            message = f"Could not parse date range: {str(e)}"
+            message = f"Could not parse date range: {e!s}"
             container.message = message
             container.success = False
 
@@ -63,7 +60,7 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
             tckrs = yf.Tickers(remaining_tickers).tickers
         except Exception as e:
             # Handle exception for Tickers creation
-            message = f"Failed to create Ticker objects: {str(e)}"
+            message = f"Failed to create Ticker objects: {e!s}"
             container.message = utils.add_attempt2msg(message, attempt)
             container.success = False
 
@@ -80,7 +77,7 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
                     yf_utils.extract_info_data(request, ticker, fetch_inception_history=False)
                 except Exception as e:
                     request.success = False
-                    request.message = f"{request.indicator} - Failed to extract metadata from yfinance: {str(e)}"
+                    request.message = f"{request.indicator} - Failed to extract metadata from yfinance: {e!s}"
                     logger.warning(request.message)
         else:
             try:
@@ -144,7 +141,7 @@ def fetch_yfinance(container: '_YF_fetchReq_Container'):
 
             except Exception as e:
                 # Log the error and continue to next attempt
-                container.message = utils.add_attempt2msg(f"Error during data fetch: {str(e)}", attempt)
+                container.message = utils.add_attempt2msg(f"Error during data fetch: {e!s}", attempt)
                 container.success = False
 
                 logger.warning(container.message)
@@ -197,6 +194,28 @@ def process_successful_request(request: indicatorRequest, data: pd.DataFrame, cl
 
     if request.mode != E_FetchMode.PRICE:
         yf_utils.extract_info_data(request, tckr)
+    else:
+        # Yahoo quotes TASE securities routed to .TA symbols in agorot. Apply
+        # that source-unit policy to freshly downloaded values even when the
+        # metadata routine (which normally normalizes them) is deliberately skipped.
+        # Foreign equivalents outside .TA keep their original provider units.
+        if (
+            request.indicator.endswith(".TA")
+            and not request.indicator.startswith("^")
+        ):
+            normalization = const.CURRENCY_NORMALIZATION["ILA"]
+            for field in ("price", "last", "open", "high", "low"):
+                value = getattr(request.data, field)
+                normalized = (
+                    [item * normalization["factor"] for item in value]
+                    if isinstance(value, (list, np.ndarray))
+                    else value * normalization["factor"]
+                )
+                setattr(request.data, field, normalized)
+            request.data.currency = normalization["alias"]
+        # Price-only requests deliberately skip the metadata success path.
+        request.message = f"{request.indicator} - Data fetch from yfinance successful."
+        request.success = True
 
 
 def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
@@ -235,6 +254,6 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
             request.success         = False  # Mark as unsuccessful to indicate special case
 
     except Exception as e:
-        request.message = f"Failed to extract data from inception date: {str(e)}."
+        request.message = f"Failed to extract data from inception date: {e!s}."
 
         logger.error(request.message)

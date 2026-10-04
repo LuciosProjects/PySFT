@@ -18,9 +18,9 @@ declarative, discoverable, and maintainable.
 """
 
 import os
+from typing import TypedDict as _TypedDict
 
 from pysft.core.structures import CTimeRepr
-
 
 # General package constants
 PACKAGE_NAME = "pysft"
@@ -37,7 +37,12 @@ MAX_YF_ATTEMPTS         = 6  # max yfinance fetch attempts, takes more bacause o
 INITIAL_DAYS_HALF_SPAN  = 3 # initial days half-span for data fetch window
 HALF_SPAN_INCREMENT     = 3 # days to increment half-span per attempt
 
-CURRENCY_NORMALIZATION = {
+class _CurrencyNormalization(_TypedDict):
+    factor: float
+    alias: str
+
+
+CURRENCY_NORMALIZATION: dict[str, _CurrencyNormalization] = {
     # Currency conversion factors for calculations
 
     "USD": {"factor": 1.0, "alias": "USD"},     # US Dollar

@@ -5,11 +5,10 @@ import requests
 
 # ---- Package imports ----
 import pysft.core.constants as const
+import pysft.core.tase_specific_utils as tase_utils
+import pysft.core.utilities as utils
 from pysft.core.enums import E_FetchMode
 from pysft.core.structures import indicatorRequest
-import pysft.core.utilities as utils
-import pysft.core.tase_specific_utils as tase_utils
-
 from pysft.tools.logger import get_logger
 
 logger = get_logger(__name__)
@@ -109,7 +108,8 @@ def fetch_TASE(request: indicatorRequest):
             with tase_utils.get_tase_security_db_connection() as db:
             # db = tase_utils.get_tase_security_db()
             # lookup security info from local TASE security list database
-                dataPt = db.execute(f'''
+                # [Replit Agent] Use a plain SQL string; parameters are still bound separately.
+                dataPt = db.execute('''
                     SELECT securityId, isin, companyName, symbol
                     FROM security_list
                     WHERE indicator = ?
@@ -119,7 +119,8 @@ def fetch_TASE(request: indicatorRequest):
                 if row.__len__() > 0:
                     row = row[0]
                     if row is not None:
-                        isForeign = row[1].startswith("IL") == False
+                        # [Replit Agent] Use boolean negation; startswith still determines foreign status.
+                        isForeign = not row[1].startswith("IL")
                         # Populate request with database info
                         request.indicator = request.data.indicator = '0' + str(row[0]) if isForeign else str(row[0]) # TASE uses leading '0' for foreign securities
                         request.data.ISIN = row[1] # ISIN

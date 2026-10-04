@@ -1,17 +1,17 @@
+from typing import cast as _cast
+
 import numpy as np
 import pandas as pd
-from pandas.core.series import Series
-from typing import Any
 
+# [Replit Agent] Removed the unused Any typing import.
 import yfinance as yf
+from pandas.core.series import Series
 
 # ---- Package imports ----
 import pysft.core.constants as const
-from pysft.core.structures import indicatorRequest
-
 import pysft.core.tase_specific_utils as tase_utils
 import pysft.core.utilities as utils
-
+from pysft.core.structures import indicatorRequest
 from pysft.tools.logger import get_logger
 
 logger = get_logger(__name__)
@@ -115,7 +115,8 @@ def safe_extract_value_int(data: pd.DataFrame | Series) -> int | list[int]:
         
         # Return the extracted value cast to appropriate type
         return dtype.type(values)
-    except:
+    # [Replit Agent] Name BaseException explicitly to preserve the original bare-except behavior.
+    except BaseException:
         # In case of any error, return zero of appropriate type
         return dtype.type(0)
     
@@ -168,7 +169,7 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_incept
         request.data.beta           = info.get("beta", info.get('beta3Year', 0.0))
 
     except Exception as e:
-        request.message = f"Failed to extract additional info data: {str(e)}."
+        request.message = f"Failed to extract additional info data: {e!s}."
         request.success = False
 
         logger.error(request.message)
@@ -183,29 +184,34 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_incept
             # Closing price
             if isinstance(request.data.price, float):
                 request.data.price *= currency_normalization["factor"]
-            elif isinstance(request.data.price, list) or isinstance(request.data.price, np.ndarray):
+            elif isinstance(request.data.price, (list, np.ndarray)):
                 request.data.price = [p * currency_normalization["factor"] for p in request.data.price]
             
             # Last price
-            request.data.last *= currency_normalization["factor"]
+            # Preserve the existing in-place operation; the provider supplies
+            # a scalar last price, although the shared model also permits lists.
+            last_price = _cast(float, request.data.last)
+            last_price *= currency_normalization["factor"]
+            request.data.last = last_price
 
             # Open price
             if isinstance(request.data.open, float):
                 request.data.open *= currency_normalization["factor"]
-            elif isinstance(request.data.open, list) or isinstance(request.data.open, np.ndarray):
+            elif isinstance(request.data.open, (list, np.ndarray)):
                 request.data.open  = [o * currency_normalization["factor"] for o in request.data.open]
 
             # High price
             if isinstance(request.data.high, float):
                 request.data.high *= currency_normalization["factor"]
-            elif isinstance(request.data.high, list) or isinstance(request.data.high, np.ndarray):
+            elif isinstance(request.data.high, (list, np.ndarray)):
                 request.data.high  = [h * currency_normalization["factor"] for h in request.data.high]
             
             # Low price
             if isinstance(request.data.low, float):
                 request.data.low  *= currency_normalization["factor"]
-            elif isinstance(request.data.low, list) or isinstance(request.data.low, np.ndarray):
-                request.data.low   = [l * currency_normalization["factor"] for l in request.data.low]
+            elif isinstance(request.data.low, (list, np.ndarray)):
+                # [Replit Agent] Rename the ambiguous loop variable; scaling is unchanged.
+                request.data.low   = [low * currency_normalization["factor"] for low in request.data.low]
 
             # Put currency alias
             request.data.currency = currency_normalization["alias"]

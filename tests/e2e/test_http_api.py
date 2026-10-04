@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
+import pandas as pd
 import pytest
 
 from tests.support.environment import HttpServerHarness
@@ -31,6 +32,39 @@ class TestHttpApi:
 
         assert status == 200
         assert payload["data"]["AAPL"]["price"] == [100.0]
+
+    def test_fetch_endpoint_honors_explicit_attribute_aliases(
+        self, pysft_env, provider_gateway
+    ):
+        today = pd.Timestamp.now().date().isoformat()
+        provider_gateway.add(YFinanceScenarioFactory.equity(dates=(today,)))
+
+        with HttpServerHarness() as server:
+            status, payload = server.get_json(
+                "/fetch?indicators=AAPL&attributes=name"
+            )
+            cached_status, cached_payload = server.get_json(
+                "/fetch?indicators=AAPL&attributes=name"
+            )
+
+        assert status == 200
+        assert cached_status == 200
+        assert set(payload["data"]["AAPL"]) == {"dates", "name"}
+        assert payload["data"]["AAPL"]["name"] == ["AAPL Incorporated"]
+        assert cached_payload == payload
+        assert provider_gateway.calls["AAPL"] == 1
+
+    def test_fetch_endpoint_keeps_mode_default_when_attributes_are_omitted(
+        self, pysft_env, provider_gateway
+    ):
+        provider_gateway.add(YFinanceScenarioFactory.equity())
+
+        with HttpServerHarness() as server:
+            status, payload = server.get_json("/fetch?indicators=AAPL")
+
+        assert status == 200
+        assert payload["data"]["AAPL"]["price"] == [100.0]
+        assert payload["data"]["AAPL"]["name"] == ["AAPL Incorporated"]
 
     def test_missing_indicators_returns_json_bad_request(self, pysft_env):
         with HttpServerHarness() as server:

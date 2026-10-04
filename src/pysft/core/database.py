@@ -14,31 +14,46 @@ TTL Rules:
     - Historical timeseries: immutable except today's data (15-min TTL)
 """
 
-import threading
-
-import sqlite3
 import json
-from datetime import datetime, timedelta
-from typing import Any, Optional, List, Tuple, Set, get_type_hints, get_origin, get_args, Union
+import sqlite3
+import threading
 import types
-import pandas as pd
-import numpy as np
- 
-from pysft.core.structures import _indicator_data
-from pysft.core.constants import (
-    DB_PATH,
-    DB_ENABLED,
-    TTL_MINUTES,
-    IMMUTABLE_FIELD_NAMES,
+from datetime import datetime, timedelta
+
+# Retain legacy typing names as module exports while modernizing annotations.
+from typing import (  # noqa: UP035 (preserve legacy typing exports)
+    Any,
+    List,  # noqa: F401 (legacy module export)
+    Optional,  # noqa: F401 (legacy module export)
+    Set,  # noqa: F401 (legacy module export)
+    Tuple,  # noqa: F401 (legacy module export)
+    Union,
+    get_args,
+    get_origin,
+    get_type_hints,
 )
 
+import numpy as np
+import pandas as pd
+
 import pysft.core.utilities as utils
+from pysft.core.constants import (
+    DB_ENABLED,
+    DB_PATH,
+    IMMUTABLE_FIELD_NAMES,
+    TTL_MINUTES,
+)
+from pysft.core.price_normalization import (
+    PRICE_FIELDS,
+    required_price_normalization_version,
+)
+from pysft.core.structures import _indicator_data
 
 # -----------------------------------------------------------------------------
 # Dynamic field categorization from _indicator_data structure
 # -----------------------------------------------------------------------------
 
-def _get_timeseries_fields() -> Set[str]:
+def _get_timeseries_fields() -> set[str]:
     """
     Dynamically detect timeseries fields by inspecting _indicator_data type hints.
     
@@ -75,20 +90,17 @@ def _is_list_type(field_type) -> bool:
     
     # Check string representation as fallback for forward refs
     type_str = str(field_type)
-    if 'list[' in type_str.lower():
-        return True
-    
-    return False
+    return 'list[' in type_str.lower()
 
 
-def _get_scalar_fields() -> Set[str]:
+def _get_scalar_fields() -> set[str]:
     """Get all non-timeseries fields from _indicator_data."""
     all_fields = set(_indicator_data.__dataclass_fields__.keys())
     timeseries = _get_timeseries_fields()
     return all_fields - timeseries
 
 
-def _get_all_fields() -> Set[str]:
+def _get_all_fields() -> set[str]:
     """Get all fields from _indicator_data."""
     return set(_indicator_data.__dataclass_fields__.keys())
 
@@ -100,7 +112,7 @@ def _get_all_fields() -> Set[str]:
 class DatabaseManager:
     """Manages SQLite database for indicator data caching."""
     
-    def __init__(self, db_path: Optional[str] = None):
+    def __init__(self, db_path: str | None = None):
         """
         Initialize database connection.
         
@@ -108,14 +120,14 @@ class DatabaseManager:
             db_path: Path to SQLite database file. If None, uses DB_PATH constant.
         """
         self.db_path = db_path or DB_PATH
-        self.connection: Optional[sqlite3.Connection] = None
+        self.connection: sqlite3.Connection | None = None
         self._timeseries_fields = _get_timeseries_fields()
         self._scalar_fields = _get_scalar_fields()
         
         self._initialize_db()
     
     def _initialize_db(self):
-        """Create database tables (drops old tables for fresh schema)."""
+        """Create tables and migrate cache validity metadata without deleting data."""
         self.connection = sqlite3.connect(
             self.db_path, 
             check_same_thread=False,
@@ -123,6 +135,8 @@ class DatabaseManager:
         )
         
         cursor = self.connection.cursor()
+        # Serialize additive migrations across thread-local connections.
+        cursor.execute("BEGIN IMMEDIATE")
         
         # New attribute-based table for scalar fields
         # Each attribute stored as separate row for per-attribute TTL tracking
@@ -152,6 +166,15 @@ class DatabaseManager:
                 PRIMARY KEY (indicator, date)
             )
         """)
+
+        # NULL identifies legacy rows with no trustworthy unit provenance.
+        # Migrate only the fetch cache; the security lookup DB is independent.
+        for table in ("indicator_attributes", "price_history"):
+            columns = {row[1] for row in cursor.execute(f"PRAGMA table_info({table})")}
+            if "normalization_version" not in columns:
+                cursor.execute(
+                    f"ALTER TABLE {table} ADD COLUMN normalization_version INTEGER"
+                )
         
         # Create indexes for efficient queries
         cursor.execute("""
@@ -176,6 +199,23 @@ class DatabaseManager:
         if self.connection:
             self.connection.close()
             self.connection = None
+
+    def clear_cache(self) -> dict[str, int]:
+        """Delete fetched attributes and history atomically, keeping the schema."""
+        if self.connection is None:
+            raise RuntimeError("The fetch cache connection is closed.")
+        with self.connection:
+            counts = {
+                "indicator_attributes": self.connection.execute(
+                    "SELECT COUNT(*) FROM indicator_attributes"
+                ).fetchone()[0],
+                "price_history": self.connection.execute(
+                    "SELECT COUNT(*) FROM price_history"
+                ).fetchone()[0],
+            }
+            self.connection.execute("DELETE FROM indicator_attributes")
+            self.connection.execute("DELETE FROM price_history")
+        return counts
     
     def __enter__(self):
         """Context manager entry."""
@@ -188,8 +228,8 @@ class DatabaseManager:
     def get_cached_data(
         self, 
         indicator: str, 
-        requested_attributes: List[str]
-    ) -> Tuple[Optional[_indicator_data], bool]:
+        requested_attributes: list[str]
+    ) -> tuple[_indicator_data | None, bool]:
         """
         Retrieve cached data for an indicator and check freshness.
         
@@ -212,7 +252,7 @@ class DatabaseManager:
         
         # Get all cached attributes for this indicator
         cursor.execute("""
-            SELECT attribute, value_json, fetched_at
+            SELECT attribute, value_json, fetched_at, normalization_version
             FROM indicator_attributes
             WHERE indicator = ?
         """, (indicator,))
@@ -223,7 +263,12 @@ class DatabaseManager:
         
         # Build attribute -> (value, fetched_at) mapping
         cached_attrs = {}
-        for attr, value_json, fetched_at in rows:
+        invalid_price_attrs = set()
+        required_version = self._required_price_version(indicator)
+        for attr, value_json, fetched_at, version in rows:
+            if attr in PRICE_FIELDS and required_version is not None and version != required_version:
+                invalid_price_attrs.add(attr)
+                continue
             try:
                 value = json.loads(value_json)
                 cached_attrs[attr] = (value, fetched_at)
@@ -239,6 +284,9 @@ class DatabaseManager:
         is_fresh = True
         
         for attr in requested_attributes:
+            if attr in invalid_price_attrs:
+                is_fresh = False
+                continue
             # Skip timeseries fields - they're handled separately
             if attr in self._timeseries_fields:
                 continue
@@ -266,6 +314,38 @@ class DatabaseManager:
             cached_data = self._build_partial_indicator_data(indicator, data_dict)
         
         return cached_data, is_fresh
+
+    def _required_price_version(self, indicator: str) -> int | None:
+        """Determine validity from cached quote type, never the currency alias."""
+        quote_type = ""
+        if self.connection:
+            row = self.connection.execute(
+                "SELECT value_json FROM indicator_attributes "
+                "WHERE indicator = ? AND attribute = 'quoteType'",
+                (indicator,),
+            ).fetchone()
+            if row:
+                try:
+                    value = json.loads(row[0])
+                    quote_type = value if isinstance(value, str) else ""
+                except json.JSONDecodeError:
+                    pass
+        return required_price_normalization_version(indicator, quote_type)
+
+    def has_outdated_price_history(
+        self, indicator: str, start_date: pd.Timestamp, end_date: pd.Timestamp
+    ) -> bool:
+        """Detect obsolete interior rows that a date-span check could overlook."""
+        if not DB_ENABLED or not self.connection:
+            return False
+        version = self._required_price_version(indicator)
+        if version is None:
+            return False
+        return self.connection.execute(
+            "SELECT 1 FROM price_history WHERE indicator = ? AND date >= ? AND date <= ? "
+            "AND (normalization_version IS NULL OR normalization_version != ?) LIMIT 1",
+            (indicator, start_date.date(), end_date.date(), version),
+        ).fetchone() is not None
     
     def _is_attribute_fresh(
         self, 
@@ -328,7 +408,7 @@ class DatabaseManager:
         
         cursor = self.connection.cursor()
         cursor.execute("""
-            SELECT date, fetched_at FROM price_history
+            SELECT date, fetched_at, normalization_version FROM price_history
             WHERE indicator = ?
             ORDER BY date
         """, (indicator,))
@@ -340,8 +420,11 @@ class DatabaseManager:
         now = datetime.now()
         today = pd.Timestamp.now().floor("D")
         fresh_dates = []
+        required_version = self._required_price_version(indicator)
         
-        for row_date, fetched_at in rows:
+        for row_date, fetched_at, version in rows:
+            if required_version is not None and version != required_version:
+                continue
             ts = pd.Timestamp(row_date)
             
             # Today's data: check 15-min TTL
@@ -359,7 +442,7 @@ class DatabaseManager:
         self, 
         indicator: str, 
         data: _indicator_data,
-        fetched_fields: List[str]
+        fetched_fields: list[str]
     ):
         """
         Cache indicator metadata and metrics.
@@ -393,20 +476,28 @@ class DatabaseManager:
             # Check if immutable field already exists
             if field in IMMUTABLE_FIELD_NAMES:
                 cursor.execute("""
-                    SELECT 1 FROM indicator_attributes 
+                    SELECT value_json FROM indicator_attributes 
                     WHERE indicator = ? AND attribute = ?
                 """, (indicator, field))
                 
-                if cursor.fetchone():
+                existing = cursor.fetchone()
+                if existing and not (
+                    field == "quoteType" and existing[0] in ('""', "null")
+                    and value
+                ):
                     # Immutable field already cached - skip
                     continue
             
             # Upsert the attribute
             cursor.execute("""
                 INSERT OR REPLACE INTO indicator_attributes 
-                (indicator, attribute, value_json, fetched_at)
-                VALUES (?, ?, ?, ?)
-            """, (indicator, field, value_json, now))
+                (indicator, attribute, value_json, fetched_at, normalization_version)
+                VALUES (?, ?, ?, ?, ?)
+            """, (
+                indicator, field, value_json, now,
+                required_price_normalization_version(indicator, data.quoteType)
+                if field in PRICE_FIELDS else None,
+            ))
         
         self.connection.commit()
     
@@ -422,13 +513,15 @@ class DatabaseManager:
     def cache_historical_data(
         self, 
         indicator: str, 
-        dates: List[pd.Timestamp],
-        open_prices: float | List[float],
-        high_prices: float | List[float],
-        low_prices: float | List[float],
-        close_prices: float | List[float],
-        volumes: int | List[int],
-        change_pcts: Optional[float | List[float]] = None
+        dates: list[pd.Timestamp],
+        open_prices: float | list[float],
+        high_prices: float | list[float],
+        low_prices: float | list[float],
+        close_prices: float | list[float],
+        volumes: int | list[int],
+        change_pcts: float | list[float] | None = None,
+        *,
+        normalization_version: int | None = None,
         # market_caps: Optional[List[float]] = None
     ):
         """
@@ -467,15 +560,16 @@ class DatabaseManager:
                 utils._to_int(volumes[i]) if isinstance(volumes, (list, np.ndarray)) and i < len(volumes) else utils._to_int(volumes),
                 utils._to_float(change_pcts[i]) if change_pcts and isinstance(change_pcts, (list, np.ndarray)) and i < len(change_pcts) else utils._to_float(change_pcts),
                 # market_caps[i] if market_caps and i < len(market_caps) else None,
-                now  # fetched_at timestamp
+                now,  # fetched_at timestamp
+                normalization_version,
             ))
         
         # Use INSERT OR REPLACE to handle duplicates (including today's refresh)
         cursor.executemany("""
             INSERT OR REPLACE INTO price_history (
                 indicator, date, open, high, low, close, 
-                volume, change_pct, fetched_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                volume, change_pct, fetched_at, normalization_version
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, rows)
         
         self.connection.commit()
@@ -485,7 +579,7 @@ class DatabaseManager:
         indicator: str,
         start_date: pd.Timestamp,
         end_date: pd.Timestamp
-    ) -> Optional[_indicator_data]:
+    ) -> _indicator_data | None:
         """
         Retrieve historical data for a date range.
         
@@ -501,12 +595,17 @@ class DatabaseManager:
             return None
         
         cursor = self.connection.cursor()
+        required_version = self._required_price_version(indicator)
         cursor.execute("""
             SELECT date, open, high, low, close, volume, change_pct
             FROM price_history
             WHERE indicator = ? AND date >= ? AND date <= ?
+            AND (? IS NULL OR normalization_version = ?)
             ORDER BY date
-        """, (indicator, start_date.date(), end_date.date()))
+        """, (
+            indicator, start_date.date(), end_date.date(),
+            required_version, required_version,
+        ))
         
         rows = cursor.fetchall()
         if not rows:
@@ -514,10 +613,10 @@ class DatabaseManager:
             return None
         
         # Convert to lists for _indicator_data
-        dates, opens, highs, lows, closes, volumes, change_pcts = zip(*rows)
-        dates = [pd.Timestamp(d) for d in dates]
+        date_values, open_values, high_values, low_values, close_values, volume_values, change_pct_values = zip(*rows)
+        dates = [pd.Timestamp(d) for d in date_values]
         # dates = pd.DatetimeIndex(dates)
-        opens, highs, lows, closes, volumes, change_pcts = [list(x) for x in (opens, highs, lows, closes, volumes, change_pcts)]
+        opens, highs, lows, closes, volumes, change_pcts = [list(x) for x in (open_values, high_values, low_values, close_values, volume_values, change_pct_values)]
         
         # Create indicator data with historical prices
         data = _indicator_data(
@@ -541,7 +640,7 @@ class DatabaseManager:
 _thread_local = threading.local()
 
 # Global database manager instance
-_db_manager: Optional[DatabaseManager] = None
+_db_manager: DatabaseManager | None = None
 
 def get_db_manager() -> DatabaseManager:
     """Get or create a thread-local database manager instance."""

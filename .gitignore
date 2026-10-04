@@ -25,6 +25,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 __pycache__/*
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
 .env
 fromChatGPT/*
 
