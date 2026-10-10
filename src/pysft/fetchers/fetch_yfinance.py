@@ -180,17 +180,22 @@ def process_successful_request(request: indicatorRequest, data: pd.DataFrame, cl
     request.data.volume = yf_utils.safe_extract_value_int(valid_data["Volume"][closest_dates])
 
     request.data.last = request.data.price[-1] if isinstance(request.data.price, list) else request.data.price # Most recent closing price
-    i_start = np.argmin(np.abs(valid_data.index.to_numpy() - closest_dates[0].to_numpy()))
-    i_end   = np.argmin(np.abs(valid_data.index.to_numpy() - closest_dates[-1].to_numpy()))
-
     if request.data.dates.__len__() > 1:
-        request.data.change_pct = [((valid_data["Close"][valid_data.index[i_ts]] / valid_data["Close"][valid_data.index[i_ts-1]]) - 1.0)*100.0 for i_ts in range(i_start, i_end+1)]
+        changes = []
+        for date in closest_dates:
+            position = int(np.searchsorted(valid_data.index.to_numpy(), date.to_numpy()))
+            previous = valid_data["Close"].iloc[position - 1] if position > 0 else 0
+            changes.append(
+                (valid_data["Close"].loc[date] / previous - 1) * 100
+                if previous != 0 else float("nan")
+            )
+        request.data.change_pct = changes
     else:
         # Try to aquire change_pct from close/open of the same day
-        if isinstance(request.data.open, float) and isinstance(request.data.price, float):
+        if isinstance(request.data.open, float) and isinstance(request.data.price, float) and request.data.open != 0:
             request.data.change_pct = (request.data.price/request.data.open - 1.0) * 100.0
         else:
-            request.data.change_pct = 0.0  # No change percentage if we only have one date and can't calculate it from open price
+            request.data._present_fields.discard("change_pct")
 
     if request.mode != E_FetchMode.PRICE:
         yf_utils.extract_info_data(request, tckr)
@@ -242,7 +247,7 @@ def try_inception_date(request: indicatorRequest, tckr: yf.Ticker):
 
             request.data.last = request.data.price
 
-            request.data.change_pct = 0.0  # No change percentage for inception date
+            request.data._present_fields.discard("change_pct")
 
             if request.mode != E_FetchMode.PRICE:
                 yf_utils.extract_info_data(request, tckr)

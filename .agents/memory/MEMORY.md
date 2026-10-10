@@ -1,0 +1,1 @@
+- [Cache availability decisions](cache-availability.md) — absent provider data must stay missing; conservative coverage is preferable to an unproven cache hit.

@@ -43,6 +43,7 @@ pysft = ["fetch_preview.html"]
 Homepage = "https://github.com/LuciosProjects/PySFT"
 
 [tool.pytest.ini_options]
+pythonpath = ["src"]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 norecursedirs = ["old_code", "prototyping", "tests/Flutter_App"]

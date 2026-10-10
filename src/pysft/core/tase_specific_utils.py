@@ -544,7 +544,8 @@ def get_Bizportal_expense_rate(data: _indicator_data, session: requests.Session 
             data.expense_rate = (float(pairs["דמי ניהול"].replace("%", "")) + \
                                 float(pairs["דמי נאמנות"].replace("%", "")))
         else:
-            data.expense_rate = 0.0 # No expense rate for stocks
+            # Not applicable is not an observed zero.
+            data._present_fields.discard("expense_rate")
 
         # Extract name as well
         paper_top_title = soup.find("div", class_="paper_top_title")
@@ -610,7 +611,8 @@ def get_Bizportal_general_indicator_data(data: _indicator_data, session: request
             # Find the key that contains "היקף נכסים"
             asset_key = next((k for k in pairs if "היקף נכסים" in k), None)
         else:
-            data.trailingPE = float(pairs["מכפיל רווח(12 חודשים אחרונים)"]) if "מכפיל רווח(12 חודשים אחרונים)" in pairs else 0.0
+            if "מכפיל רווח(12 חודשים אחרונים)" in pairs:
+                data.trailingPE = float(pairs["מכפיל רווח(12 חודשים אחרונים)"])
             asset_key = next((k for k in pairs if "שווי שוק" in k), None)
 
         # Determine market cap scale
@@ -768,7 +770,7 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
 
     data.currency = alias
 
-    if json_data is not None:
+    if json_data:
         # indices, dates = zip(*[(i, pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y")) for i, data_pt in enumerate(json_data)])
         dates = [pd.to_datetime(data_pt["D_p"], format="%d/%m/%Y") for data_pt in json_data]
 
@@ -794,16 +796,22 @@ def get_Bizportal_graph_data(data: _indicator_data, session: requests.Session) -
         all_dates  = all_dates[::-1]  # Reverse to chronological order
         all_prices = all_prices[::-1]  # Reverse to chronological order
 
+        if not all_prices:
+            return False
         data.dates  = all_dates
 
         data.price  = all_prices
-        data.open   = data.price
-        data.high   = data.price
-        data.low    = data.price
-        data.last   = data.price[-1] if data.price else 0.0 # Last price is the most recent price
+        # This fund graph supplies closing NAVs only, not intraday OHLC.
+        for field in ("open", "high", "low"):
+            data._present_fields.discard(field)
+        data.last   = data.price[-1]
         data.volume = [json_data[i]["V_p"] for i in ordered_indices]
 
-        data.change_pct = [(json_data[i]["C_p"]/json_data[i+1]["C_p"] - 1) if (i+1) < len(json_data) else 0.0 for i in ordered_indices]
+        data.change_pct = [
+            (json_data[i]["C_p"]/json_data[i+1]["C_p"] - 1)
+            if i + 1 < len(json_data) and json_data[i+1]["C_p"] != 0
+            else float("nan") for i in ordered_indices
+        ]
 
 
     else:
@@ -918,6 +926,8 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
                                                                                                             # over average price between high, low and close
             volumes.append(approx_volume)
         
+        if len(closes) < 2:
+            return False
         # Filter data to match requested dates
         data.dates = dates[1:]
         data.price = list(np.array(closes[1:])/100.0)  # MAYA TASE prices are in agorot (mostly...)
@@ -925,9 +935,12 @@ def get_MAYA_TASE_graph_data(data: _indicator_data, session: requests.Session) -
         data.high = list(np.array(highs[1:])/100.0)
         data.low = list(np.array(lows[1:])/100.0)
         data.volume = volumes[1:]
-        data.last = data.price[-1] if data.price else 0.0 # Last price is the most recent price
+        data.last = data.price[-1]
 
-        data.change_pct = [(closes[i]/closes[i-1] - 1)*100 if i > 0 else 0.0 for i in range(1, len(closes))]
+        data.change_pct = [
+            (closes[i]/closes[i-1] - 1)*100 if closes[i-1] != 0 else float("nan")
+            for i in range(1, len(closes))
+        ]
     else:
         # No data fetched
         return False

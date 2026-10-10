@@ -38,6 +38,7 @@ def seed_history(env, indicator=FUND, quote_type="MTF", price=159.5, version=Non
     )
     env.manager.cache_historical_data(
         indicator, dates, data.open, data.high, data.low, data.price, data.volume,
+        change_pcts=[0.0] * len(dates),
         normalization_version=version,
     )
 
@@ -76,8 +77,9 @@ class TestPriceCacheNormalization:
         result = fetch_data(FUND, mode="price", start=start, end=end)[FUND]
 
         expected = [1.595] if start == end else [1.575, 1.585, 1.595]
-        for field in ("price", "open", "high", "low"):
-            assert result[field] == pytest.approx(expected)
+        assert result["price"] == pytest.approx(expected)
+        for field in ("open", "high", "low"):
+            assert result[field] is None
         assert result["last"] == pytest.approx([1.595])
         assert any(path.endswith("biz_papers_helper.ashx") for path in calls)
         # Fetching one range never certifies legacy rows outside it.
@@ -88,11 +90,8 @@ class TestPriceCacheNormalization:
         assert all(row[2] == VERSION for row in refreshed)
 
         count = len(calls)
-        assert fetch_data(FUND, mode="price", start=start, end=end)[FUND]["price"] == pytest.approx(expected)
-        if start == end:
-            assert len(calls) == count
-        # Ranges still require valid surrounding dates under the existing
-        # conservative span policy; legacy neighbors cannot prove coverage.
+        assert fetch_data(FUND, attributes=["price", "last"], start=start, end=end)[FUND]["price"] == pytest.approx(expected)
+        assert len(calls) == count
 
     @pytest.mark.parametrize("quote_type", ["MTF", "ETF", "STOCK"])
     def test_known_good_complete_history_is_preserved(

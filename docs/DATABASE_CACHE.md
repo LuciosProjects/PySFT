@@ -1,278 +1,115 @@
-# Database Caching System
+# Fetch cache contract
 
-## Overview
+PySFT's SQLite fetch cache is keyed by the caller's ticker. Its provider route
+is fixed by ticker resolution, not a second cache identity. The public fetch
+API and `info`, `price`, and `all` presets are unchanged.
 
-PySFT now includes a SQLite-based caching system that stores fetched financial data locally to reduce API calls and improve performance. The system intelligently manages data freshness based on how frequently different types of data change.
+## Stored data and availability
 
-## Architecture
+- `indicator_attributes` stores one JSON scalar per ticker/attribute, with its
+  fetch timestamp, price-normalization version when applicable, and
+  `availability_version`.
+- `price_history` stores date-aligned OHLC, volume and change percentage,
+  normalization version, row timestamp and `field_fetched_at` JSON timestamps.
+- Schema additions are additive. Existing rows and the independent security
+  lookup database are not deleted or converted.
+- Only explicitly supplied usable provider values are persisted. Dataclass
+  defaults, nulls, NaNs, empty strings and unavailable sentinel strings are not
+  proof of a successful fetch. A provider's explicit numeric zero is valid.
+- Old scalar zeroes without availability provenance cannot prove completeness:
+  the previous writer stored model defaults as if providers had returned them.
+  Missing immutable values are not persisted, and unavailable legacy immutable
+  values can be replaced by an actual value.
 
-### Database Schema
+The internal data model tracks constructor-supplied fields and assignments.
+Provider adapters must assign fields only when actually available; absent
+provider keys must not be replaced with synthetic zeroes or default currencies.
+The tracking set is internal and is not an added public output attribute.
+Bizportal fund graphs provide closing NAVs, not intraday open/high/low; those
+unavailable fields are not fabricated or cached. Their legacy copied OHLC cells
+without field provenance are also excluded. Change percentages without an
+observed comparison price remain unavailable rather than becoming zero.
 
-The caching system uses two tables:
+## Freshness and normalization
 
-1. **`indicators`** - Stores metadata and metrics
-   - `indicator` (PRIMARY KEY): Symbol/ID (e.g., "AAPL", "1183441")
-   - `data_json`: Complete serialized indicator data
-   - `immutable_fetched_at`: Last fetch timestamp for immutable fields (ISIN)
-   - `longterm_fetched_at`: Last fetch for long-term fields (name, quoteType, currency)
-   - `medium_fetched_at`: Last fetch for medium-term fields (briefSummary)
-   - `short_fetched_at`: Last fetch for short-term fields (metrics like PE ratios)
-   - `last_fetched_at`: Last fetch from any source
-   - `created_at`: Record creation timestamp
+`indicator`, `name`, `ISIN`, `inceptionDate` and `quoteType` are immutable.
+Other scalars expire after 15 minutes. Historical cells are immutable, except
+today's cells, which expire after 15 minutes. A partial refresh of today's
+close does **not** refresh the timestamp of its unfetched open or volume.
 
-2. **`price_history`** - Stores historical time series
-   - `(indicator, date)` (COMPOSITE PRIMARY KEY)
-   - `open`, `high`, `low`, `close`, `volume`, `change_pct`, `market_cap`
+Only fresh scalars are returned. Failed refreshes preserve stored rows but do
+not return stale scalar values. Compatible, fresh cached fields and historical
+dates remain available even if another part of the refresh fails.
 
-### Data Freshness Rules
+Numeric TASE mutual-fund prices, including unknown numeric quote types, require
+the current normalization version. Currency aliases and price magnitude are
+not evidence of correct units. Legacy/obsolete prices are excluded; metadata
+fetches never certify or overwrite price history. When a row's normalization
+version changes, old unfetched cells are not given the new version.
 
-Different data types have different Time-To-Live (TTL) policies:
+## Reuse and fetching
 
-| Category | Fields | TTL | Rationale |
-|----------|--------|-----|-----------|
-| **Immutable** | `ISIN` | ∞ | Never changes once assigned |
-| **Long-term** | `name`, `quoteType`, `currency` | 365 days | Rarely changes (rebranding, reclassification) |
-| **Medium-term** | `briefSummary` | 90 days | Business updates, restructuring |
-| **Short-term** | `expense_rate`, `dividendYield`, `trailingPE`, `forwardPE`, `beta`, `avgDailyVolume3mnth` | 7 days | Financial metrics that update regularly |
-| **Current prices** | `last`, `open`, `high`, `low`, `volume`, `price`, `change_pct`, `market_cap` | 0 days | Always fetch fresh for current data |
-| **Historical prices** | Same as current, but with dates | No TTL | Immutable once stored (historical data doesn't change) |
+The manager checks only the requested fields, regardless of the mode that
+originally populated them. Compatible `info` plus `price` data can satisfy an
+`all` request. Unavailable requested fields remain missing and are retried,
+rather than negatively cached or silently synthesized.
 
-## How It Works
+Coverage is checked per date **and requested field**, not inferred from the
+first and last stored rows. Exact ranges and single-day requests do not require
+surrounding cache rows. Native TASE requests and resolved Yahoo `.TA` symbols
+use the TASE calendar; Yahoo instruments with verified US exchange metadata use
+XNYS. Original TASE identifiers that resolve to non-TASE Yahoo symbols do not
+inherit TASE holidays. For Yahoo instruments whose exchange calendar is not
+established (including price-only responses without exchange metadata),
+coverage is deliberately conservative:
+all requested calendar dates must be present, otherwise a refresh is attempted.
 
-### Fetch Workflow
+If prices are complete but metadata is missing/stale, only the metadata path
+is used. If metadata is complete but prices are missing, only prices are
+requested. Yahoo supports bounded downloads: the manager sends the envelope of
+missing sessions, batching only requests with the same mode and bounds.
+Disjoint gaps may therefore fetch intervening dates as well; the underlying
+Yahoo fetcher also retains its existing retry/look-around padding. TASE graph
+endpoints do not support date-bounded downloads, so that route fetches and
+merges the required range safely.
 
-1. **Cache Check** (`_check_cache()`)
-   - For each requested indicator, query the database
-   - Check if all requested attributes are present and within TTL
-   - If fresh: populate result from cache
-   - If stale/missing: add to web fetch list
+Fresh and cached values are merged by attribute and date. Partial provider
+responses do not erase valid cached cells. Explicit date-range results are
+clipped to the request, sorted and deduplicated, and contain only requested
+attributes plus the existing `dates` envelope. Unavailable requested values
+are `None`, not fabricated zeroes. `last` is derived from the final returned
+close, including historical requests.
 
-2. **Web Fetch** (if needed)
-   - Fetch **all** available attributes (not just requested ones)
-   - This ensures the cache stays complete and useful for future requests
+## Configuration and verification
 
-3. **Cache Update** (`_cache_fetched_data()`)
-   - Store complete indicator data in `indicators` table
-   - Update appropriate timestamp columns based on fetched fields
-   - If historical data: insert into `price_history` table
+`DB_ENABLED`, `DB_PATH` and `TTL_MINUTES` are defined in
+`pysft.core.constants`. `DatabaseManager(path)` supports an explicit database
+path. `clear_cache()` clears fetched scalars/history but preserves the schema.
 
-4. **Result Aggregation**
-   - Combine cached + newly fetched results
-   - Return only the attributes user originally requested
-
-### Key Features
-
-- **Automatic caching**: No code changes needed - works transparently
-- **Smart freshness**: Different TTLs for different data types
-- **Complete fetches**: When fetching from web, gets all attributes to maximize cache utility
-- **Historical tracking**: Stores time series data for reuse
-- **Date-based caching**: Historical data cached by date range, only fetches missing dates
-
-## Configuration
-
-### Constants (in `constants.py`)
-
-```python
-# Enable/disable caching
-DB_ENABLED = True
-
-# Database file location
-DB_PATH = "pysft_cache.db"
-
-# TTL values (days)
-LONGTERM_TTL_DAYS = 365  # 1 year
-MEDIUM_TTL_DAYS = 90     # 90 days  
-SHORT_TTL_DAYS = 7       # 7 days
-```
-
-### CLI Options
+Tests use `pysft_env` (a temporary SQLite file outside the repository) and
+`provider_gateway` (fixed-route provider doubles), with external networking
+blocked. The session database guard checks content, size and modification time
+of both bundled databases. No test uses them as writable fetch caches.
 
 ```bash
-# Disable caching
-pysft --no-cache
-
-# Use custom database location
-pysft --cache-db /path/to/custom/cache.db
+python -m pytest tests/e2e/test_cache_reuse_contract.py -q
+python -m pytest -m "not live" -q
 ```
 
-### Programmatic Control
+Pytest explicitly prioritizes `src`, so an older installed PySFT wheel cannot
+accidentally stand in for the implementation under test.
 
-```python
-from pysft.core import constants
+### Characterization before implementation
 
-# Disable caching globally
-constants.DB_ENABLED = False
+The initial seven cross-mode contract cases were run against the original
+production logic: **2 passed, 5 failed**. Expanded/overlapping range examples
+passed. Both fixed routes exposed fabricated scalar defaults and redundant
+price work during metadata refresh; missing-field selection exposed a
+fabricated beta zero. Production cache changes were made only after that run.
+The contract suite now also covers full presets in both directions, exact
+range hits, single-day slicing, missing interior cells, partial responses,
+failed expansions, valid zeroes and per-cell current-day freshness.
 
-# Change database location
-constants.DB_PATH = "my_custom_cache.db"
-```
-
-## Usage Examples
-
-### Basic Usage (Automatic Caching)
-
-```python
-from pysft.lib.fetchFinancialData import fetchData
-
-# First call - fetches from web and caches
-data1 = fetchData(
-    indicators=["AAPL", "MSFT"],
-    attributes=["last", "name", "ISIN"],
-    date_range="1d"
-)
-
-# Second call - retrieves name & ISIN from cache (fresh),
-# fetches current price from web (always fresh for today)
-data2 = fetchData(
-    indicators=["AAPL"],
-    attributes=["last", "name", "ISIN"],
-    date_range="1d"  
-)
-```
-
-### Historical Data Caching
-
-```python
-# First request - fetches and caches 2024 data
-historical = fetchData(
-    indicators=["AAPL"],
-    attributes=["open", "high", "low", "last", "volume"],
-    date_range=("2024-01-01", "2024-12-31")
-)
-
-# Later request for overlapping range - only fetches missing dates
-partial = fetchData(
-    indicators=["AAPL"],
-    attributes=["last"],
-    date_range=("2024-06-01", "2025-01-01")  # Jan 2025 is new
-)
-```
-
-### Direct Database Access
-
-```python
-from pysft.core.database import get_db_manager
-
-db = get_db_manager()
-
-# Check what's cached for an indicator
-cached_data, is_fresh = db.get_cached_data("AAPL", ["name", "ISIN"])
-
-# Get all cached dates for historical data
-cached_dates = db.get_cached_dates("AAPL")
-
-# Retrieve historical data directly
-hist_data = db.get_historical_data(
-    "AAPL",
-    start_date=pd.Timestamp("2024-01-01"),
-    end_date=pd.Timestamp("2024-12-31")
-)
-```
-
-## Performance Benefits
-
-### Before Caching
-- Every request hits external APIs (YFinance, TASE)
-- Rate limits slow down repeated requests
-- Network latency on every call
-
-### After Caching
-- **Metadata requests**: Near-instant (no network call)
-- **Historical data**: Instant for cached date ranges
-- **Mixed requests**: Only fetch missing/stale data
-- **Reduced API load**: Up to 90% fewer external calls
-
-### Example Scenario
-
-User requests AAPL data 10 times in one day:
-
-**Without caching**: 10 API calls
-**With caching**: 
-- 1st request: Full fetch (caches all metadata + prices)
-- Requests 2-10: Only fetch current prices (metadata cached)
-- Result: **~70% fewer API calls**
-
-## Maintenance
-
-### Database Location
-
-Default: `pysft_cache.db` in current working directory
-
-### Database Size
-
-Typical sizes:
-- Metadata only: ~1 KB per indicator
-- With 1 year historical data: ~50 KB per indicator
-- For 1000 indicators with history: ~50 MB
-
-### Clearing Cache
-
-```python
-# Delete the database file
-import os
-from pysft.core.constants import DB_PATH
-
-os.remove(DB_PATH)
-```
-
-Or manually delete `pysft_cache.db`
-
-### Schema Evolution
-
-The JSONB storage allows adding new fields without migration:
-- New fields automatically appear in cached data
-- Queries handle missing fields gracefully (return None)
-- No schema migration needed when adding attributes
-
-## Technical Details
-
-### Thread Safety
-
-The DatabaseManager uses SQLite's built-in connection thread safety with `check_same_thread=False`. For multi-threaded applications, consider using connection pooling.
-
-### Transaction Handling
-
-- Each cache operation auto-commits
-- Batch operations (historical data) use single transaction
-- Failed operations don't corrupt existing cache
-
-### Error Handling
-
-- Database connection failures: Falls back to web fetch only
-- Cache retrieval errors: Logged, continues with web fetch
-- Storage errors: Logged, user still gets requested data
-
-## Future Enhancements
-
-Potential improvements:
-1. **Field-level timestamps**: Track freshness per individual field (more granular)
-2. **Partial historical fetches**: Only fetch missing date ranges in historical requests
-3. **Cache warming**: Pre-populate cache from JSON files on first run
-4. **Statistics tracking**: Cache hit rate, storage size monitoring
-5. **Automatic cleanup**: Purge old/unused indicators based on access patterns
-
-## Migration Guide
-
-Existing code works without changes. The caching is transparent:
-
-```python
-# This code works identically before and after caching
-from pysft.lib.fetchFinancialData import fetchData
-
-data = fetchData(["AAPL"], ["last", "name"], "1d")
-```
-
-To disable for specific use cases:
-```python
-from pysft.core import constants
-
-# Temporarily disable
-original_state = constants.DB_ENABLED
-constants.DB_ENABLED = False
-
-# Your code here
-data = fetchData(...)
-
-# Restore
-constants.DB_ENABLED = original_state
-```
+The normalization regression fixture explicitly supplies its zero change
+percentages: a fixture with omitted values no longer represents complete
+history, just as an actual provider omission does not.

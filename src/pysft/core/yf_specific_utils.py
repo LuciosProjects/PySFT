@@ -11,6 +11,7 @@ from pandas.core.series import Series
 import pysft.core.constants as const
 import pysft.core.tase_specific_utils as tase_utils
 import pysft.core.utilities as utils
+from pysft.core.enums import E_FetchMode
 from pysft.core.structures import indicatorRequest
 from pysft.tools.logger import get_logger
 
@@ -83,42 +84,28 @@ def safe_extract_value_float(data: pd.DataFrame | Series) -> float | list[float]
         values = np.asarray(data.to_numpy(), dtype=np.float64).reshape(-1)
 
         if values.size == 0:
-            return 0.0
+            return []
 
         # Check if value is NaN
         if np.isnan(values).any():
             # No need to dig out the NaN values since they were already dealt with in the "find_closest_date" subroutine
-            # Return zero of appropriate type
-            return 0.0
+            return []
 
         # Return the extracted value cast to appropriate type
         return [float(v) for v in values] if values.size > 1 else float(values.item())
     except (TypeError, ValueError):
-        # In case of any error, return zero of appropriate type
-        return 0.0
+        return []
     
 def safe_extract_value_int(data: pd.DataFrame | Series) -> int | list[int]:
     """Safely extract value from pandas data, handling various formats"""
 
-    dtype = data.values.dtype
     try:
-        if hasattr(data, 'values'):
-            values = data.values
-        else:
-            return dtype.type(0)
-        
-        # Check if value is NaN
-        if pd.isna(values).any():
-            # No need to dig out the NaN values since they were already dealt with in the "find_closest_date" subroutine
-            # Return zero of appropriate type
-            return dtype.type(0)
-        
-        # Return the extracted value cast to appropriate type
-        return dtype.type(values)
-    # [Replit Agent] Name BaseException explicitly to preserve the original bare-except behavior.
-    except BaseException:
-        # In case of any error, return zero of appropriate type
-        return dtype.type(0)
+        values = np.asarray(data.to_numpy(), dtype=np.float64).reshape(-1)
+        if not values.size or not np.isfinite(values).all():
+            return []
+        return [int(value) for value in values] if values.size > 1 else int(values.item())
+    except (TypeError, ValueError, OverflowError):
+        return []
     
 def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_inception_history: bool = True):
     """
@@ -130,7 +117,7 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_incept
     try:
         info = ticker.info
 
-        request.data.quoteType = metadata["quote_type"] or info.get("quoteType", "N/A")
+        request.data.quoteType = metadata["quote_type"] or info.get("quoteType", "")
 
         # request.data.briefSummary = info.get("longBusinessSummary", "")
         if fetch_inception_history:
@@ -139,34 +126,42 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_incept
                 request.data.inceptionDate = history.index[0].tz_localize(None)
 
         if request.data.name == "": # Only update name if not already set
-            request.data.name = metadata["name"] or info.get("longName", str(request.indicator))
-        request.data.currency = metadata["currency"] or info.get("currency", info.get("financialCurrency", "USD"))
+            request.data.name = metadata["name"] or info.get("longName", "")
+        request.data.currency = metadata["currency"] or info.get("currency", info.get("financialCurrency", ""))
 
-        request.data.exchange = metadata["exchange"] or info.get("exchange", "N/A")
+        request.data.exchange = metadata["exchange"] or info.get("exchange", "")
     
 
         if request.data.currency == "ILA" or request.data.currency == "ILS":
             request.data.indicator = request.original_indicator # Keep original indicator for ILS securities (TASE)
             if not tase_utils.get_Bizportal_expense_rate(request.data):
-                request.data.expense_rate = 0.0 # If failed to get expense rate from TASE Bizportal, set to 0.0
+                request.data._present_fields.discard("expense_rate")
             
             # Revert indicator to its YF format
             request.data.indicator = request.indicator
 
         else:
-            request.data.expense_rate = info.get("netExpenseRatio", 0.0)
+            if info.get("netExpenseRatio") is not None:
+                request.data.expense_rate = info["netExpenseRatio"]
 
-        request.data.avgDailyVolume3mnth    = info.get("averageDailyVolume3Month", 0)
+        if info.get("averageDailyVolume3Month") is not None:
+            request.data.avgDailyVolume3mnth = info["averageDailyVolume3Month"]
 
         if request.data.quoteType in ["ETF", "MTF"]:
-            request.data.market_cap = info.get("totalAssets", 0.0)
+            if info.get("totalAssets") is not None:
+                request.data.market_cap = info["totalAssets"]
         elif request.data.quoteType in ["EQUITY"]:
-            request.data.market_cap = info.get("marketCap", 0.0)
+            if info.get("marketCap") is not None:
+                request.data.market_cap = info["marketCap"]
                 
-        request.data.dividendYield  = info.get("yield", info.get("dividendYield", 0.0)*0.01)*100 # Convert to percentage
-        request.data.trailingPE     = info.get("trailingPE", 0.0)
-        request.data.forwardPE      = info.get("forwardPE", 0.0)
-        request.data.beta           = info.get("beta", info.get('beta3Year', 0.0))
+        if info.get("yield") is not None:
+            request.data.dividendYield = info["yield"] * 100
+        elif info.get("dividendYield") is not None:
+            request.data.dividendYield = info["dividendYield"]
+        for field in ("trailingPE", "forwardPE", "beta"):
+            value = info.get(field, info.get("beta3Year") if field == "beta" else None)
+            if value is not None:
+                setattr(request.data, field, value)
 
     except Exception as e:
         request.message = f"Failed to extract additional info data: {e!s}."
@@ -175,7 +170,7 @@ def extract_info_data(request: indicatorRequest, ticker: yf.Ticker, fetch_incept
         logger.error(request.message)
 
     # Factor price and other values according to currency
-    if request.data.price is not None:
+    if request.mode != E_FetchMode.INFO and request.data.price is not None:
         # Convert price according to currency factor (this is not currency conversion! just adjustment)
 
         # try:

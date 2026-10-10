@@ -36,7 +36,7 @@ from typing import (  # noqa: UP035 (preserve legacy typing exports)
 import numpy as np
 import pandas as pd
 
-import pysft.core.utilities as utils
+from pysft.core.cache_contract import HISTORY_COLUMNS, valid_value
 from pysft.core.constants import (
     DB_ENABLED,
     DB_PATH,
@@ -175,6 +175,12 @@ class DatabaseManager:
                 cursor.execute(
                     f"ALTER TABLE {table} ADD COLUMN normalization_version INTEGER"
                 )
+        columns = {row[1] for row in cursor.execute("PRAGMA table_info(indicator_attributes)")}
+        if "availability_version" not in columns:
+            cursor.execute("ALTER TABLE indicator_attributes ADD COLUMN availability_version INTEGER")
+        columns = {row[1] for row in cursor.execute("PRAGMA table_info(price_history)")}
+        if "field_fetched_at" not in columns:
+            cursor.execute("ALTER TABLE price_history ADD COLUMN field_fetched_at TEXT")
         
         # Create indexes for efficient queries
         cursor.execute("""
@@ -252,7 +258,7 @@ class DatabaseManager:
         
         # Get all cached attributes for this indicator
         cursor.execute("""
-            SELECT attribute, value_json, fetched_at, normalization_version
+            SELECT attribute, value_json, fetched_at, normalization_version, availability_version
             FROM indicator_attributes
             WHERE indicator = ?
         """, (indicator,))
@@ -265,12 +271,17 @@ class DatabaseManager:
         cached_attrs = {}
         invalid_price_attrs = set()
         required_version = self._required_price_version(indicator)
-        for attr, value_json, fetched_at, version in rows:
+        for attr, value_json, fetched_at, version, availability in rows:
             if attr in PRICE_FIELDS and required_version is not None and version != required_version:
                 invalid_price_attrs.add(attr)
                 continue
             try:
                 value = json.loads(value_json)
+                if not valid_value(value):
+                    continue
+                # Old writers persisted dataclass default zeroes without proof.
+                if availability is None and value == 0:
+                    continue
                 cached_attrs[attr] = (value, fetched_at)
             except json.JSONDecodeError:
                 continue
@@ -302,6 +313,8 @@ class DatabaseManager:
         # Reconstruct _indicator_data from cached values
         data_dict: dict[str, Any] = {"indicator": indicator}
         for attr, (value, _) in cached_attrs.items():
+            if not self._is_attribute_fresh(attr, cached_attrs[attr][1], now):
+                continue
             # Convert ISO strings back to Timestamps where needed
             if attr == "inceptionDate" and value is not None:
                 value = pd.Timestamp(value)
@@ -408,7 +421,7 @@ class DatabaseManager:
         
         cursor = self.connection.cursor()
         cursor.execute("""
-            SELECT date, fetched_at, normalization_version FROM price_history
+            SELECT date, fetched_at, normalization_version, close, field_fetched_at FROM price_history
             WHERE indicator = ?
             ORDER BY date
         """, (indicator,))
@@ -422,14 +435,18 @@ class DatabaseManager:
         fresh_dates = []
         required_version = self._required_price_version(indicator)
         
-        for row_date, fetched_at, version in rows:
+        for row_date, fetched_at, version, close, stamps_json in rows:
             if required_version is not None and version != required_version:
+                continue
+            if not valid_value(close):
                 continue
             ts = pd.Timestamp(row_date)
             
             # Today's data: check 15-min TTL
             if ts.floor("D") == today:
-                age = now - fetched_at
+                stamps = json.loads(stamps_json) if stamps_json else {}
+                stamp = datetime.fromisoformat(stamps["close"]) if "close" in stamps else fetched_at
+                age = now - min(stamp, fetched_at)
                 if age <= timedelta(minutes=TTL_MINUTES):
                     fresh_dates.append(ts)
             else:
@@ -467,8 +484,8 @@ class DatabaseManager:
                 continue
             
             value = getattr(data, field, None)
-            if value is None and field not in IMMUTABLE_FIELD_NAMES:
-                continue  # Don't cache None for volatile fields
+            if not valid_value(value):
+                continue
             
             # Serialize value to JSON
             value_json = self._serialize_value(value)
@@ -481,18 +498,15 @@ class DatabaseManager:
                 """, (indicator, field))
                 
                 existing = cursor.fetchone()
-                if existing and not (
-                    field == "quoteType" and existing[0] in ('""', "null")
-                    and value
-                ):
+                if existing and valid_value(json.loads(existing[0])):
                     # Immutable field already cached - skip
                     continue
             
             # Upsert the attribute
             cursor.execute("""
                 INSERT OR REPLACE INTO indicator_attributes 
-                (indicator, attribute, value_json, fetched_at, normalization_version)
-                VALUES (?, ?, ?, ?, ?)
+                (indicator, attribute, value_json, fetched_at, normalization_version, availability_version)
+                VALUES (?, ?, ?, ?, ?, 1)
             """, (
                 indicator, field, value_json, now,
                 required_price_normalization_version(indicator, data.quoteType)
@@ -514,11 +528,11 @@ class DatabaseManager:
         self, 
         indicator: str, 
         dates: list[pd.Timestamp],
-        open_prices: float | list[float],
-        high_prices: float | list[float],
-        low_prices: float | list[float],
-        close_prices: float | list[float],
-        volumes: int | list[int],
+        open_prices: float | list[float] | None,
+        high_prices: float | list[float] | None,
+        low_prices: float | list[float] | None,
+        close_prices: float | list[float] | None,
+        volumes: int | list[int] | None,
         change_pcts: float | list[float] | None = None,
         *,
         normalization_version: int | None = None,
@@ -549,27 +563,62 @@ class DatabaseManager:
         
         # Prepare data for insertion
         rows = []
+        def cell(values, index):
+            if isinstance(values, (list, np.ndarray)):
+                value = values[index] if index < len(values) else None
+            else:
+                value = values
+            return value if valid_value(value) else None
+
         for i, date in enumerate(dates):
+            row_date = date.date() if hasattr(date, "date") else date
+            values = [cell(value, i) for value in (
+                open_prices, high_prices, low_prices, close_prices, volumes, change_pcts
+            )]
+            if not any(value is not None for value in values):
+                continue
+            timestamps: dict[str, str] = {}
+            old = cursor.execute(
+                "SELECT open, high, low, close, volume, change_pct, fetched_at, "
+                "normalization_version, field_fetched_at FROM price_history "
+                "WHERE indicator = ? AND date = ?", (indicator, row_date),
+            ).fetchone()
+            if old and old[7] == normalization_version:
+                timestamps = json.loads(old[8]) if old[8] else {
+                    column: old[6].isoformat() for column in HISTORY_COLUMNS.values()
+                }
+                old_values = list(old[:6])
+                if not old[8] and self._required_price_version(indicator) is not None:
+                    # Legacy fund writers copied close into unsupported OHLC.
+                    # Do not certify those cells during a close-only refresh.
+                    old_values[:3] = [None, None, None]
+                    for column in ("open", "high", "low"):
+                        timestamps.pop(column, None)
+                values = [
+                    value if value is not None else old_values[index]
+                    for index, value in enumerate(values)
+                ]
+            for column, value in zip(HISTORY_COLUMNS.values(), (
+                open_prices, high_prices, low_prices, close_prices, volumes, change_pcts
+            )):
+                if cell(value, i) is not None:
+                    timestamps[column] = now.isoformat()
             rows.append((
                 indicator,
-                date.date() if hasattr(date, 'date') else date,
-                utils._to_float(open_prices[i]) if isinstance(open_prices, (list, np.ndarray)) and i < len(open_prices) else utils._to_float(open_prices),
-                utils._to_float(high_prices[i]) if isinstance(high_prices, (list, np.ndarray)) and i < len(high_prices) else utils._to_float(high_prices),
-                utils._to_float(low_prices[i]) if isinstance(low_prices, (list, np.ndarray)) and i < len(low_prices) else utils._to_float(low_prices),
-                utils._to_float(close_prices[i]) if isinstance(close_prices, (list, np.ndarray)) and i < len(close_prices) else utils._to_float(close_prices),
-                utils._to_int(volumes[i]) if isinstance(volumes, (list, np.ndarray)) and i < len(volumes) else utils._to_int(volumes),
-                utils._to_float(change_pcts[i]) if change_pcts and isinstance(change_pcts, (list, np.ndarray)) and i < len(change_pcts) else utils._to_float(change_pcts),
-                # market_caps[i] if market_caps and i < len(market_caps) else None,
-                now,  # fetched_at timestamp
+                row_date,
+                *values,
+                now,
                 normalization_version,
+                json.dumps(timestamps),
             ))
         
-        # Use INSERT OR REPLACE to handle duplicates (including today's refresh)
+        # Merge partial provider rows, but never certify old price units with a
+        # new normalization version. On version change, replace the entire row.
         cursor.executemany("""
             INSERT OR REPLACE INTO price_history (
                 indicator, date, open, high, low, close, 
-                volume, change_pct, fetched_at, normalization_version
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                volume, change_pct, fetched_at, normalization_version, field_fetched_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, rows)
         
         self.connection.commit()
@@ -597,7 +646,7 @@ class DatabaseManager:
         cursor = self.connection.cursor()
         required_version = self._required_price_version(indicator)
         cursor.execute("""
-            SELECT date, open, high, low, close, volume, change_pct
+            SELECT date, open, high, low, close, volume, change_pct, fetched_at, field_fetched_at
             FROM price_history
             WHERE indicator = ? AND date >= ? AND date <= ?
             AND (? IS NULL OR normalization_version = ?)
@@ -607,7 +656,21 @@ class DatabaseManager:
             required_version, required_version,
         ))
         
-        rows = cursor.fetchall()
+        rows = []
+        now = datetime.now()
+        for date, *values in cursor.fetchall():
+            fetched_at, stamps_json = values[-2:]
+            values = values[:-2]
+            if not stamps_json and required_version is not None:
+                values[:3] = [None, None, None]
+            if date == now.date():
+                stamps = json.loads(stamps_json) if stamps_json else {}
+                for index, column in enumerate(HISTORY_COLUMNS.values()):
+                    stamp = datetime.fromisoformat(stamps[column]) if column in stamps else fetched_at
+                    if now - min(stamp, fetched_at) > timedelta(minutes=TTL_MINUTES):
+                        values[index] = None
+            if any(value is not None for value in values):
+                rows.append((date, *values))
         if not rows:
             # No historical data found for the requested date range
             return None
@@ -632,9 +695,31 @@ class DatabaseManager:
         )
         
         # Assign last price as today's price if present in close price
-        data.last = closes[-1] if dates[-1] == pd.Timestamp(datetime.now().date()) else 0.0
+        data.last = closes[-1]
 
         return data
+
+    def missing_history_dates(self, indicator, attributes, dates):
+        """Coverage is per requested cell, not merely the outer date span."""
+        columns = [HISTORY_COLUMNS.get(field, "close" if field == "last" else None)
+                   for field in attributes]
+        columns = [column for column in columns if column is not None]
+        if not columns or dates.empty:
+            return pd.DatetimeIndex([])
+        data = self.get_historical_data(indicator, dates[0], dates[-1])
+        if data is None:
+            return dates
+        rows = {
+            date: index for index, date in enumerate(data.dates)
+        }
+        fields = {column: field for field, column in HISTORY_COLUMNS.items()}
+        return pd.DatetimeIndex([
+            date for date in dates
+            if date not in rows or any(
+                not valid_value(getattr(data, fields[column])[rows[date]])
+                for column in columns
+            )
+        ])
 
 
 _thread_local = threading.local()

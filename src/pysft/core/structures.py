@@ -5,6 +5,7 @@
 
 from dataclasses import dataclass, field
 from datetime import date as Date
+from functools import wraps
 
 import pandas as pd
 
@@ -73,6 +74,37 @@ class _indicator_data:
     ''' Beta value indicating volatility compared to the market'''
     # sharpeRatio: float = 0.0
     # ''' Sharpe Ratio indicating risk-adjusted return'''
+
+    def __setattr__(self, name, value):
+        object.__setattr__(self, name, value)
+        present = self.__dict__.get("__present_fields")
+        if present is not None and name in self.__dataclass_fields__:
+            present.add(name)
+
+    @property
+    def _present_fields(self) -> set[str]:
+        return self.__dict__.get("__present_fields", set())
+
+    @_present_fields.setter
+    def _present_fields(self, value: set[str]) -> None:
+        self.__dict__["__present_fields"] = value
+
+
+# Keep dataclass defaults for parser compatibility, but never confuse them with
+# supplied values. Explicit zeroes (including constructor arguments) are valid.
+_data_init = _indicator_data.__init__
+
+
+@wraps(_data_init)
+def _init_available_data(self, *args, **kwargs):
+    _data_init(self, *args, **kwargs)
+    object.__setattr__(
+        self, "_present_fields",
+        set(list(self.__dataclass_fields__)[:len(args)]) | set(kwargs),
+    )
+
+
+setattr(_indicator_data, "__init__", _init_available_data)
 
 @dataclass
 class indicatorRequest(outputCls):

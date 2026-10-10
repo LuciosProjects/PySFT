@@ -209,8 +209,9 @@ class TestNormalization:
         )[indicator]
 
         if mode != "info":
-            for field in ("price", "open", "high", "low"):
-                assert result[field] == pytest.approx([raw_price / 100])
+            assert result["price"] == pytest.approx([raw_price / 100])
+            for field in ("open", "high", "low"):
+                assert result[field] is None
             assert result["last"] == pytest.approx([raw_price / 100])
         if mode != "price":
             assert result["currency"] == ["ILS"]
@@ -227,8 +228,8 @@ class TestNormalization:
         )
         with requests.Session() as session:
             assert tase_specific_utils.get_Bizportal_graph_data(data, session)
-        for field in ("price", "open", "high", "low"):
-            assert getattr(data, field) == pytest.approx([1.595])
+        assert data.price == pytest.approx([1.595])
+        assert not {"open", "high", "low"} & data._present_fields
         assert data.last == pytest.approx(1.595)
         assert data.currency == "ILS"
 

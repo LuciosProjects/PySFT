@@ -56,7 +56,9 @@ class TestCacheLifecycle:
 
         fetch_data("AAPL", mode="price")
         info = fetch_data("AAPL", mode="info")
-        info_again = fetch_data("AAPL", mode="info")
+        # The scenario omits several info-preset fields. Only the supplied
+        # selection can be a complete hit; missing preset fields must retry.
+        info_again = fetch_data("AAPL", attributes=["name"], mode="info")
 
         assert info["AAPL"]["name"] == ["AAPL Incorporated"]
         assert info_again["AAPL"]["name"] == ["AAPL Incorporated"]
@@ -71,7 +73,7 @@ class TestCacheLifecycle:
 
         info = fetch_data("TESTETF", mode="info")
         price = fetch_data("TESTETF", mode="price")
-        info_again = fetch_data("TESTETF", mode="info")
+        info_again = fetch_data("TESTETF", attributes=["expense_rate"], mode="info")
 
         assert info["TESTETF"]["expense_rate"] == [0.25]
         assert price["TESTETF"]["price"] == [100.0]

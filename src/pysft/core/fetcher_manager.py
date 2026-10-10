@@ -1,483 +1,223 @@
-# [Replit Agent] Removed the unused Set typing import.
-from typing import TYPE_CHECKING, Any
-from typing import cast as _cast
+"""Orchestrate fixed-route fetching and per-field cache reuse."""
 
-import numpy as np
+from collections.abc import Iterator
+from typing import Any, cast
+
+import exchange_calendars as xcals
 import pandas as pd
 
-# ---- Package imports ----
-# [Replit Agent] Removed the unused E_FetchType import.
 import pysft.core.constants as const
-
-# from pysft.core.io import _parse_attributes
 import pysft.core.tase_specific_utils as tase_utils
+from pysft.core.cache_contract import HISTORY_COLUMNS, HISTORY_FIELDS, available_fields, merge_data
 from pysft.core.constants import DB_ENABLED
-from pysft.core.database import _get_timeseries_fields, get_db_manager
-from pysft.core.enums import E_FetchMode
-from pysft.core.models import fetcher_settings
+from pysft.core.database import get_db_manager
+from pysft.core.enums import E_FetchMode, E_FetchType
+from pysft.core.fetch_task import fetchTask
+from pysft.core.models import _fetchRequest, _YF_fetchReq_Container, fetcher_settings
 from pysft.core.price_normalization import required_price_normalization_version
-from pysft.core.structures import _indicator_data, indicatorRequest
+from pysft.core.structures import indicatorRequest
 from pysft.core.task_scheduler import taskScheduler
-from pysft.core.utilities import classify_fetch_types, create_task_list
-
-if TYPE_CHECKING:
-    from pysft.core.fetch_task import fetchTask
-    from pysft.core.models import _fetchRequest
+from pysft.core.utilities import classify_fetch_types
 
 
 def _select_cached_date_span(
-    cached_dates: pd.DatetimeIndex,
-    requested_dates: pd.DatetimeIndex,
+    cached_dates: pd.DatetimeIndex, requested_dates: pd.DatetimeIndex,
     calendar_in_period: pd.DatetimeIndex,
 ) -> pd.DatetimeIndex | None:
-    """Return the safely covered cache span, or None when uncertain."""
-
+    """Legacy conservative span helper retained for compatibility."""
     if cached_dates.empty or requested_dates.empty or calendar_in_period.empty:
         return None
-
-    def nearest_position(target: pd.Timestamp) -> int:
-        return min(
-            range(len(cached_dates)),
-            key=lambda position: abs(
-                 (pd.Timestamp(_cast(pd.Timestamp, cached_dates[position])) - target).total_seconds()
-            ),
-        )
-
-    i_start_span = nearest_position(pd.Timestamp(calendar_in_period[0]))
-    i_end_span = nearest_position(pd.Timestamp(calendar_in_period[-1]))
-
+    start = min(range(len(cached_dates)), key=lambda i: abs(
+        cast(pd.Timestamp, cached_dates[i]) - cast(pd.Timestamp, calendar_in_period[0])
+    ))
+    end = min(range(len(cached_dates)), key=lambda i: abs(
+        cast(pd.Timestamp, cached_dates[i]) - cast(pd.Timestamp, calendar_in_period[-1])
+    ))
+    if start == 0 or end >= len(cached_dates) - 1 or start > end:
+        return None
     if (
-        i_start_span == 0
-        or i_end_span >= len(cached_dates) - 1
-        or i_start_span > i_end_span
+        abs((cached_dates[start - 1] - requested_dates[0]).days) > const.CACHED_DATES_MAX_DELTA
+        or abs((cached_dates[end + 1] - requested_dates[-1]).days) > const.CACHED_DATES_MAX_DELTA
     ):
         return None
-
-    previous_delta = abs(
-        (cached_dates[i_start_span - 1] - requested_dates[0]).days
-    )
-    following_delta = abs(
-        (cached_dates[i_end_span + 1] - requested_dates[-1]).days
-    )
-    if (
-        previous_delta > const.CACHED_DATES_MAX_DELTA
-        or following_delta > const.CACHED_DATES_MAX_DELTA
-    ):
-        return None
-
-    return pd.DatetimeIndex(cached_dates[i_start_span : i_end_span + 1])
+    return pd.DatetimeIndex(cached_dates[start:end + 1])
 
 
 class fetcher_manager:
-    """
-    Manage the fetching of indicator data based on a fetch request.
-
-    This manager orchestrates the retrieval and aggregation of financial indicator
-    data according to specified criteria.
-
-    Args:
-        request (_fetchRequest): The fetch request containing indicators, attributes, and time range.
-
-    Returns:
-        pd.DataFrame: A DataFrame containing the aggregated fetched indicator data.
-    """
-
-    def __init__(self, request: '_fetchRequest'):
-
+    def __init__(self, request: _fetchRequest):
         self.parsedInput = request
         self.settings = fetcher_settings(request)
         self.requests: dict[str, dict[str, Any]] = {}
-        self.fetched_data: dict[str, dict[str, Any]] = {}  # output field to be populated with fetched data
-        self.cached_indicators: list[str] = [] # indicators found fully cached in the database
-        self._timeseries_fields = _get_timeseries_fields()
+        self.fetched_data: dict[str, dict[str, Any]] = {}
+        self.cached_indicators: list[str] = []
+        self._cached_results: dict[str, indicatorRequest] = {}
 
     def managerRoutine(self) -> None:
-        """
-        Execute the main routine to fetch and process data based on the request.
-        
-        Populates self.fetched_data with retrieved indicator information.
-        """
-
-        # Check cache first
-        self._check_cache()
-        
-        # Only classify and fetch for indicators not fully cached
+        # Resolve ticker routing once. Provider route is not a cache key.
         classify_fetch_types(self)
-
-        # find a YF equivalent amonth teh TASE indicators to reduce TASE fetch load, it MUST be done after fetch type classification
         self.settings.NEED_TASE = tase_utils.find_YF_equivalent(self.requests)
+        self._check_cache()
+        if any(item[const.FETCH_TYPE_FIELD] == E_FetchType.TASE for item in self.requests.values()):
+            tase_utils.get_tase_mtf_listing()
+            tase_utils.get_tase_company_listings()
+        tasks = self._create_tasks()
+        taskScheduler(tasks).run()
+        self._cache_fetched_data(tasks)
+        self.aggregate_task_results(tasks)
 
-        if self.settings.NEED_TASE:
-            tase_utils.get_tase_mtf_listing() # Initialize the TASE_MTF_LISTINGS global variable
-            # tase_utils.get_tase_security_listings(pd.Timestamp.today().date()) # Initialize TASE_SECURITY_LISTINGS global variable
-            tase_utils.get_tase_company_listings() # Initialize TASE_COMPANIES_LISTING global variable
-
-        taskList = create_task_list(self)
-
-        # Initialize and run task scheduler
-        scheduler = taskScheduler(taskList)
-
-        # Initialize task scheduler with taskList, for now we will just serialy execute them
-        scheduler.run()
-        
-        # for task in taskList:
-        #     task.execute()
-        
-        # Cache the newly fetched data
-        self._cache_fetched_data(taskList)
-        
-        # Aggregate results into the output dict
-        self.aggregate_task_results(taskList)
-
-    
-    def aggregate_task_results(self, taskList: list['fetchTask']) -> None:
-        """
-        Aggregate results from all fetch tasks into a nested dict.
-
-        Result structure: {indicator: {"dates": ["YYYY-MM-DD", ...], attr: [values, ...], ...}}
-        Handles merging of partially cached indicators with newly fetched data.
-        """
-
-        results: dict[str, indicatorRequest] = {}
-
-        # Add cached results first
-        if hasattr(self, '_cached_results'):
-            results.update(self._cached_results)
-
-        # Add newly fetched results
-        for task in taskList:
-            task_result = task.get_results()
-            fetched_results = task_result if isinstance(task_result, list) else [task_result]
-
-            for res in fetched_results:
-                if res is None:
-                    continue
-                results[res.original_indicator] = res
-
-        # Reorder according to original request order
-        original_indicators = getattr(self.parsedInput, '_original_indicators', self.parsedInput.indicators)
-        ordered_results: list[indicatorRequest] = [
-            results[ind] for ind in original_indicators if ind in results
-        ]
-
-        # Use original requested attributes (not the force-expanded "all" attrs)
-        requested_attrs = getattr(self.parsedInput, '_original_attributes', self.parsedInput.attributes)
-
-        self.fetched_data = {}
-        for res in ordered_results:
-            # Normalise dates to a list of "YYYY-MM-DD" strings
-            raw_dates = res.data.dates
-            if raw_dates is None:
-                raw_dates = []
-            elif not isinstance(raw_dates, list):
-                raw_dates = [raw_dates]
-            date_strings = [str(d.date()) if hasattr(d, 'date') else str(d) for d in raw_dates]
-
-            entry: dict[str, Any] = {"dates": date_strings}
-
-            for field in requested_attrs:
-                if field == "dates":
-                    continue  # already captured above
-
-                value = getattr(res.data, field, None) if res.success else None
-
-                # Normalise scalar to single-element list for a consistent contract
-                if value is not None and not isinstance(value, list):
-                    value = [value]
-
-                entry[field] = value
-
-            self.fetched_data[res.original_indicator] = entry
-
+    def _expected_dates(
+        self, request: indicatorRequest, fetch_type: E_FetchType, exchange: str = "",
+    ) -> pd.DatetimeIndex:
+        start, end = pd.Timestamp(self.settings.start_date), pd.Timestamp(self.settings.end_date)
+        # Original TASE identifiers can resolve to US or other Yahoo symbols.
+        # is_tase_indicator describes origin, not the resolved trading calendar.
+        if fetch_type == E_FetchType.TASE or request.indicator.endswith(".TA"):
+            calendar = tase_utils.TASE_CALENDAR
+        elif exchange.upper() in {"XNAS", "XNYS", "NASDAQ", "NYSE", "NMS", "NGM", "NCM", "NYQ", "ASE", "PCX", "BATS"}:
+            calendar = xcals.get_calendar("XNYS")
+        else:
+            # No verified exchange: retain all requested dates instead of
+            # silently declaring an original exchange's closed days covered.
+            return pd.date_range(start, end)
+        try:
+            return calendar.sessions_in_range(start, end).tz_localize(None)
+        except xcals.errors.DateOutOfBounds:
+            # The calendar is finite; outside its bounds, do not claim knowledge
+            # of closed days. Provider results remain authoritative.
+            return pd.date_range(start, end)
 
     def _check_cache(self) -> None:
-        """
-        Check cache for requested indicators and populate results if fresh data exists.
-        
-        For timeseries requests (with date range), also checks cached historical data
-        and determines which dates need fetching.
-        
-        Modifies:
-            - parsedInput.indicators: removes fully cached indicators
-            - self.cached_indicators: tracks fully cached indicators
-            - self.partially_cached_indicators: indicator -> cached dates
-            - self.missing_dates: indicator -> dates needing fetch
-            - self._cached_results: cached indicatorRequest objects
-        """
-        
         if not DB_ENABLED:
             return
-        
         db = get_db_manager()
-        cached_results: dict[str, indicatorRequest] = {}
-        indicators_to_fetch: list[str] = []
-
-        # Check if this is a timeseries request (has date range)
-        requested_timeseries = any(
-            attr in self._timeseries_fields for attr in self.parsedInput.attributes
-        )
-        is_timeseries_request = self._is_timeseries_request()
-        requested_dates = self._get_requested_dates() if is_timeseries_request else pd.DatetimeIndex([])
-        
-        for indicator in self.parsedInput.indicators:
-            # An obsolete interior row must not turn a partially valid span into
-            # a complete cache hit. Refetch the range without reusing stale prices.
-            if requested_timeseries and db.has_outdated_price_history(
-                indicator,
-                pd.Timestamp(self.settings.start_date),
-                pd.Timestamp(self.settings.end_date),
-            ):
-                indicators_to_fetch.append(indicator)
-                continue
-            # Get cached scalar data and check freshness
-            cached_data, scalar_fresh = db.get_cached_data(indicator, self.parsedInput.attributes)
-            
-            # No scalar freshness means we need to fetch (Currently commented to test other logic)
-            if not scalar_fresh:
-                indicators_to_fetch.append(indicator)
-                continue
-
-            if is_timeseries_request and not requested_dates.empty:
-                # Check timeseries cache
-                cached_dates = db.get_cached_dates(indicator)
-
-                # If cached_dates has a date before requested_dates[0] but not more than 1 month earlier,
-                # and after requested_dates[-1] but not more than 1 month later, we can assume a full cache of the span of the requested dates
-                if cached_dates.empty:
-                    # No cached dates at all
-                    indicators_to_fetch.append(indicator)
-                    continue
-                else:
-                    # Cached data exists
-
-                    # Check if requested date range is fully covered by cached dates according to trading calendar logic (allowing for some uncertainty at the edges)
-                    calendar_in_period = tase_utils.TASE_CALENDAR.sessions_in_range(requested_dates[0], requested_dates[-1])
-                    cached_span = _select_cached_date_span(
-                        cached_dates,
-                        requested_dates,
-                        calendar_in_period,
-                    )
-                    if cached_span is None:
-                        # Uncertainty in cached span, need to fetch
-                        indicators_to_fetch.append(indicator)
-                        continue
-                
-                    # All dates cached and scalars fresh - fully cached
-                    hist_data = db.get_historical_data(
-                        indicator,
-                        pd.Timestamp(self.settings.start_date),
-                        pd.Timestamp(self.settings.end_date)
-                    )
-                    
-                    if hist_data:
-                        # Merge scalar metadata with historical timeseries
-                        merged_data = self._merge_cached_data(cached_data, hist_data)
-                        
-                        req = indicatorRequest(indicator=indicator, dates=merged_data.dates)
-                        req.data = merged_data
-                        req.original_indicator = indicator
-                        req.success = True
-                        req.start_date = self.settings.start_date
-                        req.end_date = self.settings.end_date
-                        req.message = "Data retrieved from database cache."
-
-                        cached_results[indicator] = req
-                        self.cached_indicators.append(indicator)
-                    else:
-                        # No historical data found, need to fetch
-                        indicators_to_fetch.append(indicator)
-            
-            elif cached_data and scalar_fresh and not requested_timeseries:
-                # Metadata-only selections do not depend on price-history cache
-                # rows. Recreate the request's date envelope without requiring
-                # unrelated historical data to be present.
-                request_dates = list(
-                    pd.date_range(
-                        start=self.settings.start_date, end=self.settings.end_date
-                    )
-                )
-                req = indicatorRequest(
-                    indicator=indicator,
-                    dates=request_dates,
-                    mode=self.parsedInput.mode,
-                )
-                req.data = cached_data
-                req.data.dates = request_dates
-                req.original_indicator = indicator
-                req.success = True
-                req.message = "Data retrieved from database cache."
-                cached_results[indicator] = req
+        attrs = self.parsedInput.attributes
+        scalar_attrs = [field for field in attrs if field not in HISTORY_FIELDS | {"dates"}]
+        price_attrs = [field for field in attrs if field in HISTORY_FIELDS]
+        start, end = pd.Timestamp(self.settings.start_date), pd.Timestamp(self.settings.end_date)
+        for indicator, item in list(self.requests.items()):
+            request = item[const.REQUEST_FIELD]
+            scalar, scalar_fresh = db.get_cached_data(indicator, scalar_attrs)
+            scalar_fresh = scalar_fresh or not scalar_attrs
+            history = db.get_historical_data(indicator, start, end) if price_attrs else None
+            expected = self._expected_dates(
+                request, item[const.FETCH_TYPE_FIELD], scalar.exchange if scalar else "",
+            ) if price_attrs else pd.DatetimeIndex([])
+            missing = db.missing_history_dates(indicator, price_attrs, expected)
+            price_fresh = not price_attrs or (
+                history is not None and missing.empty
+                and all(field in available_fields(history) for field in price_attrs)
+                and not db.has_outdated_price_history(indicator, start, end)
+            )
+            merged = merge_data(scalar, history, start, end)
+            if history is None:
+                merged.dates = list(pd.date_range(start, end))
+            cached = indicatorRequest(indicator, mode=self.parsedInput.mode)
+            cached.data = merged
+            cached.success = True
+            self._cached_results[indicator] = cached
+            if scalar_fresh and price_fresh:
                 self.cached_indicators.append(indicator)
-            elif cached_data and scalar_fresh:
-                # Check if price exists in cached_data for the requested date (for non-timeseries, just current price)
-                # All dates cached and scalars fresh - fully cached
-                hist_data = db.get_historical_data(
-                    indicator,
-                    pd.Timestamp(self.settings.start_date),
-                    pd.Timestamp(self.settings.end_date)
-                )
+                del self.requests[indicator]
+                continue
+            need_info = bool(scalar_attrs) and not scalar_fresh
+            need_price = bool(price_attrs) and not price_fresh
+            mode = E_FetchMode.ALL if need_info and need_price else (
+                E_FetchMode.INFO if need_info else E_FetchMode.PRICE
+            )
+            request.mode = mode
+            # Yahoo supports a bounded download. Fetch the envelope of missing
+            # sessions (including interior field gaps). TASE's graph APIs do not
+            # support date selection: safely fetch and merge the requested range.
+            if (
+                need_price and not missing.empty
+                and item[const.FETCH_TYPE_FIELD] == E_FetchType.YFINANCE
+                and not db.has_outdated_price_history(indicator, start, end)
+            ):
+                request.start_date, request.end_date = missing[0].date(), missing[-1].date()
+                request.data.dates = list(pd.date_range(missing[0], missing[-1]))
 
-                if hist_data:
-                    # Historical data exists for the requested date, get data for the requested date
-                    req = indicatorRequest(indicator=indicator, dates=cached_data.dates)
-                    req.data = cached_data
-                    req.original_indicator = indicator
-                    req.success = True
-                    # req.start_date = self.settings.start_date
-                    # req.end_date = self.settings.end_date
-                    
-                    for attr in self._timeseries_fields:
-                        value = getattr(hist_data, attr)
-                        setattr(req.data, attr, value[0] if type(value) in [list, np.ndarray] else value)
-
-                    req.message = "Data retrieved from database cache."
-
-                    cached_results[indicator] = req
-                    self.cached_indicators.append(indicator)
-                else:
-                    # No historical data found, need to fetch
-                    indicators_to_fetch.append(indicator)
+    def _create_tasks(self) -> list[fetchTask]:
+        tasks: list[fetchTask] = []
+        groups: dict[tuple, list[indicatorRequest]] = {}
+        for item in self.requests.values():
+            request = item[const.REQUEST_FIELD]
+            if item[const.FETCH_TYPE_FIELD] == E_FetchType.TASE:
+                tasks.append(fetchTask(E_FetchType.TASE, request))
             else:
-                # Need to fetch
-                indicators_to_fetch.append(indicator)
-        
-        # Store cached results for aggregation
-        if cached_results:
-            if self.parsedInput.mode == E_FetchMode.PRICE:
-                # Match fresh requests: last is the final requested close, not
-                # a scalar metadata default (which can be zero in the cache).
-                for req in cached_results.values():
-                    prices = req.data.price
-                    if isinstance(prices, (list, np.ndarray)) and len(prices):
-                        req.data.last = float(prices[-1])
-                    elif isinstance(prices, (float, int, np.floating)):
-                        req.data.last = float(prices)
-            if not hasattr(self, '_cached_results'):
-                self._cached_results = {}
-            self._cached_results.update(cached_results)
-        
-        # Update parsedInput to only fetch non-cached indicators
-        if indicators_to_fetch:
-            self.parsedInput.indicators = indicators_to_fetch
-        else:
-            # All indicators cached, no need to fetch
-            self.parsedInput.indicators = []
-    
-    def _is_timeseries_request(self) -> bool:
-        """Check if request is for timeseries data (has date range)."""
-        return (self.settings.end_date - self.settings.start_date).days > 1 and \
-                any(attr in self._timeseries_fields for attr in self.parsedInput.attributes) 
-    
-    def _get_requested_dates(self) -> pd.DatetimeIndex:
-        """Generate all dates in the requested range."""
+                key = (request.mode, request.start_date, request.end_date)
+                groups.setdefault(key, []).append(request)
+        for (mode, start, end), requests in groups.items():
+            dates = list(pd.date_range(start, end))
+            for index in range(0, len(requests), const.YF_BATCH_SIZE):
+                container = _YF_fetchReq_Container(requests[index:index + const.YF_BATCH_SIZE], dates, mode)
+                tasks.append(fetchTask(E_FetchType.YFINANCE, container))
+        return tasks
 
-        # if (self.settings.end_date - self.settings.start_date).days < 1:
-        #     # start and end dates are the same
-        #     return pd.DatetimeIndex(pd.to_datetime([self.settings.start_date]))
+    @staticmethod
+    def _task_results(tasks: list[fetchTask]) -> Iterator[indicatorRequest]:
+        for task in tasks:
+            result = task.get_results()
+            yield from result if isinstance(result, list) else [result]
 
-        # Generate date range
-        date_range = pd.date_range(
-            start=self.settings.start_date,
-            end=self.settings.end_date,
-        )
-        return date_range
-    
-    def _merge_cached_data(
-        self, 
-        scalar_data: _indicator_data | None, 
-        timeseries_data: _indicator_data
-    ) -> _indicator_data:
-        """
-        Merge scalar metadata with timeseries historical data.
-        
-        Args:
-            scalar_data: Cached scalar fields (name, ISIN, etc.)
-            timeseries_data: Cached historical prices
-            
-        Returns:
-            Combined _indicator_data
-        """
-        if scalar_data is None:
-            return timeseries_data
-        
-        # Start with timeseries data (has dates, prices, etc.)
-        merged = timeseries_data
-        
-        # Copy scalar fields from scalar_data
-        scalar_fields = set(_indicator_data.__dataclass_fields__.keys()) - self._timeseries_fields
-        for field in scalar_fields:
-            scalar_value = getattr(scalar_data, field, None)
-            if scalar_value is not None and scalar_value != "" and scalar_value != 0:
-                setattr(merged, field, scalar_value)
-        
-        return merged
-
-
-    def _cache_fetched_data(self, taskList: list['fetchTask']) -> None:
-        """
-        Cache successfully fetched indicator data.
-        
-        Args:
-            taskList: List of completed fetch tasks
-        """
+    def _cache_fetched_data(self, tasks: list[fetchTask]) -> None:
         if not DB_ENABLED:
             return
-        
         db = get_db_manager()
-        
-        for task in taskList:
-            task_result = task.get_results()
-            results = task_result if isinstance(task_result, list) else [task_result]
-            
-            for res in results:
-                if not res.success:
-                    continue
-                
-                indicator = res.original_indicator
-                data = res.data
-                
-                # Dataclass defaults are not evidence that a provider fetched a
-                # field. Cache only fields the task's mode can populate so a
-                # price-only response cannot mark empty metadata as fresh.
-                all_fields = set(data.__dataclass_fields__)
-                if res.mode == E_FetchMode.PRICE:
-                    fetched_fields = {"indicator", *self._timeseries_fields}
-                elif res.mode == E_FetchMode.INFO:
-                    fetched_fields = all_fields - self._timeseries_fields
-                else:
-                    fetched_fields = all_fields
-                
-                # Cache metadata and metrics
-                db.cache_indicator_data(indicator, data, sorted(fetched_fields))
-                
-                # Metadata-only fetches have default price fields, not refreshed
-                # prices. Never replace history or certify its unit version.
-                if res.mode == E_FetchMode.INFO:
-                    continue
+        for res in self._task_results(tasks):
+            if res is None or not res.success:
+                continue
+            fields = available_fields(res.data)
+            db.cache_indicator_data(res.original_indicator, res.data, list(fields))
+            if res.mode == E_FetchMode.INFO or not fields & set(HISTORY_COLUMNS):
+                continue
+            dates = res.data.dates
+            if not isinstance(dates, list):
+                dates = [dates]
+            db.cache_historical_data(
+                res.original_indicator, dates,
+                *[getattr(res.data, field) if field in fields else None for field in HISTORY_COLUMNS],
+                normalization_version=required_price_normalization_version(
+                    res.original_indicator, res.data.quoteType
+                ),
+            )
 
-                # Cache data
-                db.cache_historical_data(
-                    indicator=indicator,
-                    dates=data.dates,
-                    open_prices=data.open,
-                    high_prices=data.high,
-                    low_prices=data.low,
-                    close_prices=data.price,
-                    volumes=data.volume,
-                    change_pcts=data.change_pct,
-                    normalization_version=required_price_normalization_version(
-                        indicator, data.quoteType
-                    ),
-                    # market_caps=data.market_cap if isinstance(data.market_cap, list) or isinstance(data.market_cap, np.ndarray) else None
-                )
-
+    def aggregate_task_results(self, tasks: list[fetchTask]) -> None:
+        results = dict(self._cached_results)
+        explicit_range = self.parsedInput.start_ts is not None
+        start = pd.Timestamp(self.settings.start_date) if explicit_range else None
+        end = pd.Timestamp(self.settings.end_date) if explicit_range else None
+        for res in self._task_results(tasks):
+            if res is None:
+                continue
+            previous = results.get(res.original_indicator)
+            merged = merge_data(
+                previous.data if previous else None,
+                res.data if res.success else None, start, end,
+            )
+            if not res.success and previous is None:
+                merged.dates = list(pd.date_range(self.settings.start_date, self.settings.end_date))
+            res.data = merged
+            if explicit_range and not set(self.parsedInput.attributes) & HISTORY_FIELDS:
+                res.data.dates = list(pd.date_range(self.settings.start_date, self.settings.end_date))
+            res.success = bool(available_fields(merged))
+            results[res.original_indicator] = res
+        attrs = self.parsedInput._original_attributes
+        for indicator in self.parsedInput._original_indicators:
+            if indicator not in results:
+                continue
+            res = results[indicator]
+            fields = available_fields(res.data)
+            dates = res.data.dates
+            dates = dates if isinstance(dates, list) else [dates]
+            entry: dict[str, Any] = {"dates": [pd.Timestamp(date).date().isoformat() for date in dates or []]}
+            for field in attrs:
+                if field == "dates":
+                    continue
+                value = getattr(res.data, field) if field in fields else None
+                if value is not None and not isinstance(value, list):
+                    value = [value]
+                entry[field] = value
+            self.fetched_data[indicator] = entry
 
     def getResults(self) -> dict[str, dict[str, Any]]:
-        """
-        Retrieve the aggregated fetched data.
-
-        Returns:
-            dict: The fetched indicator data as {indicator: {"dates": [...], attr: [...], ...}}.
-        """
-
         return self.fetched_data
