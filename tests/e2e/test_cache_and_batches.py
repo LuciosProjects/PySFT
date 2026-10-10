@@ -49,6 +49,36 @@ class TestCacheLifecycle:
         assert set(fresh["AAPL"]) == {"dates", "name", "price"}
         assert provider_gateway.calls["AAPL"] == 1
 
+    def test_price_cache_does_not_supply_unfetched_info_metadata(
+        self, pysft_env, provider_gateway
+    ):
+        provider_gateway.add(YFinanceScenarioFactory.equity())
+
+        fetch_data("AAPL", mode="price")
+        info = fetch_data("AAPL", mode="info")
+        info_again = fetch_data("AAPL", mode="info")
+
+        assert info["AAPL"]["name"] == ["AAPL Incorporated"]
+        assert info_again["AAPL"]["name"] == ["AAPL Incorporated"]
+        assert provider_gateway.calls["AAPL"] == 2
+
+    def test_price_fetch_does_not_overwrite_cached_info_with_defaults(
+        self, pysft_env, provider_gateway
+    ):
+        provider_gateway.add(
+            YFinanceScenarioFactory.fund("TESTETF", expense_rate=0.25)
+        )
+
+        info = fetch_data("TESTETF", mode="info")
+        price = fetch_data("TESTETF", mode="price")
+        info_again = fetch_data("TESTETF", mode="info")
+
+        assert info["TESTETF"]["expense_rate"] == [0.25]
+        assert price["TESTETF"]["price"] == [100.0]
+        assert info_again["TESTETF"]["expense_rate"] == [0.25]
+        assert provider_gateway.calls["TESTETF"] == 2
+        assert pysft_env.price_row_count("TESTETF") == 1
+
     def test_expired_metadata_is_refetched(self, pysft_env, provider_gateway):
         provider_gateway.add(YFinanceScenarioFactory.equity())
         fetch_data("AAPL", mode="info")

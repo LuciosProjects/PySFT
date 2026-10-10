@@ -436,18 +436,19 @@ class fetcher_manager:
                 indicator = res.original_indicator
                 data = res.data
                 
-                # Determine which fields were actually fetched
-                # Get all non-default fields from the data
-                fetched_fields = []
-                for field_name in data.__dataclass_fields__:
-                    value = getattr(data, field_name)
-                    if  value is not None and \
-                        (isinstance(value, (list, np.ndarray)) and len(value) > 0) or \
-                        value != 0 or value != 0.0 or value != "":
-                        fetched_fields.append(field_name)
+                # Dataclass defaults are not evidence that a provider fetched a
+                # field. Cache only fields the task's mode can populate so a
+                # price-only response cannot mark empty metadata as fresh.
+                all_fields = set(data.__dataclass_fields__)
+                if res.mode == E_FetchMode.PRICE:
+                    fetched_fields = {"indicator", *self._timeseries_fields}
+                elif res.mode == E_FetchMode.INFO:
+                    fetched_fields = all_fields - self._timeseries_fields
+                else:
+                    fetched_fields = all_fields
                 
                 # Cache metadata and metrics
-                db.cache_indicator_data(indicator, data, fetched_fields)
+                db.cache_indicator_data(indicator, data, sorted(fetched_fields))
                 
                 # Metadata-only fetches have default price fields, not refreshed
                 # prices. Never replace history or certify its unit version.
