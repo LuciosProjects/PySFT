@@ -56,7 +56,9 @@ def get_tase_datahub_api_headers(api_key: str | None = None) -> dict[str, str]:
     environment or pass a key explicitly. PySFT deliberately does not search
     for or load ``.env`` files at import time.
     """
-    resolved_key = api_key if api_key is not None else os.environ.get(TASE_DATAHUB_API_KEY_ENV, "")
+    resolved_key = (
+        api_key if api_key is not None else os.environ.get(TASE_DATAHUB_API_KEY_ENV, "")
+    ).strip()
     return {
         "accept": "application/json",
         "accept-language": "en-US",

@@ -17,6 +17,11 @@ def test_explicit_tase_api_key_overrides_environment(monkeypatch):
     monkeypatch.setenv("TASE_DATAHUB_API_KEY", "environment-key")
     assert get_tase_datahub_api_headers("explicit-key")["apikey"] == "explicit-key"
 
+def test_tase_api_key_header_trims_surrounding_whitespace(monkeypatch):
+    monkeypatch.setenv("TASE_DATAHUB_API_KEY", " \tconfigured-key \r\n")
+    assert get_tase_datahub_api_headers()["apikey"] == "configured-key"
+    assert get_tase_datahub_api_headers(" explicit-key ")["apikey"] == "explicit-key"
+
 
 def test_missing_tase_api_key_is_not_persisted(monkeypatch):
     monkeypatch.delenv("TASE_DATAHUB_API_KEY", raising=False)
